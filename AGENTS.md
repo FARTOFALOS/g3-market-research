@@ -12,8 +12,8 @@ is separate, accepted spans are authoritative X-state, and `x3_t0` is the same
 RIZ's first minute-level third-span ignition. Research interpretations remain
 derived from the factual lifecycle and shared one-minute tape.
 
-Production fan-out is paused at the committed state. Do not build the 4,320
-cells until the operator explicitly resumes it. When resumed, use the existing
-CLI scheduler and atomic cells; do not reuse incompatible, temporary, or
-`.previous` outputs. G2 and Pine/RIZ sources are read-only semantic references,
-not runtime dependencies or edit targets.
+Production materialization is operator-authorized and active. Use the existing
+CLI scheduler and atomic cells to resume every missing cell until all 4,320 are
+complete; do not reuse incompatible, temporary, or `.previous` outputs. G2 and
+Pine/RIZ sources are read-only semantic references, not runtime dependencies or
+edit targets.

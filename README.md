@@ -47,11 +47,11 @@ The research-facing field has no precursor-knowability clock, generic
 
 ## Current materialization state
 
-The corrected semantic generation is frozen, but production materialization is
-currently paused before fan-out. All cells from the superseded generation were
-removed; there are currently **0 complete cells out of 4,320**. The canonical
-market spines are retained. Do not start the large-scale build until the
-operator explicitly resumes it.
+The corrected semantic generation is frozen and production materialization is
+operator-authorized and active. All cells from the superseded generation were
+removed before this generation began; the canonical market spines are retained.
+Use the live status command below for the exact completed/missing census and
+resume any missing current-generation cells automatically.
 
 Recover live state from the repository root:
 
@@ -63,8 +63,7 @@ python -m g3riz.cli status
 `complete_tfs` are atomically published current-generation cells. `missing_tfs`
 are the resume set. Temporary directories, `.previous` directories, stale
 cells, and cells with a different build identity are excluded from normal
-reads. Once production is resumed, the ordinary build command safely reuses
-completed cells:
+reads. The ordinary build command safely reuses completed cells:
 
 ```powershell
 python -m g3riz.cli build --instrument NQ --tfs 1-1440
