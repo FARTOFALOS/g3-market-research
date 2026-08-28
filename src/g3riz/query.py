@@ -3,12 +3,24 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 
 import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
 from .market import MarketSpine
+from .field import build_identity
+
+
+def _riz_exists_at(passports: pa.Table, minute_pos: int) -> pa.Array:
+    """Research-object existence starts at T0 and ends at canonical deletion."""
+    started = pa.compute.less_equal(passports["t0_spine_pos"], minute_pos)
+    not_deleted = pa.compute.or_kleene(
+        pa.compute.is_null(passports["c1_deletion_spine_pos"]),
+        pa.compute.greater(passports["c1_deletion_spine_pos"], minute_pos),
+    )
+    return pa.compute.and_(started, not_deleted)
 
 
 class Field:
@@ -19,22 +31,39 @@ class Field:
         self.field_root = self.repo_root / "data" / "field" / self.instrument
 
     def _fact_files(self, name: str, tf: int | None) -> Path | list[Path]:
-        if tf is not None:
-            path = self.field_root / "cells" / f"tf_{tf:04d}" / f"{name}.parquet"
-            if not path.exists():
-                raise FileNotFoundError(f"materialized field file not found: {path}")
+        def current_path(value: int) -> Path | None:
+            cell = self.field_root / "cells" / f"tf_{value:04d}"
+            path = cell / f"{name}.parquet"
+            manifest_path = cell / "manifest.json"
+            if not path.exists() or not manifest_path.exists():
+                return None
+            try:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                return None
+            expected = build_identity(self.market, self.instrument, value)
+            if (manifest.get("status") != "complete"
+                    or manifest.get("tf_minutes") != value
+                    or manifest.get("build_identity") != expected):
+                return None
             return path
-        consolidated = self.field_root / "consolidated" / f"{name}.parquet"
-        if consolidated.exists():
-            return consolidated
-        paths = sorted((self.field_root / "cells").glob(f"tf_*/{name}.parquet"))
+
+        if tf is not None:
+            path = current_path(tf)
+            if path is None:
+                raise FileNotFoundError(f"no current complete field cell for {self.instrument} TF {tf}")
+            return path
+        paths = [path for value in range(1, 1441)
+                 if (path := current_path(value)) is not None]
         if not paths:
-            raise FileNotFoundError(f"no materialized {name} cells under {self.field_root}")
+            raise FileNotFoundError(f"no current materialized {name} cells under {self.field_root}")
         return paths
 
     def passports(self, *, tf: int | None = None, tf_min: int | None = None,
                   tf_max: int | None = None, t0_start_ns: int | None = None,
-                  t0_stop_ns: int | None = None, censored: bool | None = None) -> pa.Table:
+                  t0_stop_ns: int | None = None, censored: bool | None = None,
+                  x3_ignited: bool | None = None,
+                  min_confirmed_nx: int | None = None) -> pa.Table:
         filters: list[tuple[str, str, object]] = []
         if tf is not None:
             filters.append(("tf_minutes", "=", tf))
@@ -48,7 +77,14 @@ class Field:
             filters.append(("t0_ts_ns", "<", t0_stop_ns))
         if censored is not None:
             filters.append(("censored", "=", censored))
-        return pq.read_table(self._fact_files("passports", tf), filters=filters or None)
+        table = pq.read_table(self._fact_files("passports", tf), filters=filters or None)
+        if x3_ignited is not None:
+            present = pa.compute.invert(pa.compute.is_null(table["x3_t0_ts_ns"]))
+            table = table.filter(present if x3_ignited else pa.compute.invert(present))
+        if min_confirmed_nx is not None:
+            table = table.filter(pa.compute.greater_equal(table["final_span_count"],
+                                                           min_confirmed_nx))
+        return table
 
     def events(self, *, tf: int | None = None, riz_ids: pa.Array | list[str] | None = None,
                kinds: list[str] | None = None) -> pa.Table:
@@ -75,40 +111,14 @@ class Field:
 
     def objects_at(self, minute_pos: int, state: str = "alive") -> pa.Table:
         passports = self.passports()
-        born = pa.compute.less_equal(passports["birth_known_spine_pos"], minute_pos)
-        deleted = pa.compute.or_(pa.compute.is_null(passports["c1_deletion_spine_pos"]),
-                                 pa.compute.greater(passports["c1_deletion_spine_pos"], minute_pos))
-        mask = pa.compute.and_(born, deleted)
+        mask = _riz_exists_at(passports, minute_pos)
         if state == "blue":
             candidates = passports.filter(mask)
-            eligible = pa.compute.or_(
+            eligible = pa.compute.or_kleene(
                 pa.compute.is_null(candidates["blue_eligibility_end_spine_pos"]),
                 pa.compute.greater(candidates["blue_eligibility_end_spine_pos"], minute_pos),
             )
-            candidates = candidates.filter(eligible)
-            confirmed = pa.compute.fill_null(
-                pa.compute.less_equal(candidates["first_confirmation_spine_pos"], minute_pos),
-                False,
-            )
-            confirmed_rows = candidates.filter(confirmed)
-            pre_confirmation = candidates.filter(pa.compute.invert(confirmed))
-            events = self.events(riz_ids=pre_confirmation["riz_id"],
-                                 kinds=["preview", "cancellation"])
-            events = events.filter(pa.compute.less_equal(events["market_spine_pos"], minute_pos))
-            if not events.num_rows:
-                return confirmed_rows
-            events = events.sort_by([
-                ("riz_id", "ascending"), ("market_spine_pos", "ascending"),
-                ("event_seq", "ascending"),
-            ])
-            event_ids = np.asarray(events["riz_id"].combine_chunks().to_numpy(zero_copy_only=False))
-            is_last = np.r_[event_ids[1:] != event_ids[:-1], True]
-            last = events.filter(pa.array(is_last))
-            is_active = pa.compute.equal(last["event_kind"], "preview")
-            active_ids = last.filter(is_active)["riz_id"]
-            preview_rows = pre_confirmation.filter(pa.compute.is_in(
-                pre_confirmation["riz_id"], value_set=active_ids))
-            return pa.concat_tables([confirmed_rows, preview_rows])
+            return candidates.filter(eligible)
         elif state == "breaker":
             candidates = passports.filter(mask)
             events = self.events(riz_ids=candidates["riz_id"], kinds=["breaker_entry"])

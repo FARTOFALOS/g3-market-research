@@ -137,7 +137,11 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "consolidate":
         print(json.dumps(consolidate(field_root, args.instrument), indent=2))
     elif args.command == "status":
-        print(json.dumps(read_status(field_root), indent=2))
+        status = read_status(field_root)
+        state_path = repo / "PROJECT_STATE.json"
+        if state_path.exists():
+            status["project_state"] = json.loads(state_path.read_text(encoding="utf-8"))
+        print(json.dumps(status, indent=2))
     elif args.command == "query":
         field = Field(repo, args.instrument)
         table = field.passports(tf=args.tf).slice(0, args.limit)

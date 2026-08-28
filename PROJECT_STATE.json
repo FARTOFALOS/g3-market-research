@@ -1,0 +1,16 @@
+{
+  "schema": "g3-project-state/1",
+  "semantic_generation": "g3-t0-primary-x3-anchors/2",
+  "phase": "PAUSED_BEFORE_PRODUCTION_FANOUT",
+  "large_scale_materialization_authorized": false,
+  "expected_cells": 4320,
+  "actual_cell_state_source": "data/field/*/cells/tf_*/manifest.json via python -m g3riz.cli status",
+  "superseded_generated_cells_removed": true,
+  "canonical_market_spines_retained": [
+    "ES",
+    "NQ",
+    "YM"
+  ],
+  "resume_rule": "Require an explicit operator resume, then use the existing CLI scheduler; current compatible completed cells are reusable.",
+  "updated_utc": "2026-08-28"
+}

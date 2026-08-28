@@ -70,6 +70,7 @@ def read_status(field_root: Path, instruments: tuple[str, ...] = ("ES", "NQ", "Y
 
 def consolidate(field_root: Path, instrument: str) -> dict:
     cells_root = field_root / instrument / "cells"
+    market = MarketSpine.open_store(field_root.parent / "market" / instrument)
     manifests: list[dict] = []
     missing: list[int] = []
     for tf in range(1, 1441):
@@ -78,7 +79,8 @@ def consolidate(field_root: Path, instrument: str) -> dict:
             missing.append(tf)
             continue
         manifest = json.loads(path.read_text(encoding="utf-8"))
-        if manifest.get("status") != "complete" or manifest.get("tf_minutes") != tf:
+        if (manifest.get("status") != "complete" or manifest.get("tf_minutes") != tf
+                or manifest.get("build_identity") != build_identity(market, instrument, tf)):
             raise ValueError(f"invalid cell manifest for {instrument} TF {tf}")
         manifests.append(manifest)
     if missing:

@@ -1,0 +1,41 @@
+{
+  "schema": "g3-source-data/1",
+  "dataset": "danielharkin21/futuresss",
+  "repository_local_raw_path": "data/raw",
+  "raw_path_kind": "Windows junction",
+  "raw_junction_target": "C:\\Users\\Admin\\Claude\\g3-riz\\CME_continuous_1m_free_2006_2026\\raw",
+  "source_uncertainties": {
+    "feed_origin": null,
+    "license": null,
+    "continuous_roll_rule": null,
+    "source_timezone_metadata": null
+  },
+  "canonical_transform": {
+    "version": "chicago-end-label-to-eastern-open-v1",
+    "source_interpretation": "America/Chicago end-labelled minute",
+    "canonical_open_interpretation": "source instant converted to US/Eastern minus one minute",
+    "canonical_close_storage": "UTC epoch nanoseconds of the source-labelled close instant",
+    "session_anchor": "18:00 US/Eastern; final and gapped windows contain observed bars only",
+    "synthetic_minutes": false
+  },
+  "instruments": {
+    "ES": {
+      "source_file": "data/raw/ES_1min.csv",
+      "source_sha256": "ca2d8aa64977801f01d8f153574fa16cf8fa0dff7fcdfe75c58c5025df441c3b",
+      "canonical_rows": 6855058,
+      "corpus_id": "0f2f8a4c6800b10f7295101916e1c4e3ee66c2dc78bcd8944a597b296ccc5ddd"
+    },
+    "NQ": {
+      "source_file": "data/raw/NQ_1min.csv",
+      "source_sha256": "7404eb845350c84361ce2316edfffd830b3eea7761e301a8f1e6368c9178934a",
+      "canonical_rows": 6418541,
+      "corpus_id": "f077783c4bd483c18d74c8d61825645c2dda7f81e391738989dd2cf623e5ab2e"
+    },
+    "YM": {
+      "source_file": "data/raw/YM_1min.csv",
+      "source_sha256": "d249ab94ed8ee372b7c347ac39de76e4529ab660f42e78210d8f09fcec379ddd",
+      "canonical_rows": 6438663,
+      "corpus_id": "78e427619ecc465b886cc79682933a63b4635aef7cdd468230e256ade167204e"
+    }
+  }
+}

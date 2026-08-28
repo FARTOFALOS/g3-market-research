@@ -8,10 +8,10 @@ def _digest(*parts: object) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
-def riz_id(corpus_id: str, instrument: str, tf_minutes: int, birth_known_ts_ns: int,
+def riz_id(corpus_id: str, instrument: str, tf_minutes: int, precursor_formed_ts_ns: int,
            top: float, bottom: float, direction: int) -> str:
     return "riz_" + _digest("g3-riz-id/1", corpus_id, instrument, tf_minutes,
-                             birth_known_ts_ns, float(top).hex(), float(bottom).hex(),
+                             precursor_formed_ts_ns, float(top).hex(), float(bottom).hex(),
                              direction)[:32]
 
 

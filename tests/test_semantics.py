@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
+import pyarrow as pa
 
 from g3riz.fast import facts_to_rows, replay_fast
 from g3riz.field import CellBuilder
@@ -12,6 +13,7 @@ from g3riz.machine import (TIER_ACTIVE_BOTH, TIER_BREAKER, NativeBar, Zone,
                            advance_one, blue_confirmed, detect_births)
 from g3riz.market import _day_numbers
 from g3riz.native import NativeArrays
+from g3riz.query import _riz_exists_at
 
 
 def bar(index, o, h, low, c, start=0, stop=1):
@@ -81,30 +83,48 @@ def test_two_clocks_precursor_and_direct_addresses_survive():
         passports, events, native_count, born = builder.run()
     assert native_count == 6 and born == 1 and len(passports) == 1
     passport = passports[0]
-    assert passport["birth_label_ts_ns"] == bars[0].open_ts_ns
-    assert passport["birth_known_ts_ns"] == bars[2].close_ts_ns
-    assert passport["first_activation_native_bar_index"] == 3
-    assert passport["t0_kind"] == "preview"
+    assert passport["precursor_formed_ts_ns"] == bars[2].close_ts_ns
+    assert passport["precursor_formed_spine_pos"] == bars[2].minute_stop - 1
+    assert passport["precursor_native_bar_index"] == 2
+    assert "birth_label_ts_ns" not in passport
+    assert passport["t0_kind"] == "minute_ignition"
     assert passport["t0_spine_pos"] == 8
     assert passport["t0_native_bar_index"] == 5
-    assert passport["first_confirmation_native_bar_index"] == 5
-    assert passport["t0_preview_outcome"] == "confirmed"
-    assert passport["t0_preview_outcome_known_at_ns"] == bars[5].close_ts_ns
-    assert passport["t0_preview_outcome_known_at_spine_pos"] == bars[5].minute_stop - 1
+    assert passport["native_blue_confirmation_native_bar_index"] == 5
     assert passport["censored"]
     kinds = [event["event_kind"] for event in events]
-    assert events[0]["event_ts_ns"] == passport["birth_known_ts_ns"]
-    assert events[0]["known_at_ns"] == passport["birth_known_ts_ns"]
-    assert passport["birth_label_ts_ns"] < passport["birth_known_ts_ns"]
-    assert kinds == ["birth_known", "candidate", "activation", "span",
-                     "preview", "span", "confirmation", "archive_censor"]
-    preview = next(event for event in events if event["event_kind"] == "preview")
-    assert preview["known_at_ns"] < preview["preview_outcome_known_at_ns"]
+    assert events[0]["event_ts_ns"] == passport["precursor_formed_ts_ns"]
+    assert kinds == ["precursor_formed", "accepted_span", "t0",
+                     "accepted_span", "native_confirmation", "archive_censor"]
+    assert [event["span_count"] for event in events
+            if event["event_kind"] == "accepted_span"] == [1, 2]
+    assert not any(event["event_kind"] in ("candidate", "preview", "cancellation")
+                   for event in events)
     assert all(event["riz_id"] == passport["riz_id"] for event in events)
 
 
-def test_compiled_replay_is_logically_identical_on_two_clock_fixture():
+def _with_confirmed_x3():
     market, bars = _synthetic_market_and_bars()
+    extra_o = np.array([112.0, 99.0, 99.0, 111.0])
+    extra_h = np.array([113.0, 100.0, 112.0, 112.0])
+    # Bar 6 retires the north boundary after nx=2. Bar 7 then ignites and
+    # confirms x3 while the canonical zone survives one-sided.
+    extra_l = np.array([110.0, 98.0, 98.0, 110.0])
+    extra_c = np.array([112.0, 99.0, 111.0, 111.0])
+    market.open = np.r_[market.open, extra_o]
+    market.high = np.r_[market.high, extra_h]
+    market.low = np.r_[market.low, extra_l]
+    market.close = np.r_[market.close, extra_c]
+    market.close_ts_utc_ns = np.arange(1, 15, dtype=np.int64) * 60_000_000_000
+    bars.extend([
+        NativeBar(6, 1800, int(market.close_ts_utc_ns[10]), 112, 113, 110, 112, 10, 11),
+        NativeBar(7, 2100, int(market.close_ts_utc_ns[13]), 99, 112, 98, 111, 11, 14),
+    ])
+    return market, bars
+
+
+def test_compiled_replay_is_identical_on_x3_two_clock_fixture():
+    market, bars = _with_confirmed_x3()
     reference = CellBuilder(market, "NQ", 5)
     with patch("g3riz.field.iter_native_bars", return_value=iter(bars)):
         rp, re, _n, _born = reference.run()
@@ -122,6 +142,21 @@ def test_compiled_replay_is_logically_identical_on_two_clock_fixture():
                            native.close_ts_ns, native.minute_stop)
     assert fp == rp
     assert fe == re
+    assert fp[0]["x3_t0_spine_pos"] == 12
+    assert fp[0]["x3_t0_native_bar_index"] == 7
+    assert fp[0]["x3_t0_confirmed"] is True
+    assert fp[0]["final_span_count"] == 3
+    assert [row["event_kind"] for row in fe].count("x3_t0") == 1
+    x3 = next(row for row in fe if row["event_kind"] == "x3_t0")
+    assert x3["north_alive"] is False and x3["south_alive"] is True
+    assert [row["event_kind"] for row in fe].index("north_boundary_retired") \
+        < [row["event_kind"] for row in fe].index("x3_t0")
+
+
+def test_riz_query_existence_begins_at_t0_not_precursor_formation():
+    rows = pa.table({"t0_spine_pos": [8], "c1_deletion_spine_pos": pa.array([None], pa.int64())})
+    assert _riz_exists_at(rows, 7).to_pylist() == [False]
+    assert _riz_exists_at(rows, 8).to_pylist() == [True]
 
 
 def test_indexed_replay_preserves_breaker_deletion_across_a_price_gap():
@@ -160,7 +195,7 @@ def test_indexed_replay_preserves_breaker_deletion_across_a_price_gap():
     assert fp[0]["c1_deletion_native_bar_index"] == 8
 
 
-def test_one_minute_clock_has_confirmation_but_no_intrabar_preview():
+def test_one_minute_clock_has_t0_without_intrabar_research_events():
     market, bars = _synthetic_market_and_bars()
     # Bar membership is already one minute for the first three; the semantic
     # fact under test is structural: a one-minute native bar has no pre-close
@@ -171,4 +206,5 @@ def test_one_minute_clock_has_confirmation_but_no_intrabar_preview():
     builder = CellBuilder(market, "NQ", 1)
     with patch("g3riz.field.iter_native_bars", return_value=iter(one_minute_bars)):
         _passports, events, _native_count, _born = builder.run()
-    assert not any(event["event_kind"] in ("candidate", "preview") for event in events)
+    assert not any(event["event_kind"] in ("candidate", "preview", "cancellation")
+                   for event in events)

@@ -8,6 +8,48 @@
 
 ---
 
+## Final semantic-freeze amendment (2026-08-28)
+
+This amendment supersedes conflicting terminology or field-shape requirements
+below. The persisted population contains only underlying zones that actually
+reach a valid Blue-2X T0; never-Blue latent zones are not research objects.
+
+- `precursor_formed_ts_ns` is the factual native close of C3, when the
+  canonical machine creates the latent BISI/SIBI zone. Its direct market-spine
+  and native-bar addresses, geometry, and direction are retrospective precursor
+  facts. There is no precursor-knowability clock.
+- Pine `time[2]` / C1 open is an internal provenance label only and is absent
+  from the research-facing passport.
+- T0 is the first completed one-minute observation satisfying the unchanged
+  canonical Blue-2X predicate. It is the birth and lower existence boundary of
+  the RIZ research object. Native confirmation is a separate later fact when
+  T0 occurs intrabar.
+- Every accepted native span is persisted once, in order, with its resulting
+  `span_count` (`nx`). This sequence is authoritative for confirmed X-state.
+- 3X is a subtype of the same `riz_id`. `x3_t0` is the first completed minute,
+  after confirmed `nx=2`, satisfying the canonical developing-body span and
+  `cr+2` predicates for a possible third accepted span. This remains available
+  to a surviving one-sided RIZ; Blue/T0's two-live-boundary gate is not added
+  to native span acceptance. Its native bar may later fail;
+  confirmed 3X is independently established by accepted history reaching
+  `span_count >= 3`.
+- The sparse journal contains only `precursor_formed`, `accepted_span`, `t0`,
+  distinct `native_confirmation`, `x3_t0`, `north_boundary_retired`,
+  `south_boundary_retired`, `breaker_entry`, `deleted`, and `archive_censor`.
+  Candidate episodes, cancellation/re-arming, retests, excursions, swings,
+  motifs, setups, films, and statistics are derived research views over the
+  journal plus shared one-minute tape.
+- Normal RIZ existence/as-of reads begin at T0 and end at canonical deletion.
+  Pre-T0 precursor history remains retrospectively available after selecting a
+  qualifying RIZ.
+
+The semantic generation is `g3-t0-primary-x3-anchors/2`. Outputs produced under
+earlier generations are incompatible and must not enter normal reads. Current
+materialization standing and the live manifest census are exposed by
+`PROJECT_STATE.json` and `python -m g3riz.cli status`.
+
+---
+
 ## 1. Goal
 
 Build a fresh, independent research substrate over the supplied ES/NQ/YM continuous 1-minute archive so that **RIZ discovery and lifecycle reconstruction are paid once**, while future hypotheses around any RIZ event can be tested by cheap, vectorized reads over already-materialized facts.
@@ -17,7 +59,7 @@ The completed field must contain:
 1. one canonical, vector-friendly 1-minute market spine for each of ES, NQ and YM over that instrument's full available history;
 2. a complete RIZ population for every integer native timeframe `1..1440` minutes on each instrument;
 3. one compact passport per RIZ;
-4. a sparse, complete lifecycle journal for each RIZ from the birth of its precursor zone through the first valid minute-close Blue 2X activation and all later lifecycle changes until true C1 deletion, or explicit censoring if the archive ends first;
+4. a sparse, complete lifecycle journal for each RIZ from factual C3-close precursor formation through the first valid minute-close Blue 2X activation and all later lifecycle changes until true C1 deletion, or explicit censoring if the archive ends first;
 5. direct, deterministic addresses from RIZ events into the corresponding 1-minute market spine;
 6. a thin, bulk/vectorized access surface that lets later agents select RIZ populations and arbitrary minute windows without replaying the RIZ machine or doing per-film disk I/O.
 
@@ -178,7 +220,7 @@ The main RIZ population includes every underlying zone that produces a valid min
 
 Zones that never produce a valid Blue 2X minute-close activation are not part of the main field.
 
-For every included RIZ, preserve its precursor history from the birth of the underlying BC/CB zone, even though the zone was not yet a 2X RIZ at that time.
+For every included RIZ, preserve its precursor history from factual C3-close formation of the underlying BC/CB zone, even though the RIZ research object does not exist until T0.
 
 One RIZ = one passport, not one row per ignition/retest.
 
@@ -190,14 +232,11 @@ Do not infer these from the early `r7_zone_census` alone. Recover the **latest c
 
 At minimum the field must preserve enough information to distinguish:
 
-- precursor/zone birth;
-- latent state;
-- first qualifying activation/span (`nx=1`) where applicable;
-- later qualifying spans and `nx` changes;
+- factual C3-close precursor formation;
+- every accepted native span and resulting `nx`;
 - first valid **1-minute-close** Blue 2X activation / T0;
-- later minute-level Blue ignitions if they occur;
-- minute-level cancellation before native close;
 - native-TF confirmation separately from minute-level T0;
+- first valid **1-minute-close** x3 ignition separately from accepted `nx=3`;
 - boundary-state changes / boundary retirement;
 - Blue-eligibility end;
 - breaker entry;
@@ -213,7 +252,10 @@ Do not collapse:
 
 A 4H or 1D RIZ can therefore produce a valid minute-level activation long before the 4H/1D bar closes. Preserve both timestamps/addresses and their relationship.
 
-Where the canonical late field distinguishes `event_ts` from `known_at`, preserve that point-in-time distinction. Future agents must be able to ask what was actually knowable at a particular minute without future leakage.
+Each persisted event uses the timestamp/address of the completed minute or
+native close at which that factual event occurs. No generic duplicate
+knowledge-time column is part of this generation; the two real clocks remain
+explicit through T0/x3 anchors and their separate native-close events.
 
 ### T0 clarification
 
@@ -235,7 +277,7 @@ Conceptually include:
 - instrument;
 - native timeframe;
 - stable `riz_id`;
-- precursor birth/native-bar address;
+- factual C3-close precursor-formation/native-bar address;
 - fixed zone geometry (`top`, `bottom`, width);
 - direction / side semantics from the canonical machine;
 - first valid T0 timestamp and 1m spine position;
@@ -248,7 +290,7 @@ Do not make a transient Python object identity or file order part of `riz_id`.
 
 ### Lifecycle journal: sparse events, not a film
 
-Keep the complete, ordered sequence of meaningful changes to the RIZ/underlying zone from precursor birth through deletion.
+Keep the complete, ordered sequence of meaningful changes to the RIZ/underlying zone from precursor formation through deletion.
 
 Each event should be addressable back to:
 
@@ -257,7 +299,7 @@ Each event should be addressable back to:
 - the native TF;
 - the native bar when relevant;
 - the exact 1m observation position/timestamp when observable at minute resolution;
-- `known_at` if different from event geometry time;
+- the factual event timestamp/address on its minute or native clock;
 - the typed event/state payload needed to reproduce the canonical lifecycle.
 
 Do not store every minute merely because the RIZ was alive. The shared 1m market spine already holds the minute tape.
@@ -275,7 +317,7 @@ where `start_position` and `end_position` are chosen relative to a RIZ event or 
 Examples:
 
 - `T0 - 5 observed 1m bars -> T0 + 10`;
-- precursor birth -> T0;
+- precursor formation -> T0;
 - T0 -> true deletion;
 - native confirmation -> 300 observed bars later;
 - first research-defined retest -> second research-defined retest.
