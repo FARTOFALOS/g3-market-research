@@ -1,0 +1,9 @@
+data/raw/
+data/market/
+data/field/
+data/tmp/
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+

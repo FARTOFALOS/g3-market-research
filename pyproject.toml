@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "g3-riz-field"
+version = "0.1.0"
+description = "Persistent ES/NQ/YM RIZ research field"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0", "pandas>=2.2", "pyarrow>=18"]
+
+[project.scripts]
+g3-riz = "g3riz.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
