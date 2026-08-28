@@ -47,11 +47,12 @@ The research-facing field has no precursor-knowability clock, generic
 
 ## Current materialization state
 
-The corrected semantic generation is frozen and production materialization is
-operator-authorized and active. All cells from the superseded generation were
-removed before this generation began; the canonical market spines are retained.
-Use the live status command below for the exact completed/missing census and
-resume any missing current-generation cells automatically.
+The corrected semantic generation is frozen and fully materialized: all 4,320
+current-generation cells are complete (1,440 each for ES, NQ, and YM). The field
+contains 1,267,009 passports and 9,549,517 lifecycle events. Final acceptance
+found zero missing, stale, invalid, or temporary cells and zero `riz_id`
+collisions. All cells from the superseded generation were removed before this
+generation began; the canonical market spines are retained.
 
 Recover live state from the repository root:
 
@@ -61,9 +62,11 @@ python -m g3riz.cli status
 ```
 
 `complete_tfs` are atomically published current-generation cells. `missing_tfs`
-are the resume set. Temporary directories, `.previous` directories, stale
-cells, and cells with a different build identity are excluded from normal
-reads. The ordinary build command safely reuses completed cells:
+would be the recovery set if verified data loss occurred. Temporary directories,
+`.previous` directories, stale cells, and cells with a different build identity
+are excluded from normal reads. Do not rebuild the complete field by default.
+If recovery is explicitly required, the ordinary build command safely reuses
+completed cells:
 
 ```powershell
 python -m g3riz.cli build --instrument NQ --tfs 1-1440
@@ -120,3 +123,7 @@ windows = field.minute_windows(
 as the lower RIZ-existence boundary and canonical deletion as the upper bound.
 `Field.events`, `Field.passports`, and `Field.minute_windows` expose factual
 bulk views without replaying the RIZ machine or opening one file per film.
+
+Terminal query acceptance on NQ 10m read 3,350 passports, selected 693 3X
+ignitions and 442 confirmed `nx>=3` cases, and sliced 3,350 sixteen-minute market
+windows in 0.31 seconds on the materializing workstation.

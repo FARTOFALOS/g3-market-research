@@ -12,8 +12,10 @@ is separate, accepted spans are authoritative X-state, and `x3_t0` is the same
 RIZ's first minute-level third-span ignition. Research interpretations remain
 derived from the factual lifecycle and shared one-minute tape.
 
-Production materialization is operator-authorized and active. Use the existing
-CLI scheduler and atomic cells to resume every missing cell until all 4,320 are
-complete; do not reuse incompatible, temporary, or `.previous` outputs. G2 and
-Pine/RIZ sources are read-only semantic references, not runtime dependencies or
-edit targets.
+Production materialization is complete: 4,320/4,320 current-generation cells,
+1,440 per instrument. Use `status` to verify the manifests and the documented
+query entry points for research. Do not rebuild by default; resume only if
+`status` identifies verified missing cells or the operator authorizes a new
+semantic generation. Never reuse incompatible, temporary, or `.previous`
+outputs. G2 and Pine/RIZ sources are read-only semantic references, not runtime
+dependencies or edit targets.

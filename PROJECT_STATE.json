@@ -1,9 +1,11 @@
 {
   "schema": "g3-project-state/1",
   "semantic_generation": "g3-t0-primary-x3-anchors/2",
-  "phase": "PRODUCTION_MATERIALIZATION_ACTIVE",
+  "phase": "FIELD_COMPLETE",
   "large_scale_materialization_authorized": true,
   "expected_cells": 4320,
+  "completed_cells": 4320,
+  "materialization_complete": true,
   "actual_cell_state_source": "data/field/*/cells/tf_*/manifest.json via python -m g3riz.cli status",
   "superseded_generated_cells_removed": true,
   "canonical_market_spines_retained": [
@@ -11,6 +13,17 @@
     "NQ",
     "YM"
   ],
-  "resume_rule": "Run python -m g3riz.cli status, then resume missing cells with the existing CLI scheduler; current compatible completed cells are reusable.",
+  "acceptance": {
+    "passports": 1267009,
+    "events": 9549517,
+    "x3_ignitions": 320682,
+    "confirmed_nx_ge_3": 174225,
+    "censored": 17557,
+    "global_riz_id_collisions": 0,
+    "stale_cells": 0,
+    "invalid_cells": 0,
+    "temporary_cells": 0
+  },
+  "resume_rule": "The current field is complete. Run python -m g3riz.cli status and query it normally; rebuild only after explicit authorization for a new semantic generation or recovery from verified data loss.",
   "updated_utc": "2026-08-29"
 }
