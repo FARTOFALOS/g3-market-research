@@ -1,141 +1,113 @@
-# G3 RIZ research field
+# G3 — RIZ research field
 
-G3 is a one-time research field over the fixed historical ES, NQ, and YM
-one-minute corpus. It stores each immutable market tape once, then materializes
-one passport and one sparse factual lifecycle for every underlying zone that
-actually reaches a valid Blue-2X T0 on every integer native timeframe `1..1440`.
-Never-Blue latent zones are not persisted.
+A research program looking for tradeable setups in twenty years of one-minute
+futures tape, anchored on a pre-computed map of significant price zones.
 
-The authoritative contract is
-[`G3_RIZ_FIELD_IMPLEMENTATION_BRIEF.md`](G3_RIZ_FIELD_IMPLEMENTATION_BRIEF.md),
-including its final semantic-freeze amendment. `PROJECT_STATE.json` records the
-current production phase; the `status` command combines that standing with the
-actual cell manifests. No chat history is needed to recover the project.
+**Start with [`RIZ.md`](RIZ.md)** — it explains what a RIZ is and what is being
+looked for. Everything below is machinery.
 
-## Frozen field semantics
+- [`RIZ.md`](RIZ.md) — the market phenomenon and the research program
+- [`GLOSSARY.md`](GLOSSARY.md) — vocabulary; which terms are field facts and
+  which you must define yourself
+- [`FINDINGS.md`](FINDINGS.md) — the observation journal
+- [`AGENTS.md`](AGENTS.md) — cold-entry order and standing rules
 
-- A qualifying object's precursor is formed at the native close of C3, when
-  the canonical machine creates the latent BISI/SIBI zone. Its timestamp,
-  market-spine position, native-bar index, geometry, and direction are factual
-  retrospective precursor history.
-- C1 open is only a transient replay label. It is not precursor formation, RIZ
-  birth, or a research-facing persisted field.
-- T0 is the first completed one-minute observation at which the unchanged
-  canonical logic says the zone is Blue 2X. T0 is the birth and lower existence
-  boundary of the persisted RIZ research object. A selected RIZ's pre-T0
-  precursor history remains available retrospectively.
-- Native Blue confirmation is a distinct later event when T0 occurs before the
-  native bar closes. The accepted native-span history is authoritative for
-  confirmed X-state: its resulting `span_count` progresses `1, 2, 3, ...`.
-- 3X is a subtype of the same RIZ and uses the same `riz_id`. `x3_t0` is the
-  first completed one-minute observation, after confirmed `nx=2`, at which the
-  canonical developing-body span and `cr+2` predicates are true for a possible
-  third accepted span, including for a surviving one-sided RIZ. Blue/T0's
-  two-live-boundary gate is not added to native span acceptance.
-  `x3_t0_confirmed` says whether that ignition's native bar
-  actually accepted the third span; `final_span_count >= 3` says confirmed 3X
-  was reached at any point.
-- The lifecycle persists only factual state changes: precursor formation,
-  accepted spans, T0, distinct native confirmation, x3 ignition, boundary
-  retirements, breaker entry, canonical deletion, and archive censoring.
-  Candidates, preview cancellation/re-arming, retests, excursions, swings,
-  motifs, setup labels, and statistics remain disposable reads over the field
-  and common market tape.
+## What the field is
 
-The research-facing field has no precursor-knowability clock, generic
-`known_at` axis, C1-open label, or separately identified 3X object.
+Every zone that reaches a valid Blue-2X T0, on ES, NQ and YM, on every integer
+timeframe from 1 to 1440 minutes. 4,320 cells, 1,267,009 zone passports,
+9,549,517 lifecycle events. Zones that never turn blue are not stored.
 
-## Current materialization state
+The field is **complete and frozen**. Reading it is the work; rebuilding it is
+not.
 
-The corrected semantic generation is frozen and fully materialized: all 4,320
-current-generation cells are complete (1,440 each for ES, NQ, and YM). The field
-contains 1,267,009 passports and 9,549,517 lifecycle events. Final acceptance
-found zero missing, stale, invalid, or temporary cells and zero `riz_id`
-collisions. All cells from the superseded generation were removed before this
-generation began; the canonical market spines are retained.
-
-Install the package editable once, from the repository root. After that the
-`g3-riz` command, `python -m g3riz.cli`, `pytest` and the Python research
-imports below all work with no `PYTHONPATH` setting:
+## Setup
 
 ```powershell
 pip install -e .
 ```
 
-Recover live state:
+After that `g3-riz`, `python -m g3riz.cli` and `pytest` all work from the
+repository root with no `PYTHONPATH`.
+
+## Verify the field is present
 
 ```powershell
 g3-riz status
 ```
 
-`status` prints a compact per-instrument census; `--full` adds the
-per-timeframe lists. `market_spine` must read `present`: without the canonical
-spine a cell's build identity cannot be checked, and such cells are reported as
-`unverifiable` rather than counted as complete.
+The cell-manifest census is the actual state — never infer it from anything
+else. `--full` adds per-timeframe lists. `market_spine` must read `present`:
+without the canonical spine a cell's build identity cannot be checked, and it is
+reported `unverifiable` rather than complete.
 
-`complete_tfs` are atomically published current-generation cells. `missing_tfs`
-would be the recovery set if verified data loss occurred. Temporary directories,
-`.previous` directories, stale cells, and cells with a different build identity
-are excluded from normal reads. Do not rebuild the complete field by default.
-If recovery is explicitly required, the ordinary build command safely reuses
-completed cells:
-
-```powershell
-python -m g3riz.cli build --instrument NQ --tfs 1-1440
-```
-
-The scheduler derives a safe worker cap and weighted RAM admission policy from
-live workstation resources. The same command applies to ES and YM.
-
-## Data and rebuild source
-
-Generated bytes are Git-ignored:
-
-```text
-data/raw/                 junction to the immutable source CSVs
-data/market/{ES,NQ,YM}/   canonical NumPy market spines and manifests
-data/field/<instrument>/  resumable current-generation timeframe facts
-```
-
-`SOURCE_DATA.json` records the junction target, immutable source hashes, row
-counts, transform, and unresolved feed/license/roll/timezone provenance. If a
-market spine must be recreated, use the repository-local junction:
-
-```powershell
-python -m g3riz.cli ingest --instrument ES --source data/raw/ES_1min.csv
-python -m g3riz.cli ingest --instrument NQ --source data/raw/NQ_1min.csv
-python -m g3riz.cli ingest --instrument YM --source data/raw/YM_1min.csv
-```
+Expected: 4,320 complete cells, 1,440 per instrument, zero missing.
 
 ## Research access
-
-After the requested cells exist, a basic query is:
 
 ```powershell
 python -m g3riz.cli query --instrument NQ --tf 10 --limit 5
 ```
 
-Python research uses bulk Arrow reads and NumPy market slices:
+Python, using bulk Arrow reads and NumPy market slices:
 
 ```python
 from pathlib import Path
-import pyarrow.compute as pc
 from g3riz.query import Field
 
 field = Field(Path.cwd(), "NQ")
-ignited = field.passports(tf=10, x3_ignited=True)
-confirmed = field.passports(tf=10, min_confirmed_nx=3)
-ignition_not_confirmed = ignited.filter(pc.equal(ignited["x3_t0_confirmed"], False))
+
+# every zone on the 10-minute timeframe
+zones = field.passports(tf=10)
+
+# the minute tape around each zone's T0
 windows = field.minute_windows(
-    ignited["x3_t0_spine_pos"].to_numpy(), before=20, after=40
+    zones["t0_spine_pos"].to_numpy(), before=30, after=120
 )
+
+# every zone alive at one minute, across all timeframes
+stack = field.objects_at(minute_pos, state="blue")
 ```
 
-`Field.objects_at(minute_pos, state="alive")` and `state="blue"` enforce T0
-as the lower RIZ-existence boundary and canonical deletion as the upper bound.
-`Field.events`, `Field.passports`, and `Field.minute_windows` expose factual
-bulk views without replaying the RIZ machine or opening one file per film.
+`Field.passports`, `Field.events`, `Field.minute_windows` and
+`Field.objects_at` read the materialized facts directly — no machine replay, no
+file-per-zone. Passport and event columns are listed in
+[`GLOSSARY.md`](GLOSSARY.md); the schemas are in `src/g3riz/schema.py`.
 
-Terminal query acceptance on NQ 10m read 3,350 passports, selected 693 3X
-ignitions and 442 confirmed `nx>=3` cases, and sliced 3,350 sixteen-minute market
-windows in 0.31 seconds on the materializing workstation.
+Reference measurement: 3,350 passports on NQ 10m, 693 3X ignitions selected and
+3,350 sixteen-minute windows sliced in 0.31 s.
+
+## Data on disk
+
+Generated bytes are Git-ignored — a fresh clone has code and documents, not the
+field:
+
+```text
+data/raw/                 junction to the immutable source CSVs
+data/market/{ES,NQ,YM}/   canonical NumPy market spines and manifests
+data/field/<instrument>/  per-timeframe zone facts
+```
+
+[`SOURCE_DATA.json`](SOURCE_DATA.json) records the source hashes, row counts,
+transform, and the unresolved feed/licence/roll/timezone provenance.
+`PROJECT_STATE.json` records the production phase and final acceptance.
+
+## Rebuilding
+
+Do not. The field is frozen. Resume a build only if `status` reports verified
+missing cells, or the operator authorizes a new semantic generation:
+
+```powershell
+python -m g3riz.cli build --instrument NQ --tfs 1-1440
+```
+
+The build contract lives in [`archive/`](archive/README.md).
+
+## Everything else
+
+- [`reference/`](reference/README.md) — the pinned Pine source the field's
+  machine was ported from, with origin and checksum. Read-only.
+- [`design/`](design/README.md) — interactive benches for working through
+  semantics with the operator. Neither field nor dependency.
+- [`TOOLING.md`](TOOLING.md) — optional read-only TradingView bridge.
+- [`docs/`](docs/AUDIT-BRIEF.md) — notes on how this repository is organised.
