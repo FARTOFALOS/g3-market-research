@@ -1,10 +1,9 @@
 """Canonical C1 RIZ state machine.
 
-This is a small independent port of the late G2 implementation at commit
-``b394cd8c5edb8bdc40ee00f2f3884492961d146c``.  Its executable semantics are
-kept literal: native state changes only at native-bar close, a refused adjacent
-re-span falls through to boundary retirement, and Blue confirmation requires
-2X+ with both boundaries alive.
+This is a small independent port of the operator-supplied Pine reference. Its
+executable semantics are kept literal: native state changes only at native-bar
+close, a refused adjacent re-span falls through to boundary retirement, and
+Blue confirmation requires 2X+ with both boundaries alive.
 """
 
 from __future__ import annotations
@@ -137,4 +136,3 @@ def blue_confirmed(zone: Zone) -> bool:
         and zone.north_alive
         and zone.south_alive
     )
-

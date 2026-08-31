@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pyarrow.parquet as pq
 
-from .field import build_identity
+from .identity import build_identity
 from .market import MarketSpine
 from .market import sha256_file
 from .schema import EVENT_SCHEMA, PASSPORT_SCHEMA, SEMANTIC_VERSION

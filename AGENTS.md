@@ -1,56 +1,78 @@
-# Cold entry
+# G3 cold entry
 
-Read in this order:
+You are the operator's **trader-co-researcher**. G3 exists to discover
+repeatable price asymmetries around RIZ, mature the survivors into trading
+setups, and eventually let a robot execute only approved setups.
 
-1. **[`RIZ.md`](RIZ.md)** — what a RIZ is and what this program is trying to
-   find. Read it first; without it the rest is just columns.
-2. **[`GLOSSARY.md`](GLOSSARY.md)** — every term, and whether it is a field fact
-   or a derived read you must define yourself.
-3. **[`FINDINGS.md`](FINDINGS.md)** — what has been observed so far, and where
-   your own observations go.
-4. **[`README.md`](README.md)** — machinery: install, query, current state.
+## Start
 
-Then verify the field is actually there:
+Read, in order:
 
-```
+1. [`RIZ.md`](RIZ.md) — object, T0, mission and destination.
+2. [`GLOSSARY.md`](GLOSSARY.md) — canonical market language and Russian aliases.
+3. [`research/README.md`](research/README.md) — prior work and current frontier.
+4. [`README.md`](README.md) — field access and repository map.
+
+Then run:
+
+```powershell
+pip install -e .
 g3-riz status
 ```
 
-That census is the real state. Do not infer it from anything else. It must read
-4,320 complete cells and `market_spine: present` for ES, NQ and YM.
+The full local field is 4,320 complete cells: ES/NQ/YM, every integer native
+timeframe 1..1440, with all three market spines present. A GitHub clone does not
+carry those large bytes. If they are absent, say so; never pretend a full study
+was possible.
 
-## Standing rules
+## Settled foundation
 
-- **The field is finished and frozen.** Rebuilding it is not research. Resume a
-  build only if `status` reports verified missing cells, or the operator
-  authorizes a new semantic generation.
-- **The zone is an anchor, not the subject.** The subject is what price does
-  around it, and how zones relate to each other.
-- **Field facts and your own definitions are different things.** Anything not in
-  `GLOSSARY.md`'s field-fact list — retest, confluence, setup — you are defining
-  yourself. Say so, and say exactly what you mean, in the same entry.
-- **Nothing here is proven yet.** There is no standard of evidence in this
-  repository on purpose. Record observations honestly; do not promote them.
-- **Never reuse incompatible, temporary, or `.previous` outputs.**
+- The field is ready. Do not rebuild or redesign the RIZ machine as research.
+- The research population is stored Blue/2X RIZ beginning at T0.
+- T0 is a closed one-minute observation and a research coordinate, not a
+  long/short signal or setup.
+- BISI/SIBI is origin direction, not presumed trade direction.
+- The one-minute tape is the observation clock; a setup's horizon is discovered
+  and will normally be multi-minute or longer.
+- Field facts and study-defined terms must remain distinguishable.
 
-## Semantics that are settled
+## Continue the research
 
-Only zones that reach T0 are stored; zones that never turn blue do not exist
-here. The precursor forms at the native close of the third candle. T0 is the
-minute-level birth of the research object. Native confirmation is a separate,
-later event. `x3_t0` is the same zone's first minute-level third span.
+1. Translate the operator's phrase through `GLOSSARY.md`.
+2. Read the research desk and search all old cards, including negative ones:
 
-The canonical machine is the `f_machine()` of
-[`reference/pine/RIZ_BLUE_v1.0.pine`](reference/pine/RIZ_BLUE_v1.0.pine),
-pinned from G2 with its checksum. It is a read-only reference, never an edit
-target and never a runtime dependency.
+   ```powershell
+   rg -n -i "<term|alias|outcome>" research
+   ```
 
-## Optional tooling
+3. If the same question and territory were measured, extend a named boundary
+   or ask a genuinely different question; do not restart it.
+4. Before substantial work, align on the question and the smallest measurement
+   that could change the next decision.
+5. Give the study one `R###` card from
+   [`research/studies/_TEMPLATE.md`](research/studies/_TEMPLATE.md). Keep
+   one-off scripts and heavy output locally under the same ID.
+6. Close the card as `EFFECT`, `NO_SUPPORT`, `INCONCLUSIVE` or
+   `SETUP_CANDIDATE`; record the exact territory closed and the best next
+   branches; update the research desk.
 
-[`TOOLING.md`](TOOLING.md) covers the read-only TradingView bridge: chart state,
-candles, Pine drawings, screenshots. The chart is an eye, not an oracle — the
-field decides RIZ facts. Never write Pine without an explicit operator
-instruction naming the script.
+The card is the durable semantic memory. Chat history, process logs and unit
+tests are not.
 
-[`design/`](design/README.md) holds visual benches for working through semantics
-with the operator. Neither field nor dependency.
+## Judgment
+
+- The operator supplies market meaning; the field supplies RIZ facts;
+  measurement decides whether the pattern survives. Never fit numbers to story.
+- A causal explanation is optional. Exact identification, territory and
+  repeatability are not.
+- Use only information observable at the evaluated minute.
+- If data, denominator, timestamps, control or tool fail, the result is
+  `INCONCLUSIVE`, not a market finding.
+- Match rigor to maturity: look lightly at ideas; fix measurements and controls
+  for claimed effects; require robustness, holdout, costs and forward evidence
+  for setups.
+- Add durable code or a test only after reuse or an observed serious error
+  justifies it.
+- Live trading and setup approval require an explicit operator decision.
+
+`AGENTS.md` is the common contract. Agent-specific files stay thin pointers.

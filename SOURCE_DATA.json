@@ -2,8 +2,8 @@
   "schema": "g3-source-data/1",
   "dataset": "danielharkin21/futuresss",
   "repository_local_raw_path": "data/raw",
-  "raw_path_kind": "Windows junction",
-  "raw_junction_target": "C:\\Users\\Admin\\Claude\\g3-riz\\CME_continuous_1m_free_2006_2026\\raw",
+  "raw_path_kind": "local attachment (directory, junction, or symlink)",
+  "raw_junction_target": null,
   "source_uncertainties": {
     "feed_origin": null,
     "license": null,

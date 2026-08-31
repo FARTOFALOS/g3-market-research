@@ -7,13 +7,6 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from concurrent.futures import FIRST_COMPLETED, wait
 from pathlib import Path
 
-from .field import build_cell
-from .market import ingest_source
-from .query import Field
-from .resources import estimated_cell_peak_bytes, live_policy
-from .store import consolidate, read_status
-
-
 def _tfs(value: str) -> list[int]:
     out: set[int] = set()
     for part in value.split(","):
@@ -32,6 +25,8 @@ def _tfs(value: str) -> list[int]:
 
 
 def _build_one(args: tuple[str, str, str, int, bool]) -> dict:
+    from .field import build_cell
+
     market_root, field_root, instrument, tf, force = args
     return build_cell(Path(market_root), Path(field_root), instrument, tf, force=force)
 
@@ -60,6 +55,8 @@ def _run_weighted(work: list[tuple[str, str, str, int, bool]], workers: int,
                   ram_budget: int, repo: Path, disk_reserve: int,
                   measured_tf1_peak: int | None) -> None:
     """Persistent worker pool with a live weighted-RAM admission rule."""
+    from .resources import estimated_cell_peak_bytes
+
     if not work:
         return
     weight_of = lambda item: estimated_cell_peak_bytes(item[3], measured_tf1_peak)
@@ -123,9 +120,13 @@ def main(argv: list[str] | None = None) -> int:
     market_root = repo / "data" / "market"
     field_root = repo / "data" / "field"
     if args.command == "ingest":
+        from .market import ingest_source
+
         result = ingest_source(args.source, market_root / args.instrument, args.instrument)
         print(json.dumps(result, indent=2))
     elif args.command == "build":
+        from .resources import live_policy
+
         work = [(str(market_root / args.instrument), str(field_root), args.instrument, tf, args.force)
                 for tf in args.tfs]
         policy = live_policy(repo)
@@ -137,14 +138,20 @@ def main(argv: list[str] | None = None) -> int:
             _run_weighted(work, workers, policy.build_ram_budget_bytes, repo,
                           policy.disk_reserve_bytes, policy.measured_tf1_peak_bytes)
     elif args.command == "consolidate":
+        from .store import consolidate
+
         print(json.dumps(consolidate(field_root, args.instrument), indent=2))
     elif args.command == "status":
+        from .store import read_status
+
         status = read_status(field_root, full=args.full)
         state_path = repo / "PROJECT_STATE.json"
         if state_path.exists():
             status["project_state"] = json.loads(state_path.read_text(encoding="utf-8"))
         print(json.dumps(status, indent=2))
     elif args.command == "query":
+        from .query import Field
+
         field = Field(repo, args.instrument)
         table = field.passports(tf=args.tf).slice(0, args.limit)
         print(table.to_pandas().to_string(index=False))

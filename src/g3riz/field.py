@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import shutil
@@ -15,7 +14,8 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from .identity import event_id, riz_id
+from .identity import (FROZEN_MATERIALIZER_CODE_IDENTITY, build_identity,
+                       event_id, riz_id)
 from .fast import facts_to_rows, replay_fast
 from .machine import (
     TIER_ACTIVE_BOTH, TIER_ACTIVE_ONE_SIDED, TIER_BREAKER, TIER_LATENT,
@@ -372,21 +372,6 @@ class CellBuilder:
         return self.passports, self.events, self.native_bars, self.zones_born
 
 
-def materializer_code_identity() -> str:
-    source_dir = Path(__file__).resolve().parent
-    code = hashlib.sha256()
-    for name in ("fast.py", "identity.py", "machine.py", "native.py", "schema.py"):
-        code.update(name.encode())
-        code.update((source_dir / name).read_bytes())
-    return code.hexdigest()
-
-
-def build_identity(market: MarketSpine, instrument: str, tf_minutes: int) -> str:
-    value = (f"{CELL_SCHEMA_VERSION}|{SEMANTIC_VERSION}|{materializer_code_identity()}|"
-             f"{market.manifest['corpus_id']}|{instrument}|{tf_minutes}")
-    return hashlib.sha256(value.encode()).hexdigest()
-
-
 def build_cell(market_root: Path, field_root: Path, instrument: str, tf_minutes: int,
                *, force: bool = False) -> dict:
     market = MarketSpine.open_store(market_root)
@@ -421,7 +406,7 @@ def build_cell(market_root: Path, field_root: Path, instrument: str, tf_minutes:
             "event_schema": EVENT_SCHEMA_VERSION, "semantic_version": SEMANTIC_VERSION,
             "status": "complete", "build_identity": identity,
             "engine": "compiled-array-replay/1",
-            "materializer_code_identity": materializer_code_identity(),
+            "materializer_code_identity": FROZEN_MATERIALIZER_CODE_IDENTITY,
             "market_corpus_id": market.manifest["corpus_id"], "instrument": instrument,
             "tf_minutes": tf_minutes, "market_rows": market.manifest["rows"],
             "source_first_close_utc_ns": market.manifest["first_close_utc_ns"],

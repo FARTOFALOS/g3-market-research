@@ -2,12 +2,10 @@
   "schema": "g3-project-state/1",
   "semantic_generation": "g3-t0-primary-x3-anchors/2",
   "phase": "FIELD_COMPLETE",
-  "large_scale_materialization_authorized": true,
   "expected_cells": 4320,
   "completed_cells": 4320,
   "materialization_complete": true,
   "actual_cell_state_source": "data/field/*/cells/tf_*/manifest.json via python -m g3riz.cli status",
-  "superseded_generated_cells_removed": true,
   "canonical_market_spines_retained": [
     "ES",
     "NQ",

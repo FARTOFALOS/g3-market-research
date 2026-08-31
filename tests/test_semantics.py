@@ -54,8 +54,8 @@ def test_birth_geometry_and_label_are_deterministic():
 
 
 def _synthetic_market_and_bars():
-    # Same load-bearing sequence as the late G2 ladder fixture: birth, native
-    # activation, then a minute preview and a separate native confirmation.
+    # Load-bearing sequence: birth, native activation, then a minute preview
+    # and a separate native confirmation.
     o = np.array([100, 104, 110, 100, 99, 112, 112, 112, 111, 99], dtype=float)
     h = np.array([103, 109, 113, 101, 112, 113, 114, 112.5, 111, 100], dtype=float)
     low = np.array([99, 103, 108, 99, 99, 111, 111.5, 111, 99, 98], dtype=float)

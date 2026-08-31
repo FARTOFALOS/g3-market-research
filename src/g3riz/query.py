@@ -10,7 +10,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from .market import MarketSpine
-from .field import build_identity
+from .identity import build_identity
 
 
 def _riz_exists_at(passports: pa.Table, minute_pos: int) -> pa.Array:

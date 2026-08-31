@@ -1,127 +1,230 @@
-# Glossary
+# G3 glossary
 
-Every term below is either a **field fact** — something the materialized field
-records, with the column that holds it — or a **derived read**, which is ours to
-define and is not in the field. Do not blur the two. `RIZ.md` explains why any
-of this matters.
+This glossary is the bridge between the operator's market language, canonical
+English terms, and the stored field. A cold agent should use the meanings here,
+not reconstruct them from column names or generic trading literature.
 
-## The object
+Each entry is one of:
 
-**RIZ** — a price range the market left untraded and has since run through with
-a candle body at least twice. The research object of this program. One RIZ =
-one row in `passports`, identified by `riz_id`.
+- **field fact** — recorded by the ready field;
+- **machine provenance** — needed to explain a stored RIZ, but not the ordinary
+  research population;
+- **research term** — defined by a study and never smuggled in as a field fact;
+- **project architecture** — how meaning is preserved between agents.
 
-**BISI / SIBI** — direction of the imbalance. BISI is bullish (gap up), SIBI is
-bearish (gap down). Fields: `bullish`, `direction` (+1 / -1).
+## Object and coordinates
 
-**North / south** — the top and bottom price of the range. Fixed at birth,
-never move. Fields: `zone_top`, `zone_bottom`. These are the lines price
-interacts with.
+### RIZ — `РИЗ`, `риз`
 
-**Width** — north minus south. Field: `zone_width`. Known to dominate almost
-any question asked about a zone, so condition on it before asking anything.
+**Field fact.** A zone that reached Blue/2X and entered this repository's
+research population. One stored RIZ has one `riz_id`. In ordinary G3 research,
+the object begins at T0; a pre-T0 candidate is not counted as a RIZ population
+member.
 
-**Timeframe** — which native bar size the zone belongs to, 1 to 1440 minutes.
-Field: `tf_minutes`. The same price area carries zones from many timeframes at
-once.
+### North / south — `север` / `юг`
 
-## Birth and the road to significance
+**Field fact.** The upper and lower fixed prices of the zone:
+`zone_top`, `zone_bottom`. A side may later retire, but its price does not move.
 
-**Precursor** — the three-candle shape that creates the latent range: a gap
-between the first and third candle, with the middle candle's body covering that
-gap. The middle body is what makes it a real impulse rather than a wick poke.
-The zone appears at the close of the third candle. Fields:
-`precursor_formed_ts_ns`, `precursor_formed_spine_pos`,
-`precursor_native_bar_index`.
+### Width — `ширина риза`
 
-**Span** — a candle body runs the entire range, edge to edge. Not a touch, not
-a partial entry: the body's open-to-close must cover the whole zone. This is
-the unit of significance.
+**Field fact.** `zone_top - zone_bottom`, stored as `zone_width`. Width is an
+available conditioner, not an established explanation and not presumed to
+dominate a result until measured.
 
-**Activation** — the first span. The range stops being latent.
+### Native timeframe — `родной ТФ`, `таймфрейм риза`
 
-**Spacing rule** — a second span only counts if at least one full bar has closed
-since the previous one. A span that comes too soon does not count and usually
-kills the zone instead.
+**Field fact.** The bar duration on which the zone's machine runs, stored as
+`tf_minutes`. G3 contains every integer value from 1 to 1440 minutes.
 
-**2X / Blue** — two accepted spans with both boundaries still alive. The zone is
-now significant and enters the field. Zones that never reach 2X are not stored
-at all.
+### Minute tape — `минутная лента`
 
-**3X** — a third accepted span. Same object, same `riz_id`, higher count. Rarer
-and stronger. Fields: `x3_t0_ts_ns`, `x3_t0_spine_pos`, `x3_t0_close`,
-`x3_t0_exit_side`, `x3_t0_confirmed`, `final_span_count`.
+**Field fact.** The canonical one-minute market sequence used to observe T0,
+slice context and eventually make decisions. A native RIZ timeframe and the
+minute observation clock are different things.
 
-## The four times
+### Origin direction — BISI / SIBI, `бычий` / `медвежий риз`
 
-These are four different clocks. Confusing them is the most common error.
+**Field fact.** The direction of the imbalance from which the zone originated:
+`bullish` and `direction` (`+1` / `-1`). It is not the direction of a future
+trade.
 
-**T0** — the minute the zone first qualified as 2X, caught on the one-minute
-tape while the native bar was still forming. This is the birth of the research
-object and the anchor for everything else. Fields: `t0_ts_ns`,
-`t0_spine_pos`, `t0_close`, `t0_exit_side`, `t0_kind`, `t0_span_count`.
+## Lifecycle before and into T0
 
-**Native confirmation** — the same qualification, registered at the close of the
-zone's own bar. Always at or after T0. Fields:
-`native_blue_confirmation_ts_ns`, `native_blue_confirmation_spine_pos`.
+These terms explain ancestry of an already stored RIZ. They do not change the
+rule that the research population begins at T0.
 
-**Flicker** — T0 fired but the native bar closed without confirming. The object
-existed on the minute tape and never appeared on a closed chart. Not an error.
-Detect it as a passport with a T0 and no native confirmation.
+### Pre-T0 ancestry — `предыстория риза`
 
-**x3 ignition** — the same minute-level catch, for the third span.
-`x3_t0_confirmed` says whether the native bar accepted it.
+**Machine provenance.** The latent zone and events that led to Blue/2X. The
+field preserves direct addresses such as `precursor_formed_ts_ns`, but a cold
+agent does not start by constructing or studying every latent gap.
 
-## Death
+### Span — `спан`, `прошив телом`
 
-**Boundary retirement** — a wick touches a boundary and that side is dead.
-Boundaries never come back. Fields: `final_north_alive`, `final_south_alive`.
+**Machine provenance / field event.** A candle body traverses the full zone,
+strictly beyond both boundaries. A wick touch or partial body entry is not a
+span.
 
-**Breaker** — the body did not run the range but pierced one side: opened inside,
-closed outside. The zone stops being a zone and becomes a one-sided magnet
-pulling toward the pierced side. Fields: `final_tier` = 3, `final_broke_south`.
+### Activation — `активация`, `первый спан`
 
-**Annihilation** — both boundaries retired. The zone is deleted and no longer
-exists. Fields: `c1_deletion_ts_ns`, `c1_deletion_spine_pos`.
+**Machine provenance.** The first accepted full-body span. It activates the
+latent zone but does not yet make it a stored Blue/2X research object.
 
-**Blue eligibility end** — the moment the zone could no longer be blue, which
-can precede deletion. Field: `blue_eligibility_end_spine_pos`.
+### Re-span — `повторный спан`, `повторный прошив`
 
-**Censored** — the archive ended while the zone was still alive. Its death was
-never observed. Fields: `censored`, `still_alive_at_archive_end`. Never treat a
-censored zone as long-lived.
+**Machine provenance / field event.** A later accepted span of the same zone.
+The spacing rule requires at least one complete native bar between accepted
+spans; an adjacent traversal does not increment the counter.
 
-## Not in the machine — ours to define
+### Blue / 2X — `синий риз`, `2X`
 
-None of these exist in the field. Any definition is a research decision, and it
-belongs in `FINDINGS.md` with the observation that used it.
+**Field qualification.** The zone has two accepted spans while both boundaries
+remain alive. This is the filter that admits the RIZ into the field. It says the
+place is research-worthy, not what price will do next.
 
-**Retest** — price returning to a line after leaving it. The machine has no such
-concept; it knows only span, wick touch and pierce.
+### T0 — `T0`, `момент отсчёта`
 
-**Confluence / stack** — several zones from different timeframes occupying
-roughly the same price area. "Roughly" is undefined and must be stated wherever
-it is used.
+**Field fact and primary research anchor.** The close of the one-minute candle
+on which the Blue/2X condition first became observable on the minute tape:
+`t0_ts_ns`, `t0_spine_pos`, `t0_close`, `t0_exit_side`, `t0_kind`,
+`t0_span_count`.
 
-**Magnet** — the pull toward an unfinished range. Motivation, not a field fact,
-except in the specific breaker sense above.
+T0 gives a place and moment, not a trading hypothesis. Minutes before T0 may be
+used as information already known at T0. A proposed decision before T0 is a
+separate precursor question and may not use future knowledge that T0 will occur.
 
-**Setup** — a repeatable situation stated precisely enough to act on. The output
-of this program; none exist yet.
+### Native confirmation — `нативное подтверждение`, `подтверждение на родном ТФ`
+
+**Field fact.** The later close of the RIZ's native bar that confirms the Blue
+state: `native_blue_confirmation_ts_ns` and
+`native_blue_confirmation_spine_pos`. It is at or after T0 and must not be
+back-ported into earlier minutes.
+
+### Flicker — `фликер`, `мигающий риз`
+
+**Field fact derived from recorded clocks.** T0 occurred on the minute tape but
+the native bar later failed to confirm Blue. This is a valid research object,
+not a data error.
+
+### 3X / x3 ignition — `3X`, `третий спан`
+
+**Field fact.** The same RIZ reaches a third accepted span. It remains the same
+`riz_id`; it is not a new zone. `x3_t0_*` records minute observation and
+`x3_t0_confirmed` records native acceptance. G3 does not presume 3X is stronger
+until a study measures that proposition.
+
+## Later life and end states
+
+### Life of a RIZ — `жизнь риза`, `цикл риза`
+
+**Research frame over field facts.** Everything observable from T0 until the
+relevant boundary retirement, breaker transition, deletion or archive end.
+Every study must name which endpoint it uses; these endpoints are not synonyms.
+
+### Boundary retirement — `снятие границы`, `север/юг снят`
+
+**Field fact.** A wick touches a live boundary and that side retires. A RIZ may
+continue to exist with one side alive. Fields include `final_north_alive` and
+`final_south_alive`; lifecycle events give the event time.
+
+### Blue eligibility end — `конец синего состояния`
+
+**Field fact.** The minute after which the object can no longer satisfy the
+strict Blue condition. `blue_eligibility_end_spine_pos`. This can precede final
+deletion.
+
+### Breaker — `брейкер`
+
+**Field fact.** A non-span body crosses the relevant live boundary and the
+object enters the machine's one-sided breaker tier. Fields include
+`final_tier = 3` and `final_broke_south`. Breaker is a lifecycle state, not by
+itself a proven magnet or setup.
+
+### Deletion / annihilation — `удаление`, `аннигиляция`, `риз умер`
+
+**Field fact.** The canonical machine no longer carries the object, recorded by
+`c1_deletion_ts_ns` and `c1_deletion_spine_pos`. Informal `риз умер` must be
+mapped to this exact endpoint or replaced by the intended earlier endpoint.
+
+### Censored — `цензурирован`, `история закончилась раньше риза`
+
+**Field fact.** The historical corpus ended while the object or relevant side
+was still alive: `censored`, `still_alive_at_archive_end`. Censoring is unknown
+future life, not long survival and not deletion.
+
+## Research language not supplied by the machine
+
+The following are **research terms**. A study card must operationalize them if
+the exact meaning affects selection or outcome.
+
+### Context — `контекст`
+
+Information known at the evaluated minute: earlier one-minute bars, RIZ state,
+session, other already-existing RIZ and any other point-in-time feature named by
+the study.
+
+### Retest — `ретест`, `повторный тест`
+
+Price returns to a specified boundary or zone after a specified departure.
+The machine does not provide a universal retest flag. A study must define the
+line, direction of approach, qualifying touch/close, and whether repeated
+contacts count.
+
+### Return / rejection / continuation / reversal
+
+`возврат` / `отбой` / `продолжение` / `разворот`.
+
+Different possible price behaviors, never implied by RIZ origin direction.
+Each needs an exact outcome and horizon in the study that uses it.
+
+### Stack / cluster / confluence
+
+`стек ризов` / `скопление ризов` / `конфлюэнс`.
+
+Several RIZ related in price and time. The field exposes the objects; the
+distance, overlap, age and timeframe rules are research definitions.
+
+### RIZ interaction / ecology — `взаимодействие ризов`, `экология ризов`
+
+Relations among multiple RIZ: nesting, overlap, opposed origin, shared
+boundary, sequence, clustering, or inheritance of a level. No single relation
+is assumed useful before measurement.
+
+### Conditional asymmetry — `условная асимметрия`, `закономерность`
+
+A measured change in later price behavior conditional on a named RIZ state or
+history, relative to an explicit comparison. It is bounded by the measured
+territory and is not yet a setup.
+
+### Pattern / observation — `паттерн`, `наблюдение`
+
+A visual or numerical lead worth asking about. Until measured, it is an `IDEA`,
+not knowledge.
+
+### Edge — `эдж`, `преимущество`
+
+A persistent positive trading asymmetry after realistic decision timing, risk,
+costs and failure conditions. A descriptive effect is not automatically edge.
+
+### Setup — `сетап`
+
+A complete trade logic: applicability, trigger, direction, action,
+invalidation, management and exit. The project is intended to grow into a
+library of narrow setups, each with its own territory and failure mode.
 
 ## Reading the field
-
-Anchor everything on `t0_spine_pos` (or `x3_t0_spine_pos`) and slice the minute
-tape around it:
 
 ```python
 from pathlib import Path
 from g3riz.query import Field
 
 field = Field(Path.cwd(), "NQ")
-z = field.passports(tf=10)
-w = field.minute_windows(z["t0_spine_pos"].to_numpy(), before=30, after=120)
+zones = field.passports(tf=10)
+windows = field.minute_windows(
+    zones["t0_spine_pos"].to_numpy(), before=30, after=120
+)
 ```
 
-`Field.objects_at(minute_pos, state="blue")` gives every zone alive at a given
-minute across all timeframes — the entry point for the second research surface.
+`Field.objects_at(minute_pos, state="blue")` exposes all Blue-eligible RIZ at a
+minute across timeframes and is the main entry into interaction research.

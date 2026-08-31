@@ -1,104 +1,80 @@
-# What a RIZ is, and what this repository is for
+# RIZ and the program
 
-Read this before anything else. It is the meaning layer. `GLOSSARY.md` is the
-vocabulary, `README.md` is the machinery, `FINDINGS.md` is the running journal.
+G3 does not exist to build a RIZ machine. It already has a ready historical
+field. The work is to discover what price repeatedly does around RIZ and turn
+the useful survivors into trading setups.
 
-## The market idea
+## Starting object
 
-A market maker is obliged to quote both sides at every price. In a market that
-works, every price level gets traded through properly — buyers and sellers meet
-there, and the level is done with.
+In G3, a **RIZ** is a zone that has reached Blue/2X and entered the stored
+research population. Its research life begins at **T0**: the close of the
+one-minute candle on which Blue/2X first became observable on the minute tape.
 
-Sometimes that does not happen. Price leaves in one direction hard enough that
-the opposite side never gets filled. What stays behind is a price range the
-market passed through without actually trading it out. An imbalance. Retail
-literature calls it a fair value gap; it is the same three-candle shape.
+Every RIZ gives three coordinates:
 
-The market has an unfinished piece of business there. Not a law — a tendency,
-and the working assumption of this program: price tends to come back to ranges
-it skipped.
+- north price;
+- south price;
+- T0 minute.
 
-## Why most of them do not matter
+The zone may originate on any native timeframe from 1 to 1440 minutes. These
+coordinates mark a meaningful place and time to inspect. They contain no
+buy/sell instruction. BISI/SIBI is origin direction, not a prediction.
 
-There are far too many of these gaps. Every instrument, every timeframe, all
-day long. Taken raw they are noise, and a research program built on all of them
-learns nothing.
+The machine preserves pre-T0 ancestry for provenance and context, but ordinary
+research starts from the ready RIZ at T0, not from every latent gap.
 
-So the population is filtered by what the market does afterwards. Price comes
-back to the range — and instead of quietly trading it out and moving on, a
-candle body runs the whole range end to end a second time. The market returned
-to the scene and left again decisively rather than settling the matter.
+## Ready field
 
-That second full traversal is **2X**, and it is the entry ticket. A third is
-**3X** — the best and the rarest.
+The local field places qualifying RIZ over roughly twenty years of one-minute
+ES, NQ and YM tape on every integer native timeframe 1..1440.
 
-This is a filter of significance, not a prediction. A 2X zone is a place the
-market has now visited twice without finishing its business. What price does
-next is exactly what we do not know, and exactly what this repository exists to
-find out.
+It lets an agent inspect:
 
-## What a qualifying zone gives us
+- price before, at and after T0;
+- the later life of one RIZ;
+- nested, overlapping, opposing and sequential RIZ across timeframes;
+- the minute tape around any object or interaction.
 
-Two prices and one moment.
+The field is a coordinate system, not a result. Rebuilding it is not research.
 
-- **North and south** — the top and bottom of the range. These are the lines
-  price will interact with: approach, touch, reject, break, return.
-- **T0** — the minute the zone became significant. The birth of the research
-  object. Before it there is only a candidate; from it the object exists.
+## Research target
 
-Everything else is measured relative to those three things.
+The first target is a **repeatable conditional asymmetry**: under a named RIZ
+state or history, later price behavior changes systematically in direction,
+amplitude, speed, return, continuation, rejection, time to event or another
+trade-relevant quantity.
 
-## What the field is
+That is still not an entry. It is a measured regularity on a stated territory.
+A useful effect may be narrow — one instrument, timeframe range, session, RIZ
+state or regime. We need to know where an edge lives, not force it everywhere.
 
-Twenty years of one-minute tape on ES, NQ and YM, with every qualifying zone
-marked on every timeframe from 1 minute to 1440 — every integer, not a selected
-handful.
+Two surfaces matter:
 
-**The field is a coordinate system, not a result.** It says where and when the
-market showed its hand. It says nothing about what to do there.
+1. **Life of one RIZ** — behavior around T0 and later lifecycle states.
+2. **RIZ ecology** — nesting, overlap, shared levels, opposition, sequence and
+   clustering among RIZ.
 
-Two consequences worth stating plainly:
+## Destination
 
-- The same price at the same moment is covered by many zones from many
-  timeframes at once — nested, overlapping, edge-sharing, opposed in direction.
-  No chart can show this. The field can.
-- The field is complete and frozen. Rebuilding it is not research and is not
-  on the table.
+`trader observation -> measured asymmetry -> setup candidate -> approved setup -> autonomous execution`
 
-## What we are actually researching
+A setup must eventually define applicability, trigger, direction, action,
+invalidation, management and exit, then survive robustness, holdout, costs and
+forward checks. Its holding time is discovered from the market and will
+normally be multi-minute or longer.
 
-Two surfaces. Both already sit in the field; neither needs new computation.
+The future robot may execute only approved setups. It does not promote its own
+research into live trading.
 
-**1. Price around a zone.** What price does before it reaches the line, at the
-moment of contact, and after T0. Setups can live in any of the three, and they
-are different setups.
+## Truth rule
 
-**2. Zones against each other.** Nesting, level agreement, several timeframes
-stacking in one price pocket, north of one meeting south of another, sequence
-and inheritance of a level across zones. The machine links none of this — every
-relation is ours to define and measure.
+The operator's market understanding determines the question. The field
+determines RIZ facts. Measurement decides whether the regularity survives.
 
-The output we want is a **setup**: a repeatable situation, stated precisely
-enough that an agent can act on it on live data later.
+A causal story is optional. Exact identification, territory and repeatability
+are not. Numbers may not be adjusted to rescue a story, and an instrument
+failure may not be reported as a market result.
 
-## What this is not
-
-- Not a claim that price must fill a gap. That is the motivation for choosing
-  this event, not a finding.
-- Not a rebuild of the RIZ machine. It is done, frozen, and correct by
-  definition of this program.
-- Not a chart-visual project. A zone can exist in the field and never appear on
-  a closed chart; that is a real and known difference, not an error.
-- Not yet a claim about anything. There is deliberately no standard of proof in
-  this repository right now. Observations accumulate first.
-
-## Where the research stands
-
-No standard of evidence has been set. This is on purpose. The predecessor
-program built an elaborate apparatus of gates and procedures and measured
-almost no market with it. Here the order is reversed: look first, accumulate
-honest observations in `FINDINGS.md`, and set the bar once it is clear what is
-actually being found.
-
-Until that bar exists, nothing in this repository is a proven effect, and no
-observation licenses a trade.
+The durable memory lives in [`research/`](research/README.md): positive effects,
+negative results, closed roads and the next open frontier. That is how each cold
+agent continues instead of repeating the past.
