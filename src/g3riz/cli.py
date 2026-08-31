@@ -109,7 +109,9 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("consolidate", help="atomically assemble all 1440 cells")
     p.add_argument("--instrument", required=True, choices=("ES", "NQ", "YM"))
 
-    sub.add_parser("status", help="derive current state from cell manifests")
+    p = sub.add_parser("status", help="derive current state from cell manifests")
+    p.add_argument("--full", action="store_true",
+                   help="include the per-timeframe lists; default is the compact census")
 
     p = sub.add_parser("query", help="basic cold-agent field query")
     p.add_argument("--instrument", required=True, choices=("ES", "NQ", "YM"))
@@ -137,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "consolidate":
         print(json.dumps(consolidate(field_root, args.instrument), indent=2))
     elif args.command == "status":
-        status = read_status(field_root)
+        status = read_status(field_root, full=args.full)
         state_path = repo / "PROJECT_STATE.json"
         if state_path.exists():
             status["project_state"] = json.loads(state_path.read_text(encoding="utf-8"))

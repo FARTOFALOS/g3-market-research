@@ -54,12 +54,24 @@ found zero missing, stale, invalid, or temporary cells and zero `riz_id`
 collisions. All cells from the superseded generation were removed before this
 generation began; the canonical market spines are retained.
 
-Recover live state from the repository root:
+Install the package editable once, from the repository root. After that the
+`g3-riz` command, `python -m g3riz.cli`, `pytest` and the Python research
+imports below all work with no `PYTHONPATH` setting:
 
 ```powershell
-$env:PYTHONPATH = "$PWD\src"
-python -m g3riz.cli status
+pip install -e .
 ```
+
+Recover live state:
+
+```powershell
+g3-riz status
+```
+
+`status` prints a compact per-instrument census; `--full` adds the
+per-timeframe lists. `market_spine` must read `present`: without the canonical
+spine a cell's build identity cannot be checked, and such cells are reported as
+`unverifiable` rather than counted as complete.
 
 `complete_tfs` are atomically published current-generation cells. `missing_tfs`
 would be the recovery set if verified data loss occurred. Temporary directories,

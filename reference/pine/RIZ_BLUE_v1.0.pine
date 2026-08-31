@@ -1,0 +1,425 @@
+//@version=6
+indicator("RIZ BLUE v1.0 — синие RIZ 2X+ (мульти-ТФ до 1 дня)", overlay=true, behind_chart=true, max_boxes_count=500, max_lines_count=500, dynamic_requests=true)
+
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║  RIZ BLUE — ТОЛЬКО синие усиленные RIZ 2X+ (без белых/серых/линий/цифр)    ║
+// ║  Ветвь от RIZ v9.4: та же машина состояний и та же логика синих 2X+,       ║
+// ║  но на график выводятся ИСКЛЮЧИТЕЛЬНО синие боксы (зона прошита телом ≥2   ║
+// ║  раз), на ПРОИЗВОЛЬНОМ наборе таймфреймов до 1 дня (любые — 16, 18, 23,    ║
+// ║  36, 166 = 2ч46м …), и КАЖДЫЙ бокс подписан своей длительностью.           ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+//  ⚠ TradingView ограничивает мультитаймфрейм ~40 запросами данных, поэтому
+//    «все 1440 минутных ТФ разом» физически невозможно. Таймфреймы задаются
+//    СПИСКОМ через запятую — впишите любые нужные (до ~38 штук). Текущий ТФ
+//    графика считается ОТДЕЛЬНО (без запроса) и работает на ЛЮБОМ значении,
+//    хоть 17, хоть 231 минута.
+//
+//  ПАРА С RIZ v9.7 (разнесены без пересечений): тут МИНУТЫ 6–46 (кроме 10/15/30
+//    — они в v9.7). v9.7 держит 1-5, 10, 15, 30, 1ч, 2ч, 4ч, 7ч, D + минуты 47–59.
+//    Вместе = синий RIZ на КАЖДОЙ минуте до часа + округлённые старшие, без дублей.
+//
+//  ЛОГИКА СИНЕГО (идентична v9.4, НЕ менялась):
+//    FVG рождается латентным (tier 0). Первый span тела → активация (nx=1).
+//    Повторный span на баре ≥ cr+2 → nx++. Синий бокс = nx ≥ 2 при ОБЕИХ живых
+//    сторонах (strict2x) и не-брейкере. is2xPreview зажигает синий уже интрабарно.
+//    Флаг is2x считается внутри f_machine (индекс 11 экспорта) отдельно для
+//    каждого ТФ в его собственном контексте — поэтому синий на 18м честно синий
+//    по правилам 18м, на 166м — по правилам 166м, и т.д.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ═══ НАСТРОЙКИ ══════════════════════════════════════════════════════════════
+var string GB = "Синие RIZ 2X+"
+var string GT = "Таймфреймы"
+var string GL = "Подписи длительности"
+var string GV = "Общее"
+
+show_2x  = input.bool(true,     "Показывать синие RIZ 2X+",  group=GB)
+c2x_fill = input.color(#2962FF, "Цвет заливки",              group=GB)
+c2x_tr   = input.int(75,        "Прозрачность заливки",      minval=0, maxval=100, group=GB)
+c2x_brdc = input.color(#2962FF, "Цвет границы",              group=GB)
+c2x_btr  = input.int(0,         "Прозрачность границы",      minval=0, maxval=100, group=GB)
+brd_w    = input.int(1,         "Толщина границы бокса",     minval=1, maxval=5,   group=GB)
+
+tf_list  = input.string("6,7,8,9,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46", "Список ТФ через запятую (минуты; D = день)", group=GT, tooltip="ПАРА к RIZ v9.7: тут МИНУТЫ 6–46, которых НЕТ в v9.7 (у v9.7 свои 1-5, 10, 15, 30, 1ч, 2ч, 4ч, 7ч, D + минуты 47–59). Вместе два скрипта дают синий RIZ на КАЖДОЙ минуте до часа без дублей. 38 значений ≈ лимит TradingView (~40 запросов). Можно править под себя.")
+tf_native = input.bool(false,   "Плюс текущий ТФ графика",   group=GT, tooltip="По умолчанию ВЫКЛ: текущий ТФ графика уже считает RIZ v9.7 (нативно, со всеми фичами). Включайте, только если запускаете BLUE без v9.7 — иначе на своём ТФ будет двойной синий бокс.")
+
+lbl_on  = input.bool(true,      "Подпись длительности на боксе", group=GL)
+lbl_col = input.color(#2962FF,  "Цвет подписи",                  group=GL)
+lbl_tsz = input.string("normal","Размер подписи", options=["tiny","small","normal","large","huge"], group=GL)
+mult_on = input.bool(false,     "Добавлять множитель ×2/×3/×4",  group=GL, tooltip="Показывать, сколько раз тело прошило зону (счётчик nx): ×2, ×3, ×4 …")
+
+prev_on = input.bool(true,      "Превью синего до закрытия свечи (текущий ТФ)", group=GV)
+zcap    = input.int(40,         "Макс. зон на таймфрейм",  minval=10, maxval=100, group=GV)
+hist_d  = input.int(14,         "Окно минутных ТФ (дней)", minval=2, maxval=90,  group=GV, tooltip="ТФ < 1ч считаются только в этом окне (экономия запросов и скорость).")
+hist_h  = input.int(60,         "Окно часовых ТФ (дней)",  minval=7, maxval=365, group=GV, tooltip="ТФ 1ч..7ч считаются в этом окне; D — вся история.")
+live_margin = input.int(10,     "Смещение текста на живом крае (баров)", minval=0, maxval=500, group=GV, tooltip="Сдвигает подписи в будущее к ценовой шкале. Pine не видит ваш отступ в пикселях — настраивается вручную.")
+
+// show_bull/show_bear/show_t3 нужны машине ТОЛЬКО для расчёта служебных полей
+// isVis (белый/серый бокс), которые в этом скрипте НЕ рисуются. Оставлены true,
+// чтобы f_machine осталась ПОБАЙТОВО идентичной v9.4 (флаг is2x, индекс 11,
+// считается ровно теми же строками). Так синяя логика гарантированно та же.
+bool show_bull = true
+bool show_bear = true
+bool show_t3   = true
+
+// ═══ СЛУЖЕБНЫЕ ФУНКЦИИ ═══════════════════════════════════════════════════════
+f_size(string s) =>
+    s == "tiny" ? size.tiny : s == "small" ? size.small : s == "normal" ? size.normal : s == "large" ? size.large : size.huge
+
+// длительность ТФ (в секундах) → компактная подпись: «18м» · «2ч46м» · «8ч» · «1д»
+f_dur(int sec) =>
+    string r = ""
+    if sec >= 86400
+        r := str.tostring(sec / 86400) + "д"
+    else if sec >= 3600
+        int h = sec / 3600
+        int mn = (sec % 3600) / 60
+        r := mn == 0 ? str.tostring(h) + "ч" : str.tostring(h) + "ч" + str.tostring(mn) + "м"
+    else
+        r := str.tostring(sec / 60) + "м"
+    r
+
+f_zdel(array<float> t, array<float> b, array<float> o, array<bool> bu, array<bool> nn, array<bool> ss, array<bool> ac, array<int> cr, array<int> ti, array<bool> t3, array<int> nx, int i) =>
+    array.remove(t, i)
+    array.remove(b, i)
+    array.remove(o, i)
+    array.remove(bu, i)
+    array.remove(nn, i)
+    array.remove(ss, i)
+    array.remove(ac, i)
+    array.remove(cr, i)
+    array.remove(ti, i)
+    array.remove(t3, i)
+    array.remove(nx, i)
+
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║  МАШИНА СОСТОЯНИЙ  f_machine()  — ВЕРБАТИМ из RIZ v9.4                       ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+//  Работает ТОЛЬКО на закрытых барах. Экспорт STRIDE 13 на зону:
+//    [0]t [1]b [2]o [3]bull [4]north [5]south [6]tier
+//    [7]t3south [8]cr [9]nx [10]isVis [11]is2x [12]magSide
+//  Этому скрипту нужны из экспорта: [0]t [1]b [2]o(время рождения) [9]nx [11]is2x.
+f_machine() =>
+    var array<float> t  = array.new<float>()   // верх зоны
+    var array<float> b  = array.new<float>()   // низ зоны
+    var array<float> o  = array.new<float>()   // время рождения = open time свечи C1
+    var array<bool>  bu = array.new<bool>()    // бычья зона? (BISI=true / SIBI=false)
+    var array<bool>  nn = array.new<bool>()    // север (верхняя граница) жив?
+    var array<bool>  ss = array.new<bool>()    // юг (нижняя граница) жив?
+    var array<bool>  ac = array.new<bool>()    // активирована? (был span телом)
+    var array<int>   cr = array.new<int>()     // bar_index последнего span (правило cr+2)
+    var array<int>   ti = array.new<int>()     // тир: 0 латент · 1/2 актив · 3 брейкер
+    var array<bool>  t3 = array.new<bool>()    // брейкер пробит вниз? (магнит на юге)
+    var array<int>   nx = array.new<int>()     // счётчик span-ов (2X-синий при nx≥2)
+
+    var int   tfs  = timeframe.in_seconds(timeframe.period)
+    var float wcut = timenow - (tfs >= 3600 ? hist_h : hist_d) * 86400000
+    bool warm = tfs >= 86400 or time >= wcut
+
+    if barstate.isconfirmed and warm
+        float bmin = math.min(open, close)
+        float bmax = math.max(open, close)
+        int i = array.size(t) - 1
+        while i >= 0
+            float zt = array.get(t, i)
+            float zb = array.get(b, i)
+            if array.get(ti, i) == 3
+                if array.get(t3, i) ? high >= zb : low <= zt
+                    f_zdel(t, b, o, bu, nn, ss, ac, cr, ti, t3, nx, i)
+            else
+                bool act  = array.get(ac, i)
+                int  crt  = array.get(cr, i)
+                // SPAN = тело свечи проторговало ВЕСЬ диапазон зоны. Первый span
+                // активирует (tier 0→1/2); повторный засчитывается лишь на cr+2 и
+                // дальше (свеча сразу после активации зону не «удваивает») → nx++.
+                bool span = bmin < zb and bmax > zt
+                if span and (not act or bar_index >= crt + 2)
+                    if not act
+                        array.set(ac, i, true)
+                        array.set(ti, i, array.get(nn, i) and array.get(ss, i) ? 1 : 2)
+                        array.set(nx, i, 1)
+                    else
+                        array.set(nx, i, array.get(nx, i) + 1)
+                    array.set(cr, i, bar_index)
+                else
+                    // БРЕЙКЕР (tier 3): тело закрылось СКВОЗЬ живую границу.
+                    bool nAl = array.get(nn, i)
+                    bool sAl = array.get(ss, i)
+                    bool sbk  = not span and sAl and not nAl and open > zb and close < zb
+                    bool nbk  = not span and nAl and not sAl and open < zt and close > zt
+                    bool sbk2 = not span and nAl and sAl and open > zb and close < zb and high >= zt and close <= zt
+                    bool nbk2 = not span and nAl and sAl and open < zt and close > zt and low  <= zb and close >= zb
+                    if sbk or nbk or sbk2 or nbk2
+                        bool southBreak = sbk or sbk2
+                        array.set(nn, i, false)
+                        array.set(ss, i, false)
+                        array.set(ti, i, 3)
+                        array.set(t3, i, southBreak)
+                        array.set(ac, i, true)
+                        array.set(cr, i, bar_index)
+                    else
+                        // КАСАНИЕ тенью (диапазон включает тело): снимает сторону.
+                        if low <= zt and high >= zt
+                            array.set(nn, i, false)
+                        if low <= zb and high >= zb
+                            array.set(ss, i, false)
+                        // обе стороны сняты тенью → зона отработана, удаляем
+                        if not array.get(nn, i) and not array.get(ss, i)
+                            f_zdel(t, b, o, bu, nn, ss, ac, cr, ti, t3, nx, i)
+            i := i - 1
+
+        // ── Рождение BISI (бычий FVG) ───────────────────────────────────────
+        // Гэп low[0]>high[2]. ГЕЙТ ДИСПЛЕЙСМЕНТА (v9.3, по ТЕЛУ C2).
+        if low[0] > high[2] and math.max(open[1], close[1]) > high[2] and math.min(open[1], close[1]) < low[0]
+            float bt1  = math.max(open[2], close[2])
+            float bt2  = math.max(open[1], close[1])
+            float c2bb = math.min(open[1], close[1])
+            float c3bb = math.min(open[0], close[0])
+            float nb_  = c2bb > bt1 ? bt1  : high[2]
+            float nt_  = c3bb > bt2 ? c3bb : low[0]
+            if nt_ > nb_
+                array.push(t, nt_)
+                array.push(b, nb_)
+                array.push(o, time[2])
+                array.push(bu, true)
+                array.push(nn, true)
+                array.push(ss, true)
+                array.push(ac, false)
+                array.push(cr, -1)
+                array.push(ti, 0)
+                array.push(t3, false)
+                array.push(nx, 0)
+
+        // ── Рождение SIBI (медвежий FVG) ────────────────────────────────────
+        // Гэп high[0]<low[2]. ГЕЙТ ДИСПЛЕЙСМЕНТА (v9.3, по ТЕЛУ C2).
+        if high[0] < low[2] and math.min(open[1], close[1]) < low[2] and math.max(open[1], close[1]) > high[0]
+            float bb1  = math.min(open[2], close[2])
+            float bb2  = math.min(open[1], close[1])
+            float c2bt = math.max(open[1], close[1])
+            float c3bt = math.max(open[0], close[0])
+            float nt_  = c2bt < bb1 ? bb1  : low[2]
+            float nb_  = c3bt < bb2 ? c3bt : high[0]
+            if nt_ > nb_
+                array.push(t, nt_)
+                array.push(b, nb_)
+                array.push(o, time[2])
+                array.push(bu, false)
+                array.push(nn, true)
+                array.push(ss, true)
+                array.push(ac, false)
+                array.push(cr, -1)
+                array.push(ti, 0)
+                array.push(t3, false)
+                array.push(nx, 0)
+
+        // защита от роста: держим не более zcap зон (удаляем самые старые)
+        while array.size(t) > zcap
+            f_zdel(t, b, o, bu, nn, ss, ac, cr, ti, t3, nx, 0)
+
+    // ── ЭКСПОРТ (на последнем баре) ─────────────────────────────────────────
+    array<float> out = na
+    if barstate.islast
+        out := array.new<float>()
+        int n = array.size(t)
+        if n > 0
+            for k = 0 to n - 1
+                float zt  = array.get(t, k)
+                float zb  = array.get(b, k)
+                bool  nA  = array.get(nn, k)
+                bool  sA  = array.get(ss, k)
+                int   tr  = array.get(ti, k)
+                int   zNx = array.get(nx, k)
+                bool  ts  = array.get(t3, k)
+                bool  isB = array.get(bu, k)
+                int   zCr = array.get(cr, k)
+
+                bool lv_tf = not barstate.isconfirmed
+                float pbmin = math.min(open, close)
+                float pbmax = math.max(open, close)
+                bool spanNow = pbmin < zb and pbmax > zt
+                bool spanOK = spanNow and bar_index >= zCr + 2
+                bool nAp = nA and not (lv_tf and not spanOK and low <= zt and high >= zt)
+                bool sAp = sA and not (lv_tf and not spanOK and low <= zb and high >= zb)
+                bool t3d = lv_tf and (ts ? high >= zb : low <= zt)
+                bool brkS  = lv_tf and tr != 3 and not spanNow and sA and not nA and open > zb and close < zb
+                bool brkN  = lv_tf and tr != 3 and not spanNow and nA and not sA and open < zt and close > zt
+                bool brkS2 = lv_tf and tr != 3 and not spanNow and nA and sA and open > zb and close < zb and high >= zt and close <= zt
+                bool brkN2 = lv_tf and tr != 3 and not spanNow and nA and sA and open < zt and close > zt and low <= zb and close >= zb
+                bool brkAny = brkS or brkN or brkS2 or brkN2
+
+                bool isVis = false
+                if tr >= 1 and tr != 9
+                    if tr == 3
+                        isVis := show_t3 and not t3d and (ts ? close < zb : close > zt)
+                    else if brkAny
+                        isVis := show_t3
+                    else
+                        isVis := (isB ? show_bull : show_bear) and ((nAp and sAp) or (nAp and close > zt) or (sAp and close < zb))
+
+                bool strict2x_dyn = nA and sA and nAp and sAp
+                bool is2xLive    = show_2x and (tr == 1 or tr == 2) and zNx >= 2 and strict2x_dyn
+                bool is2xPreview = show_2x and prev_on and lv_tf and (tr == 1 or tr == 2) and strict2x_dyn and spanNow and bar_index >= zCr + 2
+                bool is2x_dyn    = (is2xLive or is2xPreview) and not brkAny
+                array.push(out, zt)
+                array.push(out, zb)
+                array.push(out, array.get(o, k))
+                array.push(out, isB ? 1.0 : 0.0)
+                array.push(out, nA ? 1.0 : 0.0)
+                array.push(out, sA ? 1.0 : 0.0)
+                array.push(out, tr)
+                array.push(out, ts ? 1.0 : 0.0)
+                array.push(out, zCr)
+                array.push(out, zNx)
+                array.push(out, isVis ? 1.0 : 0.0)      // ← isVis (индекс 10)
+                array.push(out, is2x_dyn ? 1.0 : 0.0)   // ← is2x (индекс 11)
+
+                float magSide = -1.0
+                if isVis
+                    if tr == 3
+                        magSide := ts ? zb : zt
+                    else if brkAny
+                        magSide := (brkS or brkS2) ? zb : zt
+                    else if tr >= 1
+                        if nAp and sAp
+                            magSide := close > zt ? zt : (close < zb ? zb : -1.0)
+                        else if nAp and close > zt
+                            magSide := zt
+                        else if sAp and close < zb
+                            magSide := zb
+                array.push(out, magSide)                  // ← magSide (индекс 12)
+    out
+
+// ═══ КОНТЕКСТЫ ══════════════════════════════════════════════════════════════
+int chs = timeframe.in_seconds(timeframe.period)
+fchArr = f_machine()   // нативный (текущий ТФ графика) — считается каждый бар
+
+// разбор списка ТФ (убираем пробелы, режем по запятой)
+string tf_clean = str.replace_all(tf_list, " ", "")
+array<string> TFS = str.split(tf_clean, ",")
+
+// ═══ СБОРЩИК синих зон одного ТФ → массивы отрисовки ═════════════════════════
+// Читает плоский экспорт (STRIDE 13). Берём ТОЛЬКО зоны с флагом is2x (индекс 11)
+// — они уже посчитаны как синие в собственном контексте своего ТФ.
+f_blue(array<float> flat, int tsec, array<int> Fx, array<float> Ft, array<float> Fb, array<float> Mt, array<float> Mb, array<string> Mx, int vR_p, bool wantLbl) =>
+    if not na(flat) and show_2x
+        int n = int(array.size(flat) / 13)
+        if n > 0
+            for k = 0 to n - 1
+                int q = k * 13
+                if array.get(flat, q + 11) > 0.5   // is2x
+                    float zt = array.get(flat, q)
+                    float zb = array.get(flat, q + 1)
+                    float zo = array.get(flat, q + 2)
+                    int   znx = int(array.get(flat, q + 9))
+                    array.push(Fx, int(zo))
+                    array.push(Ft, zt)
+                    array.push(Fb, zb)
+                    if wantLbl and vR_p >= int(zo)
+                        string tx = f_dur(tsec) + (mult_on and znx >= 2 ? " ×" + str.tostring(znx) : "")
+                        array.push(Mt, zt)
+                        array.push(Mb, zb)
+                        array.push(Mx, tx)
+
+// ╔═══════════════════════════════════════════════════════════════════════════╗
+// ║  ОТРИСОВКА (только на последнем баре, анти-мерцание через реконсиляцию)     ║
+// ╚═══════════════════════════════════════════════════════════════════════════╝
+var array<box> XF = array.new<box>()   // синие заливки
+var array<box> XM = array.new<box>()   // подписи длительности (текст-слайдеры)
+var string sgF = na
+var string sgM = na
+
+var bool  drawn0 = false
+var int   lastVR = -1
+var int   lastVL = -1
+var float lastHi = na
+var float lastLo = na
+var float lastCl = na
+int vR = chart.right_visible_bar_time
+int vL = chart.left_visible_bar_time
+
+bool pxMove = nz(lastHi) != high or nz(lastLo) != low or nz(lastCl) != close
+lastHi := high
+lastLo := low
+lastCl := close
+
+bool dataChg   = barstate.isnew or not drawn0 or pxMove
+bool scrollChg = vR != lastVR or vL != lastVL
+
+if barstate.islast and (dataChg or scrollChg)
+    drawn0 := true
+    lastVR := vR
+    lastVL := vL
+
+    bool   inHist    = vR < time
+    int    anchorIdx = bar_index + live_margin
+    string xl        = inHist ? xloc.bar_time : xloc.bar_index
+    int    xRbox     = inHist ? vR : anchorIdx + 2
+    int    xLslid    = inHist ? vR - 102 * chs * 1000 : math.max(0, anchorIdx - 100)
+
+    color c_bg = color.new(c2x_fill, c2x_tr)
+    color c_br = color.new(c2x_brdc, c2x_btr)
+
+    array<int>    dFx = array.new<int>()
+    array<float>  dFt = array.new<float>()
+    array<float>  dFb = array.new<float>()
+    array<float>  dMt = array.new<float>()
+    array<float>  dMb = array.new<float>()
+    array<string> dMx = array.new<string>()
+
+    // 1) текущий ТФ графика (без request.security) — любой, включая custom
+    if tf_native
+        f_blue(fchArr, chs, dFx, dFt, dFb, dMt, dMb, dMx, vR, lbl_on)
+
+    // 2) список ТФ — каждый через свой request.security (dynamic_requests).
+    //    Пропускаем пустые, ТФ>1дня и совпадающий с текущим ТФ графика.
+    //    reqN<38 держит нас под лимитом TradingView (~40 запросов данных).
+    //    tsec парсим ВРУЧНУЮ: timeframe.in_seconds() не принимает series-строку
+    //    (элемент массива), поэтому «D»→86400, число→минуты·60. Часы задавать
+    //    минутами (60/120/240…), НЕ «2H» — иначе ТФ пропустится.
+    int reqN = 0
+    if array.size(TFS) > 0
+        for i = 0 to array.size(TFS) - 1
+            string tf = array.get(TFS, i)
+            if tf != "" and reqN < 38
+                float mnum = str.tonumber(tf)
+                int tsec = tf == "D" ? 86400 : na(mnum) ? 0 : int(mnum) * 60
+                if tsec > 0 and tsec <= 86400 and tsec != chs
+                    reqN += 1
+                    array<float> flat = request.security(syminfo.tickerid, tf, f_machine())
+                    f_blue(flat, tsec, dFx, dFt, dFb, dMt, dMb, dMx, vR, lbl_on)
+
+    // ── подписи-слепки наборов (для реконсиляции без мерцания) ──────────────
+    string nF = ""
+    if array.size(dFt) > 0
+        for i = 0 to array.size(dFt) - 1
+            nF := nF + str.tostring(array.get(dFt, i)) + "_" + str.tostring(array.get(dFb, i)) + "_" + str.tostring(array.get(dFx, i)) + ";"
+    string nM = (inHist ? "H/" : "L/")
+    if array.size(dMx) > 0
+        for i = 0 to array.size(dMx) - 1
+            nM := nM + str.tostring(array.get(dMt, i)) + "_" + str.tostring(array.get(dMb, i)) + "=" + array.get(dMx, i) + ";"
+
+    bool chgF = na(sgF) or nF != sgF
+    bool chgM = na(sgM) or nM != sgM
+
+    // синие заливки: пересоздаём лишь при смене набора (якорь по времени → не едут)
+    if chgF
+        while array.size(XF) > 0
+            box.delete(array.pop(XF))
+        if array.size(dFt) > 0
+            for i = 0 to array.size(dFt) - 1
+                array.push(XF, box.new(array.get(dFx, i), array.get(dFt, i), array.get(dFx, i) + 1, array.get(dFb, i), xloc=xloc.bar_time, extend=extend.right, border_color=c_br, border_width=brd_w, bgcolor=c_bg))
+        sgF := nF
+
+    // подписи: пересоздаём при смене содержимого, иначе просто едут за край экрана
+    if chgM
+        while array.size(XM) > 0
+            box.delete(array.pop(XM))
+        if lbl_on and array.size(dMx) > 0
+            for i = 0 to array.size(dMx) - 1
+                array.push(XM, box.new(xLslid, array.get(dMt, i), xRbox, array.get(dMb, i), xloc=xl, border_color=color.new(color.black, 100), bgcolor=color.new(color.black, 100), text=array.get(dMx, i), text_color=lbl_col, text_size=f_size(lbl_tsz), text_halign=text.align_right, text_valign=text.align_center))
+        sgM := nM
+    else
+        if array.size(XM) > 0
+            for i = 0 to array.size(XM) - 1
+                box.set_left(array.get(XM, i), xLslid)
+                box.set_right(array.get(XM, i), xRbox)

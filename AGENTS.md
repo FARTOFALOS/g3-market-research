@@ -19,3 +19,12 @@ query entry points for research. Do not rebuild by default; resume only if
 semantic generation. Never reuse incompatible, temporary, or `.previous`
 outputs. G2 and Pine/RIZ sources are read-only semantic references, not runtime
 dependencies or edit targets.
+
+Read-only chart inspection is available through one user-scope MCP server,
+`tradingview`; `TOOLING.md` has the connection procedure and the standing
+rules. It is an optional tool, never a runtime dependency: the chart is an eye
+and not an oracle, Pine is never written without an explicit operator
+instruction, and the server is not a route to rebuilding the field. Pinned Pine
+copies under `reference/` carry their G2 origin and checksum; G2 stays the Pine
+authority. `design/` holds visual benches for working through semantics with the
+operator — start from `design/README.md`; they are neither field nor dependency.

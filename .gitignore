@@ -7,3 +7,5 @@ __pycache__/
 .pytest_cache/
 .venv/
 
+# собирается из артбордов, см. design/riz-sandbox/README.md
+design/riz-sandbox/riz-sandbox.html

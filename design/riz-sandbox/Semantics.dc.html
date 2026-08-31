@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #131722; color: #d1d4dc;
+           font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    a { color: #2962FF; } a:hover { color: #5b8cff; }
+    .num { font-family: ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+  </style>
+</helmet>
+
+<div style="width: 1040px; height: 1240px; box-sizing: border-box; padding: 34px 40px; background: #131722; display: flex; flex-direction: column; gap: 22px;">
+
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 20px; font-weight: 600; color: #d1d4dc; letter-spacing: 0.2px;">Что такое синяя зона</div>
+    <div style="font-size: 13px; color: #787b86; line-height: 1.5; max-width: 800px;">Опорная страница для агента, входящего в репозиторий G3. Всё ниже — прямое следствие машины v9.4 из <span class="num" style="color: #9598a1;">reference/pine/RIZ_BLUE_v1.0.pine</span>. Проверить любое утверждение можно на соседнем артборде: задать свечи руками и посмотреть, что скажет машина.</div>
+  </div>
+
+  <div style="border: 1px solid #2962FF; border-radius: 4px; background: rgba(41,98,255,0.07); padding: 16px 18px;">
+    <div style="font-size: 14px; color: #d1d4dc; line-height: 1.6;">RIZ — это <b>FVG, который тело свечи прошило насквозь минимум дважды, при обеих ещё живых границах.</b> Три условия одновременно, ни одно не выводится из остальных.</div>
+    <div class="num" style="font-size: 12px; color: #2962FF; margin-top: 10px;">синий = (tier == 1 или 2) и nx &gt;= 2 и север_жив и юг_жив</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 11px; color: #787b86; letter-spacing: 0.5px;">ГЕОМЕТРИЯ — ОТКУДА БЕРУТСЯ ГРАНИЦЫ</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+      <div style="border: 1px solid #2a2e39; border-radius: 4px; padding: 14px 16px; background: #171b26;">
+        <div style="font-size: 12px; color: #26a69a; font-weight: 600; margin-bottom: 8px;">BISI — бычий разрыв</div>
+        <div class="num" style="font-size: 11px; color: #9598a1; line-height: 1.7;">гэп: low[C3] &gt; high[C1]<br>верх = тело C3 внизу, если оно выше тела C2, иначе low[C3]<br>низ = тело C1 вверху, если тело C2 выше него, иначе high[C1]</div>
+      </div>
+      <div style="border: 1px solid #2a2e39; border-radius: 4px; padding: 14px 16px; background: #171b26;">
+        <div style="font-size: 12px; color: #ef5350; font-weight: 600; margin-bottom: 8px;">SIBI — медвежий разрыв</div>
+        <div class="num" style="font-size: 11px; color: #9598a1; line-height: 1.7;">гэп: high[C3] &lt; low[C1]<br>верх = тело C1 внизу, если тело C2 ниже него, иначе low[C1]<br>низ = тело C3 вверху, если оно ниже тела C2, иначе high[C3]</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #787b86; line-height: 1.55;">Плюс гейт дисплейсмента по <b>телу</b> C2: тело средней свечи обязано перекрывать обе стороны разрыва. Без него зона не рождается вовсе. Границы всегда режутся телами, а не тенями — поэтому зона часто уже голого гэпа.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 11px; color: #787b86; letter-spacing: 0.5px;">ЛЕСТНИЦА СОСТОЯНИЙ</div>
+    <div style="display: flex; flex-direction: column; gap: 7px;">
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2e39; border-left: 2px solid #4a4e5a; border-radius: 3px; padding: 10px 14px; background: #171b26;">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #d1d4dc; font-weight: 600;">Латент</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Зона родилась на нативном закрытии C3. Геометрия есть, тело ещё ни разу не прошило. <span style="color: #5d606b;">tier 0, nx=0</span></div>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2e39; border-left: 2px solid #787b86; border-radius: 3px; padding: 10px 14px; background: #171b26;">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #d1d4dc; font-weight: 600;">1X · активация</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Тело свечи впервые проторговало <b>весь</b> диапазон зоны: min(open,close) ниже низа и max(open,close) выше верха. <span style="color: #5d606b;">tier 1, если обе границы живы, иначе tier 2 · nx=1</span></div>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2962FF; border-left: 2px solid #2962FF; border-radius: 3px; padding: 10px 14px; background: rgba(41,98,255,0.07);">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #2962FF; font-weight: 600;">2X · синий</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Второй span, принятый не раньше бара <span class="num">cr+2</span>. Свеча сразу после активации зону не удваивает. <b style="color: #d1d4dc;">Синий требует ещё и обе живые границы</b> — без этого nx=2 есть, а синего нет.</div>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2e39; border-left: 2px solid #2962FF; border-radius: 3px; padding: 10px 14px; background: #171b26;">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #d1d4dc; font-weight: 600;">3X и дальше</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Тот же объект, тот же <span class="num">riz_id</span>, просто nx растёт. 3X — подтип одной зоны, а не новая зона.</div>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2e39; border-left: 2px solid #f0b90b; border-radius: 3px; padding: 10px 14px; background: #171b26;">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #f0b90b; font-weight: 600;">Снятие границы</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Диапазон свечи накрыл границу — сторона снимается навсегда. Одна снятая сторона: зона живёт и может копить span-ы, но синей уже не станет. Обе — зона удаляется.</div>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2e39; border-left: 2px solid #ef5350; border-radius: 3px; padding: 10px 14px; background: #171b26;">
+        <div style="width: 118px; flex-shrink: 0; font-size: 12px; color: #ef5350; font-weight: 600;">Брейкер</div>
+        <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">Тело закрылось сквозь живую границу. tier 3, обе стороны сняты. RIZ кончился: дальше это магнит, живущий до отработки противоположной стороны.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 11px; color: #787b86; letter-spacing: 0.5px;">ЧЕТЫРЕ ВРЕМЕНИ, КОТОРЫЕ ПУТАЮТ ЧАЩЕ ВСЕГО</div>
+    <div style="font-size: 12px; color: #787b86; line-height: 1.55;">Реальный пример: NQ1! 11 минут, 28 августа, зона <span class="num" style="color: #d1d4dc;">29625.00 / 29617.25</span>. Время нью-йоркское.</div>
+    <div style="border: 1px solid #2a2e39; border-radius: 4px; overflow: hidden;">
+      <sc-for list="{{ times }}" as="t" hint-placeholder-count="4">
+        <div style="{{ t.rowStyle }}">
+          <div class="num" style="{{ t.timeStyle }}">{{ t.time }}</div>
+          <div style="width: 210px; flex-shrink: 0; font-size: 12px; color: #d1d4dc;">{{ t.name }}</div>
+          <div style="font-size: 12px; color: #9598a1; line-height: 1.5;">{{ t.what }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size: 12px; color: #787b86; line-height: 1.55;">Левый край синего бокса на графике — это <b>не</b> рождение зоны. Pine кладёт его на открытие C1, потому что так удобно рисовать. Между отрисованным краем и фактическим рождением здесь 33 минуты, в течение которых бокс уже виден, а объекта ещё нет.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 11px; color: #787b86; letter-spacing: 0.5px;">ЧТО СИНИМ НЕ ЯВЛЯЕТСЯ</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+      <div style="border: 1px solid #2a2e39; border-radius: 4px; padding: 12px 14px; background: #171b26;">
+        <div style="font-size: 12px; color: #f0b90b; font-weight: 600; margin-bottom: 6px;">nx=2 с одной границей</div>
+        <div style="font-size: 11px; color: #9598a1; line-height: 1.5;">Span-ов достаточно, но strict2x не выполнен. Объект жив и осмыслен, синего цвета у него не будет никогда.</div>
+      </div>
+      <div style="border: 1px solid #2a2e39; border-radius: 4px; padding: 12px 14px; background: #171b26;">
+        <div style="font-size: 12px; color: #ef5350; font-weight: 600; margin-bottom: 6px;">Брейкер с nx=2</div>
+        <div style="font-size: 11px; color: #9598a1; line-height: 1.5;">tier 3 выбивает зону из синей ветки независимо от счётчика.</div>
+      </div>
+      <div style="border: 1px solid #2a2e39; border-radius: 4px; padding: 12px 14px; background: #171b26;">
+        <div style="font-size: 12px; color: #9598a1; font-weight: 600; margin-bottom: 6px;">Касание и отбой</div>
+        <div style="font-size: 11px; color: #9598a1; line-height: 1.5;">Тень в зоне не span. Тело обязано накрыть <b>весь</b> диапазон, иначе это ретест, а не удвоение.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1;"></div>
+
+  <div style="border-top: 1px solid #2a2e39; padding-top: 14px; font-size: 11px; color: #5d606b; line-height: 1.6;">Поле G3 хранит только зоны, дошедшие до T0, и только фактические смены состояния. Кандидаты, отмены превью, ретесты, экскурсии и разметка сетапов — это одноразовые чтения поверх поля и общей минутной ленты, они не персистятся. График — глаз, а не оракул: расхождение поля и TradingView это находка к докладу, а не право править поле.</div>
+
+</div>
+</x-dc>
+
+<script data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    var rows = [
+      { time: '09:46', name: 'Левый край бокса', what: 'Открытие C1. Метка отрисовки Pine. Событием жизненного цикла не является.', col: '#5d606b' },
+      { time: '10:19', name: 'Рождение зоны', what: 'Нативное закрытие C3. Появляется латентный объект с окончательной геометрией.', col: '#9598a1' },
+      { time: '11:51', name: 'T0', what: 'Первая минута, на которой развивающееся тело нативного бара впервые прошило зону во второй раз. Нижняя граница существования RIZ как исследовательского объекта.', col: '#2962FF' },
+      { time: '11:58', name: 'Нативное подтверждение', what: 'Закрытие 11-минутного бара, на котором nx ушёл с 1 на 2. Отдельное событие, позже T0.', col: '#2962FF' }
+    ];
+    return {
+      times: rows.map(function (r, i) {
+        return {
+          time: r.time,
+          name: r.name,
+          what: r.what,
+          rowStyle: 'display: flex; gap: 14px; align-items: flex-start; padding: 11px 14px; background: ' + (i % 2 ? '#171b26' : '#131722') + ';',
+          timeStyle: 'width: 56px; flex-shrink: 0; font-size: 12px; font-weight: 600; color: ' + r.col + ';'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

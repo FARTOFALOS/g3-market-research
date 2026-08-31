@@ -1,0 +1,635 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #131722; color: #d1d4dc;
+           font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    a { color: #2962FF; } a:hover { color: #5b8cff; }
+    .num { font-family: ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+    .tvax { font-family: -apple-system, "Trebuchet MS", Roboto, Ubuntu, sans-serif; }
+    input[type=number] { -moz-appearance: textfield; }
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 900px; box-sizing: border-box; padding: 14px 24px 16px 24px; background: #131722; display: flex; flex-direction: column; gap: 9px;">
+
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="font-size: 15px; font-weight: 600; letter-spacing: 0.2px; color: #d1d4dc;">Песочница RIZ</div>
+    <div style="font-size: 11px; color: #787b86;">машина v9.4 · RIZ BLUE v1.0</div>
+    <div style="flex-grow: 1;"></div>
+    <button onClick="{{ randomize }}" style="background: #2a2e39; color: #d1d4dc; border: none; border-radius: 3px; padding: 4px 11px; font-size: 11px; cursor: pointer;">Случайные</button>
+    <button onClick="{{ addBar }}" style="background: #2a2e39; color: #d1d4dc; border: none; border-radius: 3px; padding: 4px 11px; font-size: 11px; cursor: pointer;">+ свеча</button>
+    <div class="num" style="font-size: 11px; color: #787b86; width: 68px; text-align: right;">{{ barCountLabel }}</div>
+  </div>
+
+  <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+    <sc-for list="{{ presetList }}" as="p" hint-placeholder-count="11">
+      <button onClick="{{ p.load }}" style="{{ p.style }}">{{ p.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="font-size: 11px; color: #787b86; line-height: 1.4; height: 30px; overflow: hidden;">{{ presetNote }}</div>
+
+  <div style="position: relative; width: 1392px; height: 430px; background: #B8B8B8; overflow: hidden; flex-shrink: 0;">
+    <sc-for list="{{ vGrid }}" as="g" hint-placeholder-count="8">
+      <div style="{{ g.style }}"></div>
+    </sc-for>
+    <sc-for list="{{ hGrid }}" as="g" hint-placeholder-count="7">
+      <div style="{{ g.style }}"></div>
+    </sc-for>
+    <sc-for list="{{ zoneRects }}" as="z" hint-placeholder-count="3">
+      <div style="{{ z.boxStyle }}"></div>
+      <div class="tvax" style="{{ z.tagStyle }}">{{ z.tag }}</div>
+    </sc-for>
+    <sc-for list="{{ candles }}" as="c" hint-placeholder-count="19">
+      <div onClick="{{ c.pick }}" style="{{ c.hitStyle }}"></div>
+      <div style="{{ c.wickStyle }}"></div>
+      <div style="{{ c.bodyStyle }}"></div>
+    </sc-for>
+    <div style="{{ axisSepStyle }}"></div>
+    <sc-for list="{{ priceLabels }}" as="p" hint-placeholder-count="7">
+      <div class="tvax" style="{{ p.style }}">{{ p.label }}</div>
+    </sc-for>
+    <div style="{{ timeSepStyle }}"></div>
+    <sc-for list="{{ timeLabels }}" as="t" hint-placeholder-count="10">
+      <div class="tvax" style="{{ t.style }}">{{ t.label }}</div>
+    </sc-for>
+    <sc-for list="{{ eventMarks }}" as="m" hint-placeholder-count="4">
+      <div class="tvax" style="{{ m.style }}">{{ m.label }}</div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 11px;">
+    <div style="font-size: 11px; color: #787b86; flex-shrink: 0;">Бар</div>
+    <input type="range" min="{{ scrubMin }}" max="{{ scrubMax }}" value="{{ scrubVal }}" onChange="{{ onScrub }}" style="flex-grow: 1; accent-color: #2962FF;">
+    <div class="num" style="font-size: 12px; color: #d1d4dc; width: 60px; text-align: right; flex-shrink: 0;">{{ scrubLabel }}</div>
+    <label style="display: flex; align-items: center; gap: 5px; font-size: 11px; color: #787b86; flex-shrink: 0; cursor: pointer;">
+      <input type="checkbox" checked="{{ liveOn }}" onChange="{{ onLive }}" style="accent-color: #2962FF; cursor: pointer;">
+      <span>живой</span>
+    </label>
+    <div style="font-size: 11px; color: #787b86; flex-shrink: 0;">Масштаб</div>
+    <input type="range" min="4" max="70" value="{{ spacingVal }}" onChange="{{ onSpacing }}" style="width: 116px; accent-color: #2962FF; flex-shrink: 0;">
+    <div style="width: 10px;"></div>
+    <sc-for list="{{ legend }}" as="g" hint-placeholder-count="5">
+      <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+        <div style="{{ g.chip }}"></div>
+        <div style="font-size: 11px; color: #787b86;">{{ g.label }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="border: 1px solid #2a2e39; border-radius: 3px; background: #171b26; padding: 5px 7px; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;">
+    <div style="{{ gridStyle }}">
+      <div></div>
+      <sc-for list="{{ colHead }}" as="c" hint-placeholder-count="19">
+        <div style="{{ c.style }}">{{ c.label }}</div>
+      </sc-for>
+    </div>
+    <div style="{{ gridStyle }}">
+      <div style="font-size: 9px; color: #5d606b; line-height: 19px;">O</div>
+      <sc-for list="{{ colO }}" as="c" hint-placeholder-count="19">
+        <input class="num" type="number" step="{{ tick }}" value="{{ c.v }}" onChange="{{ c.set }}" style="{{ c.style }}">
+      </sc-for>
+    </div>
+    <div style="{{ gridStyle }}">
+      <div style="font-size: 9px; color: #5d606b; line-height: 19px;">H</div>
+      <sc-for list="{{ colH }}" as="c" hint-placeholder-count="19">
+        <input class="num" type="number" step="{{ tick }}" value="{{ c.v }}" onChange="{{ c.set }}" style="{{ c.style }}">
+      </sc-for>
+    </div>
+    <div style="{{ gridStyle }}">
+      <div style="font-size: 9px; color: #5d606b; line-height: 19px;">L</div>
+      <sc-for list="{{ colL }}" as="c" hint-placeholder-count="19">
+        <input class="num" type="number" step="{{ tick }}" value="{{ c.v }}" onChange="{{ c.set }}" style="{{ c.style }}">
+      </sc-for>
+    </div>
+    <div style="{{ gridStyle }}">
+      <div style="font-size: 9px; color: #5d606b; line-height: 19px;">C</div>
+      <sc-for list="{{ colC }}" as="c" hint-placeholder-count="19">
+        <input class="num" type="number" step="{{ tick }}" value="{{ c.v }}" onChange="{{ c.set }}" style="{{ c.style }}">
+      </sc-for>
+    </div>
+    <div style="{{ gridStyle }}">
+      <div></div>
+      <sc-for list="{{ colDel }}" as="c" hint-placeholder-count="19">
+        <button onClick="{{ c.del }}" style="background: none; border: none; color: #3a3e4a; cursor: pointer; font-size: 11px; line-height: 12px; padding: 0;">×</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 0; border: 1px solid #2a2e39; border-radius: 3px; background: #171b26; display: flex; flex-direction: column; overflow: hidden;">
+    <div style="padding: 5px 12px; font-size: 10px; color: #787b86; border-bottom: 1px solid #2a2e39; letter-spacing: 0.4px;">ЛЕСТНИЦА СОБЫТИЙ</div>
+    <div style="flex-grow: 1; overflow: auto; padding: 4px 0;">
+      <sc-for list="{{ events }}" as="e" hint-placeholder-count="8">
+        <div style="display: flex; gap: 10px; align-items: center; padding: 2px 12px;">
+          <div style="{{ e.dotStyle }}"></div>
+          <div class="num" style="font-size: 11px; color: #787b86; width: 66px; flex-shrink: 0;">{{ e.at }}</div>
+          <div style="{{ e.textStyle }}">{{ e.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"tick":{"editor":"float","default":0.25,"min":0.01,"max":100,"step":0.01,"section":"Данные"},"maxBars":{"editor":"int","default":20,"min":5,"max":40,"section":"Данные"}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var ps = this.presets();
+    this.state = { key: 'real', bars: this.toRows(ps.real.bars), upTo: 999, sel: -1, spacing: 0, live: false };
+  }
+
+  toRows(arr) {
+    return arr.map(function (b) {
+      return { o: String(b[0]), h: String(b[1]), l: String(b[2]), c: String(b[3]), t: b[4] || '' };
+    });
+  }
+
+  presets() {
+    return {
+      real: {
+        label: 'NQ 11м · реальный 2X',
+        note: 'Реальные свечи: NQ1! 11 минут, 28 августа, время нью-йоркское. Зона 29625.00 / 29617.25 — тот самый синий бокс, который рисует RIZ BLUE. Поставь бар 11:47 и включи «живой»: превью синего горит при nx=1, счётчик уйдёт на 2 только на закрытии в 11:58.',
+        bars: [
+          [29680.75, 29703.25, 29625, 29650.25, '09:46'],
+          [29650.75, 29706, 29566, 29572.5, '09:57'],
+          [29573.25, 29617.25, 29505, 29596, '10:08'],
+          [29596.75, 29675.75, 29596.25, 29653.5, '10:19'],
+          [29653.5, 29713, 29632, 29700.75, '10:30'],
+          [29700.25, 29769.75, 29686.5, 29754.25, '10:41'],
+          [29754.25, 29811.5, 29753.25, 29790, '10:52'],
+          [29789.5, 29806.25, 29735.25, 29758.5, '11:03'],
+          [29757.75, 29775, 29738, 29768.5, '11:14'],
+          [29768.5, 29791.25, 29758.75, 29762.25, '11:25'],
+          [29762.5, 29769, 29660.5, 29662.75, '11:36'],
+          [29662.75, 29672.25, 29547.5, 29557.25, '11:47'],
+          [29557.25, 29579.75, 29509.75, 29578.75, '11:58']
+        ]
+      },
+      wick: {
+        label: 'NQ 5м · умерла за один бар',
+        note: 'Реальные свечи: NQ1! 5 минут, воскресенье 30 августа. BISI 29480.00 / 29471.00 рождается в 18:20 и удаляется уже на следующем баре. Телу бара 18:25 не хватило 2.25 пункта до юга — вместо активации зона стёрлась двумя тенями сразу.',
+        bars: [
+          [29540, 29546.25, 29455.75, 29465.25, '18:00'],
+          [29466.25, 29472.75, 29448, 29457.25, '18:05'],
+          [29457.25, 29471.25, 29446.75, 29471, '18:10'],
+          [29471.25, 29489.5, 29467.25, 29484, '18:15'],
+          [29485.75, 29495, 29480, 29480, '18:20'],
+          [29481.75, 29483.5, 29470.5, 29473, '18:25'],
+          [29474.75, 29476.5, 29451.5, 29455.5, '18:30'],
+          [29456.25, 29463.25, 29432.5, 29446.75, '18:35'],
+          [29446.25, 29454, 29428, 29436.75, '18:40'],
+          [29436, 29453.5, 29435, 29443, '18:45']
+        ]
+      },
+      whatif: {
+        label: 'NQ 5м · «а если бы» → 04:40',
+        note: 'Тот же тейп с одной правкой: у бара 18:25 Low поднят с 29470.50 до 29472.75, юг 29471.00 уцелел. Дальше всё настоящее, все бары 01:15–02:10 на месте. Вырезаны только пустые часы 18:40–01:10 и 02:15–04:35, стрелка отмечает шов.',
+        bars: [
+          [29457.25, 29471.25, 29446.75, 29471, '18:10'],
+          [29471.25, 29489.5, 29467.25, 29484, '18:15'],
+          [29485.75, 29495, 29480, 29480, '18:20'],
+          [29481.75, 29483.5, 29472.75, 29473, '18:25*'],
+          [29474.75, 29476.5, 29451.5, 29455.5, '18:30'],
+          [29456.25, 29463.25, 29432.5, 29446.75, '18:35'],
+          [29442.75, 29477, 29442.25, 29471.75, '→01:15'],
+          [29471.5, 29472.25, 29455.5, 29466.75, '01:20'],
+          [29467.75, 29477.25, 29463, 29470, '01:25'],
+          [29470, 29474.25, 29443.75, 29451.75, '01:30'],
+          [29450.5, 29452, 29439.25, 29442.5, '01:35'],
+          [29442, 29456.25, 29426.25, 29442, '01:40'],
+          [29442.25, 29452, 29437.25, 29439, '01:45'],
+          [29439.5, 29448, 29432, 29448, '01:50'],
+          [29447.75, 29462.5, 29444.5, 29462.25, '01:55'],
+          [29462, 29468, 29448.75, 29468, '02:00'],
+          [29468.25, 29489.5, 29466.75, 29486.25, '02:05'],
+          [29485.5, 29503.5, 29485.25, 29500.5, '02:10'],
+          [29490.25, 29491.5, 29475, 29484.5, '→04:40']
+        ]
+      },
+      blank: {
+        label: 'Чистый лист',
+        note: 'Ничего не сформировано — четыре нейтральные свечи. Дальше твоя работа: правь числа под графиком, добавляй свечи, жми «Случайные», пока не появится ситуация, про которую хочется спросить.',
+        bars: [[100,101,99,100.5],[100.5,101.5,99.5,100],[100,101,99,100.5],[100.5,101.5,99.5,100]]
+      },
+      a: {
+        label: '1X — синий не зажёгся',
+        note: 'Тело прошило зону ровно один раз. nx=1, обе границы живы — но синим это не делает. Один span это ещё не RIZ 2X.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[100,107,99,106],[102,102.75,99,100],[100,102.75,98,101]]
+      },
+      b: {
+        label: 'cr+2 — ранний повтор убивает',
+        note: 'Повтор на следующем же баре не засчитывается за span, и бар проваливается в ветку теней. А тело, прошившее зону насквозь, тенями обязательно накрывает обе границы — обе снимаются, зона удаляется.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[100,107,99,106],[106,107,99,100],[100,103,98,101]]
+      },
+      brk1: {
+        label: 'Брейкер · свип севера',
+        note: 'Обе стороны живы. Бар открывается ВНУТРИ зоны, тенью снимает север и закрывается под югом. Телом зону он не прошил: верх тела остался под севером, туда сходила только тень. Ветка sbk2.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[100,107,99,106],[102,102.75,99,100],[104,106,101,102],[102,102.75,100,101]]
+      },
+      brk2: {
+        label: 'Брейкер · сторона уже снята',
+        note: 'Север снят тенью заранее, зона осталась односторонней. Потом тело просто закрывается сквозь юг — лишних условий на хай тут нет. Ветка sbk, самая частая на реальном рынке.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[106,107,104,106],[106,107,104,105],[104,105,100,101]]
+      },
+      brk3: {
+        label: 'Брейкер вверх',
+        note: 'Зеркальный случай: бар открылся под севером, тенью достал юг и закрылся над севером. Зона уходит в tier 3, но магнит теперь сверху — ветка nbk2, t3=false.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[100,107,99,106],[102,102.75,99,100],[104,107,102,106]]
+      },
+      d: {
+        label: '2X без синего — одна граница',
+        note: 'Север снят тенью ещё до активации. Дальше зона честно набирает nx=2, но strict2x требует обе живые стороны — синей она не станет никогда.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[106,107,104,105.5],[105.5,106,99,100],[104,105.5,103.5,104.5],[105.5,106,99,100]]
+      },
+      e: {
+        label: '3X',
+        note: 'Три принятых span-а с зазором cr+2. Тот же объект и тот же riz_id — 3X это подтип одной зоны, а не новая зона.',
+        bars: [[112,113,109,111],[110,112,105,108],[108,109,99,100],[100,103,98,99],[100,107,99,106],[102,102.75,99,100],[100,107,99,106],[101,102.75,99,100],[100,107,99,106]]
+      }
+    };
+  }
+
+  num(v) { var n = parseFloat(v); return isFinite(n) ? n : 0; }
+
+  fmt(v) { return String(Math.round(v * 100) / 100); }
+
+  randomBars(n, tick) {
+    var step = tick > 0 ? tick : 0.25;
+    var snap = function (v) { return Math.round(v / step) * step; };
+    var out = [], px = 100;
+    for (var i = 0; i < n; i++) {
+      var big = Math.random() < 0.32;
+      var dir = Math.random() < 0.5 ? -1 : 1;
+      var body = (big ? 2.5 + Math.random() * 4.5 : 0.25 + Math.random() * 1.6) * dir;
+      var o = snap(px), c = snap(o + body);
+      if (c === o) c = snap(o + step * (dir > 0 ? 1 : -1));
+      var reach = big ? 1.4 : 0.9;
+      var h = snap(Math.max(o, c) + Math.random() * reach);
+      var l = snap(Math.min(o, c) - Math.random() * reach);
+      out.push({ t: '', o: String(o), h: String(h), l: String(l), c: String(c) });
+      px = c;
+    }
+    return out;
+  }
+
+  candleWidth(barSpacing) {
+    var to = 4;
+    if (barSpacing >= 2.5 && barSpacing <= to) return 3;
+    var coeff = 1 - 0.2 * Math.atan(Math.max(to, barSpacing) - to) / (Math.PI * 0.5);
+    return Math.max(1, Math.min(Math.floor(barSpacing * coeff), Math.floor(barSpacing)));
+  }
+
+  mkZone(t, b, bull, i) {
+    return { t: t, b: b, bull: bull, nn: true, ss: true, ac: false, cr: -1, ti: 0, t3: false, nx: 0,
+             born: i, dead: false, deadAt: -1, x1At: -1, x2At: -1 };
+  }
+
+  isBlue(z) { return !z.dead && (z.ti === 1 || z.ti === 2) && z.nx >= 2 && z.nn && z.ss; }
+
+  dyn(z, b, idx) {
+    var zt = z.t, zb = z.b, nA = z.nn, sA = z.ss, tr = z.ti, zCr = z.cr;
+    var pbmin = Math.min(b.o, b.c), pbmax = Math.max(b.o, b.c);
+    var spanNow = pbmin < zb && pbmax > zt;
+    var spanOK = spanNow && idx >= zCr + 2;
+    var nAp = nA && !(!spanOK && b.l <= zt && b.h >= zt);
+    var sAp = sA && !(!spanOK && b.l <= zb && b.h >= zb);
+    var brkS  = tr !== 3 && !spanNow && sA && !nA && b.o > zb && b.c < zb;
+    var brkN  = tr !== 3 && !spanNow && nA && !sA && b.o < zt && b.c > zt;
+    var brkS2 = tr !== 3 && !spanNow && nA && sA && b.o > zb && b.c < zb && b.h >= zt && b.c <= zt;
+    var brkN2 = tr !== 3 && !spanNow && nA && sA && b.o < zt && b.c > zt && b.l <= zb && b.c >= zb;
+    var brkAny = brkS || brkN || brkS2 || brkN2;
+    var strict2x = nA && sA && nAp && sAp;
+    var is2xLive = (tr === 1 || tr === 2) && z.nx >= 2 && strict2x;
+    var is2xPreview = (tr === 1 || tr === 2) && strict2x && spanNow && idx >= zCr + 2;
+    return { nAp: nAp, sAp: sAp, spanNow: spanNow, spanOK: spanOK, brkAny: brkAny,
+             is2x: (is2xLive || is2xPreview) && !brkAny,
+             preview: is2xPreview && !is2xLive && !brkAny };
+  }
+
+  machine(bars) {
+    var self = this;
+    var zones = [], log = [];
+    for (var i = 0; i < bars.length; i++) {
+      var o = bars[i].o, h = bars[i].h, l = bars[i].l, c = bars[i].c;
+      var bmin = Math.min(o, c), bmax = Math.max(o, c);
+      for (var k = zones.length - 1; k >= 0; k--) {
+        var z = zones[k];
+        if (z.dead) continue;
+        var zt = z.t, zb = z.b;
+        var tagz = self.fmt(zt) + '/' + self.fmt(zb) + ' — ';
+        if (z.ti === 3) {
+          if (z.t3 ? h >= zb : l <= zt) {
+            z.dead = true; z.deadAt = i;
+            log.push({ i: i, kind: 'dead', text: tagz + 'брейкер отработан, зона удалена' });
+          }
+          continue;
+        }
+        var span = bmin < zb && bmax > zt;
+        if (span && (!z.ac || i >= z.cr + 2)) {
+          if (!z.ac) {
+            z.ac = true; z.ti = (z.nn && z.ss) ? 1 : 2; z.nx = 1; z.x1At = i;
+            log.push({ i: i, kind: 'x1', text: tagz + 'span #1, активация, nx=1, tier=' + z.ti });
+          } else {
+            z.nx = z.nx + 1;
+            if (z.nx === 2) z.x2At = i;
+            var tail = '';
+            if (z.nx === 2) tail = (z.nn && z.ss) ? ' — СИНИЙ 2X' : ' — 2X есть, синего нет: граница снята';
+            log.push({ i: i, kind: z.nx === 2 ? 'x2' : 'xn', text: tagz + 'span #' + z.nx + tail });
+          }
+          z.cr = i;
+        } else {
+          var nAl = z.nn, sAl = z.ss;
+          var sbk = !span && sAl && !nAl && o > zb && c < zb;
+          var nbk = !span && nAl && !sAl && o < zt && c > zt;
+          var sbk2 = !span && nAl && sAl && o > zb && c < zb && h >= zt && c <= zt;
+          var nbk2 = !span && nAl && sAl && o < zt && c > zt && l <= zb && c >= zb;
+          if (sbk || nbk || sbk2 || nbk2) {
+            z.nn = false; z.ss = false; z.ti = 3; z.t3 = !!(sbk || sbk2); z.ac = true; z.cr = i;
+            var br = sbk ? 'sbk' : (nbk ? 'nbk' : (sbk2 ? 'sbk2' : 'nbk2'));
+            log.push({ i: i, kind: 'brk', text: tagz + 'БРЕЙКЕР, ветка ' + br + ', магнит ' + (z.t3 ? 'снизу' : 'сверху') });
+          } else {
+            if (l <= zt && h >= zt && z.nn) { z.nn = false; log.push({ i: i, kind: 'ret', text: tagz + 'север снят тенью' }); }
+            if (l <= zb && h >= zb && z.ss) { z.ss = false; log.push({ i: i, kind: 'ret', text: tagz + 'юг снят тенью' }); }
+            if (!z.nn && !z.ss) {
+              z.dead = true; z.deadAt = i;
+              log.push({ i: i, kind: 'dead', text: tagz + 'обе стороны сняты, зона удалена' });
+            }
+          }
+        }
+      }
+      if (i >= 2) {
+        var c1 = bars[i - 2], c2 = bars[i - 1], c3 = bars[i];
+        if (c3.l > c1.h && Math.max(c2.o, c2.c) > c1.h && Math.min(c2.o, c2.c) < c3.l) {
+          var bt1 = Math.max(c1.o, c1.c), bt2 = Math.max(c2.o, c2.c);
+          var c2bb = Math.min(c2.o, c2.c), c3bb = Math.min(c3.o, c3.c);
+          var nb = c2bb > bt1 ? bt1 : c1.h;
+          var nt = c3bb > bt2 ? c3bb : c3.l;
+          if (nt > nb) {
+            zones.push(self.mkZone(nt, nb, true, i));
+            log.push({ i: i, kind: 'born', text: self.fmt(nt) + '/' + self.fmt(nb) + ' — BISI рождается латентной на закрытии C3' });
+          }
+        }
+        if (c3.h < c1.l && Math.min(c2.o, c2.c) < c1.l && Math.max(c2.o, c2.c) > c3.h) {
+          var bb1 = Math.min(c1.o, c1.c), bb2 = Math.min(c2.o, c2.c);
+          var c2bt = Math.max(c2.o, c2.c), c3bt = Math.max(c3.o, c3.c);
+          var nt2 = c2bt < bb1 ? bb1 : c1.l;
+          var nb2 = c3bt < bb2 ? c3bt : c3.h;
+          if (nt2 > nb2) {
+            zones.push(self.mkZone(nt2, nb2, false, i));
+            log.push({ i: i, kind: 'born', text: self.fmt(nt2) + '/' + self.fmt(nb2) + ' — SIBI рождается латентной на закрытии C3' });
+          }
+        }
+      }
+    }
+    return { zones: zones, log: log };
+  }
+
+  renderVals() {
+    var self = this;
+    var tick = this.props.tick != null ? this.props.tick : 0.25;
+    var maxBars = this.props.maxBars != null ? this.props.maxBars : 20;
+    var rowsRaw = this.state.bars;
+    var n = rowsRaw.length;
+    var bars = rowsRaw.map(function (r) {
+      return { o: self.num(r.o), h: self.num(r.h), l: self.num(r.l), c: self.num(r.c), t: r.t };
+    });
+
+    var upTo = Math.min(this.state.upTo, n - 1);
+    if (upTo < 0) upTo = n - 1;
+    var live = !!this.state.live && upTo >= 0;
+    var confirmedTo = live ? upTo - 1 : upTo;
+    var res = this.machine(bars.slice(0, confirmedTo + 1));
+    var zones = res.zones, log = res.log;
+
+    var zview = zones.map(function (z) {
+      if (!live || z.dead) {
+        return { z: z, dv: null, blue: self.isBlue(z), nAlive: z.nn, sAlive: z.ss, brk: z.ti === 3, preview: false };
+      }
+      var dv = self.dyn(z, bars[upTo], upTo);
+      return { z: z, dv: dv, blue: dv.is2x, nAlive: dv.nAp, sAlive: dv.sAp, brk: z.ti === 3 || dv.brkAny, preview: dv.preview };
+    });
+
+    var PANE_W = 1392, PANE_H = 430, AXIS_W = 82, TIME_H = 24;
+    var PLOT_W = PANE_W - AXIS_W, PLOT_H = PANE_H - TIME_H;
+
+    var hi = -Infinity, lo = Infinity;
+    bars.forEach(function (b) { if (b.h > hi) hi = b.h; if (b.l < lo) lo = b.l; });
+    zones.forEach(function (z) { if (z.t > hi) hi = z.t; if (z.b < lo) lo = z.b; });
+    if (!isFinite(hi) || !isFinite(lo) || hi <= lo) { hi = 1; lo = 0; }
+    var sp0 = hi - lo;
+    hi = hi + sp0 * 0.10; lo = lo - sp0 * 0.08;
+    var y = function (p) { return (hi - p) / (hi - lo) * PLOT_H; };
+
+    var autoSpacing = Math.max(4, Math.min(46, PLOT_W / (n + 6)));
+    var barSpacing = this.state.spacing > 0 ? this.state.spacing : autoSpacing;
+    var bodyW = this.candleWidth(barSpacing);
+    var cx = function (i) { return Math.round(8 + barSpacing * (i + 0.5)); };
+
+    var GRID_H = 'rgba(46, 46, 46, 0.1884)', GRID_V = 'rgba(46, 46, 46, 0.1252)';
+    var UP = '#388E3C', DOWN = '#536FBD', WICK = '#131722', AXTEXT = '#131722';
+
+    var hGrid = [], priceLabels = [];
+    for (var g = 0; g <= 6; g++) {
+      var pv = lo + (hi - lo) * (g / 6);
+      var gy = Math.round(y(pv));
+      hGrid.push({ style: 'position: absolute; left: 0px; top: ' + gy + 'px; width: ' + PLOT_W + 'px; height: 1px; background: ' + GRID_H + ';' });
+      priceLabels.push({
+        label: self.fmt(Math.round(pv * 4) / 4),
+        style: 'position: absolute; left: ' + (PLOT_W + 9) + 'px; top: ' + (gy - 9) + 'px; font-size: 14px; line-height: 18px; color: ' + AXTEXT + ';'
+      });
+    }
+
+    var vGrid = [], timeLabels = [];
+    var every = barSpacing >= 30 ? 2 : (barSpacing >= 14 ? 3 : 5);
+    for (var i2 = 0; i2 < n; i2++) {
+      var vx = cx(i2);
+      if (vx > PLOT_W) break;
+      if (i2 % every === 0) {
+        vGrid.push({ style: 'position: absolute; left: ' + vx + 'px; top: 0px; width: 1px; height: ' + PLOT_H + 'px; background: ' + GRID_V + ';' });
+        timeLabels.push({
+          label: bars[i2].t || String(i2),
+          style: 'position: absolute; left: ' + vx + 'px; top: ' + (PLOT_H + 4) + 'px; transform: translateX(-50%); font-size: 12px; line-height: 16px; color: ' + AXTEXT + '; white-space: nowrap;'
+        });
+      }
+    }
+
+    var zoneRects = [];
+    zview.forEach(function (vw) {
+      var z = vw.z, blue = vw.blue;
+      var top = Math.round(y(z.t)), bot = Math.round(y(z.b));
+      var hgt = Math.max(2, bot - top);
+      var left = cx(Math.max(0, z.born - 2)) - Math.round(barSpacing * 0.5);
+      var right = z.dead ? cx(z.deadAt) + Math.round(barSpacing * 0.5) : PLOT_W;
+      var w = Math.max(8, right - left);
+      var bg, br, tag, tagCol;
+      if (z.dead) { bg = 'transparent'; br = '1px dashed rgba(19,23,34,0.35)'; tag = 'снята'; tagCol = 'rgba(19,23,34,0.55)'; }
+      else if (vw.brk) { bg = 'rgba(242,54,69,0.12)'; br = '1px solid #F23645'; tag = z.ti === 3 ? 'брейкер' : 'брейкер (превью)'; tagCol = '#F23645'; }
+      else if (blue) { bg = 'rgba(41,98,255,0.25)'; br = '1px ' + (vw.preview ? 'dashed' : 'solid') + ' #2962FF'; tag = vw.preview ? '2X превью' : '2X'; tagCol = '#2962FF'; }
+      else if (z.nx >= 2) { bg = 'rgba(255,152,0,0.14)'; br = '1px solid #FF9800'; tag = 'nx=' + z.nx + ' без синего'; tagCol = '#B26100'; }
+      else if (z.ac) { bg = 'rgba(19,23,34,0.06)'; br = '1px dashed rgba(19,23,34,0.45)'; tag = '1X'; tagCol = 'rgba(19,23,34,0.7)'; }
+      else { bg = 'transparent'; br = '1px dotted rgba(19,23,34,0.4)'; tag = 'латент'; tagCol = 'rgba(19,23,34,0.55)'; }
+      zoneRects.push({
+        boxStyle: 'position: absolute; left: ' + left + 'px; top: ' + top + 'px; width: ' + w + 'px; height: ' + hgt + 'px; background: ' + bg + '; border: ' + br + '; box-sizing: border-box; pointer-events: none;',
+        tag: tag,
+        tagStyle: 'position: absolute; left: ' + (left + w - 5) + 'px; top: ' + (top + hgt / 2 - 9) + 'px; transform: translateX(-100%); font-size: 12px; line-height: 18px; color: ' + tagCol + '; pointer-events: none; white-space: nowrap;'
+      });
+    });
+
+    var candles = bars.map(function (b, i) {
+      var col = b.c >= b.o ? UP : DOWN;
+      var ghost = i > upTo;
+      var opa = ghost ? '0.22' : '1';
+      var byTop = Math.round(y(Math.max(b.o, b.c)));
+      var bh = Math.max(1, Math.round(y(Math.min(b.o, b.c))) - byTop);
+      var wTop = Math.round(y(b.h)), wBot = Math.round(y(b.l));
+      var x = cx(i), half = Math.floor(bodyW / 2);
+      var sel = self.state.sel === i;
+      return {
+        pick: function () { self.setState({ sel: i, upTo: i }); },
+        hitStyle: 'position: absolute; left: ' + (x - barSpacing / 2) + 'px; top: 0px; width: ' + barSpacing + 'px; height: ' + PLOT_H + 'px; background: ' + (sel ? 'rgba(41,98,255,0.10)' : 'transparent') + '; cursor: pointer;',
+        wickStyle: 'position: absolute; left: ' + x + 'px; top: ' + wTop + 'px; width: 1px; height: ' + Math.max(1, wBot - wTop) + 'px; background: ' + WICK + '; opacity: ' + opa + '; pointer-events: none;',
+        bodyStyle: 'position: absolute; left: ' + (x - half) + 'px; top: ' + byTop + 'px; width: ' + bodyW + 'px; height: ' + bh + 'px; background: ' + col + '; border: 1px solid ' + col + '; box-sizing: border-box; opacity: ' + opa + '; pointer-events: none;'
+      };
+    });
+
+    var markFor = {};
+    zones.forEach(function (z) {
+      if (z.born >= 0) markFor[z.born] = 'C3';
+      if (z.x1At >= 0) markFor[z.x1At] = '1X';
+      if (z.x2At >= 0) markFor[z.x2At] = self.isBlue(z) ? '2X' : '2X?';
+    });
+    zview.forEach(function (vw) { if (live && vw.preview) markFor[upTo] = 'T0?'; });
+    var eventMarks = Object.keys(markFor).map(function (kk) {
+      var i3 = parseInt(kk, 10);
+      return {
+        label: markFor[kk],
+        style: 'position: absolute; left: ' + cx(i3) + 'px; top: ' + (PLOT_H - 17) + 'px; transform: translateX(-50%); font-size: 11px; font-weight: 700; line-height: 14px; color: #2962FF; background: rgba(255,255,255,0.82); border-radius: 2px; padding: 0px 3px; pointer-events: none;'
+      };
+    });
+
+    var inputBase = 'width: 100%; box-sizing: border-box; background: #131722; border: 1px solid #2a2e39; border-radius: 2px; color: #d1d4dc; font-size: 10px; padding: 2px 3px; text-align: center;';
+    var mkSet = function (i, fld) {
+      return function (e) {
+        var next = self.state.bars.slice();
+        var row = { o: next[i].o, h: next[i].h, l: next[i].l, c: next[i].c, t: next[i].t };
+        row[fld] = e.target.value;
+        next[i] = row;
+        self.setState({ bars: next });
+      };
+    };
+    var colHead = [], colO = [], colH = [], colL = [], colC = [], colDel = [];
+    rowsRaw.forEach(function (r, i) {
+      var o = self.num(r.o), h = self.num(r.h), l = self.num(r.l), c = self.num(r.c);
+      var badHi = h < Math.max(o, c), badLo = l > Math.min(o, c);
+      colHead.push({
+        label: r.t || String(i),
+        style: 'font-size: 9px; color: ' + (i <= upTo ? (self.state.sel === i ? '#2962FF' : '#787b86') : '#3a3e4a') + '; text-align: center; white-space: nowrap; overflow: hidden;'
+      });
+      colO.push({ v: r.o, set: mkSet(i, 'o'), style: inputBase });
+      colH.push({ v: r.h, set: mkSet(i, 'h'), style: badHi ? inputBase + ' border-color: #F23645;' : inputBase });
+      colL.push({ v: r.l, set: mkSet(i, 'l'), style: badLo ? inputBase + ' border-color: #F23645;' : inputBase });
+      colC.push({ v: r.c, set: mkSet(i, 'c'), style: inputBase });
+      colDel.push({
+        del: function () {
+          if (self.state.bars.length <= 3) return;
+          var next = self.state.bars.slice();
+          next.splice(i, 1);
+          self.setState({ bars: next, upTo: 999, sel: -1 });
+        }
+      });
+    });
+
+    var kindCol = { born: '#787b86', x1: '#9598a1', x2: '#2962FF', xn: '#2962FF', ret: '#FF9800', brk: '#F23645', dead: '#5d606b' };
+    var events = log.map(function (e) {
+      var strong = e.kind === 'x2';
+      return {
+        at: (bars[e.i] && bars[e.i].t) ? bars[e.i].t : ('бар ' + e.i),
+        text: e.text,
+        dotStyle: 'width: 6px; height: 6px; border-radius: 50%; background: ' + (kindCol[e.kind] || '#787b86') + '; flex-shrink: 0;',
+        textStyle: 'font-size: 11px; color: ' + (strong ? '#d1d4dc' : '#9598a1') + ';' + (strong ? ' font-weight: 600;' : '')
+      };
+    });
+
+    if (live) {
+      var lt = [];
+      zview.forEach(function (vw) {
+        if (vw.z.dead || !vw.dv) return;
+        var head = self.fmt(vw.z.t) + '/' + self.fmt(vw.z.b) + ': ';
+        if (vw.dv.brkAny) lt.push(head + 'условие брейкера выполнено');
+        else if (vw.preview) lt.push(head + 'превью синего горит');
+        else if (vw.dv.spanNow && !vw.dv.spanOK) lt.push(head + 'тело прошивает, но бар раньше cr+2');
+        else if (vw.z.nn && !vw.dv.nAp) lt.push(head + 'север гаснет предварительно');
+        else if (vw.z.ss && !vw.dv.sAp) lt.push(head + 'юг гаснет предварительно');
+      });
+      events.push({
+        at: (bars[upTo] && bars[upTo].t) ? bars[upTo].t : ('бар ' + upTo),
+        text: 'живой бар — ' + (lt.length ? lt.join(' · ') : 'состояние зон не меняется'),
+        dotStyle: 'width: 6px; height: 6px; border-radius: 50%; background: #2962FF; flex-shrink: 0;',
+        textStyle: 'font-size: 11px; color: #d1d4dc; font-style: italic;'
+      });
+    }
+
+    var ps = this.presets();
+    var presetList = Object.keys(ps).map(function (k) {
+      var on = self.state.key === k;
+      return {
+        label: ps[k].label,
+        load: function () { self.setState({ key: k, bars: self.toRows(ps[k].bars), upTo: 999, sel: -1, spacing: 0 }); },
+        style: 'background: ' + (on ? '#2962FF' : '#1e222d') + '; color: ' + (on ? '#ffffff' : '#9598a1') + '; border: 1px solid ' + (on ? '#2962FF' : '#2a2e39') + '; border-radius: 3px; padding: 4px 9px; font-size: 11px; cursor: pointer;'
+      };
+    });
+
+    return {
+      tick: tick,
+      barCountLabel: n + ' / ' + maxBars,
+      presetNote: ps[this.state.key] ? ps[this.state.key].note : 'Свой сценарий: свечи заданы вручную или сгенерированы случайно.',
+      presetList: presetList,
+      hGrid: hGrid, vGrid: vGrid, priceLabels: priceLabels, timeLabels: timeLabels,
+      eventMarks: eventMarks, zoneRects: zoneRects, candles: candles,
+      axisSepStyle: 'position: absolute; left: ' + PLOT_W + 'px; top: 0px; width: 1px; height: ' + PANE_H + 'px; background: ' + GRID_H + ';',
+      timeSepStyle: 'position: absolute; left: 0px; top: ' + PLOT_H + 'px; width: ' + PANE_W + 'px; height: 1px; background: ' + GRID_H + ';',
+      gridStyle: 'display: grid; grid-template-columns: 16px repeat(' + n + ', minmax(0, 1fr)); gap: 3px; align-items: center;',
+      colHead: colHead, colO: colO, colH: colH, colL: colL, colC: colC, colDel: colDel,
+      events: events,
+      legend: [
+        { label: 'латент', chip: 'width: 14px; height: 9px; border: 1px dotted #787b86;' },
+        { label: '1X', chip: 'width: 14px; height: 9px; border: 1px dashed #787b86; background: rgba(120,123,134,0.10);' },
+        { label: 'синий 2X', chip: 'width: 14px; height: 9px; border: 1px solid #2962FF; background: rgba(41,98,255,0.25);' },
+        { label: '2X без синего', chip: 'width: 14px; height: 9px; border: 1px solid #FF9800; background: rgba(255,152,0,0.14);' },
+        { label: 'брейкер', chip: 'width: 14px; height: 9px; border: 1px solid #F23645; background: rgba(242,54,69,0.12);' }
+      ],
+      scrubMin: 0, scrubMax: Math.max(0, n - 1), scrubVal: upTo,
+      scrubLabel: (bars[upTo] && bars[upTo].t) ? bars[upTo].t : ('бар ' + upTo),
+      onScrub: function (e) { self.setState({ upTo: parseInt(e.target.value, 10) }); },
+      liveOn: live,
+      onLive: function (e) { self.setState({ live: !!e.target.checked }); },
+      spacingVal: Math.round(barSpacing),
+      onSpacing: function (e) { self.setState({ spacing: parseInt(e.target.value, 10) }); },
+      randomize: function () {
+        self.setState({ key: 'custom', bars: self.randomBars(Math.min(13, maxBars), tick), upTo: 999, sel: -1, spacing: 0 });
+      },
+      addBar: function () {
+        var cur = self.state.bars;
+        if (cur.length >= maxBars) return;
+        var last = cur[cur.length - 1];
+        var next = cur.slice();
+        next.push({ o: last.c, h: last.c, l: last.c, c: last.c, t: '' });
+        self.setState({ bars: next, upTo: 999, sel: next.length - 1 });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
