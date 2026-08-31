@@ -1,4 +1,4 @@
-# G3 agent adapter
+# G3
 
-Read and follow [`AGENTS.md`](AGENTS.md). It is the shared cold-entry contract
-for every capable agent. This file adds no separate project policy.
+Читай [`AGENTS.md`](AGENTS.md) и работай по нему. Это общий вход для всех
+агентов. Отдельной политики в этом файле нет.

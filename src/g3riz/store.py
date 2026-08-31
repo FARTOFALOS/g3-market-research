@@ -1,20 +1,12 @@
-"""Consolidation and machine-readable materialization status."""
+"""Machine-readable census of the frozen field."""
 
 from __future__ import annotations
 
-import hashlib
 import json
-import os
-import shutil
-import tempfile
 from pathlib import Path
-
-import pyarrow.parquet as pq
 
 from .identity import build_identity
 from .market import MarketSpine
-from .market import sha256_file
-from .schema import EVENT_SCHEMA, PASSPORT_SCHEMA, SEMANTIC_VERSION
 
 
 def read_status(field_root: Path, instruments: tuple[str, ...] = ("ES", "NQ", "YM"),
@@ -96,71 +88,3 @@ def read_status(field_root: Path, instruments: tuple[str, ...] = ("ES", "NQ", "Y
         for item in result["instruments"].values()
     )
     return result
-
-
-def consolidate(field_root: Path, instrument: str) -> dict:
-    cells_root = field_root / instrument / "cells"
-    market = MarketSpine.open_store(field_root.parent / "market" / instrument)
-    manifests: list[dict] = []
-    missing: list[int] = []
-    for tf in range(1, 1441):
-        path = cells_root / f"tf_{tf:04d}" / "manifest.json"
-        if not path.exists():
-            missing.append(tf)
-            continue
-        manifest = json.loads(path.read_text(encoding="utf-8"))
-        if (manifest.get("status") != "complete" or manifest.get("tf_minutes") != tf
-                or manifest.get("build_identity") != build_identity(market, instrument, tf)):
-            raise ValueError(f"invalid cell manifest for {instrument} TF {tf}")
-        manifests.append(manifest)
-    if missing:
-        raise ValueError(f"cannot consolidate {instrument}: {len(missing)} cells missing; first={missing[:10]}")
-
-    target = field_root / instrument / "consolidated"
-    target.parent.mkdir(parents=True, exist_ok=True)
-    tmp = Path(tempfile.mkdtemp(prefix=".consolidated.", dir=target.parent))
-    passport_writer = pq.ParquetWriter(tmp / "passports.parquet", PASSPORT_SCHEMA,
-                                       compression="zstd", use_dictionary=True)
-    event_writer = pq.ParquetWriter(tmp / "events.parquet", EVENT_SCHEMA,
-                                    compression="zstd", use_dictionary=True)
-    passport_rows = event_rows = 0
-    try:
-        for tf in range(1, 1441):
-            cell = cells_root / f"tf_{tf:04d}"
-            ptable = pq.read_table(cell / "passports.parquet", schema=PASSPORT_SCHEMA)
-            etable = pq.read_table(cell / "events.parquet", schema=EVENT_SCHEMA)
-            passport_writer.write_table(ptable)
-            event_writer.write_table(etable)
-            passport_rows += ptable.num_rows
-            event_rows += etable.num_rows
-        passport_writer.close()
-        event_writer.close()
-        digest_payload = "\n".join(m["build_identity"] for m in manifests)
-        manifest = {
-            "schema": "g3-consolidated-field/1", "status": "complete",
-            "semantic_version": SEMANTIC_VERSION, "instrument": instrument,
-            "cell_count": 1440, "tf_min": 1, "tf_max": 1440,
-            "passports": passport_rows, "events": event_rows,
-            "cell_set_digest": hashlib.sha256(digest_payload.encode()).hexdigest(),
-            "output_sha256": {
-                "passports.parquet": sha256_file(tmp / "passports.parquet"),
-                "events.parquet": sha256_file(tmp / "events.parquet"),
-            },
-        }
-        (tmp / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n",
-                                            encoding="utf-8")
-        if target.exists():
-            old = target.with_name(target.name + ".previous")
-            if old.exists():
-                shutil.rmtree(old)
-            os.replace(target, old)
-            os.replace(tmp, target)
-            shutil.rmtree(old)
-        else:
-            os.replace(tmp, target)
-        return manifest
-    except BaseException:
-        passport_writer.close()
-        event_writer.close()
-        shutil.rmtree(tmp, ignore_errors=True)
-        raise

@@ -5,16 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "g3-riz-field"
 version = "0.1.0"
-description = "Persistent ES/NQ/YM RIZ research field"
+description = "Read access to the frozen G3 RIZ field"
 requires-python = ">=3.11"
-dependencies = ["numba>=0.61", "numpy>=2.0", "pandas>=2.2", "pyarrow>=18"]
+dependencies = ["numpy>=2.0", "pandas>=2.2", "pyarrow>=18"]
 
 [project.scripts]
 g3-riz = "g3riz.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]

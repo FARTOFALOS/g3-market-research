@@ -1,8 +1,8 @@
 # G3 glossary
 
-This glossary is the bridge between the operator's market language, canonical
-English terms, and the stored field. A cold agent should use the meanings here,
-not reconstruct them from column names or generic trading literature.
+The bridge between spoken market language — the trader's or the agent's own —
+canonical English terms, and the stored field. Load meanings from here; do not
+reconstruct them from column names or generic trading literature.
 
 Each entry is one of:
 
@@ -157,6 +157,27 @@ future life, not long survival and not deletion.
 
 The following are **research terms**. A study card must operationalize them if
 the exact meaning affects selection or outcome.
+
+### History — `история`
+
+Careful: in Russian this word carries two meanings — **the loaded tape** and **a
+causal story**. In G3 it means only the tape: twenty years of one-minute market
+history. For a causal account say `механика`.
+
+### Mechanism — `механика`, `почему это работает`
+
+A causal account of why price behaves this way. **Optional, and never required to
+accept a finding.** Repeatability on an honestly counted sample is sufficient
+ground. If a mechanism shows up later, good; demanding one up front restricts the
+search to what is already understood.
+
+### Episode vs row — `эпизод` / `строка`
+
+**Research term, and the main way to be fooled here.** The same tape is replayed
+1,440 times per instrument, once per native timeframe. A RIZ on TF 10 and a RIZ
+on TF 15 at the same place and time are two rows and one market event. Overlapping
+RIZ in time inflate the count further. A study must state how many independent
+episodes it has, not how many rows.
 
 ### Context — `контекст`
 
