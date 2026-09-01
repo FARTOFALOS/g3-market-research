@@ -9,8 +9,16 @@ description = "Read access to the frozen G3 RIZ field"
 requires-python = ">=3.11"
 dependencies = ["numpy>=2.0", "pandas>=2.2", "pyarrow>=18"]
 
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
 [project.scripts]
 g3-riz = "g3riz.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+# Bare `pytest` from the repository root would otherwise walk data/field's
+# 4,320 cell directories looking for test files. Collection is the tests/ tree.
+[tool.pytest.ini_options]
+testpaths = ["tests"]

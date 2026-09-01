@@ -11,6 +11,7 @@ import pyarrow.parquet as pq
 
 from .market import MarketSpine
 from .identity import build_identity
+from .film import Film, build_film, passport_rows
 
 
 def _riz_exists_at(passports: pa.Table, minute_pos: int) -> pa.Array:
@@ -108,6 +109,41 @@ class Field:
                 values = np.where(valid, values, np.nan)
             out[name] = values
         return out
+
+    def films(self, passports: pa.Table, *, stop: str = "deletion",
+              pre_roll: int = 0, max_bars: int | None = None,
+              end_positions=None, end_reason: str | None = None):
+        """Yield one Film per passport row. Nothing is written anywhere.
+
+        Every film is anchored at that RIZ's T0 and cut from the open spine,
+        used, and dropped. To end films where a study's own rule says — its
+        first retest, its own exhaustion condition — pass `end_positions`, one
+        spine position per row, together with the phrase naming that rule. This
+        method never evaluates a study's predicate.
+        """
+        rows = passport_rows(passports)
+        if end_positions is not None and len(end_positions) != len(rows):
+            raise ValueError("one end position per passport row is required")
+        for index, row in enumerate(rows):
+            yield build_film(
+                self.market, row, stop=stop, pre_roll=pre_roll,
+                max_bars=max_bars,
+                end_position=(None if end_positions is None
+                              else int(end_positions[index])),
+                end_reason=end_reason)
+
+    def film(self, riz_id: str, *, tf: int, stop: str = "deletion",
+             pre_roll: int = 0, max_bars: int | None = None,
+             end_position: int | None = None,
+             end_reason: str | None = None) -> Film:
+        """One Film by RIZ identity. `tf` is required: `riz_id` does not carry it."""
+        table = self.passports(tf=tf)
+        match = table.filter(pa.compute.equal(table["riz_id"], riz_id))
+        if match.num_rows != 1:
+            raise KeyError(f"{riz_id!r} is not a single RIZ on TF {tf}")
+        return build_film(self.market, passport_rows(match)[0], stop=stop,
+                          pre_roll=pre_roll, max_bars=max_bars,
+                          end_position=end_position, end_reason=end_reason)
 
     def objects_at(self, minute_pos: int, state: str = "alive") -> pa.Table:
         passports = self.passports()
