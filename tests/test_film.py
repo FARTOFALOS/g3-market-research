@@ -61,8 +61,49 @@ def test_a_study_defined_end_must_carry_the_reason_it_cut_there():
                       end_reason="first_close_inside")
     assert film.stop == "first_close_inside"
     assert film.end_reason == "first_close_inside"
-    assert not film.reached_its_stop
+    # The study's end was asked for and observed, so the film reached its stop.
+    assert film.reached_its_stop
     assert film.spine_pos[-1] == 150
+
+
+def test_an_end_before_t0_is_refused_not_quietly_raised_to_t0():
+    """Coercion would hand back a one-bar film still labelled with the event."""
+    with pytest.raises(ValueError, match="before T0"):
+        build_film(_spine(200), _row(), end_position=50,
+                   end_reason="first_close_inside")
+
+
+def test_a_study_end_the_tape_never_reached_reports_the_tape_not_the_event():
+    """The invariant: an end that was not observed is never claimed as reached.
+
+    Otherwise a film that never saw its retest would still name the retest, and
+    a censored episode would enter a study as an observed one. Refusing outright
+    would honour the same invariant; this build instead returns the film with
+    the reason that actually ended observation, which the last two assertions
+    record as this build's choice rather than as the requirement.
+    """
+    film = build_film(_spine(200), _row(), end_position=5_000,
+                      end_reason="first_close_inside")
+    assert not film.reached_its_stop
+    assert film.end_reason != "first_close_inside"
+
+    assert film.end_reason == "archive_edge"
+    assert film.spine_pos[-1] == 199
+
+
+def test_a_budget_outranks_a_study_end_and_says_so():
+    film = build_film(_spine(200), _row(), end_position=150,
+                      end_reason="first_close_inside", max_bars=10)
+    assert not film.reached_its_stop
+    assert film.end_reason != "first_close_inside"
+    assert film.end_reason == "observation_budget"
+
+
+def test_an_exit_side_outside_its_closed_domain_is_refused():
+    """Unknown must not become "not north" and silently invert excursions."""
+    row = _row() | {"t0_exit_side": "sideways"}
+    with pytest.raises(ValueError, match="t0_exit_side"):
+        build_film(_spine(200), row)
 
 
 def test_truncation_removes_the_future_from_the_metadata_too():

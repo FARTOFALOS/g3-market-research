@@ -26,11 +26,14 @@ The film never runs a study's predicate, because the moment it did, one
 definition of retest would quietly become the repository's.
 
 This matters more here than it did in the previous repository, which
-materialized its trajectories and so had to declare one global cap. Measured on
-NQ, the median life to deletion is 162 minutes while p95 is 30,044 and p99 is
-1,017,896. Any single cap would discard almost every observed minute while
-looking like a property of the object. So a cap is always a named budget, never
-a default, and when it bites the film reports `observation_budget`.
+materialized its trajectories and so had to declare one global cap. RIZ
+lifetimes are heterogeneous enough that any single cap would discard most
+observed minutes while looking like a property of the object rather than a
+choice. So a cap is always a named budget, never a default, and when it bites
+the film reports `observation_budget`. The distribution behind that reasoning
+is a market finding: if it is ever needed as evidence it belongs in a card in
+`base/`, with population, denominator, censoring and a rerun path — not in
+this docstring, where no one could check it.
 
 WHAT A FILM CARRIES
 -------------------
@@ -121,8 +124,18 @@ class Film:
 
     @property
     def reached_its_stop(self) -> bool:
-        """True only when the film ran to the end it asked for."""
-        return self.end_reason == "none"
+        """True only when the film ran to the end it was asked for.
+
+        A field stop that arrived reports `none`. A study-defined end that
+        arrived reports its own phrase, unchanged. Everything else — the
+        observation budget biting, the archive ending first, a PIT cursor —
+        means the asked-for end was never observed, and this is False. The
+        distinction matters because a study may use it as a censoring
+        denominator.
+        """
+        if self.end_reason == PIT_TRUNCATION:
+            return False
+        return self.end_reason == "none" or self.end_reason == self.stop
 
     def signed_distances(self) -> dict[str, np.ndarray]:
         """`d = price - boundary` for five measures against both zone prices.
@@ -228,13 +241,33 @@ def build_film(spine, row: dict, *, stop: str = "deletion", pre_roll: int = 0,
         if not end_reason:
             raise ValueError("an explicit end_position needs an end_reason")
         t0 = int(row["t0_spine_pos"])
-        end = max(int(end_position), t0)
+        end = int(end_position)
+        # An end before T0 is an incoherent request, not a short film. Coercing
+        # it up to T0 would hand back a one-bar film still labelled with the
+        # study's event.
+        if end < t0:
+            raise ValueError(
+                f"end_position {end} is before T0 {t0} for RIZ {row.get('riz_id')!r}")
         reason, label = end_reason, end_reason
         if max_bars is not None and (end - t0 + 1) > int(max_bars):
             end = t0 + int(max_bars) - 1
             reason = "observation_budget"
-        end = min(end, len(spine.close) - 1)
+        # The tape running out is what actually stopped observation, so it —
+        # not the study's event — is what the film reports. Otherwise a film
+        # that never reached its retest would still claim it did.
+        if end > len(spine.close) - 1:
+            end = len(spine.close) - 1
+            reason = "archive_edge"
         start = max(0, t0 - int(pre_roll))
+
+    # `t0_exit_side` is a closed domain of the passport. An unexpected value
+    # silently becoming "not north" would read as a genuine south exit and
+    # quietly invert every excursion statistic built on top of it.
+    side = row.get("t0_exit_side")
+    if side not in ("north", "south"):
+        raise ValueError(
+            f"RIZ {row.get('riz_id')!r} has t0_exit_side {side!r}; "
+            f"expected 'north' or 'south'")
 
     sl = slice(start, end + 1)
     n = end - start + 1
@@ -242,7 +275,7 @@ def build_film(spine, row: dict, *, stop: str = "deletion", pre_roll: int = 0,
         riz_id=str(row["riz_id"]), instrument=str(row["instrument"]),
         tf_minutes=int(row["tf_minutes"]), zone_top=float(row["zone_top"]),
         zone_bottom=float(row["zone_bottom"]),
-        exit_up=(str(row["t0_exit_side"]) == "north"),
+        exit_up=(side == "north"),
         stop=label, end_reason=reason, n_pre_roll=int(t0 - start),
         spine_pos=np.arange(start, end + 1, dtype=np.int64),
         close_ts_utc_ns=np.asarray(spine.close_ts_utc_ns[sl]),

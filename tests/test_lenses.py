@@ -98,14 +98,27 @@ def test_vs_last_swing_is_stable_under_truncation():
 
 
 @needs_field
-def test_the_predicates_disagree_on_the_real_corpus(nq_field):
+def test_every_predicate_runs_on_real_films_and_answers_per_minute(nq_field):
+    """An integration sentinel, deliberately carrying no market assertion.
+
+    That the four predicates encode different definitions is proved above, by
+    synthetic counterexamples that cannot depend on which corpus is loaded.
+    Asserting here that their aggregate counts differ on NQ would put an
+    empirical property of one corpus inside the test suite, where it has no
+    territory, denominator or rerun path — and where a green run would slowly
+    start reading as evidence about the market. Equal counts on some corpus
+    would not make two definitions the same, and different counts would confirm
+    nothing.
+
+    So this checks only what a substrate test can honestly check: real films
+    build, every predicate executes on them, and each answers once per minute.
+    """
     passports = nq_field.passports(tf=10).slice(0, 300)
-    counts = {name: 0 for name in interaction.PREDICATES}
     films = 0
     for film in nq_field.films(passports, stop="deletion", max_bars=500):
         films += 1
         for name, fn in interaction.V1.items():
-            counts[name] += int(fn(film)[film.post].sum())
+            answers = fn(film)
+            assert answers.shape == (film.n,), (name, film.riz_id)
+            assert answers.dtype == bool, name
     assert films > 0
-    # Four different questions give four different answers; none is "the" one.
-    assert len(set(counts.values())) > 1, counts

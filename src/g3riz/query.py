@@ -54,11 +54,19 @@ class Field:
             if path is None:
                 raise FileNotFoundError(f"no current complete field cell for {self.instrument} TF {tf}")
             return path
-        paths = [path for value in range(1, 1441)
-                 if (path := current_path(value)) is not None]
-        if not paths:
-            raise FileNotFoundError(f"no current materialized {name} cells under {self.field_root}")
-        return paths
+        # A request without a timeframe asks for the whole population, not for
+        # whatever happened to load. One missing or stale cell out of 1,440
+        # would return a perfectly normal-looking table over 1,439, and a tool
+        # failure would have become a market result.
+        resolved = {value: current_path(value) for value in range(1, 1441)}
+        missing = [value for value, path in resolved.items() if path is None]
+        if missing:
+            shown = missing if len(missing) <= 12 else missing[:12] + ["..."]
+            raise FileNotFoundError(
+                f"incomplete current field for {self.instrument}: {len(missing)} of 1440 "
+                f"{name} cells are absent or stale ({shown}). This is a tool or data "
+                f"failure, not a market answer; run `g3-riz status` before reading.")
+        return [resolved[value] for value in range(1, 1441)]
 
     def passports(self, *, tf: int | None = None, tf_min: int | None = None,
                   tf_max: int | None = None, t0_start_ns: int | None = None,
@@ -101,13 +109,17 @@ class Field:
         positions = self.market.window_positions(anchor_positions, before, after)
         valid = positions >= 0
         safe = np.where(valid, positions, 0)
+        # Index zero is a gather placeholder, never an observation. Every
+        # payload it produced is masked, because a minute that does not exist
+        # must not carry a real timestamp or a plausible volume: floats become
+        # NaN, integral columns become -1, which no epoch or volume can be.
         out = {"positions": positions, "valid": valid,
-               "close_ts_utc_ns": np.asarray(self.market.close_ts_utc_ns[safe])}
+               "close_ts_utc_ns": np.where(
+                   valid, np.asarray(self.market.close_ts_utc_ns[safe]), -1)}
         for name in columns:
             values = np.asarray(getattr(self.market, name)[safe])
-            if np.issubdtype(values.dtype, np.floating):
-                values = np.where(valid, values, np.nan)
-            out[name] = values
+            fill = np.nan if np.issubdtype(values.dtype, np.floating) else -1
+            out[name] = np.where(valid, values, fill)
         return out
 
     def films(self, passports: pa.Table, *, stop: str = "deletion",
