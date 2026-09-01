@@ -149,11 +149,34 @@ from g3riz.query import Field
 field = Field(Path.cwd(), "NQ")
 zones = field.passports(tf=10)
 windows = field.minute_windows(zones["t0_spine_pos"].to_numpy(), before=30, after=120)
+
+minute_pos = int(zones["t0_spine_pos"][0].as_py())
 stack = field.objects_at(minute_pos, state="blue")
 ```
 
 `passports`, `events`, `minute_windows`, `objects_at` читают записанные факты.
 Машину они не запускают.
+
+Жизнь одного риза смотрят через **Film** — ленту вокруг T0, которая нигде не
+сохраняется:
+
+```python
+from g3riz.tracks import core_tracks
+
+for film in field.films(zones.slice(0, 50), stop="deletion", max_bars=240):
+    t = core_tracks(film)          # film.post — только после T0, пре-ролл отрицателен
+```
+
+У фильма один T0 и названный конец: `deletion`, `blue_end`, `archive_edge`,
+бюджет наблюдения или позиция, которую исследование посчитало само. Конец всегда
+объясняется, а не угадывается. `film.truncate(p)` даёт мир, каким он выглядел на
+минуте `p`, — этим проверяют, что условие не подглядывает в будущее.
+
+`core_tracks` — тринадцать механических чтений одной минуты, без порогов. Всё,
+что требует выбора — порог, окно, задержку подтверждения, — живёт в
+[`lenses/`](src/g3riz/lenses/) и зовётся по имени с версией (`close_inside_v1`);
+изменил правило — новое имя, а не тихая правка старого. Ни трек, ни линза не
+присваивают вывод, evidence или статус сетапа: они считают, решаешь ты.
 
 Клон с GitHub больших байтов не несёт. Нет локальных `data/market` и `data/field`
 — так и скажи. Никогда не выдавай отсутствие данных за пустой рынок и не
