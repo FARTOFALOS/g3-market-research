@@ -1,14 +1,10 @@
-"""What this directory is for, and the fixtures it shares.
+"""Shared fixtures, and what these tests actually cover.
 
-Tests here insure shared assumptions with a large blast radius: field read
-identity, T0 and end/censor/budget semantics, point-in-time properties, and the
-difference between reusable predicates that look alike. A defect that already
-happened once earns a test so it cannot happen quietly again.
-
-NOT tested here: the format of a card, a one-off formula, the order hypotheses
-are picked in, or whether a question is worth asking at all. A green test proves
-the predicate it encodes — never that the right thing was asked of the market.
-No test is a permit to start researching, and none is owed before a question.
+Field read identity, T0 and end/censor/budget semantics, point-in-time
+stability under truncation, and the difference between reusable predicates that
+look alike — the shared substrate whose failure would corrupt many studies at
+once. The rule deciding what belongs here, and what deliberately does not,
+lives in AGENTS.md.
 
 Fixtures: hand-built films, and the real field when it is present.
 """
