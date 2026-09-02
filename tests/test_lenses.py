@@ -122,3 +122,59 @@ def test_every_predicate_runs_on_real_films_and_answers_per_minute(nq_field):
             assert answers.shape == (film.n,), (name, film.riz_id)
             assert answers.dtype == bool, name
     assert films > 0
+
+
+# --- legs -----------------------------------------------------------------
+
+def test_legs_alternate_and_confirm_after_the_turn(nq_field):
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 40)
+    seen = 0
+    for film in nq_field.films(zones, stop="archive_edge", max_bars=240):
+        width = film.width or 1.0
+        legs = directional_change_v1(film, theta=0.5 * width)
+        if len(legs) < 2:
+            continue
+        seen += 1
+        # a directional change reverses; two legs never point the same way
+        assert np.all(legs.direction[1:] != legs.direction[:-1])
+        # confirmation is never before the turn it confirms
+        assert np.all(legs.confirmation_lag >= 0)
+        # legs are ordered in time and confirmed inside the film
+        assert np.all(np.diff(legs.conf_ord) > 0)
+        assert legs.conf_ord[-1] <= film.bar_ord[-1]
+    assert seen >= 5
+
+
+def test_legs_are_decidable_when_they_confirm(nq_field):
+    """The lens claims a leg is knowable at `conf_ord`. Rebuild there and check."""
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 40)
+    checked = 0
+    for film in nq_field.films(zones, stop="archive_edge", max_bars=240):
+        width = film.width or 1.0
+        legs = directional_change_v1(film, theta=0.5 * width)
+        if len(legs) < 2:
+            continue
+        k = 1
+        cut = directional_change_v1(film.truncate(int(legs.conf_ord[k])),
+                                    theta=0.5 * width)
+        assert len(cut) > k
+        assert cut.direction[k] == legs.direction[k]
+        assert cut.turn_ord[k] == legs.turn_ord[k]
+        assert cut.conf_ord[k] == legs.conf_ord[k]
+        checked += 1
+    assert checked >= 5
+
+
+def test_legs_never_read_the_pre_roll(nq_field):
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 20)
+    for film in nq_field.films(zones, stop="archive_edge", pre_roll=30,
+                               max_bars=240):
+        legs = directional_change_v1(film, theta=0.5 * (film.width or 1.0))
+        if len(legs):
+            assert legs.turn_ord.min() >= 0
