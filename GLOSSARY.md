@@ -132,8 +132,10 @@ because those paths return before the test. A RIZ may continue to exist with one
 side alive. Fields include `final_north_alive` and `final_south_alive`;
 lifecycle events give the event time.
 
-Two consequences that cost a session to find, and that any study touching
-lifecycle order must know:
+The machine has always worked this way; it is this entry that described
+something else. Nothing was learned about retirement — a wrong description was
+corrected. Two consequences follow, and any study touching lifecycle order needs
+both:
 
 - **Retirement is not a minute-tape wick touch.** Measured against the tape, the
   recorded minute lands a median 70 minutes after the first minute the tape
