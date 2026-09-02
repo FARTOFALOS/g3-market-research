@@ -124,9 +124,29 @@ Every study must name which endpoint it uses; these endpoints are not synonyms.
 
 ### Boundary retirement — `снятие границы`, `север/юг снят`
 
-**Field fact.** A wick touches a live boundary and that side retires. A RIZ may
-continue to exist with one side alive. Fields include `final_north_alive` and
-`final_south_alive`; lifecycle events give the event time.
+**Field fact, and a per-scale one.** The rule is evaluated at NATIVE BAR close,
+on that bar's own high and low, and it requires the bar's range to *contain* the
+boundary (`bar.low <= boundary <= bar.high`) — not merely to reach it. It is
+also skipped entirely on a bar that produces an accepted span or a breaker,
+because those paths return before the test. A RIZ may continue to exist with one
+side alive. Fields include `final_north_alive` and `final_south_alive`;
+lifecycle events give the event time.
+
+Two consequences that cost a session to find, and that any study touching
+lifecycle order must know:
+
+- **Retirement is not a minute-tape wick touch.** Measured against the tape, the
+  recorded minute lands a median 70 minutes after the first minute the tape
+  reached the boundary price, even at TF 1.
+- **A shared price is not a shared event.** Layers holding the *same exact*
+  boundary retire on one identical minute in only ~10% of cases, and a larger
+  timeframe frequently retires *earlier* than a smaller one, because a longer
+  bar covers the price sooner in wall-clock terms and every timeframe sits at a
+  different phase of the bar grid. Reading "TF 240 retired before TF 15" as
+  market structure is reading bar-grid phase. Strip the word and what remains is
+  price returning to a level, which needs no machine semantics to observe — see
+  [`009`](base/009-okruzhenie-rizov-ne-delit-sleduyushchiy-chas.md) and
+  [`010`](base/010-pamyat-kontaktov-s-urovnem-ploskaya.md).
 
 ### Blue eligibility end — `конец синего состояния`
 
