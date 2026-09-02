@@ -241,7 +241,7 @@ from pathlib import Path
 from g3riz.query import Field
 
 field = Field(Path.cwd(), "NQ")
-zones = field.passports(tf=10)
+zones = field.passports()          # all 1,440 timeframes; tf=N is a slice, not the field
 windows = field.minute_windows(
     zones["t0_spine_pos"].to_numpy(), before=30, after=120
 )
