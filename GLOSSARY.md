@@ -179,6 +179,24 @@ on TF 15 at the same place and time are two rows and one market event. Overlappi
 RIZ in time inflate the count further. A study must state how many independent
 episodes it has, not how many rows.
 
+There is no repository-wide episode predicate, and none is owed. Sharing a T0
+minute is evidence that two RIZ are related, not proof they are one object:
+they may be one event seen at several scales, separate interactions, or an outer
+zone containing an inner one. A study that needs an independent unit defines and
+names its own, and says what that definition throws away. Deduplicating by T0
+minute alone is a diagnostic statistic, never an episode count.
+
+### Film — `фильм`
+
+**Research frame, not a stored field fact.** The minute tape around one T0,
+carrying its own pre-roll and a named end — `deletion`, `blue_end`,
+`archive_edge`, an observation budget, or a position the study closed itself.
+The end is always stated, never guessed. The canonical field does not store
+films: `Field.films()` builds them on demand from recorded facts. A study may
+materialise its own corpus of films locally, and then that corpus — not the word
+— carries provenance: its own identity, the semantic generation it was built
+from, and its selection rule.
+
 ### Context — `контекст`
 
 Information known at the evaluated minute: earlier one-minute bars, RIZ state,
