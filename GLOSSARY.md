@@ -174,10 +174,11 @@ search to what is already understood.
 ### Episode vs row — `эпизод` / `строка`
 
 **Research term, and the main way to be fooled here.** The same tape is replayed
-1,440 times per instrument, once per native timeframe. A RIZ on TF 10 and a RIZ
-on TF 15 at the same place and time are two rows and one market event. Overlapping
-RIZ in time inflate the count further. A study must state how many independent
-episodes it has, not how many rows.
+1,440 times per instrument, once per native timeframe, so a RIZ on TF 10 and a
+RIZ on TF 15 at the same place and time are two rows that **may** be one market
+event. Overlapping RIZ in time inflate the count further. Rows are not
+independent observations by default, and a study must say how many independent
+units it actually has.
 
 There is no repository-wide episode predicate, and none is owed. Sharing a T0
 minute is evidence that two RIZ are related, not proof they are one object:
