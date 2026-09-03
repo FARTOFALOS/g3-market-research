@@ -14,20 +14,29 @@ carries about 25 strict three-bar pivots and 49 close-to-close sign changes in
 instead showed no natural scale either: leg count falls smoothly from 41 to 5.4
 as theta goes from 0.10 to 3.00 ATR, with no plateau.
 
-Read that admission twice before building on this lens. No plateau means the
-segmentation has no intrinsic scale in this data, so every symbol it emits is a
-function of an arbitrary knob, and a search over the knob will report whichever
-setting looked best. A leg also carries only direction, amplitude and two
-minutes: it discards speed, the adverse travel inside the run, and where the
-zone boundaries sat — that is, everything an entry, a stop and a target are made
-of. And a leg is knowable only at `conf`, which is `theta` of give-back after
-its extreme, so its symbol always arrives after price has moved against it by
-exactly the amount that makes it hard to use.
+Read that carefully, and do not over-read it. No plateau shows there is no single
+privileged scale; it does not show the knob is meaningless, because a genuinely
+multiscale tape would produce exactly this smooth decay. What it does mean is
+that `theta` is a free search dimension whose multiplicity has to be paid for
+like any other.
 
-So this lens is a descriptive statistic about a film, not a primitive for setup
-discovery. Cards 017 to 019 used it as the latter and found nothing; the setups
-that did survive in this base (S-01, S-02) are built from counting and level
-events, not from legs.
+Three arguments against this lens were tried in 2026-09 and all three failed, so
+they are recorded here to keep them from being tried again. That latency
+disqualifies it: no — every signal is observed after something happened, S-01
+waits fifteen minutes, and 017 correctly measured forward from `conf`; the
+give-back is a headwind of known size, not a disqualification. That a leg
+discards speed, adverse travel and zone geometry: no — `Legs` is an insufficient
+feature object, not a lossy primitive, and the film it came from still holds all
+of it. That the surviving setups (S-01, S-02) come from counting and level events
+instead: true but weak, being two cases, and those are built on three thresholds
+where this lens has one.
+
+What is actually established is narrower. This lens was broken until 2026-09-03
+and cards 017 to 019 stand on the broken version; the corrected re-measurement
+put 017's survivors at chance width. So the honest status of legs as a discovery
+primitive is unknown, not refuted. Earning promotion needs a leg-based episode
+whose forward path geometry is asymmetric at a frequency worth trading — which
+has not been shown, and was not shown before either.
 
 CLOSES ONLY
 -----------
