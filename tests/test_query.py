@@ -74,19 +74,54 @@ def test_a_window_off_the_end_of_the_tape_is_missing_the_same_way(nq_field):
     assert np.all(np.isnan(window["close"][0][invalid]))
 
 
-def test_t0_events_group_rows_without_losing_layers(nq_field):
-    """Rows are not events: the minute path belongs to the moment, not the TF."""
+@needs_field
+def test_t0_minute_groups_keep_every_layer(nq_field):
+    """Grouping by T0 minute is a diagnostic and must lose no RIZ identity."""
     passports = nq_field.passports(tf=15)
-    events = nq_field.t0_events(passports)
-    assert events.num_rows <= passports.num_rows
-    assert int(events["n_layers"].to_numpy().sum()) == passports.num_rows
-    flat = [r for row in events["riz_ids"].to_pylist() for r in row]
+    groups = nq_field.t0_minute_groups(passports)
+    assert groups.num_rows <= passports.num_rows
+    assert int(groups["n_layers"].to_numpy().sum()) == passports.num_rows
+    flat = [r for row in groups["riz_ids"].to_pylist() for r in row]
     assert sorted(flat) == sorted(passports["riz_id"].to_pylist())
 
 
-def test_t0_events_carry_one_exit_side_per_minute(nq_field):
+@needs_field
+def test_t0_minute_groups_carry_one_exit_side_per_minute(nq_field):
     """The empirical invariant the 008 corpus rests on, re-checked on a slice."""
     passports = nq_field.passports(tf_min=10, tf_max=20)
-    events = nq_field.t0_events(passports)
-    pos = events["t0_spine_pos"].to_numpy()
+    groups = nq_field.t0_minute_groups(passports)
+    pos = groups["t0_spine_pos"].to_numpy()
     assert len(set(pos.tolist())) == len(pos), "a T0 minute carried both sides"
+
+
+@needs_field
+def test_a_shared_t0_minute_is_not_a_shared_exit_boundary(nq_field):
+    """The guard against re-collapsing films by T0 minute.
+
+    A group of layers on one minute is not one film, because the line each
+    film is about — its exit boundary — differs across the layers. If this
+    ever stops finding such minutes on a slice this large, the field changed
+    and every per-minute grouping in the repository needs re-reading.
+    """
+    passports = nq_field.passports(tf_min=30, tf_max=90)
+    groups = nq_field.t0_minute_groups(passports)
+    boundary = {
+        rid: (top if side == "north" else bottom)
+        for rid, side, top, bottom in zip(
+            passports["riz_id"].to_pylist(),
+            passports["t0_exit_side"].to_pylist(),
+            passports["zone_top"].to_pylist(),
+            passports["zone_bottom"].to_pylist())
+    }
+    multi = shared = split = 0
+    for ids in groups["riz_ids"].to_pylist():
+        if len(ids) < 2:
+            continue
+        multi += 1
+        if len({boundary[r] for r in ids}) > 1:
+            split += 1
+        else:
+            shared += 1
+    assert multi > 100, "no multi-layer T0 minutes in this slice"
+    assert split > 0, "every shared T0 minute shared one exit boundary"
+    assert shared > 0, "the reverse case must also exist"

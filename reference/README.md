@@ -1,10 +1,19 @@
 # Read-only semantic reference
 
 `reference/` contains a pinned copy of the Pine source supplied directly by the
-operator for this project. It lets a cold agent inspect the exact RIZ lifecycle
-semantics without relying on another repository or conversation.
+operator for this project, and one worked scene. Together they let a cold agent
+see the exact RIZ lifecycle semantics, and the market those semantics describe,
+without relying on another repository or conversation.
 
-The file is not a runtime dependency and is never an ordinary edit target.
+The Pine file is not a runtime dependency and is never an ordinary edit target.
+
+## `SCENE.md`
+
+One RIZ, one T0, one exit boundary, one minute film, read candle by candle: the
+trader's own calibration screenshot explained, plus the same object located in
+the corpus with its real OHLC. It is not a `base/` card — it establishes what
+object we are counting, not what the market does. Read it before building a
+first film.
 
 ## `pine/RIZ_BLUE_v1.0.pine`
 

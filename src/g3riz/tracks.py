@@ -22,6 +22,17 @@ must be asked for by name.
 passport, not a study's decision, which is why they belong here; the signed
 distances stay orientation-free regardless.
 
+BUT THEY ARE ANCHORED ON `t0_close`, NOT ON THE EXIT BOUNDARY
+------------------------------------------------------------
+The T0 close is where the minute happened to close. The exit boundary is the
+line the trader watches, and it is the one the whole post-T0 language is about.
+These two anchors are a fixed distance apart within one film, so nothing here
+is wrong — but excursion "in points from T0" is not distance from the level,
+and a study that reports the first and says the second has swapped the object.
+Distance from either boundary is already mechanical and already here: `D_TOP`
+and `D_BOTTOM`. Contact with the exit boundary is a lens,
+`lenses.interaction.exit_boundary_touch_v1`.
+
 WHAT THEY ARE NOT
 -----------------
 Thirteen convenient derived readings of bars the field already stored — not the

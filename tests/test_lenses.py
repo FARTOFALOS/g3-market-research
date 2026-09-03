@@ -285,3 +285,103 @@ def test_legs_never_read_the_pre_roll(nq_field):
         legs = directional_change_v1(film, theta=0.5 * (film.width or 1.0))
         if len(legs):
             assert legs.turn_ord.min() >= 0
+
+
+# --- the exit boundary and the trader's first film -------------------------
+
+
+def test_exit_boundary_is_the_side_the_riz_left_through():
+    up = make_film([12, 11], [11, 10], top=10.0, bottom=0.0, exit_up=True)
+    down = make_film([1, 2], [-2, -1], top=10.0, bottom=0.0, exit_up=False)
+    assert up.exit_boundary == 10.0 and up.far_boundary == 0.0
+    assert down.exit_boundary == 0.0 and down.far_boundary == 10.0
+
+
+def test_first_exit_contact_never_returns_the_t0_bar():
+    """T0's own range straddles the exit boundary; that is not a contact."""
+    from g3riz.lenses.interaction import (exit_boundary_touch_v1,
+                                          first_exit_contact_v1)
+
+    # T0 spans the line, +1 stays away, +2 wicks back to it.
+    film = make_film(high=[12.0, 8.0, 10.5], low=[9.0, 6.0, 7.0],
+                     top=10.0, bottom=0.0, exit_up=True)
+    touch = exit_boundary_touch_v1(film)
+    assert bool(touch[0]) and not bool(touch[1]) and bool(touch[2])
+    assert first_exit_contact_v1(film) == 2
+
+
+def test_first_exit_contact_is_none_when_price_never_comes_back():
+    from g3riz.lenses.interaction import first_exit_contact_v1
+
+    film = make_film(high=[12.0, 9.5, 9.0], low=[9.0, 8.0, 7.0],
+                     top=10.0, bottom=0.0, exit_up=True)
+    assert first_exit_contact_v1(film) is None
+
+
+def test_first_exit_contact_counts_a_wick_and_ignores_the_far_side():
+    """A wick to the exit line counts; a body through the far side does not."""
+    from g3riz.lenses.interaction import first_exit_contact_v1
+
+    # South exit at 0.0. +1 dives further; +2 gaps clean over the zone and
+    # sits entirely above the far boundary, so it engages the zone without
+    # ever meeting the line this RIZ actually left through.
+    film = make_film(high=[1.0, -1.0, 12.0], low=[-2.0, -4.0, 11.0],
+                     top=10.0, bottom=0.0, exit_up=False)
+    assert first_exit_contact_v1(film) is None
+
+
+def test_the_exit_boundary_is_not_the_zone():
+    """`shadow_touch` fires on the far side too; the exit predicate does not."""
+    from g3riz.lenses.interaction import (exit_boundary_touch_v1,
+                                          shadow_touch_v1)
+
+    # North exit at 10.0. The last bar sits on the far boundary only.
+    film = make_film(high=[12.0, 11.0, 1.0], low=[9.0, 10.5, -1.0],
+                     top=10.0, bottom=0.0, exit_up=True)
+    assert bool(shadow_touch_v1(film)[2])
+    assert not bool(exit_boundary_touch_v1(film)[2])
+
+
+@needs_field
+def test_t0_closes_beyond_its_exit_boundary_and_no_other(nq_field):
+    """The one invariant that lets a cold agent find the line without a detector.
+
+    T0 is NOT "a minute candle whose body spanned the zone": the intrabar
+    2X preview reads the NATIVE bar's running body, so at TF 54 only ~40% of
+    T0 minutes have a minute body that spans the zone. What always holds is
+    the close being strictly beyond the recorded exit side.
+    """
+    import numpy as np
+
+    for tf in (5, 54, 240):
+        p = nq_field.passports(tf=tf)
+        pos = p["t0_spine_pos"].to_numpy()
+        close = np.asarray(nq_field.market.close[pos], dtype=np.float64)
+        top = p["zone_top"].to_numpy()
+        bottom = p["zone_bottom"].to_numpy()
+        north = np.asarray(p["t0_exit_side"]) == "north"
+        beyond_exit = np.where(north, close > top, close < bottom)
+        beyond_far = np.where(north, close < bottom, close > top)
+        assert beyond_exit.all(), f"TF {tf}: a T0 closed inside its own zone"
+        assert not beyond_far.any(), f"TF {tf}: a T0 closed beyond both sides"
+
+
+@needs_field
+def test_film1_can_be_cut_at_its_own_first_contact(nq_field):
+    """The end-to-end path a study uses: find the contact, cut the film there."""
+    from g3riz.lenses.interaction import first_exit_contact_v1
+
+    zones = nq_field.passports(tf=54).slice(0, 60)
+    cut = 0
+    for film in nq_field.films(zones, stop="archive_edge", max_bars=600):
+        ord_ = first_exit_contact_v1(film)
+        if ord_ is None:
+            continue
+        end_pos = int(film.spine_pos[film.n_pre_roll]) + ord_
+        one = nq_field.film(film.riz_id, tf=54, end_position=end_pos,
+                            end_reason="first_exit_contact_v1")
+        assert one.bar_ord[-1] == ord_
+        assert one.stop == one.end_reason == "first_exit_contact_v1"
+        assert first_exit_contact_v1(one) == ord_
+        cut += 1
+    assert cut >= 20

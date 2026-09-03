@@ -26,6 +26,21 @@ member.
 **Field fact.** The upper and lower fixed prices of the zone:
 `zone_top`, `zone_bottom`. A side may later retire, but its price does not move.
 
+### Exit boundary — `выходная граница`, `сторона ухода`
+
+**Field fact, composed of two.** The boundary price the RIZ left through at T0:
+`zone_top` when `t0_exit_side` is `north`, `zone_bottom` when it is `south`.
+Exposed as `Film.exit_boundary`; the other one is `Film.far_boundary`.
+
+This is the line the trader's post-T0 language is about, and it belongs to the
+RIZ for the whole life of the film — it never moves and never switches sides,
+whatever price later does. The T0 minute closes strictly beyond it in 100% of
+the field and strictly beyond the other boundary in 0% (checked on NQ TF 5, 54,
+240), so a cold agent never needs to re-detect the span to find it.
+
+It is a per-RIZ fact, not a per-minute one. See `Episode vs row` for the
+measured consequence.
+
 ### Width — `ширина риза`
 
 **Field fact.** `zone_top - zone_bottom`, stored as `zone_width`. Width is an
@@ -93,6 +108,30 @@ on which the Blue/2X condition first became observable on the minute tape:
 T0 gives a place and moment, not a trading hypothesis. Minutes before T0 may be
 used as information already known at T0. A proposed decision before T0 is a
 separate precursor question and may not use future knowledge that T0 will occur.
+
+**T0 is not "a minute candle whose body spanned the zone".** The 2X box turns
+blue intrabar, and the Pine reads the body of the FORMING NATIVE bar
+(`is2xPreview`, line 261 of the pinned source), so the span can be half made of
+the native bar's open. On NQ, the T0 minute's own body spans the zone in 68.7%
+of cases at TF 5, 39.8% at TF 54 and 28.1% at TF 240. A hand-written
+minute-body detector therefore measures a different market event on most
+timeframes; this is the exact failure mode AGENTS.md calls
+«тем же способом, каким это записано в поле».
+
+What always holds on the minute tape is the close: strictly beyond
+`t0_exit_side`, never beyond the other side. Take the exit boundary from the
+passport, do not re-derive the span.
+
+### T0 kind — `t0_kind`, `минутное зажигание`, `нативное зажигание`
+
+**Field fact.** How T0 was reached: `minute_ignition` when the intrabar preview
+was what first made Blue/2X visible on the tape, `native_confirmation` when a
+native bar close did. `minute_ignition` dominates (1,029 of 1,046 on NQ TF 54)
+and carries `t0_span_count = 1`, because the second span has not been accepted
+at native close yet — which is not a contradiction of Blue/2X but the reason
+`native_blue_confirmation_*` and `Flicker` exist. See
+[`011`](base/011-nativnoe-podtverzhdenie-pereskazyvaet-put.md) and
+[`012`](base/012-odinokoe-zazhiganie-podglyadyvalo-vperyod.md).
 
 ### Native confirmation — `нативное подтверждение`, `подтверждение на родном ТФ`
 
@@ -207,18 +246,59 @@ minute is evidence that two RIZ are related, not proof they are one object:
 they may be one event seen at several scales, separate interactions, or an outer
 zone containing an inner one. A study that needs an independent unit defines and
 names its own, and says what that definition throws away. Deduplicating by T0
-minute alone is a diagnostic statistic, never an episode count.
+minute alone is a diagnostic statistic, never an episode count, which is why
+`Field.t0_minute_groups()` is named after the grouping and not after an event.
+
+**The collapse is measured, not feared.** On NQ, 44.6% of T0 minutes carry more
+than one RIZ, and 56.6% of those minutes carry two or more DIFFERENT exit
+boundaries — up to 170 on a single minute. Among those, the first post-T0
+contact with the exit boundary falls on a different minute for 46.1% of the
+minutes (p90 spread 22 minutes, worst case 599). One pair: 2006-06-12 07:13 UTC,
+TF 41 leaves north through 1576.00 and TF 44 through 1575.75; first contact is
++1 for one and +205 for the other. Films are per `riz_id`, always.
 
 ### Film — `фильм`
 
-**Research frame, not a stored field fact.** The minute tape around one T0,
-carrying its own pre-roll and a named end — `deletion`, `blue_end`,
-`archive_edge`, an observation budget, or a position the study closed itself.
-The end is always stated, never guessed. The canonical field does not store
-films: `Field.films()` builds them on demand from recorded facts. A study may
-materialise its own corpus of films locally, and then that corpus — not the word
-— carries provenance: its own identity, the semantic generation it was built
-from, and its selection rule.
+**Research frame, not a stored field fact.** The minute tape around ONE
+`riz_id`, anchored at ITS T0, carrying its own pre-roll and a named end —
+`deletion`, `blue_end`, `archive_edge`, an observation budget, or a position the
+study closed itself. The end is always stated, never guessed. The canonical
+field does not store films: `Field.films()` builds them on demand from recorded
+facts. A study may materialise its own corpus of films locally, and then that
+corpus — not the word — carries provenance: its own identity, the semantic
+generation it was built from, and its selection rule.
+
+**Careful with older cards: the word there usually names a fixed window.**
+`H15-фильм` (006, 007), `120-минутный фильм` (008, 016) and `165-минутный
+фильм` (017) are observation budgets over T0-minute groups, not per-RIZ films
+with a market end. A budget is a legitimate named end. It is not the object
+below, and a card measuring one is not evidence about the other.
+
+### Film-1 — `первый фильм`, `Film-1`
+
+**Research frame with an unambiguous end, and the minimal object of per-RIZ
+work.** The minutes from a RIZ's T0 through the FIRST minute after T0 whose
+range meets that RIZ's exit boundary, inclusive. A wick counts.
+`first_exit_contact_v1` returns that ordinal; `Field.film(end_position=...)`
+cuts the film there.
+
+The T0 minute itself never qualifies: its range straddles the line it closed
+beyond, by construction.
+
+**No departure is required, and the word `retest` is avoided for that reason** —
+`retest` smuggles in "price first went away", and here it usually did not. On
+40,000 sampled NQ RIZ the first contact is at +1 minute in 57.7% of cases,
+within 3 minutes in 73.0%, within 15 in 88.4%, and absent inside 600 minutes in
+4.0%. The median Film-1 is one minute long. A study that wants a departure adds
+it to its own selection and reports what that drops.
+
+Nothing canonical follows Film-1. After the first contact the market branches —
+continued contact, departure, return, full traversal, breaker — and no
+repository-wide Film-2 / Film-3 cut exists or is owed. What is owed is that the
+later life stays recoverable without loss: a film with an observation budget
+plus `exit_boundary_touch_v1` over every minute gives that.
+
+Worked out on one real scene in [`reference/SCENE.md`](reference/SCENE.md).
 
 ### Context — `контекст`
 
@@ -232,6 +312,11 @@ Price returns to a specified boundary or zone after a specified departure.
 The machine does not provide a universal retest flag. A study must define the
 line, direction of approach, qualifying touch/close, and whether repeated
 contacts count.
+
+The word carries a condition — that price first left — and the field does not
+supply it. Where the trader says "first retest" about the end of the first film,
+the repository says `first exit contact`; see `Film-1`. Use `retest` only when
+departure is actually in your selection.
 
 ### Return / rejection / continuation / reversal
 

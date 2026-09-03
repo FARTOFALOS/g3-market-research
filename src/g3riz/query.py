@@ -157,24 +157,38 @@ class Field:
                           pre_roll=pre_roll, max_bars=max_bars,
                           end_position=end_position, end_reason=end_reason)
 
-    def t0_events(self, passports: pa.Table | None = None) -> pa.Table:
-        """Group passports into T0 events: one row per (T0 minute, exit side).
+    def t0_minute_groups(self, passports: pa.Table | None = None) -> pa.Table:
+        """Group passports by (T0 minute, exit side). A DIAGNOSTIC, not a unit.
 
-        A RIZ row is not a market event. The same minute of tape is replayed
-        1,440 times per instrument, so 1.27 million passports stand on far
-        fewer moments. The minute path after T0 belongs to the MOMENT, not to
-        the timeframe that noticed it, which is why every study of what price
-        does after T0 counts events and keeps the layers as context.
+        This answers one narrow question: how many distinct T0 minutes stand
+        behind a pile of rows. The same tape is replayed 1,440 times per
+        instrument, so 1.27 million passports sit on far fewer moments, and
+        that ratio is worth knowing.
 
-        Returned columns are the event key, its layer count, and the list of
-        `riz_id` behind it, so nothing about the layers is thrown away -- no
+        IT IS NOT THE RESEARCH OBJECT, and an earlier version of this docstring
+        said it was. The minute path after T0 does NOT belong to the moment,
+        because the line the trader watches after T0 — the boundary the RIZ left
+        through — belongs to the RIZ, not to the minute. Measured on NQ: 44.6%
+        of T0 minutes carry more than one RIZ, and 56.6% of those carry two or
+        more DIFFERENT exit boundaries (up to 170 on one minute). Among the
+        minutes with distinct boundaries, the first post-T0 contact with the
+        exit boundary lands on a different minute for 46.1% of them, p90 spread
+        22 minutes, worst case 599. One pair: 2006-06-12 07:13 UTC, TF 41 at
+        1576.00 and TF 44 at 1575.75, first contact +1 vs +205.
+
+        So a group here is one moment several films started at, never one film.
+        Films are per `riz_id`, always. A study that needs an independent unit
+        defines its own and says what the definition throws away; grouping by
+        T0 minute alone is not that definition.
+
+        Returned columns are the group key, its layer count, and the list of
+        `riz_id` behind it, so nothing about the layers is thrown away — no
         canonical layer is chosen and no boundary is collapsed.
 
-        On the 2026 field this holds exactly, checked on all 224,097 events of
-        ES, NQ and YM: a T0 minute carries ONE exit side, never both. The
-        grouping key still includes the side so that a future generation which
-        breaks the invariant splits into two events instead of silently
-        merging two markets.
+        On the 2026 field a T0 minute carries ONE exit side, never both,
+        checked on all 224,097 groups of ES, NQ and YM. The key still includes
+        the side so that a future generation which breaks the invariant splits
+        into two groups instead of silently merging two markets.
         """
         table = self.passports() if passports is None else passports
         pos = table["t0_spine_pos"].to_numpy()

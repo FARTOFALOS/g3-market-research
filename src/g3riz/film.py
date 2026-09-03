@@ -35,6 +35,26 @@ is a market finding: if it is ever needed as evidence it belongs in a card in
 `base/`, with population, denominator, censoring and a rerun path — not in
 this docstring, where no one could check it.
 
+THE EXIT BOUNDARY IS THE ANCHOR OF THE TRADER'S FIRST FILM
+----------------------------------------------------------
+`t0_exit_side` is a stored passport fact, so the boundary price the RIZ left
+through is a stored fact too: `exit_boundary`. It is the one boundary the
+trader's language is about after T0 — "price came back to the line it left
+through" — and `far_boundary` is the other one.
+
+This matters because the exit boundary belongs to the RIZ, not to the minute.
+On NQ, 44.6% of T0 minutes carry more than one RIZ, and 56.6% of those minutes
+carry two or more DIFFERENT exit boundaries. One measured pair: 2006-06-12
+07:13 UTC ignites TF 41 at 1576.00 and TF 44 at 1575.75 — a quarter point
+apart — and the first minute price comes back to that line is +1 for one and
++205 for the other. Group films by T0 minute and that 204-minute difference is
+gone, replaced by whichever layer happened to be picked. Across the shared-T0
+minutes with distinct boundaries, the first-contact minute differs in 46.1% of
+cases (p90 spread 22 minutes, max 599).
+
+So: one RIZ, one T0, one exit boundary, one film. A shared T0 minute is
+evidence two RIZ are related, never that they are one film.
+
 WHAT A FILM CARRIES
 -------------------
 Stored primitives and nothing derived: spine positions, close timestamps,
@@ -121,6 +141,23 @@ class Film:
     @property
     def width(self) -> float:
         return self.zone_top - self.zone_bottom
+
+    @property
+    def exit_boundary(self) -> float:
+        """The boundary price this RIZ left through at T0.
+
+        Composed from two stored facts and nothing else — the two zone prices
+        and `t0_exit_side` — so it is a fact of the field, not a study's
+        choice, and it is the same number for the whole life of the film. The
+        T0 minute closes strictly beyond it in 100% of the field (checked on
+        NQ TF 5, 54 and 240), and strictly beyond the other boundary in 0%.
+        """
+        return self.zone_top if self.exit_up else self.zone_bottom
+
+    @property
+    def far_boundary(self) -> float:
+        """The other boundary — the one price would cross to pass the zone."""
+        return self.zone_bottom if self.exit_up else self.zone_top
 
     @property
     def reached_its_stop(self) -> bool:
