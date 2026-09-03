@@ -285,6 +285,17 @@ cuts the film there.
 The T0 minute itself never qualifies: its range straddles the line it closed
 beyond, by construction.
 
+**One film per RIZ is the unit of the OBJECT, never the unit of INDEPENDENCE.**
+Two RIZ must have two films — that is what the reset is about — but two films on
+the same tape, close in price and time, can have almost the same outcome for the
+same reason. `riz_id` fixes what is being watched; it says nothing about how
+many independent things were observed. Counting 100,000 films and speaking as if
+100,000 independent observations were made is the same substitution as before,
+wearing the corrected object's clothes. A study reports how many films it
+counted AND how few independent occasions stand behind them — distinct T0
+minutes, distinct sessions, distinct price neighbourhoods — and lets the
+weakest count carry the claim. See `Episode vs row`.
+
 **No departure is required, and the word `retest` is avoided for that reason** —
 `retest` smuggles in "price first went away", and here it usually did not. On
 40,000 sampled NQ RIZ the first contact is at +1 minute in 57.7% of cases,

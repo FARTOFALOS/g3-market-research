@@ -1,6 +1,9 @@
 {
   "schema": "g3-project-state/1",
   "semantic_generation": "g3-t0-primary-x3-anchors/2",
+  "semantic_generation_note": "Identity of the FIELD (materializer semantics). Unchanged by the 2026-09-03 research-object reset.",
+  "research_object_baseline": "per-RIZ Film-1, since 2026-09-03",
+  "research_object_baseline_note": "One RIZ -> one T0 -> its own exit boundary -> its own minute film. Film-1 ends at the first post-T0 minute whose range meets that RIZ's exit boundary. Cards written before this date are 'not carried over' by default: they measured T0-minute packets, fixed windows called films, or geometry anchored on t0_close. See AGENTS.md, GLOSSARY.md, reference/SCENE.md and base/README.md.",
   "phase": "FIELD_COMPLETE",
   "expected_cells": 4320,
   "completed_cells": 4320,
@@ -23,5 +26,5 @@
     "temporary_cells": 0
   },
   "resume_rule": "The current field is complete and frozen. Run python -m g3riz.cli status and query it normally. The materializer was removed from the working tree; it lives in git history at commit dd278b6 and on branch snapshot/pre-restructure. Restore and rebuild only after an explicit trader decision: a new semantic generation, or recovery from verified data loss.",
-  "updated_utc": "2026-08-31"
+  "updated_utc": "2026-09-03"
 }
