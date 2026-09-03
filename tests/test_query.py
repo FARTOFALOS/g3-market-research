@@ -72,3 +72,21 @@ def test_a_window_off_the_end_of_the_tape_is_missing_the_same_way(nq_field):
     assert invalid.any()
     assert np.all(window["close_ts_utc_ns"][0][invalid] == -1)
     assert np.all(np.isnan(window["close"][0][invalid]))
+
+
+def test_t0_events_group_rows_without_losing_layers(nq_field):
+    """Rows are not events: the minute path belongs to the moment, not the TF."""
+    passports = nq_field.passports(tf=15)
+    events = nq_field.t0_events(passports)
+    assert events.num_rows <= passports.num_rows
+    assert int(events["n_layers"].to_numpy().sum()) == passports.num_rows
+    flat = [r for row in events["riz_ids"].to_pylist() for r in row]
+    assert sorted(flat) == sorted(passports["riz_id"].to_pylist())
+
+
+def test_t0_events_carry_one_exit_side_per_minute(nq_field):
+    """The empirical invariant the 008 corpus rests on, re-checked on a slice."""
+    passports = nq_field.passports(tf_min=10, tf_max=20)
+    events = nq_field.t0_events(passports)
+    pos = events["t0_spine_pos"].to_numpy()
+    assert len(set(pos.tolist())) == len(pos), "a T0 minute carried both sides"

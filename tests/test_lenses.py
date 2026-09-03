@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from conftest import make_film, needs_field
 from g3riz.lenses import interaction, swing
@@ -122,3 +123,165 @@ def test_every_predicate_runs_on_real_films_and_answers_per_minute(nq_field):
             assert answers.shape == (film.n,), (name, film.riz_id)
             assert answers.dtype == bool, name
     assert films > 0
+
+
+# --- legs -----------------------------------------------------------------
+
+def _closes(values, exit_up=True):
+    """A film whose closes are exactly `values`; bodies sit inside the bars."""
+    z = np.asarray(values, dtype=float)
+    return make_film(z + 0.5, z - 0.5, close=z, exit_up=exit_up)
+
+
+def test_a_clean_run_produces_no_leg_at_all():
+    """The defect this file exists to keep out.
+
+    Price that only travels has ended no run, so there is nothing to segment.
+    The original lens measured the give-back against an extreme still pinned at
+    the T0 close, so it emitted a leg of amplitude exactly zero pointing against
+    the move — on 79% of NQ films at theta = 0.5 ATR. That fabricated symbol sat
+    first in every sequence read off this lens, made the first real leg the
+    second symbol, and made the first leg-size ratio a division by zero.
+    """
+    from g3riz.lenses.legs import directional_change_v1
+
+    for path in ([0, 1, 2, 3, 4], [0, -1, -2, -3, -4]):
+        legs = directional_change_v1(_closes(path), theta=1.0)
+        assert len(legs) == 0, path
+        assert legs.opening_turn_ord == -1, path
+
+
+def test_the_span_from_t0_to_the_first_turn_is_not_a_leg():
+    """It is travel no give-back has measured, so it is reported apart."""
+    from g3riz.lenses.legs import directional_change_v1
+
+    # up 3, then back 1.1: one turn, and it opens the sequence rather than
+    # being a leg of it.
+    legs = directional_change_v1(_closes([0, 3, 1.9]), theta=1.0)
+    assert len(legs) == 0
+    assert legs.opening_amplitude == 3.0
+    assert (legs.opening_turn_ord, legs.opening_conf_ord) == (1, 2)
+
+    # and the first real leg starts at that turn, not at T0
+    legs = directional_change_v1(_closes([0, 2, 0.75, 1.75]), theta=1.0)
+    assert len(legs) == 1
+    assert legs.opening_turn_ord == 1
+    assert legs.start_ord.tolist() == [1]
+    assert legs.direction.tolist() == [-1]
+    assert legs.amplitude.tolist() == [-1.25]
+    assert legs.turn_ord.tolist() == [2] and legs.conf_ord.tolist() == [3]
+
+
+def test_one_tick_of_noise_cannot_open_a_leg():
+    """A tick up before a large move down must not become a leg of that tick.
+
+    Freezing the run direction at the first bar the extremes separate does
+    exactly that. Starting the sequence at the first turn does not.
+    """
+    from g3riz.lenses.legs import directional_change_v1
+
+    legs = directional_change_v1(_closes([0, 0.1, -5]), theta=1.0)
+    assert len(legs) == 0
+    assert legs.opening_amplitude == pytest.approx(0.1)
+
+
+def test_every_leg_costs_at_least_theta_and_points_the_way_it_moved():
+    """Both follow from the definition, so a violation means fabrication."""
+    from g3riz.lenses.legs import directional_change_v1
+
+    rng = np.random.default_rng(4)
+    for seed_path in rng.normal(size=(40, 90)):
+        z = np.cumsum(seed_path)
+        for theta in (0.3, 0.8, 1.7):
+            legs = directional_change_v1(_closes(z), theta=theta)
+            if not len(legs):
+                continue
+            assert np.all(np.sign(legs.amplitude) == legs.direction)
+            assert np.all(np.abs(legs.amplitude) >= theta - 1e-9)
+            assert np.all(legs.direction[1:] != legs.direction[:-1])
+            assert np.all(legs.confirmation_lag >= 0)
+            # a leg begins where the previous one turned; the first at the
+            # opening turn, never at T0
+            assert legs.start_ord[0] == legs.opening_turn_ord
+            assert np.array_equal(legs.start_ord[1:], legs.turn_ord[:-1])
+
+
+def test_a_turn_is_dated_to_the_earliest_bar_holding_the_extreme():
+    """Ties go to the first bar, or a truncated rebuild would disagree."""
+    from g3riz.lenses.legs import directional_change_v1
+
+    legs = directional_change_v1(_closes([0, 2, 2, 1, 2, 0.9]), theta=1.0)
+    assert legs.opening_turn_ord == 1          # not 2, though both closed at 2
+    assert legs.turn_ord.tolist() == [3, 4]
+    assert legs.amplitude.tolist() == [-1.0, 1.0]
+
+
+def test_the_next_run_carries_the_extreme_the_confirming_bar_set():
+    """Carrying the ended run's extreme instead dates the next turn too late.
+
+    Here the down leg's true low is at bar 4, and the old lens reported bar 5
+    with an amplitude short by 0.1, because it had seeded the low with the high
+    the leg had just left.
+    """
+    from g3riz.lenses.legs import directional_change_v1
+
+    legs = directional_change_v1(_closes([0, 1, 2, 3, 2.4, 2.5, 3.05]), theta=0.5)
+    assert legs.turn_ord.tolist() == [4]
+    assert legs.amplitude[0] == pytest.approx(-0.6)
+
+
+@needs_field
+def test_legs_alternate_and_confirm_after_the_turn(nq_field):
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 40)
+    seen = 0
+    for film in nq_field.films(zones, stop="archive_edge", max_bars=240):
+        width = film.width or 1.0
+        legs = directional_change_v1(film, theta=0.5 * width)
+        if len(legs) < 2:
+            continue
+        seen += 1
+        # a directional change reverses; two legs never point the same way
+        assert np.all(legs.direction[1:] != legs.direction[:-1])
+        # confirmation is never before the turn it confirms
+        assert np.all(legs.confirmation_lag >= 0)
+        # legs are ordered in time and confirmed inside the film
+        assert np.all(np.diff(legs.conf_ord) > 0)
+        assert legs.conf_ord[-1] <= film.bar_ord[-1]
+    assert seen >= 5
+
+
+@needs_field
+def test_legs_are_decidable_when_they_confirm(nq_field):
+    """The lens claims a leg is knowable at `conf_ord`. Rebuild there and check."""
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 40)
+    checked = 0
+    for film in nq_field.films(zones, stop="archive_edge", max_bars=240):
+        width = film.width or 1.0
+        legs = directional_change_v1(film, theta=0.5 * width)
+        if len(legs) < 2:
+            continue
+        k = 1
+        cut = directional_change_v1(film.truncate(int(legs.conf_ord[k])),
+                                    theta=0.5 * width)
+        assert len(cut) > k
+        assert cut.direction[k] == legs.direction[k]
+        assert cut.turn_ord[k] == legs.turn_ord[k]
+        assert cut.conf_ord[k] == legs.conf_ord[k]
+        checked += 1
+    assert checked >= 5
+
+
+@needs_field
+def test_legs_never_read_the_pre_roll(nq_field):
+    from g3riz.lenses.legs import directional_change_v1
+
+    zones = nq_field.passports(tf=15).slice(0, 20)
+    for film in nq_field.films(zones, stop="archive_edge", pre_roll=30,
+                               max_bars=240):
+        legs = directional_change_v1(film, theta=0.5 * (film.width or 1.0))
+        if len(legs):
+            assert legs.turn_ord.min() >= 0

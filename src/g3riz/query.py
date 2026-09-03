@@ -157,6 +157,47 @@ class Field:
                           pre_roll=pre_roll, max_bars=max_bars,
                           end_position=end_position, end_reason=end_reason)
 
+    def t0_events(self, passports: pa.Table | None = None) -> pa.Table:
+        """Group passports into T0 events: one row per (T0 minute, exit side).
+
+        A RIZ row is not a market event. The same minute of tape is replayed
+        1,440 times per instrument, so 1.27 million passports stand on far
+        fewer moments. The minute path after T0 belongs to the MOMENT, not to
+        the timeframe that noticed it, which is why every study of what price
+        does after T0 counts events and keeps the layers as context.
+
+        Returned columns are the event key, its layer count, and the list of
+        `riz_id` behind it, so nothing about the layers is thrown away -- no
+        canonical layer is chosen and no boundary is collapsed.
+
+        On the 2026 field this holds exactly, checked on all 224,097 events of
+        ES, NQ and YM: a T0 minute carries ONE exit side, never both. The
+        grouping key still includes the side so that a future generation which
+        breaks the invariant splits into two events instead of silently
+        merging two markets.
+        """
+        table = self.passports() if passports is None else passports
+        pos = table["t0_spine_pos"].to_numpy()
+        side = np.asarray(table["t0_exit_side"])
+        north = side == "north"
+        key = pos.astype(np.int64) * 2 + north.astype(np.int64)
+        order = np.argsort(key, kind="stable")
+        sorted_key = key[order]
+        starts = np.flatnonzero(np.r_[True, sorted_key[1:] != sorted_key[:-1]])
+        counts = np.diff(np.r_[starts, sorted_key.size])
+        uniq = sorted_key[starts]
+        ids = np.asarray(table["riz_id"])[order]
+        grouped = [ids[a:a + c].tolist() for a, c in zip(starts, counts)]
+        ev_pos = (uniq // 2).astype(np.int64)
+        ev_north = (uniq % 2).astype(bool)
+        return pa.table({
+            "instrument": pa.array([self.instrument] * uniq.size, pa.string()),
+            "t0_spine_pos": pa.array(ev_pos),
+            "t0_exit_side": pa.array(np.where(ev_north, "north", "south")),
+            "n_layers": pa.array(counts.astype(np.int32)),
+            "riz_ids": pa.array(grouped, pa.list_(pa.string())),
+        })
+
     def objects_at(self, minute_pos: int, state: str = "alive") -> pa.Table:
         passports = self.passports()
         mask = _riz_exists_at(passports, minute_pos)
