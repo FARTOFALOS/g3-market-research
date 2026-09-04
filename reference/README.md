@@ -41,6 +41,14 @@ when the question needs it; an automatic two-bar pre-roll cannot provide it.
 For recognition at a particular minute, expose only the prefix and known events.
 Do not use future fields from a full passport as earlier information.
 
+## `ENTRY_CHECK.md`
+
+Пять пар анонимизированных сцен из поля, по одной оси возможного неверного
+чтения на пару, с заранее записанными наивным и объектным чтениями. Измеряет
+не агента, а этот вход: переносит ли он объект свежему читателю. Механизм —
+`python -B -m g3riz.cli entry-check`, записанные прогоны и их границы — в самом
+файле.
+
 ## `pine/RIZ_BLUE_v1.0.pine`
 
 | Property | Value |
