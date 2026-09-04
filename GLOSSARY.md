@@ -28,8 +28,14 @@ member.
 
 ### Exit boundary — `выходная граница`, `сторона ухода`
 
-**Field fact, composed of two.** The boundary price the RIZ left through at T0:
+**Field fact, composed of two.** The boundary price the RIZ crossed at T0:
 `zone_top` when `t0_exit_side` is `north`, `zone_bottom` when it is `south`.
+
+The Russian name says `ухода`, and the word misleads: **price did not leave.**
+The T0 close sits beyond this line by a median 0.30 of its own minute's range —
+1.25 ticks on NQ against a 5.25-tick minute. Use the term for the side, never as
+evidence that a departure happened. See
+[`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md).
 Exposed as `Film.exit_boundary`; the other one is `Film.far_boundary`.
 
 This is the line the trader's post-T0 language is about, and it belongs to the
@@ -92,11 +98,25 @@ latent zone but does not yet make it a stored Blue/2X research object.
 The spacing rule requires at least one complete native bar between accepted
 spans; an adjacent traversal does not increment the counter.
 
+**An `accepted_span` event is reported at the NATIVE BAR's close, not when the
+crossing happened.** The gap is a median 48 minutes (p90 0.7 native bars), and
+at the report minute price stands a median 6.8 minute-ranges beyond the corridor
+against 0.45 at the crossing itself. Reading the event's `market_spine_pos` as
+the moment of the move measures reporting delay and makes it look like
+displacement ([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+
 ### Blue / 2X — `синий риз`, `2X`
 
 **Field qualification.** The zone has two accepted spans while both boundaries
 remain alive. This is the filter that admits the RIZ into the field. It says the
 place is research-worthy, not what price will do next.
+
+In market terms it is a **round trip**: price drove a body through the whole
+corridor one way, went away, came back, and crossed it again the other way. The
+second crossing is counter-directional to the first in 99.1 / 98.7 / 98.6% of
+NQ / ES / YM, and the whole trip takes a median four of the zone's OWN native
+bars at every timeframe from 1 to 1440
+([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
 
 ### T0 — `T0`, `момент отсчёта`
 
@@ -104,6 +124,13 @@ place is research-worthy, not what price will do next.
 on which the Blue/2X condition first became observable on the minute tape:
 `t0_ts_ns`, `t0_spine_pos`, `t0_close`, `t0_exit_side`, `t0_kind`,
 `t0_span_count`.
+
+T0 is the EARLIEST observable instant of that second crossing, which is why the
+minute's close clears the boundary by only a fraction of its own range: it is a
+first-passage overshoot, not a displacement. The same holds for the first
+crossing when it is taken at the instant it happens rather than at the field's
+report. No recorded minute of the object's life has price displaced from the
+line ([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
 
 T0 gives a place and moment, not a trading hypothesis. Minutes before T0 may be
 used as information already known at T0. A proposed decision before T0 is a
@@ -295,6 +322,14 @@ wearing the corrected object's clothes. A study reports how many films it
 counted AND how few independent occasions stand behind them — distinct T0
 minutes, distinct sessions, distinct price neighbourhoods — and lets the
 weakest count carry the claim. See `Episode vs row`.
+
+**The one-minute median is geometry, not market behaviour.** Price never left
+the line, so the next minute usually still covers it; the share of minutes
+covering the boundary then decays 55% → 40% → 34% → 16% by +15, the way price
+standing at a level behaves rather than price returning to one. This holds in
+every width band, including corridors eight times wider than the T0 minute,
+where the +1 contact is MORE frequent, not less
+([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
 
 **No departure is required, and the word `retest` is avoided for that reason** —
 `retest` smuggles in "price first went away", and here it usually did not. On
