@@ -1,19 +1,45 @@
 # Read-only semantic reference
 
 `reference/` contains a pinned copy of the Pine source supplied directly by the
-operator for this project, and one worked scene. Together they let a cold agent
-see the exact RIZ lifecycle semantics, and the market those semantics describe,
-without relying on another repository or conversation.
+operator for this project, a worked scene and contrasting calibration cases.
+Together they let a cold agent see the exact RIZ lifecycle semantics, and the
+market those semantics describe, without relying on another repository or
+conversation.
 
 The Pine file is not a runtime dependency and is never an ordinary edit target.
 
 ## `SCENE.md`
 
-One RIZ, one T0, one exit boundary, one minute film, read candle by candle: the
-trader's own calibration screenshot explained, plus the same object located in
-the corpus with its real OHLC. It is not a `base/` card — it establishes what
-object we are counting, not what the market does. Read it before building a
-first film.
+Begin with the market history and the calibration exercise. The examples
+distinguish minute Blue observation, native confirmation and a precursor that
+has only its first accepted span. Detailed source candles, the trader's original
+example and earlier semantic corrections are optional sections. Exact definitions
+live in `GLOSSARY.md`; the scene teaches their application.
+
+The numerical examples were checked against the frozen field. This does not
+claim that an independent new agent has already passed the transfer exercise.
+
+## Reading a scene from the field
+
+With local data attached, run `python -B -m g3riz.cli status` from the repo root.
+
+```python
+from pathlib import Path
+from g3riz.query import Field
+from g3riz.lenses.interaction import first_exit_contact_v1
+
+field = Field(Path.cwd(), "NQ")
+zones = field.passports(tf=54)
+riz_id = zones["riz_id"][0].as_py()
+film = field.film(riz_id, tf=54, stop="archive_edge", max_bars=600, pre_roll=2)
+contact = first_exit_contact_v1(film)  # ordinal after T0, or None
+```
+
+The 600-bar window is an observation budget, not Film-1. If contact is absent,
+report that limit. Reconstruct longer ancestry from `events` and minute OHLC
+when the question needs it; an automatic two-bar pre-roll cannot provide it.
+For recognition at a particular minute, expose only the prefix and known events.
+Do not use future fields from a full passport as earlier information.
 
 ## `pine/RIZ_BLUE_v1.0.pine`
 

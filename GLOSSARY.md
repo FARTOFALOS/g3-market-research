@@ -1,8 +1,10 @@
 # G3 glossary
 
 The bridge between spoken market language — the trader's or the agent's own —
-canonical English terms, and the stored field. Load meanings from here; do not
-reconstruct them from column names or generic trading literature.
+canonical English terms, and the stored field. This is the single reference for
+exact definitions. Begin with `reference/SCENE.md`; look up the terms you need
+here rather than reading every entry at startup. Do not infer meanings from
+column names or generic trading literature.
 
 Each entry is one of:
 
@@ -12,14 +14,33 @@ Each entry is one of:
 - **research term** — defined by a study and never smuggled in as a field fact;
 - **project architecture** — how meaning is preserved between agents.
 
+## What this contract establishes
+
+Definitions fix object identity, event predicates and observation clocks.
+Numbers cited from studies describe their measured populations; they do not
+silently become admission filters or causal facts. A mechanism may be unknown.
+
+The source minute OHLC and timestamps are observations retained with the
+provenance and uncertainties in `SOURCE_DATA.json`. Canonical time/session
+coordinates and RIZ passports/events are derived from those observations under
+the pinned transform and machine. A **field fact** is a persisted observation
+under that contract, not direct evidence of hidden liquidity or causal force.
+Film and lenses derive views from the field; claims belong in `base/`.
+
 ## Object and coordinates
 
 ### RIZ — `РИЗ`, `риз`
 
-**Field fact.** A zone that reached Blue/2X and entered this repository's
-research population. One stored RIZ has one `riz_id`. In ordinary G3 research,
-the object begins at T0; a pre-T0 candidate is not counted as a RIZ population
-member.
+**Field identity and research meaning.** RIZ research concerns an observable
+scene of repeated price interaction with a previously formed price region,
+after the prescribed lifecycle sequence. The zone locates the scene; T0 anchors
+its first Blue/2X observation; the passport addresses it. The subject is the
+price history and subsequent interactions, not the rectangle or timestamp alone.
+
+One stored RIZ still has one `riz_id`, with the existing Blue/2X admission rule
+unchanged. A pre-T0 candidate is ancestry, not yet a RIZ population member.
+The full worked ancestry and the boundary between observed price geometry and
+a hypothesis of unfilled interest are in `reference/SCENE.md`.
 
 ### North / south — `север` / `юг`
 
@@ -31,18 +52,17 @@ member.
 **Field fact, composed of two.** The boundary price the RIZ crossed at T0:
 `zone_top` when `t0_exit_side` is `north`, `zone_bottom` when it is `south`.
 
-The Russian name says `ухода`, and the word misleads: **price did not leave.**
-The T0 close sits beyond this line by a median 0.30 of its own minute's range —
-1.25 ticks on NQ against a 5.25-tick minute. Use the term for the side, never as
-evidence that a departure happened. See
-[`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md).
+The name `сторона ухода` identifies a side, not a developed departure.
+The proximity measurements and their population are in
+[`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md); they do not define RIZ.
 Exposed as `Film.exit_boundary`; the other one is `Film.far_boundary`.
 
 This is the line the trader's post-T0 language is about, and it belongs to the
 RIZ for the whole life of the film — it never moves and never switches sides,
-whatever price later does. The T0 minute closes strictly beyond it in 100% of
-the field and strictly beyond the other boundary in 0% (checked on NQ TF 5, 54,
-240), so a cold agent never needs to re-detect the span to find it.
+whatever price later does. The T0 minute closes on its exit side; the
+strict-close relation is checked in the scene calibration. Take the recorded
+side and fixed prices directly; do not replace them with a new minute-body
+span detector.
 
 It is a per-RIZ fact, not a per-minute one. See `Episode vs row` for the
 measured consequence.
@@ -81,11 +101,24 @@ rule that the research population begins at T0.
 field preserves direct addresses such as `precursor_formed_ts_ns`, but a cold
 agent does not start by constructing or studying every latent gap.
 
+### Precursor formation — `рождение кандидата`, `precursor`
+
+**Machine provenance.** A latent FVG-derived candidate born at C3's native
+close under the pinned machine's gap, displacement and boundary rules.
+`precursor_formed_ts_ns` addresses formation; the source's C1 origin coordinate
+is not the time at which a completed three-candle pattern was known.
+An arbitrary visual gap does not substitute for this machine predicate.
+
 ### Span — `спан`, `прошив телом`
 
-**Machine provenance / field event.** A candle body traverses the full zone,
-strictly beyond both boundaries. A wick touch or partial body entry is not a
-span.
+**Machine provenance / field event.** The NATIVE candle body traverses the
+full zone: `min(open, close) < zone_bottom` and
+`max(open, close) > zone_top`. Equality, a wick touch or partial body entry is
+not a machine span. A minute observation of a developing native body is not
+the minute body's own traversal. This OHLC body predicate does not establish
+executed volume at every intermediate price or any resting-order inventory.
+Study lens `full_traversal_v1` has inclusive
+boundary comparisons; it is a different named research predicate.
 
 ### Activation — `активация`, `первый спан`
 
@@ -98,27 +131,30 @@ latent zone but does not yet make it a stored Blue/2X research object.
 The spacing rule requires at least one complete native bar between accepted
 spans; an adjacent traversal does not increment the counter.
 
-**An `accepted_span` event is reported at the NATIVE BAR's close, not when the
-crossing happened.** The gap is a median 48 minutes (p90 0.7 native bars), and
-at the report minute price stands a median 6.8 minute-ranges beyond the corridor
-against 0.45 at the crossing itself. Reading the event's `market_spine_pos` as
-the moment of the move measures reporting delay and makes it look like
-displacement ([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+**An `accepted_span` event is reported at native close, which may be later
+than the market crossing.** Its `market_spine_pos` is the report address.
+Reconstruct the minute path when the question concerns the crossing itself;
+the worked example is in `reference/SCENE.md`.
 
 ### Blue / 2X — `синий риз`, `2X`
 
-**Field qualification.** The zone has two accepted spans while both boundaries
-remain alive. This is the filter that admits the RIZ into the field. It says the
-place is research-worthy, not what price will do next.
+**Field qualification with two observation routes.** At native close, Blue
+requires at least two accepted spans, both boundaries alive, and the machine's
+eligible non-breaker tier. Before native close, the second qualifying span can
+be visible on the developing native body under the same spacing/live-boundary
+rules. This minute preview can admit the object at T0 while the persisted
+accepted count is still one. Do not require later native confirmation to keep
+that object, or call the first accepted span (activation) Blue/2X.
 
-The population this filter collects is DOMINATED by a round trip — price drove a
-body through the corridor one way, went away, came back, crossed it again the
-other way — but that shape is a measured population fact, not part of the
-filter. The second crossing is counter-directional to the first in 99.1 / 98.7 /
-98.6% of NQ / ES / YM, so 0.9-1.4% run the same way and are RIZ all the same;
-the trip takes a median four of the zone's own native bars (p25-p75 1.7 to 18)
-([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)). Selecting on the
-dominant shape studies a narrower object than the field contains.
+The clock split is:
+`latent -> first accepted span (activation) -> earliest Blue observation (T0)`;
+then the native bar can confirm that observation or fail to confirm it.
+T0 can also first occur at native confirmation. These are two recorded routes,
+not a requirement to wait for future acceptance. Neither predicts direction.
+
+A frequent shape described in [046](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)
+is a round trip with a counter-directional second crossing. This is an empirical
+description, not a filter: a different qualifying shape remains a RIZ.
 
 ### T0 — `T0`, `момент отсчёта`
 
@@ -127,14 +163,9 @@ on which the Blue/2X condition first became observable on the minute tape:
 `t0_ts_ns`, `t0_spine_pos`, `t0_close`, `t0_exit_side`, `t0_kind`,
 `t0_span_count`.
 
-T0 is the EARLIEST observable instant of that crossing, which is why the minute's
-close clears the boundary by only a fraction of its own range — a median 0.30,
-p90 0.67, above one range in 0.5% of the field. **At T0 price is not in developed
-displacement from the RIZ: T0 records the crossing of the corridor, not an
-impulse already made away from it.** The same holds for the first crossing when
-taken at the instant it happens rather than at the field's report. What price
-does AFTER T0 is a separate question and it can travel far
-([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+T0 records the first observable Blue state. It does not require a developed
+departure or a specified distance from the exit boundary. Subsequent price
+movement and population distance measurements are research questions.
 
 T0 gives a place and moment, not a trading hypothesis. Minutes before T0 may be
 used as information already known at T0. A proposed decision before T0 is a
@@ -166,20 +197,20 @@ at native close yet — which is not a contradiction of Blue/2X but the reason
 
 ### Native confirmation — `нативное подтверждение`, `подтверждение на родном ТФ`
 
-**Field fact.** The later close of the RIZ's native bar that confirms the Blue
-state: `native_blue_confirmation_ts_ns` and
-`native_blue_confirmation_spine_pos`. It is at or after T0 and must not be
-back-ported into earlier minutes.
+**Field fact when present.** The native close at or after T0 that confirms
+Blue: `native_blue_confirmation_ts_ns` and
+`native_blue_confirmation_spine_pos`. Confirmation can be absent. Its presence,
+absence or eventual timing must not be back-ported into earlier decisions.
 
 ### Flicker — `фликер`, `мигающий риз`
 
 **Field fact derived from recorded clocks.** T0 occurred on the minute tape but
 the native bar later failed to confirm Blue. This is a valid research object,
-not a data error.
+not a data error. The eventual failure is not information available at T0.
 
 ### 3X / x3 ignition — `3X`, `третий спан`
 
-**Field fact.** The same RIZ reaches a third accepted span. It remains the same
+**Field fact.** The same RIZ reaches a third-span observation. It remains the same
 `riz_id`; it is not a new zone. `x3_t0_*` records minute observation and
 `x3_t0_confirmed` records native acceptance. G3 does not presume 3X is stronger
 until a study measures that proposition.
@@ -280,13 +311,9 @@ names its own, and says what that definition throws away. Deduplicating by T0
 minute alone is a diagnostic statistic, never an episode count, which is why
 `Field.t0_minute_groups()` is named after the grouping and not after an event.
 
-**The collapse is measured, not feared.** On NQ, 44.6% of T0 minutes carry more
-than one RIZ, and 56.6% of those minutes carry two or more DIFFERENT exit
-boundaries — up to 170 on a single minute. Among those, the first post-T0
-contact with the exit boundary falls on a different minute for 46.1% of the
-minutes (p90 spread 22 minutes, worst case 599). One pair: 2006-06-12 07:13 UTC,
-TF 41 leaves north through 1576.00 and TF 44 through 1575.75; first contact is
-+1 for one and +205 for the other. Films are per `riz_id`, always.
+For a concrete distinction, NQ 2006-06-12 07:13 UTC has two RIZ: TF 41
+exits north through 1576.00 and TF 44 through 1575.75. Their first contacts are
++1 and +205 minutes. A shared T0 does not make their films interchangeable.
 
 ### Film — `фильм`
 
@@ -307,46 +334,34 @@ below, and a card measuring one is not evidence about the other.
 
 ### Film-1 — `первый фильм`, `Film-1`
 
-**Research frame with an unambiguous end, and the minimal object of per-RIZ
-work.** The minutes from a RIZ's T0 through the FIRST minute after T0 whose
-range meets that RIZ's exit boundary, inclusive. A wick counts.
-`first_exit_contact_v1` returns that ordinal; `Field.film(end_position=...)`
-cuts the film there.
+**The first research segment of one RIZ scene.** The minutes from that RIZ's
+T0 through the FIRST minute after T0 whose range meets its exit boundary,
+inclusive. A wick counts. `first_exit_contact_v1` returns that ordinal;
+`Field.film(end_position=...)` cuts the film there. The object retains its
+ancestry and later life beyond this first segment.
 
-The T0 minute itself never qualifies: its range straddles the line it closed
-beyond, by construction.
+The T0 minute is excluded from contact search by definition. Its own body
+need not span the zone. A contact at +1 means one elapsed minute after T0
+and TWO candles inclusive. If observation ends before contact, report that
+limit and censoring; do not invent a contact or a negative outcome.
 
-**One film per RIZ is the unit of the OBJECT, never the unit of INDEPENDENCE.**
-Two RIZ must have two films — that is what the reset is about — but two films on
-the same tape, close in price and time, can have almost the same outcome for the
-same reason. `riz_id` fixes what is being watched; it says nothing about how
-many independent things were observed. Counting 100,000 films and speaking as if
-100,000 independent observations were made is the same substitution as before,
-wearing the corrected object's clothes. A study reports how many films it
-counted AND how few independent occasions stand behind them — distinct T0
-minutes, distinct sessions, distinct price neighbourhoods — and lets the
-weakest count carry the claim. See `Episode vs row`.
+**One film per RIZ preserves object identity; it does not establish
+independence.** Two RIZ retain two films even when they share a T0. Report
+object counts, distinct decision moments, levels and sessions, then state
+how dependence is treated. None of these counts automatically supplies the
+number of independent observations. See `Episode vs row`.
 
-**The one-minute median is geometry, not market behaviour.** Price never left
-the line, so the next minute usually still covers it; the share of minutes
-covering the boundary then decays 55% → 40% → 34% → 16% by +15, the way price
-standing at a level behaves rather than price returning to one. This holds in
-every width band, including corridors eight times wider than the T0 minute,
-where the +1 contact is MORE frequent, not less
-([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+**No departure is required, so first contact is not automatically a retest.**
+A study using `retest` must define and observe a prior departure and report
+the resulting narrower population. Short contact latency alone cannot prove
+that no departure occurred, especially within a one-minute bar. Population
+frequencies and the proximity interpretation belong to
+[`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md); they are not admission rules.
 
-**No departure is required, and the word `retest` is avoided for that reason** —
-`retest` smuggles in "price first went away", and here it usually did not. On
-40,000 sampled NQ RIZ the first contact is at +1 minute in 57.7% of cases,
-within 3 minutes in 73.0%, within 15 in 88.4%, and absent inside 600 minutes in
-4.0%. The median Film-1 is one minute long. A study that wants a departure adds
-it to its own selection and reports what that drops.
-
-Nothing canonical follows Film-1. After the first contact the market branches —
-continued contact, departure, return, full traversal, breaker — and no
-repository-wide Film-2 / Film-3 cut exists or is owed. What is owed is that the
-later life stays recoverable without loss: a film with an observation budget
-plus `exit_boundary_touch_v1` over every minute gives that.
+After Film-1 the same RIZ's life continues. There is no canonical Film-2 /
+Film-3 cut. Preserve OHLC and the chosen observation limits when studying
+later contacts, departures, returns or traversal; an exit-contact mask alone
+does not describe the whole path or recover unobserved intraminute order.
 
 Worked out on one real scene in [`reference/SCENE.md`](reference/SCENE.md).
 

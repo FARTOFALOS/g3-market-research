@@ -83,9 +83,9 @@ def exit_boundary_touch_v1(film: Film) -> np.ndarray:
     close and not a body: those are different questions and get their own
     names when a study needs them.
 
-    True at the T0 bar itself by construction, because the T0 minute's range
-    straddles the line it closed beyond. Callers who mean "afterwards" must
-    say so; `first_exit_contact_v1` does.
+    This predicate evaluates every supplied bar, including T0. Callers
+    asking about a subsequent contact must exclude ordinal zero explicitly;
+    `first_exit_contact_v1` does. No minute-body traversal is required.
     """
     e = film.exit_boundary
     return (film.low <= e) & (film.high >= e)
