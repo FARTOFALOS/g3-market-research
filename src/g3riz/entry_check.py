@@ -274,8 +274,15 @@ READINGS = {
     },
 }
 
+FIRST_CONTACT_ASK = {
+    "a_first_contact": "На какой минуте после T0 в A первый контакт с выходной "
+                       "границей? Ответь числом либо словами «не наблюдалось».",
+    "b_first_contact": "То же для B: число либо «не наблюдалось».",
+}
+
 ASK = {
-    "same_meaning": "разные | одно и то же — разные ли это по смыслу вещи",
+    "same_meaning": "Разные ли это по смыслу вещи? Ответь одним словом из двух: "
+                    "«разные» либо «одно и то же».",
     "difference": "Чем эти две сцены различаются КАК ОБЪЕКТЫ, или почему не "
                   "различаются. Не перечисляй числа: скажи, что это за вещи.",
     "question": "Один осмысленный рыночный вопрос об этой паре и наблюдение, "
@@ -310,7 +317,9 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
                           _offset(rng, float(a_row["t0_close"]))),
         "scene_b": _scene(corpus, b_row, b_pos,
                           _offset(rng, float(field.market.close[b_pos]))),
-        "ask": dict(ASK, a_t0_now="да | нет", b_t0_now="да | нет"),
+        "ask": dict(ASK,
+                    a_t0_now="Есть ли T0 в оцениваемую минуту сцены A? «да» либо «нет».",
+                    b_t0_now="Есть ли T0 в оцениваемую минуту сцены B? «да» либо «нет»."),
     })
     key["P1"] = {"anchor": {"a_t0_now": "да", "b_t0_now": "нет"},
                  "a_exit_side": ru[a_row["t0_exit_side"]]}
@@ -329,7 +338,8 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
                           _offset(rng, float(pair[0][0]["t0_close"]))),
         "scene_b": _scene(corpus, pair[1][0], int(pair[1][0]["t0_spine_pos"]),
                           _offset(rng, float(pair[1][0]["t0_close"]))),
-        "ask": dict(ASK, which_is_confirmed="A | B | нельзя определить"),
+        "ask": dict(ASK, which_is_confirmed="Какая из сцен позже подтвердится "
+                    "нативным баром? «A», «B» либо «нельзя определить»."),
     })
     key["P2"] = {"anchor": {"which_is_confirmed": "нельзя определить"},
                  "hidden_truth": pair[0][1]}
@@ -361,8 +371,7 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
         "object_a": {k: v for k, v in film_x.items() if k != "minutes_from_t0"},
         "object_b": {k: v for k, v in film_y.items() if k != "minutes_from_t0"},
         "minutes_from_t0": film_x["minutes_from_t0"],
-        "ask": dict(ASK, a_first_contact="целое | не наблюдалось",
-                    b_first_contact="целое | не наблюдалось"),
+        "ask": dict(ASK, **FIRST_CONTACT_ASK),
     })
     key["P3"] = {"anchor": {
         "a_first_contact": "не наблюдалось" if kx is None else str(kx),
@@ -384,8 +393,7 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
         "title": "Два первых касания выходной границы",
         "scene_a": film_e,
         "scene_b": film_f,
-        "ask": dict(ASK, a_first_contact="целое | не наблюдалось",
-                    b_first_contact="целое | не наблюдалось"),
+        "ask": dict(ASK, **FIRST_CONTACT_ASK),
     })
     key["P4"] = {"anchor": {"a_first_contact": str(ke), "b_first_contact": str(kf)}}
 
@@ -408,8 +416,7 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
         "title": "Две ленты без продолжения",
         "scene_a": film_h,
         "scene_b": film_g,
-        "ask": dict(ASK, a_first_contact="целое | не наблюдалось",
-                    b_first_contact="целое | не наблюдалось"),
+        "ask": dict(ASK, **FIRST_CONTACT_ASK),
     })
     key["P5"] = {"anchor": {"a_first_contact": str(kh),
                             "b_first_contact": "не наблюдалось"}}
@@ -423,6 +430,7 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
             "Цены сдвинуты, даты и инструмент убраны: искать эти сцены в поле бессмысленно.",
             "Где на префиксе ответа нет — так и напиши: это правильный ответ.",
             "Отвечай тем, что это за объекты, а не тем, как называются колонки.",
+            "Пиши сам ответ, а не подсказку формата из списка «Ответь».",
         ],
         "native_tf_minutes": tf,
         "items": items,
