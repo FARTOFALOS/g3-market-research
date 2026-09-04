@@ -177,8 +177,8 @@ blue intrabar, and the Pine reads the body of the FORMING NATIVE bar
 the native bar's open. On NQ, the T0 minute's own body spans the zone in 68.7%
 of cases at TF 5, 39.8% at TF 54 and 28.1% at TF 240. A hand-written
 minute-body detector therefore measures a different market event on most
-timeframes; this is the exact failure mode AGENTS.md calls
-«тем же способом, каким это записано в поле».
+timeframes. This is the failure `AGENTS.md` names when it says to read the
+event the field already stores instead of writing a candle detector for it.
 
 What always holds on the minute tape is the close: strictly beyond
 `t0_exit_side`, never beyond the other side. Take the exit boundary from the
