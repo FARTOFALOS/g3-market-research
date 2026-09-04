@@ -111,12 +111,14 @@ displacement ([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
 remain alive. This is the filter that admits the RIZ into the field. It says the
 place is research-worthy, not what price will do next.
 
-In market terms it is a **round trip**: price drove a body through the whole
-corridor one way, went away, came back, and crossed it again the other way. The
-second crossing is counter-directional to the first in 99.1 / 98.7 / 98.6% of
-NQ / ES / YM, and the whole trip takes a median four of the zone's OWN native
-bars at every timeframe from 1 to 1440
-([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+The population this filter collects is DOMINATED by a round trip — price drove a
+body through the corridor one way, went away, came back, crossed it again the
+other way — but that shape is a measured population fact, not part of the
+filter. The second crossing is counter-directional to the first in 99.1 / 98.7 /
+98.6% of NQ / ES / YM, so 0.9-1.4% run the same way and are RIZ all the same;
+the trip takes a median four of the zone's own native bars (p25-p75 1.7 to 18)
+([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)). Selecting on the
+dominant shape studies a narrower object than the field contains.
 
 ### T0 — `T0`, `момент отсчёта`
 
@@ -125,12 +127,14 @@ on which the Blue/2X condition first became observable on the minute tape:
 `t0_ts_ns`, `t0_spine_pos`, `t0_close`, `t0_exit_side`, `t0_kind`,
 `t0_span_count`.
 
-T0 is the EARLIEST observable instant of that second crossing, which is why the
-minute's close clears the boundary by only a fraction of its own range: it is a
-first-passage overshoot, not a displacement. The same holds for the first
-crossing when it is taken at the instant it happens rather than at the field's
-report. No recorded minute of the object's life has price displaced from the
-line ([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
+T0 is the EARLIEST observable instant of that crossing, which is why the minute's
+close clears the boundary by only a fraction of its own range — a median 0.30,
+p90 0.67, above one range in 0.5% of the field. **At T0 price is not in developed
+displacement from the RIZ: T0 records the crossing of the corridor, not an
+impulse already made away from it.** The same holds for the first crossing when
+taken at the instant it happens rather than at the field's report. What price
+does AFTER T0 is a separate question and it can travel far
+([`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)).
 
 T0 gives a place and moment, not a trading hypothesis. Minutes before T0 may be
 used as information already known at T0. A proposed decision before T0 is a
