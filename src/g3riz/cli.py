@@ -1,3 +1,4 @@
+"""Командная строка поля: перепись, паспорта и экзамен для входа."""
 from __future__ import annotations
 
 import argparse

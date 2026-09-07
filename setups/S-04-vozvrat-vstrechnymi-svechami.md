@@ -37,5 +37,6 @@ ES, четыре закрытия, возврат до 10 минут, выход
 Повтор: `python -B setups/S-04/run.py`, затем `reversal.py signals`,
 `check.py`, `reversal.py backtest`, `reversal.py selection` из корня.
 Нужны подключённые data/market и data/field, зависимости и полные команды —
-в [документации S-05](S-05/README.md).
+в [документации S-04](S-04/README.md); среда описана у [S-05](S-05/README.md).
+Там же сказано, что `calendar.parquet` из этого каталога читают S-05, S-06 и S-07.
 Правило не требует work/ предыдущих исследователей. Разрешения на торговлю нет.
