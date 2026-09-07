@@ -276,6 +276,16 @@ mapped to this exact endpoint or replaced by the intended earlier endpoint.
 was still alive: `censored`, `still_alive_at_archive_end`. Censoring is unknown
 future life, not long survival and not deletion.
 
+### End of observation — `archive_edge`, `observation_budget`
+
+**Fact about the film, not about the object.** A film always names why it
+stopped. `archive_edge`: the loaded corpus ended there. `observation_budget`: a
+named cap (`max_bars`, counted in post-T0 minutes) bit first. Neither is a death
+of the RIZ, and neither turns a missing event into an absent one. Up to the
+named horizon "it did not happen" is a known fact; past it the outcome is
+unknown and stays in the denominator of the question. `deletion` and `blue_end`
+end the object; these two end the looking.
+
 ## Research language not supplied by the machine
 
 The following are **research terms**. A study card must operationalize them if

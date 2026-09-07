@@ -124,3 +124,70 @@ def test_calendar_horizon_distinguishes_absence_from_a_gap():
     assert example.label(high[:-1], low[:-1], ts[:-1], 10.0) == ("unknown", None)
     mask = np.arange(13) != 7
     assert example.label(high[mask], low[mask], ts[mask], 10.0) == ("unknown", None)
+
+
+def _boundary(obj: dict) -> float:
+    return obj["zone_north"] if obj["t0_exit_side"] == "north" else obj["zone_south"]
+
+
+def _first_contact_from_tape(rows: list, boundary: float):
+    for r in rows:
+        if r["t"] > 0 and r["low"] <= boundary <= r["high"]:
+            return r["t"]
+    return None
+
+
+def _has_departure(rows: list, boundary: float, side: str, before: int) -> bool:
+    """Two consecutive fully outside candles after T0 and before the contact."""
+    outside = [r["t"] for r in rows
+               if 0 < r["t"] < before
+               and (r["low"] > boundary if side == "north" else r["high"] < boundary)]
+    return any(t + 1 in outside for t in outside)
+
+
+@needs_field
+def test_the_key_answers_the_tape_the_reader_is_shown(nq_field):
+    """A generator bug could print one tape and key another. Then a correct
+    reader fails on the examiner's arithmetic, which is what happened on
+    2026-09-07 for the tier line and the P5 wording. Recompute every contact
+    answer from the printed candles alone."""
+    for seed in ("0" * 32, "1" * 32, "a1b2" * 8):
+        paper, key = ec.build_decision_paper(nq_field, 54, seed=seed)
+        items = {it["id"]: it for it in paper["items"]}
+
+        p3 = items["P3"]
+        for label in ("a", "b"):
+            got = _first_contact_from_tape(p3["minutes_from_t0"], _boundary(p3[f"object_{label}"]))
+            assert str(got) == key["P3"]["anchor"][f"{label}_first_contact"], (seed, "P3", label)
+
+        for pid in ("P4", "P5"):
+            for label in ("a", "b"):
+                scene = items[pid][f"scene_{label}"]
+                boundary = _boundary(scene)
+                got = _first_contact_from_tape(scene["minutes_from_t0"], boundary)
+                expected = key[pid]["anchor"][f"{label}_first_contact"]
+                assert (str(got) if got is not None else "не наблюдалось") == expected, (seed, pid, label)
+                if pid == "P4":
+                    retest = got is not None and _has_departure(
+                        scene["minutes_from_t0"], boundary, scene["t0_exit_side"], got)
+                    assert ("да" if retest else "нет") == key["P4"]["anchor"][f"{label}_retest"], (seed, label)
+        # Unobserved is never a known absence: B's later outcome stays "нет".
+        assert key["P5"]["anchor"]["b_later"] == "нет"
+
+
+@needs_field
+def test_p1_p2_scenes_print_every_condition_the_answer_depends_on(nq_field):
+    """The 2026-09-07 reader answered «нельзя определить» and was right: the
+    tier condition was not in the scene, and the contract forbids assuming a
+    missing condition. Every admission fact the key relies on must be visible."""
+    paper, key = ec.build_decision_paper(nq_field, 54, seed="7" * 32)
+    md = ec.paper_markdown(paper)
+    assert md.count("Текущий tier допустим для Blue и не является breaker: да") == 4
+    assert "Blue ещё не наблюдался" in md
+    for item in paper["items"][:2]:
+        for label in ("a", "b"):
+            scene = item[f"scene_{label}"]
+            for fact in ("accepted_spans_so_far", "last_accepted_span_native_bars_ago",
+                         "boundaries_alive", "current_native_bar", "eligible_tier"):
+                assert fact in scene, (item["id"], label, fact)
+            assert f"**{scene['current_native_bar']['open']}**" in md
