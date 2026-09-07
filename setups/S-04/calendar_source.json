@@ -1,0 +1,8 @@
+{
+  "package": "4.13.2",
+  "calendar": "XNYS",
+  "convention": "NYSE cash close, including historical early closes",
+  "reference": "https://www.nyse.com/trade/hours-calendars",
+  "exceptional_closure_checks": 5,
+  "source_timezone_uncertainty": "Canonical timezone follows SOURCE_DATA.json; original feed metadata unknown."
+}

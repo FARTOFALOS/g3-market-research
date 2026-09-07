@@ -1,0 +1,377 @@
+{
+  "robustness": {
+    "NQ_m3_h60_nostop": {
+      "trades_all": 4866,
+      "mean_all": 45.83,
+      "recent_trades": 1569,
+      "recent_total": 204105.0,
+      "recent_mean": 130.1,
+      "recent_median": 120.0,
+      "recent_win": 0.532,
+      "max_dd": 34025.0,
+      "without_best_5pct": -124830.0,
+      "worst_trade": -14220.0,
+      "candles_recent": 1.357,
+      "candles_2006_2012": 1.532,
+      "candles_2013_2019": 0.956,
+      "years": {
+        "2020": {
+          "total": 21115.0,
+          "mean": 85.5,
+          "trades": 247
+        },
+        "2021": {
+          "total": 1685.0,
+          "mean": 6.7,
+          "trades": 252
+        },
+        "2022": {
+          "total": 4355.0,
+          "mean": 17.4,
+          "trades": 250
+        },
+        "2023": {
+          "total": 13290.0,
+          "mean": 53.2,
+          "trades": 250
+        },
+        "2024": {
+          "total": 63945.0,
+          "mean": 254.8,
+          "trades": 251
+        },
+        "2025": {
+          "total": 42525.0,
+          "mean": 176.5,
+          "trades": 241
+        },
+        "2026": {
+          "total": 57190.0,
+          "mean": 733.2,
+          "trades": 78
+        }
+      }
+    },
+    "NQ_m3_h60_stop2": {
+      "trades_all": 4875,
+      "mean_all": -1.73,
+      "recent_trades": 1571,
+      "recent_total": 1600.0,
+      "recent_mean": 1.0,
+      "recent_median": -235.0,
+      "recent_win": 0.131,
+      "max_dd": 64895.0,
+      "without_best_5pct": -260110.0,
+      "worst_trade": -1585.0,
+      "candles_recent": 0.266,
+      "candles_2006_2012": 0.382,
+      "candles_2013_2019": 0.61,
+      "years": {
+        "2020": {
+          "total": -23265.0,
+          "mean": -94.2,
+          "trades": 247
+        },
+        "2021": {
+          "total": -8890.0,
+          "mean": -35.3,
+          "trades": 252
+        },
+        "2022": {
+          "total": -3145.0,
+          "mean": -12.5,
+          "trades": 251
+        },
+        "2023": {
+          "total": -17755.0,
+          "mean": -71.0,
+          "trades": 250
+        },
+        "2024": {
+          "total": 19215.0,
+          "mean": 76.2,
+          "trades": 252
+        },
+        "2025": {
+          "total": 13710.0,
+          "mean": 56.9,
+          "trades": 241
+        },
+        "2026": {
+          "total": 21730.0,
+          "mean": 278.6,
+          "trades": 78
+        }
+      }
+    },
+    "NQ_m4_h60_nostop": {
+      "trades_all": 4870,
+      "mean_all": 49.51,
+      "recent_trades": 1569,
+      "recent_total": 205180.0,
+      "recent_mean": 130.8,
+      "recent_median": 130.0,
+      "recent_win": 0.535,
+      "max_dd": 39380.0,
+      "without_best_5pct": -119205.0,
+      "worst_trade": -13695.0,
+      "candles_recent": 1.282,
+      "candles_2006_2012": 0.945,
+      "candles_2013_2019": 1.513,
+      "years": {
+        "2020": {
+          "total": -9080.0,
+          "mean": -36.8,
+          "trades": 247
+        },
+        "2021": {
+          "total": 1920.0,
+          "mean": 7.6,
+          "trades": 252
+        },
+        "2022": {
+          "total": 36590.0,
+          "mean": 146.4,
+          "trades": 250
+        },
+        "2023": {
+          "total": 27465.0,
+          "mean": 109.9,
+          "trades": 250
+        },
+        "2024": {
+          "total": 64550.0,
+          "mean": 257.2,
+          "trades": 251
+        },
+        "2025": {
+          "total": 51860.0,
+          "mean": 215.2,
+          "trades": 241
+        },
+        "2026": {
+          "total": 31875.0,
+          "mean": 408.7,
+          "trades": 78
+        }
+      }
+    },
+    "NQ_m3_h30_nostop": {
+      "trades_all": 4871,
+      "mean_all": 26.26,
+      "recent_trades": 1569,
+      "recent_total": 129120.0,
+      "recent_mean": 82.3,
+      "recent_median": 90.0,
+      "recent_win": 0.533,
+      "max_dd": 33690.0,
+      "without_best_5pct": -126910.0,
+      "worst_trade": -9335.0,
+      "candles_recent": 1.015,
+      "candles_2006_2012": 1.221,
+      "candles_2013_2019": 0.698,
+      "years": {
+        "2020": {
+          "total": -4210.0,
+          "mean": -17.0,
+          "trades": 247
+        },
+        "2021": {
+          "total": 2345.0,
+          "mean": 9.3,
+          "trades": 252
+        },
+        "2022": {
+          "total": 29170.0,
+          "mean": 116.7,
+          "trades": 250
+        },
+        "2023": {
+          "total": -8855.0,
+          "mean": -35.4,
+          "trades": 250
+        },
+        "2024": {
+          "total": 41080.0,
+          "mean": 163.7,
+          "trades": 251
+        },
+        "2025": {
+          "total": 31590.0,
+          "mean": 131.1,
+          "trades": 241
+        },
+        "2026": {
+          "total": 38000.0,
+          "mean": 487.2,
+          "trades": 78
+        }
+      }
+    },
+    "NQ_m3_h120_nostop": {
+      "trades_all": 4857,
+      "mean_all": 61.62,
+      "recent_trades": 1563,
+      "recent_total": 273050.0,
+      "recent_mean": 174.7,
+      "recent_median": 115.0,
+      "recent_win": 0.528,
+      "max_dd": 43985.0,
+      "without_best_5pct": -138010.0,
+      "worst_trade": -12770.0,
+      "candles_recent": 1.558,
+      "candles_2006_2012": 1.469,
+      "candles_2013_2019": 0.937,
+      "years": {
+        "2020": {
+          "total": 31760.0,
+          "mean": 129.1,
+          "trades": 246
+        },
+        "2021": {
+          "total": 19040.0,
+          "mean": 75.9,
+          "trades": 251
+        },
+        "2022": {
+          "total": 6740.0,
+          "mean": 27.1,
+          "trades": 249
+        },
+        "2023": {
+          "total": 28580.0,
+          "mean": 114.3,
+          "trades": 250
+        },
+        "2024": {
+          "total": 68295.0,
+          "mean": 274.3,
+          "trades": 249
+        },
+        "2025": {
+          "total": 60735.0,
+          "mean": 253.1,
+          "trades": 240
+        },
+        "2026": {
+          "total": 57900.0,
+          "mean": 742.3,
+          "trades": 78
+        }
+      }
+    }
+  },
+  "selection": {
+    "rows": [
+      {
+        "year": 2010,
+        "variant": "YM_m8_h120_s0",
+        "test_trades": 233,
+        "test_net": -5500.0
+      },
+      {
+        "year": 2011,
+        "variant": "YM_m5_h120_s0",
+        "test_trades": 239,
+        "test_net": 715.0
+      },
+      {
+        "year": 2012,
+        "variant": "NQ_m5_h60_s0",
+        "test_trades": 247,
+        "test_net": 1025.0
+      },
+      {
+        "year": 2013,
+        "variant": "NQ_m5_h60_s0",
+        "test_trades": 244,
+        "test_net": 3275.0
+      },
+      {
+        "year": 2014,
+        "variant": "NQ_m5_h60_s0",
+        "test_trades": 244,
+        "test_net": 455.0
+      },
+      {
+        "year": 2015,
+        "variant": "NQ_m7_h120_s0",
+        "test_trades": 251,
+        "test_net": -745.0
+      },
+      {
+        "year": 2016,
+        "variant": "NQ_m9_h120_s0",
+        "test_trades": 250,
+        "test_net": 4100.0
+      },
+      {
+        "year": 2017,
+        "variant": "NQ_m4_h120_s0",
+        "test_trades": 249,
+        "test_net": 3570.0
+      },
+      {
+        "year": 2018,
+        "variant": "NQ_m1_h120_s0",
+        "test_trades": 251,
+        "test_net": 8455.0
+      },
+      {
+        "year": 2019,
+        "variant": "NQ_m4_h120_s0",
+        "test_trades": 250,
+        "test_net": 6140.0
+      },
+      {
+        "year": 2020,
+        "variant": "NQ_m4_h120_s0",
+        "test_trades": 246,
+        "test_net": -21260.0
+      },
+      {
+        "year": 2021,
+        "variant": "NQ_m6_h120_s0",
+        "test_trades": 251,
+        "test_net": 23335.0
+      },
+      {
+        "year": 2022,
+        "variant": "NQ_m3_h120_s0",
+        "test_trades": 249,
+        "test_net": 6740.0
+      },
+      {
+        "year": 2023,
+        "variant": "NQ_m6_h120_s0",
+        "test_trades": 250,
+        "test_net": 885.0
+      },
+      {
+        "year": 2024,
+        "variant": "NQ_m4_h120_s0",
+        "test_trades": 249,
+        "test_net": 60865.0
+      },
+      {
+        "year": 2025,
+        "variant": "NQ_m4_h120_s0",
+        "test_trades": 240,
+        "test_net": 64995.0
+      },
+      {
+        "year": 2026,
+        "variant": "NQ_m2_h120_s0",
+        "test_trades": 78,
+        "test_net": 47100.0
+      }
+    ],
+    "total": 204150.0,
+    "max_dd": 55615.0,
+    "configurations": 270
+  },
+  "prefix": {
+    "cases": 195,
+    "side_and_entry_stable_under_truncation": true
+  }
+}

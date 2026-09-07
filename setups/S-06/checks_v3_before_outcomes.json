@@ -1,0 +1,221 @@
+{
+  "physical_gate_and_decision_checks": [
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 773,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 774,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 2935877,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 2935878,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 6854578,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 6854579,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 775,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 776,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 2212391,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 2212392,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 6853083,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 6853084,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 2965,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 2966,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 2858505,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 2858506,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 6417817,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 6417818,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 3013,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 3014,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 2111801,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 2111802,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 6401356,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 6401357,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 98,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 99,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 2683704,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 2683705,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 6432646,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 6432647,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 2452,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 2453,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 2130395,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 2130396,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 6420434,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 6420435,
+      "equal": true
+    }
+  ],
+  "code_sha256": "f974d2a7f93a75c1df81935826de9cae14d5df220d08924a641f3693a1651f43"
+}

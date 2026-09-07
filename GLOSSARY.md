@@ -421,9 +421,13 @@ costs and failure conditions. A descriptive effect is not automatically edge.
 
 ### Setup — `сетап`
 
-A complete trade logic: applicability, trigger, direction, action,
-invalidation, management and exit. The project is intended to grow into a
-library of narrow setups, each with its own territory and failure mode.
+A candidate action policy around a RIZ scene. It may begin as an incomplete
+idea. Before testing execution, it specifies applicability, observable trigger,
+action or abstention, invalidation, management and exit. It can use several
+RIZ and successive decisions; no fixed duration or single entry/target form is
+required. Each candidate has its own stated territory and failure conditions.
+Discovery evidence, new-information evidence and permission to trade are
+different properties; a file in `setups/` establishes none of them by itself.
 
 ## Reading the field
 

@@ -1,0 +1,268 @@
+{
+  "prefixes": [
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 3601,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 3602,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 3603,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 6825835,
+      "decisions": 383,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 6825836,
+      "decisions": 384,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 3,
+      "cutoff": 6825837,
+      "decisions": 384,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 3607,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 3608,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 3609,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 6825783,
+      "decisions": 154,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 6825784,
+      "decisions": 155,
+      "equal": true
+    },
+    {
+      "instrument": "ES",
+      "k": 5,
+      "cutoff": 6825785,
+      "decisions": 155,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 93723,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 93724,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 93725,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 6369888,
+      "decisions": 452,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 6369889,
+      "decisions": 453,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 3,
+      "cutoff": 6369890,
+      "decisions": 453,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 99344,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 99345,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 99346,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 6333395,
+      "decisions": 193,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 6333396,
+      "decisions": 194,
+      "equal": true
+    },
+    {
+      "instrument": "NQ",
+      "k": 5,
+      "cutoff": 6333397,
+      "decisions": 194,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 65052,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 65053,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 65054,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 6284865,
+      "decisions": 382,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 6284866,
+      "decisions": 383,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 3,
+      "cutoff": 6284867,
+      "decisions": 383,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 65052,
+      "decisions": 0,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 65053,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 65054,
+      "decisions": 1,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 6177988,
+      "decisions": 150,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 6177989,
+      "decisions": 151,
+      "equal": true
+    },
+    {
+      "instrument": "YM",
+      "k": 5,
+      "cutoff": 6177990,
+      "decisions": 151,
+      "equal": true
+    }
+  ],
+  "execution_cases": [
+    "clock_exit",
+    "target_trade_through",
+    "touch_not_fill",
+    "both_barriers_bounds",
+    "stop_gap",
+    "entry_outside_cancel",
+    "missing_entry",
+    "missing_path",
+    "mirror_short"
+  ],
+  "code_sha256": "ac5cc21f4d59e0c8049f8749d224b0465c1aa747e63511374cba4db0d07907e6"
+}

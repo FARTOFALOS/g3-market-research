@@ -1,0 +1,6 @@
+check,trades,net
+base,4395,103820.0
+round_cost_25.0,4395,59870.0
+round_cost_45.0,4395,-28030.0
+one_minute_entry_delay,3717,55475.0
+delay_and_cost_25,3717,18305.0

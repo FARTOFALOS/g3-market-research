@@ -1,0 +1,64 @@
+//@version=6
+// S-07 — дрейф первых минут сессии. Замороженная версия v1 (2026-09-07).
+// ВАЖНО: график — NQ, таймфрейм 1 минута, ВКЛЮЧЁННЫЕ расширенные часы (ETH).
+// Без ETH окно из 30 баров захватит вчерашнюю сессию, и сторона будет другой.
+// Это перенос правила для живой проверки. Историческим расчётом проекта
+// является python в setups/S-07/, а не этот файл: данные TradingView другие.
+strategy("S-07 opening drift v1", overlay = true, initial_capital = 100000,
+         default_qty_type = strategy.fixed, default_qty_value = 1,
+         commission_type = strategy.commission.cash_per_order, commission_value = 7.5,
+         calc_on_every_tick = false, process_orders_on_close = true)
+
+WINDOW      = input.int(30,  "Окно предрыночного диапазона, минут")
+DECIDE      = input.int(3,   "Минута решения от открытия сессии")
+HOLD        = input.int(120, "Удержание, минут")
+CHECK       = input.int(15,  "Минута проверки: в минусе — выходим")
+LIMIT       = input.float(16, "Катастрофический лимит, свечей")
+USE_CHECK   = input.bool(true, "Выходить на 15-й минуте при минусе")
+
+// свеча как единица: медиана истинного диапазона последних 30 закрытых минут
+unit = ta.median(ta.tr(true), WINDOW)
+
+// минута основной сессии: 0 — бар, закрывшийся в 09:31 ET
+rth        = not na(time("1", "0930-1600", "America/New_York"))
+newSession = rth and not rth[1]
+var int sessionMinute = na
+sessionMinute := newSession ? 0 : rth ? nz(sessionMinute[1]) + 1 : na
+
+mid  = (ta.highest(high, WINDOW) + ta.lowest(low, WINDOW)) / 2
+side = close > mid ? 1 : -1
+
+var int  heldMinutes = 0
+var float unitAtEntry = na
+var float stopPrice   = na
+
+decide = rth and sessionMinute == DECIDE and strategy.position_size == 0
+if decide
+    unitAtEntry := unit
+    stopPrice   := side == 1 ? close - LIMIT * unit : close + LIMIT * unit
+    heldMinutes := 0
+    if side == 1
+        strategy.entry("L", strategy.long)
+    else
+        strategy.entry("S", strategy.short)
+
+inPosition = strategy.position_size != 0
+if inPosition
+    heldMinutes := heldMinutes + 1
+    long  = strategy.position_size > 0
+    pnl   = (long ? close - strategy.position_avg_price : strategy.position_avg_price - close)
+    hitLimit = long ? low <= stopPrice : high >= stopPrice
+    // 1) катастрофический лимит
+    if hitLimit
+        strategy.close_all("лимит 16 свечей")
+    // 2) проверка на 15-й минуте: в минусе — выходим
+    else if USE_CHECK and heldMinutes == CHECK and pnl < 0
+        strategy.close_all("минус на 15-й минуте")
+    // 3) время вышло или конец основной сессии
+    else if heldMinutes >= HOLD or not rth
+        strategy.close_all("120 минут")
+
+// Безубыток и трейлинг НЕ ставятся сознательно: на истории проекта перенос стопа
+// в безубыток срезает более половины результата и увеличивает просадку.
+plot(rth ? mid : na, "середина предрыночного диапазона", color.new(color.blue, 0), 1)
+plot(inPosition ? stopPrice : na, "лимит", color.new(color.red, 0), 1, plot.style_linebr)

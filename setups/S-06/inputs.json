@@ -1,0 +1,18 @@
+{
+  "previous_input_receipt": "data/research/S-04/input_hashes.json",
+  "previous_receipt_sha256": "f08543b2245d7bf572c9102f65149575b204e88a4af0bd0ec2e4678270ee6dd1",
+  "new_copies": {
+    "ES": {
+      "objects": 364266,
+      "copy_sha256": "4054f96108e59d1174f9ae8bd405542f0926d7c872d162baa18f42209570ddad"
+    },
+    "NQ": {
+      "objects": 461683,
+      "copy_sha256": "89632e6d3078db0cd82629376432e6286130aac8dce3ef926114977b00367493"
+    },
+    "YM": {
+      "objects": 441060,
+      "copy_sha256": "74c44e5dc5883aea83985742363f9d8f158a54bb6baf575b3a96ad600d3b5708"
+    }
+  }
+}

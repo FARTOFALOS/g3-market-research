@@ -1,0 +1,31 @@
+{
+  "intraday_drawdown_order_bounds": [
+    40880.0,
+    40880.0
+  ],
+  "fixed_rule_common_days_2010_net": 118365.0,
+  "selection_net": -612.5,
+  "frequency": [
+    {
+      "period": "all",
+      "known_days": 4966,
+      "trade_days": 4395,
+      "no_trade_days": 571,
+      "fraction": 0.8850181232380185
+    },
+    {
+      "period": "2020+",
+      "known_days": 1551,
+      "trade_days": 1493,
+      "no_trade_days": 58,
+      "fraction": 0.9626047711154094
+    },
+    {
+      "period": "2023+",
+      "known_days": 812,
+      "trade_days": 786,
+      "no_trade_days": 26,
+      "fraction": 0.9679802955665024
+    }
+  ]
+}

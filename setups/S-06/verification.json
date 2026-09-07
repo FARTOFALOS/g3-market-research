@@ -1,0 +1,103 @@
+{
+  "illustrative_rules": [
+    {
+      "variant": "NQ_k3_stop_h5",
+      "full_replay_equal": true,
+      "independent_trade_checks": 65898,
+      "total": -1113225.0,
+      "median_risk": 115.0,
+      "risk_q90": 505.0,
+      "worst_trade": -7425.0,
+      "average_trades_per_active_day_2020": 16.40213049267643,
+      "trade_days_2020": 1502,
+      "known_days_2020": 1551,
+      "exposure_age_native_quantiles": [
+        0.04285714285714286,
+        0.459053651266766,
+        2.7777777777777777
+      ],
+      "epochs": [
+        {
+          "period": "2006-2012",
+          "trades": 18411,
+          "gross": -10785.0,
+          "net": -286950.0,
+          "mean_net": -15.585791103144858,
+          "known_days": 1669,
+          "trade_days": 1521
+        },
+        {
+          "period": "2013-2019",
+          "trades": 22851,
+          "gross": -24950.0,
+          "net": -367715.0,
+          "mean_net": -16.091855936282876,
+          "known_days": 1746,
+          "trade_days": 1621
+        },
+        {
+          "period": "2020-2026",
+          "trades": 24636,
+          "gross": -89020.0,
+          "net": -458560.0,
+          "mean_net": -18.613411268062997,
+          "known_days": 1551,
+          "trade_days": 1502
+        }
+      ]
+    },
+    {
+      "variant": "NQ_k3_reject_target_h5",
+      "full_replay_equal": true,
+      "independent_trade_checks": 51265,
+      "total": -802945.0,
+      "median_risk": 50.0,
+      "risk_q90": 210.0,
+      "worst_trade": -2550.0,
+      "average_trades_per_active_day_2020": 15.027739251040222,
+      "trade_days_2020": 1442,
+      "known_days_2020": 1551,
+      "exposure_age_native_quantiles": [
+        0.0427807486631016,
+        0.44155844155844154,
+        2.4642857142857144
+      ],
+      "epochs": [
+        {
+          "period": "2006-2012",
+          "trades": 12280,
+          "gross": -18065.0,
+          "net": -202265.0,
+          "mean_net": -16.471091205211728,
+          "known_days": 1669,
+          "trade_days": 1400
+        },
+        {
+          "period": "2013-2019",
+          "trades": 17315,
+          "gross": -8695.0,
+          "net": -268420.0,
+          "mean_net": -15.502165752237945,
+          "known_days": 1746,
+          "trade_days": 1526
+        },
+        {
+          "period": "2020-2026",
+          "trades": 21670,
+          "gross": -7210.0,
+          "net": -332260.0,
+          "mean_net": -15.332718043377941,
+          "known_days": 1551,
+          "trade_days": 1442
+        }
+      ],
+      "optimistic_total": -743955.0,
+      "one_minute_delay": {
+        "trades": 31366,
+        "net": -524325.0
+      },
+      "without_best_ten_days": -840365.0
+    }
+  ],
+  "all_72_daily_results_reconciled": true
+}

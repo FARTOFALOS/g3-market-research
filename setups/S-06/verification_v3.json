@@ -1,0 +1,107 @@
+{
+  "illustrative_rules": [
+    {
+      "variant": "NQ_k3_stop_h5_confined",
+      "full_replay_equal": true,
+      "independent_trade_checks": 22306,
+      "total": -419685.0,
+      "median_risk": 80.0,
+      "risk_q90": 380.0,
+      "worst_trade": -2005.0,
+      "average_trades_per_active_day_2020": 5.631539611360239,
+      "trade_days_2020": 1338,
+      "known_days_2020": 1551,
+      "exposure_age_native_quantiles": [
+        0.041666666666666664,
+        0.4351053288314739,
+        2.3863049095607236
+      ],
+      "epochs": [
+        {
+          "period": "2006-2012",
+          "trades": 7128,
+          "gross": -2630.0,
+          "net": -109550.0,
+          "mean_net": -15.368967452300785,
+          "known_days": 1669,
+          "trade_days": 1348
+        },
+        {
+          "period": "2013-2019",
+          "trades": 7643,
+          "gross": -11110.0,
+          "net": -125755.0,
+          "mean_net": -16.453617689388985,
+          "known_days": 1746,
+          "trade_days": 1431
+        },
+        {
+          "period": "2020-2026",
+          "trades": 7535,
+          "gross": -71355.0,
+          "net": -184380.0,
+          "mean_net": -24.469807564698076,
+          "known_days": 1551,
+          "trade_days": 1338
+        }
+      ]
+    },
+    {
+      "variant": "NQ_k3_reject_target_h5_confined",
+      "full_replay_equal": true,
+      "independent_trade_checks": 10706,
+      "total": -156575.0,
+      "median_risk": 35.0,
+      "risk_q90": 167.5,
+      "worst_trade": -1210.0,
+      "average_trades_per_active_day_2020": 3.6742700729927007,
+      "trade_days_2020": 1096,
+      "known_days_2020": 1551,
+      "exposure_age_native_quantiles": [
+        0.040275344623170714,
+        0.41954349307290484,
+        2.1729437828856275
+      ],
+      "epochs": [
+        {
+          "period": "2006-2012",
+          "trades": 3100,
+          "gross": -5365.0,
+          "net": -51865.0,
+          "mean_net": -16.730645161290322,
+          "known_days": 1669,
+          "trade_days": 1012
+        },
+        {
+          "period": "2013-2019",
+          "trades": 3579,
+          "gross": -2095.0,
+          "net": -55780.0,
+          "mean_net": -15.585359038837664,
+          "known_days": 1746,
+          "trade_days": 1135
+        },
+        {
+          "period": "2020-2026",
+          "trades": 4027,
+          "gross": 11475.0,
+          "net": -48930.0,
+          "mean_net": -12.150484231437796,
+          "known_days": 1551,
+          "trade_days": 1096
+        }
+      ],
+      "optimistic_total": -137595.0,
+      "one_minute_delay": {
+        "trades": 6435,
+        "net": -104600.0
+      },
+      "without_best_ten_days": -170000.0
+    }
+  ],
+  "fresh_confined_recognition_equal": true,
+  "all_72_v3_daily_results_reconciled": true,
+  "positive_rules": 0,
+  "best_rule": "NQ_k5_close_h30_confined",
+  "best_total": -25.0
+}

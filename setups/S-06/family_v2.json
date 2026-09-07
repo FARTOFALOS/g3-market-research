@@ -1,0 +1,254 @@
+[
+  {
+    "id": "ES_k3_reject_target_h5",
+    "instrument": "ES",
+    "k": 3,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "ES_k3_reject_target_h15",
+    "instrument": "ES",
+    "k": 3,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "ES_k3_reject_target_h30",
+    "instrument": "ES",
+    "k": 3,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "ES_k3_reject_time_h5",
+    "instrument": "ES",
+    "k": 3,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "ES_k3_reject_time_h15",
+    "instrument": "ES",
+    "k": 3,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "ES_k3_reject_time_h30",
+    "instrument": "ES",
+    "k": 3,
+    "target": false,
+    "horizon": 30
+  },
+  {
+    "id": "ES_k5_reject_target_h5",
+    "instrument": "ES",
+    "k": 5,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "ES_k5_reject_target_h15",
+    "instrument": "ES",
+    "k": 5,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "ES_k5_reject_target_h30",
+    "instrument": "ES",
+    "k": 5,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "ES_k5_reject_time_h5",
+    "instrument": "ES",
+    "k": 5,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "ES_k5_reject_time_h15",
+    "instrument": "ES",
+    "k": 5,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "ES_k5_reject_time_h30",
+    "instrument": "ES",
+    "k": 5,
+    "target": false,
+    "horizon": 30
+  },
+  {
+    "id": "NQ_k3_reject_target_h5",
+    "instrument": "NQ",
+    "k": 3,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "NQ_k3_reject_target_h15",
+    "instrument": "NQ",
+    "k": 3,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "NQ_k3_reject_target_h30",
+    "instrument": "NQ",
+    "k": 3,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "NQ_k3_reject_time_h5",
+    "instrument": "NQ",
+    "k": 3,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "NQ_k3_reject_time_h15",
+    "instrument": "NQ",
+    "k": 3,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "NQ_k3_reject_time_h30",
+    "instrument": "NQ",
+    "k": 3,
+    "target": false,
+    "horizon": 30
+  },
+  {
+    "id": "NQ_k5_reject_target_h5",
+    "instrument": "NQ",
+    "k": 5,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "NQ_k5_reject_target_h15",
+    "instrument": "NQ",
+    "k": 5,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "NQ_k5_reject_target_h30",
+    "instrument": "NQ",
+    "k": 5,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "NQ_k5_reject_time_h5",
+    "instrument": "NQ",
+    "k": 5,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "NQ_k5_reject_time_h15",
+    "instrument": "NQ",
+    "k": 5,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "NQ_k5_reject_time_h30",
+    "instrument": "NQ",
+    "k": 5,
+    "target": false,
+    "horizon": 30
+  },
+  {
+    "id": "YM_k3_reject_target_h5",
+    "instrument": "YM",
+    "k": 3,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "YM_k3_reject_target_h15",
+    "instrument": "YM",
+    "k": 3,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "YM_k3_reject_target_h30",
+    "instrument": "YM",
+    "k": 3,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "YM_k3_reject_time_h5",
+    "instrument": "YM",
+    "k": 3,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "YM_k3_reject_time_h15",
+    "instrument": "YM",
+    "k": 3,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "YM_k3_reject_time_h30",
+    "instrument": "YM",
+    "k": 3,
+    "target": false,
+    "horizon": 30
+  },
+  {
+    "id": "YM_k5_reject_target_h5",
+    "instrument": "YM",
+    "k": 5,
+    "target": true,
+    "horizon": 5
+  },
+  {
+    "id": "YM_k5_reject_target_h15",
+    "instrument": "YM",
+    "k": 5,
+    "target": true,
+    "horizon": 15
+  },
+  {
+    "id": "YM_k5_reject_target_h30",
+    "instrument": "YM",
+    "k": 5,
+    "target": true,
+    "horizon": 30
+  },
+  {
+    "id": "YM_k5_reject_time_h5",
+    "instrument": "YM",
+    "k": 5,
+    "target": false,
+    "horizon": 5
+  },
+  {
+    "id": "YM_k5_reject_time_h15",
+    "instrument": "YM",
+    "k": 5,
+    "target": false,
+    "horizon": 15
+  },
+  {
+    "id": "YM_k5_reject_time_h30",
+    "instrument": "YM",
+    "k": 5,
+    "target": false,
+    "horizon": 30
+  }
+]

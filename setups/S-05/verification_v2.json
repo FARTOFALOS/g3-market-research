@@ -1,0 +1,97 @@
+{
+  "version": {
+    "id": "NQ_k3_w60_h60_time",
+    "instrument": "NQ",
+    "k": 3,
+    "wait": 60,
+    "horizon": 60,
+    "stop": "time"
+  },
+  "replay_equal": true,
+  "direct_price_checks": 4395,
+  "calendar_days": 5115,
+  "known_days": 4966,
+  "unknown_days": 149,
+  "recognized_objects": 143390,
+  "unique_signal_minutes": 19550,
+  "eligible_objects": 255650,
+  "signal_minutes_per_event_day_2020_quantiles": [
+    2.0,
+    5.0,
+    9.0
+  ],
+  "deleted_by_signal": 1935,
+  "decision_days": 4584,
+  "entry_cancelled": 115,
+  "unknown_outcomes_in_all_decisions": 10,
+  "unknown_outcomes_on_complete_days": 0,
+  "trades": 4395,
+  "total": 103820.0,
+  "days": 4966,
+  "mean_day": 20.9061619009263,
+  "drawdown": 40035.0,
+  "mean_trade": 23.622298065984072,
+  "median_trade": 0.0,
+  "win_rate": 0.4939704209328783,
+  "worst_trade": -9900.0,
+  "best_trade": 24220.0,
+  "mean_wait": 12.290784982935154,
+  "median_wait": 8.0,
+  "wait_q10_q90": [
+    3.0,
+    30.0
+  ],
+  "heat_dollars_q50_q90_q99_max": [
+    200.0,
+    1360.0,
+    3887.700000000018,
+    28730.0
+  ],
+  "mfe_dollars_q50_q90_q99_max": [
+    235.0,
+    1470.999999999999,
+    3775.300000000002,
+    28210.0
+  ],
+  "selected_rule_daily_mean_ci95": [
+    -3.1172888772716965,
+    45.660181451612914
+  ],
+  "bootstrap": {
+    "block": 20,
+    "repetitions": 3000,
+    "limitation": "Approximate moving-day-block interval under weak stability; unadjusted for adaptive rule choice."
+  },
+  "without_best_day": 79600.0,
+  "without_best_10_days": 27655.0,
+  "best_one_percent_share": 1.9909458678481988,
+  "without_best_one_percent": -102880.0,
+  "sensitivities": [
+    {
+      "check": "base",
+      "trades": 4395,
+      "net": 103820.0
+    },
+    {
+      "check": "round_cost_25.0",
+      "trades": 4395,
+      "net": 59870.0
+    },
+    {
+      "check": "round_cost_45.0",
+      "trades": 4395,
+      "net": -28030.0
+    },
+    {
+      "check": "one_minute_entry_delay",
+      "trades": 3717,
+      "net": 55475.0
+    },
+    {
+      "check": "delay_and_cost_25",
+      "trades": 3717,
+      "net": 18305.0
+    }
+  ],
+  "python": "3.14.4"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "NQ_k4_w30_h60_time",
+  "instrument": "NQ",
+  "k": 4,
+  "wait": 30,
+  "horizon": 60,
+  "stop": "time"
+}

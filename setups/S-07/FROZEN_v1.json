@@ -1,0 +1,104 @@
+{
+  "version": "v1",
+  "frozen": "2026-09-07",
+  "rule": {
+    "instrument": "NQ",
+    "decision_minute": 3,
+    "window": 30,
+    "entry": "open следующей минуты",
+    "hold_minutes": 120,
+    "exit_if_negative_at": 15,
+    "catastrophic_limit_candles": 16,
+    "breakeven": "never",
+    "trailing": "never",
+    "cost_per_turn_usd": 15,
+    "unit": "median true range of last 30 closed minutes"
+  },
+  "code": {
+    "field.py": "b418bc600f171820c7ef836a7674db88ba5bf0a050e4e1feb7a73e7145c5b0ce",
+    "freeze.py": "bcf3263dcee6916c047e93a699a876fb9e1a262490363e0642efc2922062e62f",
+    "manage.py": "6a84f2e80f83c37828df1fce9030c32c596016d81a7959a78eab99db7c97a9db",
+    "run.py": "1b77003652a412ad07b2b7ad983a7404cec4f40aa350218e8a668f2534600e97",
+    "scenes.py": "f2067433f298c13865ba96299155f39a937af75130040a81525d929f35cb1987",
+    "verify.py": "17cb6f0ce5f0d5e20860bce08067722462f490bed1a0822baaf4e2933bfeee1e",
+    "S07_opening_drift.pine": "f1a809afd51e7bc467f1f94616b25e2a3517c34816ccba0a034425bdf5d61e03"
+  },
+  "inputs": {
+    "calendar": "16e5b0b37219ce6478d7c32b1615c4a00a1c152cca20572a8358e9e47e3521ff",
+    "SOURCE_DATA.json": "a61ee214546e80955410a2bf447f9e1ccdbdf37371d65549bc1343338d6df395"
+  },
+  "market": {
+    "ES/close_ts_utc_ns": {
+      "sha256": "998863a199bd5049a35a79668be3dde6e7988ab129e2ad8692b06475a775878e",
+      "minutes": 6855058
+    },
+    "ES/open": {
+      "sha256": "52bc943a165a73a912c0b268d4606d861c718b66a5a7db6fd93bae03245a2f4b",
+      "minutes": 6855058
+    },
+    "ES/high": {
+      "sha256": "3eda5bced1754d8b7352dd2739cdb52ea5ca96d6ea5df93386532baf4d6601d7",
+      "minutes": 6855058
+    },
+    "ES/low": {
+      "sha256": "d275b35b6dd6d1fa8fc14974f0113371d85627e2c99e90d35957dfbffaa07b0a",
+      "minutes": 6855058
+    },
+    "ES/close": {
+      "sha256": "991224bd6bdad8b5a8c99e2c77e9fac2b071887472f1ada27fdaab2603b35d1e",
+      "minutes": 6855058
+    },
+    "NQ/close_ts_utc_ns": {
+      "sha256": "b1a33f16ad754851b9d202e5fe3925add711c0ba0c5a1221e55ce71c49c683b7",
+      "minutes": 6418541
+    },
+    "NQ/open": {
+      "sha256": "5f9709d127ab52b46b4229566df2180159be011a8cb0393cc6a269119585cc61",
+      "minutes": 6418541
+    },
+    "NQ/high": {
+      "sha256": "e965cc0b62cb0af3ee296a451de401d2ff03ca1d401e51e4e93e4910dd4a6c32",
+      "minutes": 6418541
+    },
+    "NQ/low": {
+      "sha256": "daa64c199e6f03125eec620413062527c947b9876d85b2fc4326c658b024ca00",
+      "minutes": 6418541
+    },
+    "NQ/close": {
+      "sha256": "02c00108f3808c4f0a8078c2bede214f9d6357fc8fda8ecb487ec560290599da",
+      "minutes": 6418541
+    },
+    "YM/close_ts_utc_ns": {
+      "sha256": "5442389c98805e47ebe8edb5508abf0808fbef44645fe51545af0d80c6b57b7e",
+      "minutes": 6438663
+    },
+    "YM/open": {
+      "sha256": "b748c76abe51169b4d200893a90236acb62afba40eaf3c7b93d03111e0a4d63f",
+      "minutes": 6438663
+    },
+    "YM/high": {
+      "sha256": "5c5c08d3c882b42e1e0e369bef326599ecc7344cc695c8733d21ee184cd3d58f",
+      "minutes": 6438663
+    },
+    "YM/low": {
+      "sha256": "1b7c56465c8a0afdc879a87787669cbdc830a596c194a26f7634c8d33961aa4c",
+      "minutes": 6438663
+    },
+    "YM/close": {
+      "sha256": "0e1918ffd822eff65f8fd97da3914e7d41e23e1a723e2f632c24743f17b52b80",
+      "minutes": 6438663
+    }
+  },
+  "results": {
+    "trades_file": "data\\research\\S-07\\trades_v1.parquet",
+    "configurations": 675,
+    "nq_m3_h120_nostop_2020_total": 273050.0,
+    "nq_m3_h120_managed_2020_total": 236265.0
+  },
+  "environment": {
+    "python": "3.14.4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}
