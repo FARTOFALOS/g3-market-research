@@ -1,0 +1,75 @@
+{
+ "denominator": "дни, известные обеим линиям",
+ "variant_S07": "NQ m3 h120 без стопа, один контракт, без ведения и лимита",
+ "variant_prior": "совместный годовой выбор S-04/S-05/S-06, 576 правил",
+ "all_years": {
+  "S-07": {
+   "days": 4699,
+   "total": 297085.0,
+   "mean": 63.22,
+   "dd": 38215.0,
+   "worst": -12770.0,
+   "loss_days": 2237,
+   "loss_share": 0.476
+  },
+  "prior_selection": {
+   "days": 4699,
+   "total": -2177.5,
+   "mean": -0.46,
+   "dd": 87272.5,
+   "worst": -9085.0,
+   "loss_days": 1645,
+   "loss_share": 0.35
+  },
+  "together_one_contract_each": {
+   "days": 4699,
+   "total": 294907.5,
+   "mean": 62.76,
+   "dd": 65555.0,
+   "worst": -21855.0,
+   "loss_days": 2353,
+   "loss_share": 0.501
+  },
+  "loss_overlap": {
+   "both_negative_share": 0.183,
+   "if_independent": 0.167,
+   "ratio": 1.1,
+   "correlation": 0.166
+  }
+ },
+ "since_2020": {
+  "S-07": {
+   "days": 1522,
+   "total": 265895.0,
+   "mean": 174.7,
+   "dd": 38215.0,
+   "worst": -12770.0,
+   "loss_days": 713,
+   "loss_share": 0.468
+  },
+  "prior_selection": {
+   "days": 1522,
+   "total": 14205.0,
+   "mean": 9.33,
+   "dd": 81525.0,
+   "worst": -9085.0,
+   "loss_days": 685,
+   "loss_share": 0.45
+  },
+  "together_one_contract_each": {
+   "days": 1522,
+   "total": 280100.0,
+   "mean": 184.03,
+   "dd": 65555.0,
+   "worst": -21855.0,
+   "loss_days": 765,
+   "loss_share": 0.503
+  },
+  "loss_overlap": {
+   "both_negative_share": 0.242,
+   "if_independent": 0.211,
+   "ratio": 1.15,
+   "correlation": 0.172
+  }
+ }
+}
