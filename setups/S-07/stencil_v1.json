@@ -1,0 +1,45 @@
+{
+ "what": "S-07: структура фильма сделки и стоп за подтверждённым свингом",
+ "caveat": "разбор на уже просмотренной истории; независимым подтверждением не является",
+ "structure": {
+  "k1": {
+   "n": 4857,
+   "first_low_at_median_win": 3.0,
+   "first_low_at_median_loss": 3.0,
+   "first_low_depth_median_win": -2.25,
+   "first_low_depth_median_loss": -3.62,
+   "broke_share_win": 0.702,
+   "broke_share_loss": 0.986,
+   "win_after_break": 0.445,
+   "win_without_break": 0.96,
+   "leg_candles_median": 2.0,
+   "legs_median": 41.0
+  },
+  "k2": {
+   "n": 4857,
+   "first_low_at_median_win": 6.0,
+   "first_low_at_median_loss": 5.0,
+   "first_low_depth_median_win": -2.5,
+   "first_low_depth_median_loss": -4.91,
+   "broke_share_win": 0.623,
+   "broke_share_loss": 0.974,
+   "win_after_break": 0.419,
+   "win_without_break": 0.943,
+   "leg_candles_median": 4.0,
+   "legs_median": 24.0
+  },
+  "k3": {
+   "n": 4857,
+   "first_low_at_median_win": 9.0,
+   "first_low_at_median_loss": 8.0,
+   "first_low_depth_median_win": -2.5,
+   "first_low_depth_median_loss": -6.2,
+   "broke_share_win": 0.564,
+   "broke_share_loss": 0.957,
+   "win_after_break": 0.399,
+   "win_without_break": 0.919,
+   "leg_candles_median": 5.0,
+   "legs_median": 17.0
+  }
+ }
+}
