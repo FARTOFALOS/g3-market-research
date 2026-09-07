@@ -48,7 +48,7 @@ def robustness():
 
 
 def selection_cost():
-    """Годовой выбор по прошлым трём годам среди всех 270 конфигураций."""
+    """Годовой выбор по прошлым трём годам среди всех конфигураций перебора."""
     d = pd.read_parquet(OUT / 'trades_v1.parquet')
     d = d.loc[d.status > 0].copy()
     d['id'] = d.instrument + '_m' + d.minute.astype(str) + '_h' + d.horizon.astype(str) + '_s' + d.stop.astype(int).astype(str)

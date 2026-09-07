@@ -16,7 +16,7 @@ python -B setups/S-07/scenes.py
 python -B setups/S-07/freeze.py
 ```
 
-`run.py` считает все 270 конфигураций (3 инструмента × минуты решения 0–14 ×
+`run.py` считает все 675 конфигураций (3 инструмента × минуты решения 0–14 ×
 горизонты 30/60/120 × стопы 0/2/4/6/10 свечей) и пишет `summary_v1.csv` и
 `data/research/S-07/trades_v1.parquet` со всеми сделками. `verify.py` даёт
 устойчивость, стоимость годового выбора среди всех конфигураций и физическое
@@ -32,6 +32,7 @@ python -B setups/S-07/freeze.py
 | Все сделки | `data/research/S-07/trades_v1.parquet` |
 | Ведение, диагностика провала, размер | `management_v3.csv`, `diagnostics_v3.csv`, `sizing_v3.csv` |
 | Сцены с закрытым будущим | `scenes.png`, `scenes.json` |
+| Прогон v1 на минутах вне корпуса (TradingView) | `oos_tradingview_v1.json` |
 | Заморозка версии v1: хеши кода, входов, среды | `FROZEN_v1.json` |
 | Перенос правила на TradingView | `S07_opening_drift.pine` |
 | Хеши кода | `run_hashes_v1.json`, `FROZEN_v1.json` |
