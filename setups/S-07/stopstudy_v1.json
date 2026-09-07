@@ -1,0 +1,68 @@
+{
+ "what": "S-07: MAE-профиль и сетка стоп/время-выхода на сохранённой истории NQ 2006-2026",
+ "caveat": "выбор внутри уже просмотренной истории; независимым подтверждением не является",
+ "mae_percentiles_candles": {
+  "winners": [
+   -5.33,
+   -2.36,
+   -0.91,
+   -0.41,
+   0.0
+  ],
+  "losers": [
+   -18.0,
+   -12.1,
+   -8.0,
+   -6.29,
+   -3.75
+  ]
+ },
+ "stop_kill_table": [
+  {
+   "stop_candles": 4,
+   "kills_share_of_future_winners": 0.6125,
+   "touched_share_of_losers": 0.9886
+  },
+  {
+   "stop_candles": 6,
+   "kills_share_of_future_winners": 0.4629,
+   "touched_share_of_losers": 0.9593
+  },
+  {
+   "stop_candles": 8,
+   "kills_share_of_future_winners": 0.3432,
+   "touched_share_of_losers": 0.9015
+  },
+  {
+   "stop_candles": 10,
+   "kills_share_of_future_winners": 0.2452,
+   "touched_share_of_losers": 0.8393
+  },
+  {
+   "stop_candles": 12,
+   "kills_share_of_future_winners": 0.166,
+   "touched_share_of_losers": 0.7583
+  },
+  {
+   "stop_candles": 16,
+   "kills_share_of_future_winners": 0.0731,
+   "touched_share_of_losers": 0.5806
+  },
+  {
+   "stop_candles": 20,
+   "kills_share_of_future_winners": 0.0323,
+   "touched_share_of_losers": 0.4282
+  },
+  {
+   "stop_candles": 24,
+   "kills_share_of_future_winners": 0.0167,
+   "touched_share_of_losers": 0.3144
+  },
+  {
+   "stop_candles": 32,
+   "kills_share_of_future_winners": 0.0023,
+   "touched_share_of_losers": 0.1585
+  }
+ ],
+ "grid_file": "stopstudy_v1.csv"
+}
