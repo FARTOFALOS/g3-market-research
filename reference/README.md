@@ -41,13 +41,16 @@ when the question needs it; an automatic two-bar pre-roll cannot provide it.
 For recognition at a particular minute, expose only the prefix and known events.
 Do not use future fields from a full passport as earlier information.
 
-## `ENTRY_CHECK.md`
+## `CONTRACT.md` и `ENTRY_CHECK.md`
 
-Пять пар анонимизированных сцен из поля, по одной оси возможного неверного
-чтения на пару, с заранее записанными наивным и объектным чтениями. Измеряет
-не агента, а этот вход: переносит ли он объект свежему читателю. Механизм —
-`python -B -m g3riz.cli entry-check`, записанные прогоны и их границы — в самом
-файле.
+Контракт связывает восстановленную сцену с вопросом к данным: какой тест
+отпадает и какой нужен взамен. Его применение входит в существующие шаблоны
+карточки и сетапа. `contract_example.py` выполняет ограниченный опыт на ленте.
+
+`entry-check make --version 2` даёт пять пар сцен и задачу о раннем состоянии
+до будущего паттерна. Короткие ответы дополняются самостоятельным выбором
+эксперимента. Процедура, проверенные результаты и ограничения — в
+`ENTRY_CHECK.md`; v1 оставлена для исторического прибора.
 
 ## `pine/RIZ_BLUE_v1.0.pine`
 

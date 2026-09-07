@@ -291,7 +291,8 @@ ASK = {
 }
 
 
-def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dict]:
+def build_paper(field, tf: int = 54, seed: str | None = None, *,
+                record_sources: bool = False) -> tuple[dict, dict]:
     """Five pairs, one misreading axis each.
 
     Two pairs look different and are the same object question; three look
@@ -443,11 +444,123 @@ def build_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dic
         key[pid]["anchor"]["same_meaning"] = (
             "одно и то же" if READINGS[pid]["same_object"] else "разные")
     key["_meta"] = {"seed": seed, "tf": tf, "paper_sha256": paper["paper_sha256"]}
+    if record_sources:
+        key["_meta"]["sources"] = {
+            "P1": [(a_row["riz_id"], int(a_row["t0_spine_pos"])), (b_row["riz_id"], b_pos)],
+            "P2": [(r["riz_id"], int(r["t0_spine_pos"])) for r, _ in pair],
+            "P3": [(r["riz_id"], int(r["t0_spine_pos"])) for r in (x_row, y_row)],
+            "P4": [(r["riz_id"], int(r["t0_spine_pos"])) for r in (e_row, f_row)],
+            "P5": [(r["riz_id"], int(r["t0_spine_pos"])) for r in (h_row, g_row)],
+        }
+        for pid in ("P1", "P2"):
+            item = next(it for it in items if it["id"] == pid)
+            for label, (rid, pos) in zip(("scene_a", "scene_b"), key["_meta"]["sources"][pid]):
+                item[label]["current_native_bar"]["closed"] = bool(pos == corpus.stops[corpus.bar_of(pos)] - 1)
+                seen = [e for e in corpus.events[rid] if e["market_spine_pos"] <= pos]
+                item[label]["eligible_tier"] = int(seen[-1]["tier"]) in (1, 2)
+    return paper, key
+
+
+def build_decision_paper(field, tf: int = 54, seed: str | None = None) -> tuple[dict, dict]:
+    """V2 asks for consequences, without v1's ambiguous 'same meaning' score.
+
+    V1 remains reproducible. Prices/relations come from its field scenes;
+    addresses stay with the examiner. Free reasoning still requires review.
+    """
+    import copy
+
+    paper, key = build_paper(field, tf, seed, record_sources=True)
+    key = copy.deepcopy(key)  # v2 must not mutate the shared legacy READINGS
+    paper["version"] = 2
+    paper["what_this_is"] = "Прочитай сцены и выбери исследовательское действие. " \
+        "Это учебная выборка, подобранная по различиям, включая исходы; по ней нельзя оценивать частоты."
+    paper["rules"] += [
+        "Скопируй строку «Отпечаток задания» ниже в _meta.paper_fingerprint своего ответа. "
+        "Это отпечаток самого задания, а не хеш файла: считать sha256 файла не нужно.",
+        "Номера свечей — порядковые позиции ленты; календарное время через разрывы из них не выводится.",
+        "В P1/P2 до оцениваемой свечи Blue ещё не наблюдался. Прочие условия допуска бери из сцены.",
+        "Для каждой пары объясни: какой вопрос к данным меняется, какой тест отпадает, какой нужен взамен.",
+    ]
+    for item in paper["items"]:
+        pid = item["id"]
+        item["ask"].pop("same_meaning")
+        item["ask"]["difference"] = "Какие свойства совпадают и какие различаются? Приведи основание из сцены."
+        item["ask"]["question"] = "Вопрос к данным, неподходящий тест и следующий проверяемый тест."
+        key[pid]["anchor"].pop("same_meaning")
+    p2 = paper["items"][1]
+    p2["ask"]["keep_both"] = "Включить ли обе сцены в выборку по уже наблюдаемому T0? «да» / «нет»."
+    key["P2"]["anchor"]["keep_both"] = "да"
+    key["P2"]["readings"]["object"] = (
+        "Разные префиксы имеют одинаковый статус наблюдаемого Blue. Будущее не известно; "
+        "гипотеза о вероятности подтверждения допустима, исключение будущего flicker из раннего отбора — нет.")
+    p3 = paper["items"][2]
+    # Both answers must be recoverable from the SAME displayed tape.
+    for label in ("a", "b"):
+        obj = p3[f"object_{label}"]
+        boundary = obj["zone_north"] if obj["t0_exit_side"] == "north" else obj["zone_south"]
+        found = next((r["t"] for r in p3["minutes_from_t0"]
+                      if 0 < r["t"] <= obj["tape_ends_after"] and r["low"] <= boundary <= r["high"]), None)
+        key["P3"]["anchor"][f"{label}_first_contact"] = "не наблюдалось" if found is None else str(found)
+    p3["ask"].update(objects="Сколько RIZ нужно сохранить? Число.",
+                    independent="Доказаны ли две независимые возможности? «да» / «нет».")
+    key["P3"]["anchor"].update(objects="2", independent="нет")
+    p4 = paper["items"][3]
+    p4["note"] = ("Только для этой исследовательской линзы уход означает две подряд полностью "
+                  "внешние свечи после T0 ДО первого контакта. Это не условие принадлежности к RIZ.")
+    for label in ("a", "b"):
+        scene = p4[f"scene_{label}"]
+        k = int(key["P4"]["anchor"][f"{label}_first_contact"])
+        up = scene["t0_exit_side"] == "north"
+        boundary = scene["zone_north"] if up else scene["zone_south"]
+        before = [r for r in scene["minutes_from_t0"] if 0 < r["t"] < k]
+        outside = [r["low"] > boundary if up else r["high"] < boundary for r in before]
+        departure = any(a and b for a, b in zip(outside, outside[1:]))
+        p4["ask"][f"{label}_retest"] = f"Первый контакт {label.upper()} — ретест по заданной линзе? «да» / «нет»."
+        key["P4"]["anchor"][f"{label}_retest"] = "да" if departure else "нет"
+    key["P4"]["readings"]["object"] = "Контакт определяет лента; ретест требует отдельно заданного ухода. Применить предикат, не угадывать по задержке."
+    p5 = paper["items"][4]
+    p5["ask"].update(b_within_shown="Был ли контакт B ПОСЛЕ T0 внутри показанного окна? «да» / «нет».",
+                    b_later="Известно ли, что контакт B не наступит позже показанного окна? «да» / «нет».")
+    key["P5"]["anchor"].update(b_within_shown="нет", b_later="нет")
+    key["P5"]["readings"]["object"] = "Отсутствие в полностью показанном окне известно; исход за окном неизвестен. Для более длинного горизонта это недосмотренный случай."
+    paper["items"].append({
+        "id": "P6", "title": "До будущего паттерна", "task":
+        "Учебная ситуация: T0 уже наблюдён. На закрытии +4 узнаётся состояние S. "
+        "Событие Y — первый контакт после S до +14. Правило A берёт все S, включая будущие "
+        "неуспехи; B берёт только S с будущим Y и исключает будущие flicker. "
+        "Из 12 отобранных по A случаев: 5 с Y, 4 полностью наблюдались до +14 без Y, "
+        "у 3 лента оборвалась раньше +14 без Y. Успешный Y в одном примере начинается на +8. "
+        "Решение принимается после закрытия +4; модель исполнения — open следующей свечи, "
+        "если она есть без разрыва. Оба правила придуманы после просмотра этого архива.",
+        "ask": {"rule": "Какое правило отбирает по доступному состоянию? «A» / «B».",
+                "denominator": "Сколько всего возможностей в знаменателе? Число.",
+                "known_no": "Сколько известных неуспехов до +14? Число.",
+                "unknown": "Сколько неизвестных исходов до +14? Число.",
+                "entry_bar": "На open какой свечи первое допустимое исполнение? Число.",
+                "independent_confirmation": "Повтор на этом же архиве независимо подтверждает идею? «да» / «нет».",
+                "question": "Предложи один эксперимент о раннем состоянии: узнавание, исход, опережение, отрицательный результат и решение по нему.",
+                "rejected_test": "Какой соблазнительный тест здесь отвечает на другой вопрос и почему?"}})
+    key["P6"] = {"axis": "префикс → будущий ответ → действие",
+                 "anchor": {"rule": "A", "denominator": "12", "known_no": "4", "unknown": "3",
+                            "entry_bar": "5", "independent_confirmation": "нет"},
+                 "readings": {"naive": "Искать предвестник только среди успешных Y, прибыль считать от T0.",
+                              "object": "Отбор по S, Y отдельно, весь знаменатель, неизвестное отдельно; действие после узнавания. Нужен проверяемый следующий эксперимент."}}
+    paper.pop("paper_sha256")
+    paper["paper_sha256"] = hashlib.sha256(json.dumps(paper, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+    key["_meta"].update(version=2, instrument=field.instrument, paper_sha256=paper["paper_sha256"])
     return paper, key
 
 
 def score_anchors(key: dict, answers: dict) -> dict:
     """Machine part only. The readings are classified by the operator."""
+    if key.get("_meta", {}).get("version") == 2:
+        meta = answers.get("_meta", {})
+        # `paper_fingerprint` is what the paper asks for; `paper_sha256` is the
+        # older field name, kept so recorded runs stay scorable.
+        shown = meta.get("paper_fingerprint", meta.get("paper_sha256"))
+        if shown != key["_meta"]["paper_sha256"]:
+            raise ValueError("answers do not identify this decision paper: "
+                             "_meta.paper_fingerprint must repeat the printed digest")
     def norm(v) -> str:
         s = str(v).strip().lower().replace("ё", "е")
         table = {"yes": "да", "no": "нет", "true": "да", "false": "нет",
@@ -471,6 +584,9 @@ def score_anchors(key: dict, answers: dict) -> dict:
             out["total"] += 1
             out["correct"] += int(ok)
         out["items"][pid] = detail
+    if key.get("_meta", {}).get("version") == 2:
+        out["anchors_pass"] = out["total"] > 0 and out["correct"] == out["total"]
+        out["free_text_review_required"] = True
     return out
 
 
@@ -493,12 +609,16 @@ def _scene_md(name: str, s: dict) -> list[str]:
             + (f"; последний закрылся назад нативных баров: {last}." if last is not None else "."),
             f"Обе границы живы: север {s['boundaries_alive']['north']}, юг {s['boundaries_alive']['south']}.",
             f"Текущий нативный бар открылся {s['current_native_bar']['minutes_since_bar_open']} "
-            f"минут назад на **{s['current_native_bar']['open']}** и ещё не закрылся.",
+            f"минут назад на **{s['current_native_bar']['open']}**"
+            + (" и закрылся на оцениваемой свече." if s['current_native_bar'].get('closed') else " и ещё не закрылся."),
             "",
             "Минуты, 0 — оцениваемая:",
             "",
         ]
         out += _candles(s["minutes"], "мин")
+        if "eligible_tier" in s:
+            out += ["", "Текущий tier допустим для Blue и не является breaker: "
+                    + ("да." if s["eligible_tier"] else "нет.")]
     else:
         out += [
             f"Область: юг **{s['zone_south']}**, север **{s['zone_north']}**. "
@@ -515,14 +635,18 @@ def _scene_md(name: str, s: dict) -> list[str]:
 
 
 def paper_markdown(paper: dict) -> str:
-    L = ["# Проверка входа: пять пар сцен", "", paper["what_this_is"], ""]
+    title = "шесть исследовательских решений" if paper.get("version") == 2 else "пять пар сцен"
+    L = [f"# Проверка входа: {title}", "", paper["what_this_is"], ""]
     L += ["Правила:", ""] + [f"- {r}" for r in paper["rules"]] + [""]
-    L += [f"Отпечаток задания: `{paper['paper_sha256'][:16]}`", ""]
+    digest = paper['paper_sha256'] if paper.get("version") == 2 else paper['paper_sha256'][:16]
+    L += [f"Отпечаток задания: `{digest}`", ""]
     for it in paper["items"]:
         L += [f"## {it['id']} — {it['title']}", ""]
         if it.get("note"):
             L += [it["note"], ""]
-        if it["id"] == "P3":
+        if it.get("task"):
+            L += [it["task"], ""]
+        elif it["id"] == "P3":
             a, b = it["object_a"], it["object_b"]
             L += [
                 f"Объект A: область юг **{a['zone_south']}**, север **{a['zone_north']}**, "
@@ -532,6 +656,8 @@ def paper_markdown(paper: dict) -> str:
                 f"Лента показана до +{a['tape_ends_after']}, обрыв по причине **{a['tape_end_reason']}**.",
                 "", "Общая минутная лента от T0:", "",
             ]
+            if paper.get("version") == 2:
+                L += [f"Для B наблюдение допустимо до +{b['tape_ends_after']}; за его пределами исход неизвестен.", ""]
             L += _candles(it["minutes_from_t0"], "от T0")
             L.append("")
         else:

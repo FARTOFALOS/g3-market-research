@@ -31,6 +31,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--instrument", default="NQ", choices=("ES", "NQ", "YM"))
     p.add_argument("--tf", type=int, default=54)
     p.add_argument("--seed", help="hex; omit on make to draw a fresh one")
+    p.add_argument("--version", type=int, choices=(1, 2), default=1,
+                   help="1: legacy pairs; 2: research decisions and explicit horizons")
     p.add_argument("--paper", type=Path, help="make: where to write the questions")
     p.add_argument("--key", type=Path, help="make: where to write the key; score: where to read it")
     p.add_argument("--answers", type=Path, help="score: the reader's JSON")
@@ -52,11 +54,12 @@ def main(argv: list[str] | None = None) -> int:
         table = field.passports(tf=args.tf).slice(0, args.limit)
         print(table.to_pandas().to_string(index=False))
     elif args.command == "entry-check":
-        from .entry_check import build_paper, paper_markdown, score_anchors
+        from .entry_check import build_paper, build_decision_paper, paper_markdown, score_anchors
         from .query import Field
 
         if args.mode == "make":
-            paper, key = build_paper(Field(repo, args.instrument), args.tf, args.seed)
+            builder = build_decision_paper if args.version == 2 else build_paper
+            paper, key = builder(Field(repo, args.instrument), args.tf, args.seed)
             if args.paper:
                 args.paper.write_text(paper_markdown(paper), encoding="utf-8", newline="\n")
             if args.key:
@@ -78,6 +81,8 @@ def main(argv: list[str] | None = None) -> int:
                     k: v for k, v in answers.get(pid, {}).items()
                     if k not in spec["anchor"]}
             print(json.dumps(result, ensure_ascii=False, indent=1))
+            if result.get("anchors_pass") is False:
+                return 2
     return 0
 
 

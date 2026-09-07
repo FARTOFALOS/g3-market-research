@@ -119,10 +119,11 @@ S-06 впервые вышел в рынок и дал −$22 950; совмес�
 ## Проверка входа
 
 ```powershell
-python -B -m g3riz.cli entry-check make --paper work/NNN/paper.md --key <вне репозитория>
+python -B -m g3riz.cli entry-check make --version 2 --paper work/NNN/paper.md --key <вне репозитория>
 python -B -m g3riz.cli entry-check score --key <ключ> --answers work/NNN/answers.json
 ```
 
-Пять пар анонимизированных сцен, по одной оси возможного неверного чтения на
-пару. Что измерено и с какими границами — в
+Пять пар анонимизированных сцен и задача о раннем состоянии до будущего
+паттерна. Сверяются ответы и выбранные исследовательские решения; коротких
+полей недостаточно. Версия 1 оставлена для старых прогонов. Что измерено — в
 [`reference/ENTRY_CHECK.md`](reference/ENTRY_CHECK.md).

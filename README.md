@@ -20,6 +20,8 @@
 [`reference/SCENE.md`](reference/SCENE.md), точные термины по надобности в
 [`GLOSSARY.md`](GLOSSARY.md), состояние поля и команды — в
 [`WORKBENCH.md`](WORKBENCH.md).
+Переход от сцены к вопросу, отбрасываемому тесту и следующему эксперименту —
+[`reference/CONTRACT.md`](reference/CONTRACT.md).
 Накопленное знание — [`base/`](base/README.md), порядок поиска и кандидаты с
 рождения — [`setups/`](setups/README.md). Наличие карточки не означает, что
 сетап прошёл проверку или разрешён к торговле.
