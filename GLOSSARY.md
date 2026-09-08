@@ -84,6 +84,35 @@ dominate a result until measured.
 slice context and eventually make decisions. A native RIZ timeframe and the
 minute observation clock are different things.
 
+### Cluster — `кластер`
+
+**Research term over field facts, and the unit the field does not store.** All
+RIZ whose T0 falls on the same minute of the tape, reduced to distinct zones by
+boundary price. One minute of tape ignites them together, and in every measured
+case with five or more members they share a single `t0_exit_side`: one candle
+body closes beyond several zones at once.
+
+The field has no row, id or column for this object — it stores passports one per
+`riz_id`. A cold agent therefore counts RIZ one by one and measures a different
+population than the trader sees on the chart. Two consequences, measured on NQ
+2006–2025 in [`060`](base/060-vizity-k-linii-klastera.md):
+
+- **Per-RIZ counting inflates density 2.9×.** Neighbouring timeframes produce
+  near-identical bars and hence copies of one zone: mean 5.29 RIZ per ignition
+  minute against 1.83 distinct zones. NQ 2024-10-17 09:00 records sixteen RIZ on
+  TF 455…1066 which are three zones. Reduce by boundary price, tolerance about a
+  quarter of the minute candle, before any population claim.
+- **Only part of a cluster is visible to anyone.** The pinned Pine pair draws
+  every minute up to 59 plus 60, 120, 240, 420 and D. Zones native to TF 61–1439
+  outside those values appear on no chart in the world, and 18.8% of ignition
+  minutes contain no visible timeframe at all. Whether an effect needs an
+  observer is therefore testable on neighbours — TF 240 against TF 239 and 241 —
+  and any population claim should say which of the two sets it used.
+
+The cluster's **line** is the first boundary price met on the way back: the
+highest `zone_top` for a north cluster, the lowest `zone_bottom` for a south
+one. It stays live while at least one of its zones has not retired that side.
+
 ### Origin direction — BISI / SIBI, `бычий` / `медвежий риз`
 
 **Field fact.** The direction of the imbalance from which the zone originated:
@@ -183,6 +212,17 @@ event the field already stores instead of writing a candle detector for it.
 What always holds on the minute tape is the close: strictly beyond
 `t0_exit_side`, never beyond the other side. Take the exit boundary from the
 passport, do not re-derive the span.
+
+**At T0 price is standing on the line, not departing from it.** The close sits
+beyond the boundary by a median 0.30 of that minute's own range — about five
+ticks on NQ ([046](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)) — and the
+first contact with that boundary follows a median one minute later, within two
+minutes for 71.7% of clusters. An entry at T0 aiming at its own boundary has no
+room: the target is nearer than the round-turn cost. Every prior negative result
+about touch, retest and return (020, 044, 045, 053, 056, 057) measured this
+configuration, so their zero is arithmetic and says nothing about a trade entered
+after price has travelled away. The worked picture is in
+[`reference/scenes/`](reference/scenes/README.md).
 
 ### T0 kind — `t0_kind`, `минутное зажигание`, `нативное зажигание`
 

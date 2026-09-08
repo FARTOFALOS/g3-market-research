@@ -12,13 +12,38 @@
 `exchange_calendars` (для пересборки календаря S-04, готовый `calendar.parquet`
 её не требует). Локально — `data/tmp/s04-venv`.
 
+## Повторить текущий результат
+
+Зависимости установи один раз в выбранной среде Python, из корня репозитория:
+
+```powershell
+python -m pip install -e ".[dev]" -r setups/S-05/requirements.txt
+```
+
+Для проверки полного правила v1 в ревизии v1r1 достаточно:
+
+```powershell
+python -B setups/S-07/revision.py --check
+python -B -m pytest setups/S-07/test_execution.py -q -p no:cacheprovider
+```
+
+Повтор записывается в `data/research/S-07/recheck/` и сравнивается с
+`result_v1r1.json`. Заморозка и сохранённый итог остаются источниками сверки.
+
+## Как был получен результат
+
+Ниже — команды разных этапов исследования, а не очередь для обычного повтора.
+Они включают перебор и запись результатов рядом с карточкой; выбирай конкретный
+скрипт по вопросу. Текущий повтор выше не требует заново проходить эти этапы.
+`freeze.py` создавал `FROZEN_v1.json` и при повторном запуске перезапишет его.
+Это исторический генератор: существующая заморозка сохраняется без перезаписи.
+
 ```powershell
 python -B setups/S-07/run.py
 python -B setups/S-07/verify.py
 python -B setups/S-07/field.py across
 python -B setups/S-07/manage.py
 python -B setups/S-07/scenes.py
-python -B setups/S-07/freeze.py
 python -B setups/S-07/portfolio.py
 python -B setups/S-07/stopstudy.py
 python -B setups/S-07/stencil.py
@@ -74,7 +99,7 @@ python -B -m pytest setups/S-07/test_execution.py -q
 В `management_v3.csv` лежит то же ведение без предела: $240 505, просадка
 $32 460, медиана −$275, остаток без лучших 5% −$159 030.
 
-Четыре последних скрипта не меняют версию v1, а разбирают её.
+Скрипты разбора отвечают на отдельные вопросы о версии v1.
 `portfolio.py` берёт сохранённые дневные ряды и отвечает, стоит ли держать S-07
 вместе с прежней совместной линией S-04/S-05/S-06. `stopstudy.py` считает
 профиль просадки внутри сделки и сетку «уровень стопа × момент выхода из минуса»

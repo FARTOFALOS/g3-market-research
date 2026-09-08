@@ -570,21 +570,18 @@ $52 449 при k=1, $157 186 при k=2, $180 503 при k=3 — против $2
 
 ## Как повторить и что дальше
 
-Из корня репозитория, окружение — как в [S-05](S-05/requirements.txt):
+Из корня репозитория, окружение — как в [S-05](S-05/requirements.txt).
+Для повтора полного правила в ревизии v1r1:
 
 ```powershell
-python -B setups/S-07/run.py
-python -B setups/S-07/verify.py
-python -B setups/S-07/manage.py
-python -B setups/S-07/scenes.py
-python -B setups/S-07/freeze.py
-python -B setups/S-07/portfolio.py
-python -B setups/S-07/stopstudy.py
-python -B setups/S-07/stencil.py
-python -B setups/S-07/stencil2.py
-python -B setups/S-07/revision.py
-python -B -m pytest setups/S-07/test_execution.py -q
+python -B setups/S-07/revision.py --check
+python -B -m pytest setups/S-07/test_execution.py -q -p no:cacheprovider
 ```
+
+Роль остальных скриптов и этапы получения результата описаны в
+[README расчёта](S-07/README.md#как-был-получен-результат). Они не являются
+обязательной очередью повторного запуска. Исторический `freeze.py` при запуске
+перезаписывает `FROZEN_v1.json`; существующая заморозка сохраняется без перезаписи.
 
 Поле RIZ нужно только для отвергнутой проверки `field.py`. Хеши кода, календаря,
 рыночных массивов и среды — [FROZEN_v1.json](S-07/FROZEN_v1.json); таблица
