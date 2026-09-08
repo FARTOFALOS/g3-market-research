@@ -1,0 +1,40 @@
+# Узкий CI: только общий слой чтения поля.
+#
+# Чего здесь НЕТ и почему. Поле не загружается и не материализуется: оно
+# заморожено и живёт локально. Проверки, которым нужны data/market и
+# data/field, помечены `needs_field` и на runner'е пропускаются — пропуск
+# означает «не смотрели», а не «пусто». Предметные проверки кандидатов
+# (setups/S-NN/test_*.py) здесь не запускаются: у них свои данные и свой
+# владелец, и общим покрытием исследований они не являются.
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  general-layer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Установить пакет чтения поля
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Общий слой тестов
+        run: python -B -m pytest tests -q -p no:cacheprovider
+
+      - name: Сказать, что именно осталось непроверенным
+        if: always()
+        run: |
+          echo "Локальных data/market и data/field на runner'е нет."
+          echo "Всё, что помечено needs_field, пропущено, а не пройдено."
+          echo "Предметные проверки S-07: python -B -m pytest setups/S-07/test_execution.py"

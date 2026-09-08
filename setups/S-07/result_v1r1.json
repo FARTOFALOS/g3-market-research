@@ -1,0 +1,196 @@
+{
+  "revision": "v1r1",
+  "of_version": "v1",
+  "what_changed": "исполнение катастрофического лимита: при открытии минуты за уровнем заполнение идёт по этому open, а не по уровню",
+  "rule": {
+    "instrument": "NQ",
+    "decision_minute": 3,
+    "decision_clock": "закрытие минуты 3 сессии, 09:33 America/New_York",
+    "entry": "open следующего минутного интервала; у свечи с close-меткой 09:34 этот open относится к 09:33, то есть к самому моменту решения",
+    "window_minutes": 30,
+    "hold_minutes": 120,
+    "exit_if_negative_at": 15,
+    "catastrophic_limit_candles": 16.0,
+    "breakeven": "никогда",
+    "trailing": "никогда",
+    "unit": "медиана истинного диапазона последних 30 закрытых минут, зафиксированная в минуту решения"
+  },
+  "position_model": {
+    "contracts": 1,
+    "cost_per_turn_usd": 15.0,
+    "point_value_usd": 20.0,
+    "slippage": "сверх фиксированного расхода не моделируется"
+  },
+  "coverage": {
+    "calendar_days": 5115,
+    "with_decision_minute": 5066,
+    "without_decision_minute": 49,
+    "dropped_broken_minute_grid": 22,
+    "dropped_missing_30m_prefix": 187,
+    "entries": 4857
+  },
+  "clock_sample": {
+    "date": "2026-05-01",
+    "decision_close": "2026-05-01 09:33:00-04:00",
+    "entry_bar_close": "2026-05-01 09:34:00-04:00",
+    "entry_price_instant": "2026-05-01 09:33:00-04:00",
+    "exit_bar_close": "2026-05-01 11:33:00-04:00",
+    "exit_reason": "120 минут"
+  },
+  "result_v1r1": {
+    "2006-2012": {
+      "trades": 1557,
+      "candles_mean": 0.788,
+      "mean": -4.4,
+      "median": -55.0,
+      "win_share": 0.337,
+      "total": -6895.0,
+      "drawdown": 11960.0,
+      "worst_day": -805.0,
+      "without_best_5pct": -53490.0,
+      "years_positive": 1,
+      "years": 7,
+      "exits": {
+        "120 минут": 700,
+        "минус на 15-й минуте": 656,
+        "катастрофический лимит": 201
+      }
+    },
+    "2013-2019": {
+      "trades": 1737,
+      "candles_mean": 1.01,
+      "mean": 9.7,
+      "median": -80.0,
+      "win_share": 0.344,
+      "total": 16815.0,
+      "drawdown": 13460.0,
+      "worst_day": -1935.0,
+      "without_best_5pct": -103925.0,
+      "years_positive": 5,
+      "years": 7,
+      "exits": {
+        "120 минут": 774,
+        "минус на 15-й минуте": 670,
+        "катастрофический лимит": 293
+      }
+    },
+    "2020-2026": {
+      "trades": 1563,
+      "candles_mean": 1.433,
+      "mean": 151.2,
+      "median": -290.0,
+      "win_share": 0.362,
+      "total": 236265.0,
+      "drawdown": 30960.0,
+      "worst_day": -4620.0,
+      "without_best_5pct": -163270.0,
+      "years_positive": 7,
+      "years": 7,
+      "exits": {
+        "120 минут": 732,
+        "минус на 15-й минуте": 667,
+        "катастрофический лимит": 164
+      }
+    }
+  },
+  "result_v1_frozen_execution": {
+    "2006-2012": {
+      "trades": 1557,
+      "candles_mean": 0.788,
+      "mean": -4.4,
+      "median": -55.0,
+      "win_share": 0.337,
+      "total": -6895.0,
+      "drawdown": 11960.0,
+      "worst_day": -805.0,
+      "without_best_5pct": -53490.0,
+      "years_positive": 1,
+      "years": 7,
+      "exits": {
+        "120 минут": 700,
+        "минус на 15-й минуте": 656,
+        "катастрофический лимит": 201
+      }
+    },
+    "2013-2019": {
+      "trades": 1737,
+      "candles_mean": 1.01,
+      "mean": 9.7,
+      "median": -80.0,
+      "win_share": 0.344,
+      "total": 16815.0,
+      "drawdown": 13460.0,
+      "worst_day": -1935.0,
+      "without_best_5pct": -103925.0,
+      "years_positive": 5,
+      "years": 7,
+      "exits": {
+        "120 минут": 774,
+        "минус на 15-й минуте": 670,
+        "катастрофический лимит": 293
+      }
+    },
+    "2020-2026": {
+      "trades": 1563,
+      "candles_mean": 1.433,
+      "mean": 151.2,
+      "median": -290.0,
+      "win_share": 0.362,
+      "total": 236265.0,
+      "drawdown": 30960.0,
+      "worst_day": -4620.0,
+      "without_best_5pct": -163270.0,
+      "years_positive": 7,
+      "years": 7,
+      "exits": {
+        "120 минут": 732,
+        "минус на 15-й минуте": 667,
+        "катастрофический лимит": 164
+      }
+    }
+  },
+  "correction_cost": {
+    "trades_changed": 0,
+    "trades_changed_2020_2026": 0,
+    "usd_difference_2020_2026": 0.0,
+    "usd_difference_all": 0.0,
+    "changed_trades": [],
+    "note": "минута ни разу не открылась строго за пределом 16 свечей внутри сессии, поэтому исправление меняет код, а не деньги; на более тесных пределах той же ленты такие случаи единичны, но существуют"
+  },
+  "matches_frozen_claim": {
+    "claim": {
+      "total": 236265.0,
+      "drawdown": 30960.0,
+      "worst_day": -4620.0,
+      "trades": 1563
+    },
+    "computed": {
+      "total": 236265.0,
+      "drawdown": 30960.0,
+      "worst_day": -4620.0,
+      "trades": 1563
+    },
+    "note": "FROZEN_v1.json хранит эти деньги двумя константами, вписанными в freeze.py. Здесь они вычислены; совпадение означает, что константы верны, а не что они были вычислены тогда."
+  },
+  "identity": {
+    "revision_py": "ed0d728b06078d9d4ff5714af0c2175e0c16115210416d5af9092309cd47fafc",
+    "run_py": "1b77003652a412ad07b2b7ad983a7404cec4f40aa350218e8a668f2534600e97",
+    "manage_py": "6a84f2e80f83c37828df1fce9030c32c596016d81a7959a78eab99db7c97a9db",
+    "pine": "23ee7a10309dc9efa0a8b4560995c067e6505641360c9a4442b2c10e3f036cd1",
+    "calendar": "16e5b0b37219ce6478d7c32b1615c4a00a1c152cca20572a8358e9e47e3521ff",
+    "market": {
+      "NQ/close_ts_utc_ns": "b1a33f16ad754851b9d202e5fe3925add711c0ba0c5a1221e55ce71c49c683b7",
+      "NQ/open": "5f9709d127ab52b46b4229566df2180159be011a8cb0393cc6a269119585cc61",
+      "NQ/high": "e965cc0b62cb0af3ee296a451de401d2ff03ca1d401e51e4e93e4910dd4a6c32",
+      "NQ/low": "daa64c199e6f03125eec620413062527c947b9876d85b2fc4326c658b024ca00",
+      "NQ/close": "02c00108f3808c4f0a8078c2bede214f9d6357fc8fda8ecb487ec560290599da"
+    }
+  },
+  "limits": [
+    "выход на 15-й и на 120-й минуте исполняется по close той же минуты — самое оптимистичное допущение конструкции, измерением не подтверждено",
+    "внутри одной минуты порядок лимита и закрытия не восстановим; лимит считается первым",
+    "проскальзывание сверх фиксированного расхода не моделируется",
+    "независимого подтверждения нет: та же лента, тот же корпус, ведение и предел подобраны на этой же истории",
+    "S07_opening_drift.pine — исследовательский перенос; его исполнение в TradingView не проверялось"
+  ]
+}

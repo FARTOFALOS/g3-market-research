@@ -439,6 +439,22 @@ required. Each candidate has its own stated territory and failure conditions.
 Discovery evidence, new-information evidence and permission to trade are
 different properties; a file in `setups/` establishes none of them by itself.
 
+### Idea error vs protective limit — `ошибка идеи` / `защитное ограничение`
+
+Two different things a stop can mean, and they need not coincide.
+
+An **idea error** is an observation that weakens the guess the trade was built
+on: after it, the reason to hold the position is gone. Naming one requires
+saying which observation, and it is falsifiable.
+
+A **protective limit** caps the loss and nothing else. A catastrophic limit
+chosen because a wider one costs too much money is a protective limit even when
+it sits on a round level; it carries no claim about the market being wrong. It
+is legitimate and often necessary, but structural meaning is not to be invented
+for it. A card states which of the two a level is, and how it was chosen — by
+money or by a named observation. Both may exist in one rule at different
+distances.
+
 ## Reading the field
 
 ```python

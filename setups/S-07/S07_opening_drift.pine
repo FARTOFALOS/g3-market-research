@@ -1,10 +1,21 @@
 //@version=6
-// S-07 — дрейф первых минут сессии. Замороженная версия v1 (2026-09-07).
+// S-07 — дрейф первых минут сессии. Перенос правила v1 в ревизии v1r1.
 // ВАЖНО: график — NQ, таймфрейм 1 минута, ВКЛЮЧЁННЫЕ расширенные часы (ETH).
 // Без ETH окно из 30 баров захватит вчерашнюю сессию, и сторона будет другой.
-// Это перенос правила для живой проверки. Историческим расчётом проекта
-// является python в setups/S-07/, а не этот файл: данные TradingView другие.
-strategy("S-07 opening drift v1", overlay = true, initial_capital = 100000,
+//
+// Историческим расчётом проекта остаётся python в setups/S-07/ (revision.py),
+// а не этот файл. Что здесь может расходиться с ним, даже когда часы совпали:
+//   1. Цена входа. В python вход идёт по open интервала 09:33–09:34; здесь
+//      process_orders_on_close=true заполняет заявку по close минуты решения.
+//      Это один и тот же момент 09:33:00, но два разных числа: на корпусе
+//      проекта они совпадают лишь в 44% дней, средняя разница 0,21 пункта.
+//   2. Первая минута позиции. Стоп-заявка выставляется, когда позиция уже
+//      видна скрипту, поэтому внутриминутный минимум самой минуты входа она
+//      может не поймать; revision.py проверяет предел и на ней.
+//   3. Данные TradingView другие; расхождение итогов ожидаемо.
+//   4. Исполнение этого скрипта в TradingView не проверялось — ни одного
+//      прогона стратегии здесь не сверено со сделками python.
+strategy("S-07 opening drift v1r1", overlay = true, initial_capital = 100000,
          default_qty_type = strategy.fixed, default_qty_value = 1,
          commission_type = strategy.commission.cash_per_order, commission_value = 7.5,
          calc_on_every_tick = false, process_orders_on_close = true)
@@ -19,24 +30,27 @@ USE_CHECK   = input.bool(true, "Выходить на 15-й минуте при 
 // свеча как единица: медиана истинного диапазона последних 30 закрытых минут
 unit = ta.median(ta.tr(true), WINDOW)
 
-// минута основной сессии: 0 — бар, закрывшийся в 09:31 ET
+// Нумерация минут сессии как в python: минута 0 — та, что ЗАКРЫВАЕТСЯ в 09:30,
+// то есть последняя минута перед открытием. Первый бар RTH открывается в 09:30
+// и закрывается в 09:31 — это уже минута 1. Без этого сдвига DECIDE = 3
+// означал бы решение на закрытии 09:34, на минуту позже правила.
 rth        = not na(time("1", "0930-1600", "America/New_York"))
 newSession = rth and not rth[1]
 var int sessionMinute = na
-sessionMinute := newSession ? 0 : rth ? nz(sessionMinute[1]) + 1 : na
+sessionMinute := newSession ? 1 : rth ? nz(sessionMinute[1]) + 1 : na
 
 mid  = (ta.highest(high, WINDOW) + ta.lowest(low, WINDOW)) / 2
 side = close > mid ? 1 : -1
 
-var int  heldMinutes = 0
+var int   heldMinutes = 0
 var float unitAtEntry = na
 var float stopPrice   = na
 
 decide = rth and sessionMinute == DECIDE and strategy.position_size == 0
 if decide
     unitAtEntry := unit
-    stopPrice   := side == 1 ? close - LIMIT * unit : close + LIMIT * unit
     heldMinutes := 0
+    stopPrice   := na
     if side == 1
         strategy.entry("L", strategy.long)
     else
@@ -45,14 +59,18 @@ if decide
 inPosition = strategy.position_size != 0
 if inPosition
     heldMinutes := heldMinutes + 1
-    long  = strategy.position_size > 0
-    pnl   = (long ? close - strategy.position_avg_price : strategy.position_avg_price - close)
-    hitLimit = long ? low <= stopPrice : high >= stopPrice
-    // 1) катастрофический лимит
-    if hitLimit
-        strategy.close_all("лимит 16 свечей")
-    // 2) проверка на 15-й минуте: в минусе — выходим
-    else if USE_CHECK and heldMinutes == CHECK and pnl < 0
+    long = strategy.position_size > 0
+    // предел отсчитывается от фактической цены входа, а не от close минуты решения
+    if na(stopPrice)
+        stopPrice := long ? strategy.position_avg_price - LIMIT * unitAtEntry
+                          : strategy.position_avg_price + LIMIT * unitAtEntry
+    pnl = long ? close - strategy.position_avg_price : strategy.position_avg_price - close
+    // 1) катастрофический лимит — ЦЕНОВОЙ стоп, а не market close по факту касания:
+    //    заполняется по уровню, а при открытии бара за уровнем — по этому open,
+    //    ровно как считает revision.py
+    strategy.exit(long ? "предел L" : "предел S", from_entry = long ? "L" : "S", stop = stopPrice)
+    // 2) проверка на 15-й минуте позиции: в минусе — выходим по close этой минуты
+    if USE_CHECK and heldMinutes == CHECK and pnl < 0
         strategy.close_all("минус на 15-й минуте")
     // 3) время вышло или конец основной сессии
     else if heldMinutes >= HOLD or not rth
@@ -61,4 +79,4 @@ if inPosition
 // Безубыток и трейлинг НЕ ставятся сознательно: на истории проекта перенос стопа
 // в безубыток срезает более половины результата и увеличивает просадку.
 plot(rth ? mid : na, "середина предрыночного диапазона", color.new(color.blue, 0), 1)
-plot(inPosition ? stopPrice : na, "лимит", color.new(color.red, 0), 1, plot.style_linebr)
+plot(inPosition ? stopPrice : na, "предел", color.new(color.red, 0), 1, plot.style_linebr)
