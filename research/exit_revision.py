@@ -51,6 +51,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from relational_stencil import Corpus                      # noqa: E402
 from candidate_check import CURSOR, HORIZON, POINT, COST, sides, tape  # noqa: E402
 
@@ -204,7 +206,7 @@ def block(trades):
         return {'n': 0}
     net = np.array([t['net'] for t in trades])
     ts = np.array([t['ts'] for t in trades])
-    year = 1970 + (ts // MIN) // int(365.2425 * 1440)
+    year = year_of(ts)
     by_year = {int(y): float(net[year == y].sum()) for y in np.unique(year)}
     eq = np.cumsum(net)
     reasons = {}

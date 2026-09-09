@@ -42,6 +42,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from candidate_check import POINT, COST                            # noqa: E402
 from minute_edge import _session_index, ROOT, MIN                  # noqa: E402
 
@@ -224,7 +226,7 @@ def summarise(trades, cost):
         return {'n': 0}
     g = np.array([t['gross'] for t in trades])
     tsx = np.array([t['ts'] for t in trades])
-    year = (tsx // MIN) // int(365.2425 * 1440) + 1970
+    year = year_of(tsx)
     net = g - cost
     eq = np.cumsum(net)
     sem = float(g.std(ddof=1) / np.sqrt(len(g)))

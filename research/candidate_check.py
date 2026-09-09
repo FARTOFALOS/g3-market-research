@@ -34,6 +34,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from relational_stencil import Corpus                       # noqa: E402
 from ordinal_events import extremum_event, last_update_event  # noqa: E402
 
@@ -119,7 +121,7 @@ def block(rows, m):
         return {'n': 0}
     net = np.array([r['net'] for r in rows])
     ts = np.array([r['ts'] for r in rows])
-    years = ((ts // MIN) // (365.2425 * 1440)).astype(int)
+    years = year_of(ts)
     by_year = {}
     for y in np.unique(years):
         by_year[int(y)] = float(net[years == y].sum())

@@ -22,14 +22,15 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from candidate_check import POINT, COST                            # noqa: E402
 from minute_edge import load, MIN                                  # noqa: E402
 from minute_candidates import parts, CANDIDATES, mask_of, stream   # noqa: E402
 
 
 def blocks(ts_ns):
-    day = (ts_ns // MIN) // 1440
-    return day
+    return date_key(ts_ns)
 
 
 def report(trades, cost):
@@ -46,7 +47,7 @@ def report(trades, cost):
     for m in (1, 5, 10, 25):
         top[f'top{m}_days_share_of_gross'] = float(
             by_day_g[order[:m]].sum() / total_g) if total_g else None
-    quarters = ((ts // MIN) // 1440 + 719163) // 91
+    quarters = quarter_of(ts)
     qs = np.unique(quarters)
     by_q = {int(q): float(net[quarters == q].mean()) for q in qs}
     return {

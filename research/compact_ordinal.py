@@ -54,6 +54,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from relational_stencil import Corpus, Space                        # noqa: E402
 from candidate_check import POINT, COST                             # noqa: E402
 from ordinal_events import (NONE, UNKNOWN, crossing_event,          # noqa: E402
@@ -336,8 +338,8 @@ def summarise(tr, cost):
         return {'n': 0}
     g = np.array([t[1] for t in tr])
     ts = np.array([t[0] for t in tr])
-    day = (ts // MIN) // 1440
-    year = day // int(365.2425) + 1970
+    day = date_key(ts)
+    year = year_of(ts)
     net = g - cost
     eq = np.cumsum(net)
     sem = float(g.std(ddof=1) / np.sqrt(len(g))) if len(g) > 1 else 0.0

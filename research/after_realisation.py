@@ -52,6 +52,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from relational_stencil import Corpus, Space                       # noqa: E402
 from anchor_control import sample_control, window_corpus, tape     # noqa: E402
 from candidate_check import CURSOR, HORIZON, POINT, COST, sides    # noqa: E402
@@ -361,7 +363,7 @@ def stage_money(found, denom, m, cursor, instrument='NQ'):
             return {'n': 0}
         net = np.array([t['net'] for t in tr])
         ts_ = np.array([t['ts'] for t in tr])
-        year = 1970 + (ts_ // MIN) // int(365.2425 * 1440)
+        year = year_of(ts_)
         by = {int(y): float(net[year == y].sum()) for y in np.unique(year)}
         eq = np.cumsum(net)
         return {'n': len(tr), 'mean_net': float(net.mean()),

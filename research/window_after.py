@@ -41,6 +41,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from calendar_utils import year_of, quarter_of, date_key  # noqa: E402
+
 from relational_stencil import Corpus                               # noqa: E402
 from anchor_control import sample_control, tape                     # noqa: E402
 from candidate_check import POINT, COST, sides                      # noqa: E402
@@ -345,7 +347,7 @@ def summarise(trades, cost):
     net = np.array([t['net'] for t in trades])
     gross = np.array([t['gross'] for t in trades])
     tsx = np.array([t['ts_entry'] for t in trades])
-    year = (tsx // MIN) // int(365.2425 * 1440) + 1970
+    year = year_of(tsx)
     by = {int(y): float(net[year == y].sum()) for y in np.unique(year)}
     eq = np.cumsum(net)
     sem = float(gross.std(ddof=1) / np.sqrt(len(gross)))
