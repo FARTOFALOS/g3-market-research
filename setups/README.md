@@ -22,6 +22,9 @@
 | [S-05](S-05-otkat-vstrechnymi-svechami.md) | Откат встречными свечами | [S-05/README.md](S-05/README.md) |
 | [S-06](S-06-svechnaya-pauza-u-riz.md) | Свечная пауза у RIZ | [S-06/README.md](S-06/README.md) |
 | [S-07](S-07-drayf-pervyh-minut-sessii.md) | Дрейф первых минут сессии; правило без RIZ | [S-07/README.md](S-07/README.md) |
+| [S-08](S-08-otmena-vneshnego-otkrytiya.md) | Отмена открытия за вчерашним диапазоном; правило без RIZ | [S-08/README.md](S-08/README.md) |
+| [S-09](S-09-dve-dveri-dnya.md) | Две двери дня: два решения в день, правило без RIZ | [S-09/README.md](S-09/README.md) |
+| [S-10](S-10-porjadok-pervyh-minut.md) | Порядок первых минут: две версии ведения, обе отвергнуты | — |
 
 Исследователь сам выбирает догадку и ведёт её до ответа. Ему не нужны отдельные
 генератор, комиссия и хранитель реестра. Скрипты считают; агент отвечает за
