@@ -213,15 +213,16 @@ What always holds on the minute tape is the close: strictly beyond
 `t0_exit_side`, never beyond the other side. Take the exit boundary from the
 passport, do not re-derive the span.
 
-**At T0 price is standing on the line, not departing from it.** The close sits
+**T0 does not by itself establish a departure.** The measured close sits
 beyond the boundary by a median 0.30 of that minute's own range — about five
 ticks on NQ ([046](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)) — and the
 first contact with that boundary follows a median one minute later, within two
-minutes for 71.7% of clusters. An entry at T0 aiming at its own boundary has no
-room: the target is nearer than the round-turn cost. Every prior negative result
-about touch, retest and return (020, 044, 045, 053, 056, 057) measured this
-configuration, so their zero is arithmetic and says nothing about a trade entered
-after price has travelled away. The worked picture is in
+minutes for 71.7% of clusters in the original 060 operator, whose touch/visit
+semantics now require review (see [audit](setups/S-08/AUDIT.md)). An entry at T0
+aiming at its own boundary may have too little room to cover costs; this must
+be checked at its actual fill price. Prior studies do not all measure this entry:
+056 and 057 explicitly require a departure and later decision. Their negatives
+cannot all be attributed to T0 proximity. The worked picture is in
 [`reference/scenes/`](reference/scenes/README.md).
 
 ### T0 kind — `t0_kind`, `минутное зажигание`, `нативное зажигание`

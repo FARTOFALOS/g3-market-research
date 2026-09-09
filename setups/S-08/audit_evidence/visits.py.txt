@@ -1,0 +1,97 @@
+"""060 — visity ceny k linii klastera, poka liniya gorit. NQ."""
+import numpy as np, pyarrow as pa, pyarrow.parquet as pq, pyarrow.compute as pc, datetime as dt, pickle, sys
+from collections import defaultdict
+
+REPO='.'; INSTR='NQ'
+R=f'{REPO}/data/market/{INSTR}/'
+hi=np.load(R+'high.npy',mmap_mode='r'); lo=np.load(R+'low.npy',mmap_mode='r')
+op=np.load(R+'open.npy',mmap_mode='r'); cl=np.load(R+'close.npy',mmap_mode='r')
+ts=np.load(R+'close_ts_utc_ns.npy',mmap_mode='r')
+N=len(hi)
+DISC_END=int(dt.datetime(2025,11,1,tzinfo=dt.timezone.utc).timestamp()*1e9)  # holdout granica
+BUDGET=2880   # minut nablyudeniya
+PINE=set(range(1,60))|{60,120,240,420,1440}
+
+# --- sbor pasportov i sobytiy snyatiya granic ---
+zones=defaultdict(list)      # t0_spine_pos -> [(tf, top, bot, side, riz_id)]
+retire={}                    # riz_id -> {'north':pos,'south':pos}
+for tf in range(1,1441):
+    p=pq.read_table(f'{REPO}/data/field/{INSTR}/cells/tf_{tf:04d}/passports.parquet',
+        columns=['riz_id','t0_spine_pos','t0_ts_ns','zone_top','zone_bottom','t0_exit_side'])
+    m=p['t0_ts_ns'].to_numpy()<DISC_END
+    if m.sum()==0: continue
+    p=p.filter(m)
+    ids=p['riz_id'].to_pylist()
+    for rid,sp,zt,zb,sd in zip(ids,p['t0_spine_pos'].to_numpy(),p['zone_top'].to_numpy(),
+                               p['zone_bottom'].to_numpy(),p['t0_exit_side'].to_pylist()):
+        zones[int(sp)].append((tf,float(zt),float(zb),sd,rid))
+    e=pq.read_table(f'{REPO}/data/field/{INSTR}/cells/tf_{tf:04d}/events.parquet',
+        columns=['riz_id','event_kind','market_spine_pos'])
+    e=e.filter(pc.is_in(e['event_kind'], value_set=pa.array(['north_boundary_retired','south_boundary_retired'])))
+    for rid,k,mp in zip(e['riz_id'].to_pylist(),e['event_kind'].to_pylist(),
+                        e['market_spine_pos'].to_numpy()):
+        d=retire.setdefault(rid,{})
+        d['north' if k.startswith('north') else 'south']=int(mp)
+print(f"minut zazhiganiya: {len(zones)}, rizov so snyatiem granic: {len(retire)}",flush=True)
+
+def unit_at(p):
+    """svecha = mediana istinnogo diapazona 30 zakrytyh minut do p"""
+    a=max(p-30,1)
+    h=np.asarray(hi[a:p],dtype=float); l=np.asarray(lo[a:p],dtype=float); c=np.asarray(cl[a-1:p-1],dtype=float)
+    if len(h)<5: return np.nan
+    tr=np.maximum(h-l,np.maximum(abs(h-c),abs(l-c)))
+    return float(np.median(tr))
+
+out=[]
+for p,v in zones.items():
+    if p<40 or p+2>=N: continue
+    side=v[0][3]
+    u=unit_at(p)
+    if not np.isfinite(u) or u<=0: continue
+    tol=0.25*u
+    # dedup zon po cene
+    uniq=[]
+    for tf,zt,zb,sd,rid in sorted(v,key=lambda z:-z[0]):
+        hit=None
+        for j,(a,b,tfs,rids) in enumerate(uniq):
+            if abs(zt-a)<=tol and abs(zb-b)<=tol: hit=j; break
+        if hit is None: uniq.append((zt,zb,[tf],[rid]))
+        else: uniq[hit][2].append(tf); uniq[hit][3].append(rid)
+    line = max(z[0] for z in uniq) if side=='north' else min(z[1] for z in uniq)
+    # kakie zony derzhat etu liniyu i kogda ona perestayot gorét
+    key='north' if side=='north' else 'south'
+    holders=[z for z in uniq if abs((z[0] if side=='north' else z[1])-line)<=tol]
+    ends=[]
+    for z in holders:
+        for rid in z[3]:
+            r=retire.get(rid,{}).get(key)
+            ends.append(r if r is not None else 10**12)
+    life_end=max(ends) if ends else p
+    end=min(p+BUDGET, life_end, N-1)
+    if end<=p+1: 
+        out.append((p,len(uniq),len(v),side,u,line,0,[],[],0,life_end>p+BUDGET)); continue
+    h=np.asarray(hi[p+1:end+1],dtype=float); l=np.asarray(lo[p+1:end+1],dtype=float)
+    touch = (l<=line)&(h>=line)
+    if side=='north': touch = l<=line
+    else: touch = h>=line
+    # visity: gruppy podryad iduschih kasaniy, razdelyonnye hotya by odnoy minutoy bez kasaniya
+    idx=np.flatnonzero(touch)
+    visits=[]
+    if len(idx):
+        start=idx[0]; prev=idx[0]
+        for i in idx[1:]:
+            if i>prev+1: visits.append((start,prev)); start=i
+            prev=i
+        visits.append((start,prev))
+    # othod mezhdu vizitami: maksimalnoe udalenie ot linii v storonu ceny
+    gaps=[]
+    for a,b in zip(visits[:-1],visits[1:]):
+        s,e2=a[1]+1,b[0]
+        if e2<=s: gaps.append(0.0); continue
+        seg = h[s:e2] if side=='north' else l[s:e2]
+        gaps.append((float(seg.max())-line)/u if side=='north' else (line-float(seg.min()))/u)
+    starts=[int(a[0])+1 for a in visits]
+    out.append((p,len(uniq),len(v),side,u,line,len(visits),starts,gaps,
+                int(visits[0][0])+1 if visits else -1, life_end>end))
+pickle.dump(out,open('work/060/visits.pkl','wb'))
+print("gotovo, klasterov:",len(out),flush=True)

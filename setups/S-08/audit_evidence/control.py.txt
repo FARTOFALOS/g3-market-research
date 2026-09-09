@@ -1,0 +1,90 @@
+"""1) Kontrol: tot zhe test na SLUCHAYNYH urovnyah - dolzhen dat tu zhe cifru, esli linii ne osobennye.
+   2) Signal trydera: proboy pervogo swing-low posle uhoda (k=1,2,3 bara podtverzhdeniya)."""
+import numpy as np, pickle, datetime as dt
+rng=np.random.default_rng(7)
+o=pickle.load(open('work/060/visits.pkl','rb'))
+R='data/market/NQ/'
+hi=np.load(R+'high.npy',mmap_mode='r'); lo=np.load(R+'low.npy',mmap_mode='r')
+cl=np.load(R+'close.npy',mmap_mode='r'); ts=np.load(R+'close_ts_utc_ns.npy',mmap_mode='r')
+N=len(hi); BUD=2880
+D=[2,3,5,8]
+
+def run_test(get_line):
+    res={d:[0,0] for d in D}
+    for x in o:
+        p,nu,nr,side,u,line0,nv,starts,gaps,fv,cen=x
+        if nv<1 or u<=0: continue
+        line=get_line(x)
+        if line is None: continue
+        a=p+starts[0]; end=min(p+BUD,N-2)
+        if a+12>=end: continue
+        h=np.asarray(hi[a+1:end+1],dtype=float); l=np.asarray(lo[a+1:end+1],dtype=float)
+        if len(h)<20: continue
+        for d in D:
+            dist=d*u
+            away=np.flatnonzero(h>=line+dist) if side=='north' else np.flatnonzero(l<=line-dist)
+            if len(away)==0: continue
+            j=int(away[0]); h2=h[j+1:]; l2=l[j+1:]
+            if len(h2)<2: continue
+            if side=='north':
+                bk=np.flatnonzero(l2<=line); fr=np.flatnonzero(h2>=line+2*dist)
+            else:
+                bk=np.flatnonzero(h2>=line); fr=np.flatnonzero(l2<=line-2*dist)
+            b=int(bk[0]) if len(bk) else 10**9; f=int(fr[0]) if len(fr) else 10**9
+            if b==f==10**9: continue
+            res[d][0 if b<f else 1]+=1
+    return res
+
+real=run_test(lambda x: x[5])
+# sluchaynyy uroven: smeshchyon ot linii na 3-15 svechey v storonu ceny (tam zhe, gde cena hodit)
+def rnd(x):
+    p,nu,nr,side,u,line,*_=x
+    off=rng.uniform(3,15)*u
+    return line+off if side=='north' else line-off
+ctrl=run_test(rnd)
+print("KONTROL: dolya 'vozvrat k urovnyu ranshe, chem eshchyo stolko zhe proch', %")
+print(f"{'d':>3} {'liniya klastera':>16} {'N':>8} | {'sluchaynyy uroven':>18} {'N':>8}")
+for d in D:
+    a,b=real[d]; c,e=ctrl[d]
+    print(f"{d:>3} {100*a/max(a+b,1):>16.1f} {a+b:>8} | {100*c/max(c+e,1):>18.1f} {c+e:>8}")
+
+# --- signal: proboy pervogo swing-low posle uhoda ---
+print("\nSIGNAL TREYDERA: posle uhoda ot linii cena probivaet svoy pervyy swing-low (k barov podtverzhdeniya)")
+print("vhod po close minuty proboya, cel = liniya, stop = to zhe rasstoyanie vverh (simmetrichno)")
+for K in (1,2,3):
+    res=[0,0]; dd=[]
+    for x in o:
+        p,nu,nr,side,u,line,nv,starts,gaps,fv,cen=x
+        if nv<1 or u<=0: continue
+        a=p+starts[0]; end=min(p+BUD,N-2)
+        if a+40>=end: continue
+        h=np.asarray(hi[a:end+1],dtype=float); l=np.asarray(lo[a:end+1],dtype=float); c=np.asarray(cl[a:end+1],dtype=float)
+        n=len(h)
+        if n<40: continue
+        piv=None; sig=None
+        rng_i=range(K,n-K)
+        for i in rng_i:
+            if side=='north':
+                if l[i]==l[i-K:i+K+1].min() and l[i]<l[i-1] and l[i]<l[i+K]:
+                    if piv is None or i+K>piv[0]: piv=(i+K,l[i])
+            else:
+                if h[i]==h[i-K:i+K+1].max() and h[i]>h[i-1] and h[i]>h[i+K]:
+                    if piv is None or i+K>piv[0]: piv=(i+K,h[i])
+            if piv is not None and i>piv[0]:
+                if (side=='north' and c[i]<piv[1]) or (side=='south' and c[i]>piv[1]):
+                    sig=i; break
+        if sig is None: continue
+        entry=c[sig]; gap=(entry-line) if side=='north' else (line-entry)
+        if gap<=0.25*u: continue
+        h2=h[sig+1:]; l2=l[sig+1:]
+        if len(h2)<3: continue
+        if side=='north':
+            t=np.flatnonzero(l2<=line); s=np.flatnonzero(h2>=entry+gap)
+        else:
+            t=np.flatnonzero(h2>=line); s=np.flatnonzero(l2<=entry-gap)
+        ti=int(t[0]) if len(t) else 10**9; si=int(s[0]) if len(s) else 10**9
+        if ti==si==10**9: continue
+        res[0 if ti<si else 1]+=1
+        if ti<si: dd.append(gap/u)
+    n=res[0]+res[1]
+    print(f"  k={K}: cel ranshe stopa {100*res[0]/max(n,1):.1f}%   N={n}   med rasstoyanie do celi {np.median(dd) if dd else 0:.2f} svechi")

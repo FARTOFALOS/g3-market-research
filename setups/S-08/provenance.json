@@ -1,0 +1,48 @@
+{
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "pyarrow": "24.0.0",
+    "matplotlib": "3.11.1"
+  },
+  "sha256": {
+    "setups\\S-08\\AUDIT.md": "7a80d943d7b0c31d5939d35ef5161cc845e60c17efdf5bb050f5a05305b48be4",
+    "setups\\S-08\\audit_checks.json": "5122662513a41ce5ceac4c69e25df44d77d7dd1abd0487573fb6e1e9f2219ad3",
+    "setups\\S-08\\audit_checks.py": "0a1852be4e341bd19ac0f3e34a8689a3e13e6f6db3675bbfc61c15c65b5c355e",
+    "setups\\S-08\\check.py": "62b890afb5aa0f92ea0bfa9e27fcfd7fa7a1a602c60e81a4e94748aa7889ebd8",
+    "setups\\S-08\\checks_before_outcomes.json": "3bc651538f0ce4c00d110d8bed7c55d2e90f34b70b1fc6ab92d8ea093523f4b8",
+    "setups\\S-08\\daily.csv": "67fc6692bd2ab19e9c46397e4c7c46767403f26c70c5a5e3daf3deb195e493a0",
+    "setups\\S-08\\present.py": "f368836330cd4c521916c11f1dde49da58d12680468eb40ba0f694b3155e4339",
+    "setups\\S-08\\README.md": "5d58b548b3291b26cb6e18a457303d47018115a4e87e5d93e141e5952aa74e39",
+    "setups\\S-08\\result.json": "368d4da7e0ce8e9430452b8a784d704ccec7be4c6c587773ad6831020771abfb",
+    "setups\\S-08\\riz_prefix_candles.csv": "b66cf910386607d565b61344a7dfd425b76fb8b92813654da5eff83fb73de110",
+    "setups\\S-08\\riz_prefix_events.json": "2f2918cbbd4fd8028770f925aef5327dfe44bf81a7cc943fbf5f356dc0407183",
+    "setups\\S-08\\run.py": "8d73dd394edfa2ab74d1992970d94b8df8b8583a924fc8f66e8dbe0bf3000466",
+    "setups\\S-08\\scenes.json": "d63c1773d697e14725a3ffdc3fbfd0ee05fb768a882e7b88865e7323ce32cce8",
+    "setups\\S-08\\scenes.png": "699bcdfdf3c084fedf864d2d66c7bf114c952205a1b79d02f65ea9689361b5b2",
+    "setups\\S-08\\summary.csv": "87f98988ce3ef4dc0e1ca5aa2cb3c7cc1302e169db178ed1710a9729de6b4779",
+    "setups\\S-08\\validate.py": "4458cda93b4399b5276e94bbc2988129879f5a55ff8a00b3543474bfed8048c3",
+    "setups\\S-08\\validation.json": "2d1592dd750d5e939de9f6ac6c0fdabc6c15e2a02ac700489bf287d18953ef2d",
+    "setups\\S-08\\yearly.csv": "83aa82c5e35bcca7212d2dbec6940d2b32caa78e7dd246a0e1ae1be209982f81",
+    "setups\\S-08\\audit_evidence\\control.py.txt": "6ddbcc4d7b0f7c4263718fb2d024ba1440fd1d343874fc9c4c66fbae739f1d25",
+    "setups\\S-08\\audit_evidence\\magnet.py.txt": "f1179e03b32411a86c983c320ea0d39da16309dd04127473bae292245e150829",
+    "setups\\S-08\\audit_evidence\\sanity.py.txt": "9a148660258b824635f39f7a7810e68aa19d4f917b1cf80e1caf2e635dbe8d9c",
+    "setups\\S-08\\audit_evidence\\second.py.txt": "5bb2f0e44dd624f7c780a4da496eee346aec7de4ad3a10efd5370230cb338769",
+    "setups\\S-08\\audit_evidence\\visits.py.txt": "5a35894eba23ade595a4fef89bb6d0c5fcaa276966b8b3ec2ef673aeee538dfb",
+    "setups\\S-08-otmena-vneshnego-otkrytiya.md": "0a69e7edd4f2601380ad451fdb7066bdabe942f931e55328669d8a4b5aba24e9",
+    "base\\060-vizity-k-linii-klastera.md": "de7ba10be39018b0cb2e71462457b49e75e68e254fe3e0ed24327e187f7bbb10",
+    "GLOSSARY.md": "64ef6ff2a009a0d53ddfd55a90631488922b9a85718329a5e3285d67e65e994e",
+    "WORKBENCH.md": "f52299eabd708389a1c394deb90a4e930a523e6f8ba4eea1d636f244f409fd6d",
+    "reference\\scenes\\README.md": "8225fe59edf92d2d50cd0fe987c2dc3189653aeb83c96e51aa8c17f9da21f559",
+    "setups\\README.md": "8f0e1760bc7b09a0bfeb4afa3b7dfade500dc4e5f0903469e9d8bfa4d4ac4f38",
+    "base\\README.md": "85ae8c96174d5520e757e1579ebbd9dc8f830dac3c16c8efd331a764c5d21f79"
+  },
+  "source_root_commit": "c6057cbf4229850dcff5e32f311a1be118564c8b",
+  "validation": {
+    "core_tests_passed": 71,
+    "signal_prefix_checks": 509,
+    "independent_execution_agreements": 395,
+    "exact_trade_table_repeat_sha256": "1f335efbe3ac667c008d3c1ec41b4bd7a4183d1daeb09d902a0c38e6077504e7",
+    "missing_document_links": 0
+  }
+}

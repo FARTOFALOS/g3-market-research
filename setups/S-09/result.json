@@ -1,0 +1,173 @@
+{
+  "rule": "S-09 v1",
+  "territory": "NQ, XNYS, 2020-01-01..2025-10-31",
+  "poisk": {
+    "sdelok": 2934,
+    "dney": 1494,
+    "v_den": 1.96,
+    "srednyaya": 97.7,
+    "chistoe": 286786,
+    "valovoe": 330796,
+    "let_plus": "6/6",
+    "prosadka": 43735,
+    "hudshiy_den": -13321,
+    "hudshaya_sdelka": -10125,
+    "dney_v_plyuse_pct": 49,
+    "zakryto_predelom_pct": 37,
+    "mediana_minut": 120
+  },
+  "otlozhennoe": {
+    "sdelok": 238,
+    "dney": 121,
+    "v_den": 1.97,
+    "srednyaya": 267.2,
+    "chistoe": 63582,
+    "valovoe": 67152,
+    "let_plus": "2/2",
+    "prosadka": 15629,
+    "hudshiy_den": -5471,
+    "hudshaya_sdelka": -4716,
+    "dney_v_plyuse_pct": 53,
+    "zakryto_predelom_pct": 34,
+    "mediana_minut": 120
+  },
+  "po_dveryam": {
+    "utro_0933": {
+      "poisk": {
+        "sdelok": 1490,
+        "dney": 1490,
+        "v_den": 1.0,
+        "srednyaya": 113.2,
+        "chistoe": 168656,
+        "valovoe": 191006,
+        "let_plus": "6/6",
+        "prosadka": 41067,
+        "hudshiy_den": -10125,
+        "hudshaya_sdelka": -10125,
+        "dney_v_plyuse_pct": 47,
+        "zakryto_predelom_pct": 38,
+        "mediana_minut": 120
+      },
+      "otlozhennoe": {
+        "sdelok": 121,
+        "dney": 121,
+        "v_den": 1.0,
+        "srednyaya": 477.6,
+        "chistoe": 57784,
+        "valovoe": 59599,
+        "let_plus": "2/2",
+        "prosadka": 15095,
+        "hudshiy_den": -4716,
+        "hudshaya_sdelka": -4716,
+        "dney_v_plyuse_pct": 54,
+        "zakryto_predelom_pct": 32,
+        "mediana_minut": 120
+      }
+    },
+    "den_1338": {
+      "poisk": {
+        "sdelok": 1444,
+        "dney": 1444,
+        "v_den": 1.0,
+        "srednyaya": 81.8,
+        "chistoe": 118129,
+        "valovoe": 139789,
+        "let_plus": "5/6",
+        "prosadka": 41980,
+        "hudshiy_den": -4082,
+        "hudshaya_sdelka": -4082,
+        "dney_v_plyuse_pct": 48,
+        "zakryto_predelom_pct": 37,
+        "mediana_minut": 120
+      },
+      "otlozhennoe": {
+        "sdelok": 117,
+        "dney": 117,
+        "v_den": 1.0,
+        "srednyaya": 49.5,
+        "chistoe": 5797,
+        "valovoe": 7552,
+        "let_plus": "1/2",
+        "prosadka": 18316,
+        "hudshiy_den": -2895,
+        "hudshaya_sdelka": -2895,
+        "dney_v_plyuse_pct": 41,
+        "zakryto_predelom_pct": 35,
+        "mediana_minut": 120
+      }
+    }
+  },
+  "po_godam": {
+    "2020": 36124,
+    "2021": 3582,
+    "2022": 85765,
+    "2023": 54022,
+    "2024": 70143,
+    "2025": 37147
+  },
+  "cost_30": {
+    "sdelok": 2934,
+    "dney": 1494,
+    "v_den": 1.96,
+    "srednyaya": 82.7,
+    "chistoe": 242776,
+    "valovoe": 330796,
+    "let_plus": "5/6",
+    "prosadka": 45190,
+    "hudshiy_den": -13351,
+    "hudshaya_sdelka": -10140,
+    "dney_v_plyuse_pct": 49,
+    "zakryto_predelom_pct": 37,
+    "mediana_minut": 120
+  },
+  "ES": {
+    "sdelok": 2953,
+    "dney": 1504,
+    "v_den": 1.96,
+    "srednyaya": 23.0,
+    "chistoe": 67847,
+    "valovoe": 156437,
+    "let_plus": "5/6",
+    "prosadka": 26769,
+    "hudshiy_den": -5292,
+    "hudshaya_sdelka": -5503,
+    "dney_v_plyuse_pct": 48,
+    "zakryto_predelom_pct": 36,
+    "mediana_minut": 120
+  },
+  "YM": {
+    "sdelok": 2928,
+    "dney": 1496,
+    "v_den": 1.96,
+    "srednyaya": 4.0,
+    "chistoe": 11660,
+    "valovoe": 55580,
+    "let_plus": "4/6",
+    "prosadka": 34178,
+    "hudshiy_den": -4214,
+    "hudshaya_sdelka": -3235,
+    "dney_v_plyuse_pct": 46,
+    "zakryto_predelom_pct": 40,
+    "mediana_minut": 120
+  },
+  "input_hashes": {
+    "close.npy": "02c00108f3808c4f0a8078c2bede214f9d6357fc8fda8ecb487ec560290599da",
+    "close_ts_utc_ns.npy": "b1a33f16ad754851b9d202e5fe3925add711c0ba0c5a1221e55ce71c49c683b7",
+    "high.npy": "e965cc0b62cb0af3ee296a451de401d2ff03ca1d401e51e4e93e4910dd4a6c32",
+    "low.npy": "daa64c199e6f03125eec620413062527c947b9876d85b2fc4326c658b024ca00",
+    "open.npy": "5f9709d127ab52b46b4229566df2180159be011a8cb0393cc6a269119585cc61"
+  },
+  "code_sha": "6827a46dec5211a7c007865c6553078858556da575f87ba67b89a6ae3e258aa8",
+  "prefix_check": {
+    "resheniy": 500,
+    "rashozhdeniy": 0
+  },
+  "interval": {
+    "metod": "mesyachnoe blochnoe peresemplirovanie, 10000 povtorov",
+    "p2.5": 82036,
+    "p97.5": 490296,
+    "dolya_nizhe_nulya_pct": 0.39
+  },
+  "bez_pyati_luchshih_dney": 231731,
+  "bez_2022": 201020
+}

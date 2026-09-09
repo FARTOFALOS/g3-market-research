@@ -1,0 +1,62 @@
+"""Simmetrichnyy test magnita: posle vizita cena otoshla na d svechey ot linii.
+Chto ranshe - vozvrat k linii (d nazad) ili eshchyo d proch? Pri otsutstvii effekta 50/50."""
+import numpy as np, pickle, datetime as dt
+o=pickle.load(open('work/060/visits.pkl','rb'))
+R='data/market/NQ/'
+hi=np.load(R+'high.npy',mmap_mode='r'); lo=np.load(R+'low.npy',mmap_mode='r')
+ts=np.load(R+'close_ts_utc_ns.npy',mmap_mode='r')
+N=len(hi); BUD=2880
+def epoch(p):
+    y=dt.datetime.fromtimestamp(int(ts[p])/1e9,dt.timezone.utc).year
+    return 0 if y<2013 else (1 if y<2020 else 2)
+EP=['2006-2012','2013-2019','2020-2025']
+D=[1,2,3,5,8]
+res={(d,e):[0,0,0] for d in D for e in range(3)}   # [k linii, proch, ne reshilos]
+res_n={(d,k):[0,0,0] for d in D for k in range(4)} # razrez po chislu zon
+tim={d:[] for d in D}
+for x in o:
+    p,nu,nr,side,u,line,nv,starts,gaps,fv,cen = x
+    if nv<1 or u<=0: continue
+    e=epoch(p); kb=0 if nu==1 else (1 if nu==2 else (2 if nu<=4 else 3))
+    end=min(p+BUD,N-2)
+    for vi,st in enumerate(starts):
+        a=p+st                       # minuta vizita
+        if a+2>=end: break
+        seg_h=np.asarray(hi[a+1:end+1],dtype=float); seg_l=np.asarray(lo[a+1:end+1],dtype=float)
+        if len(seg_h)<10: break
+        for d in D:
+            dist=d*u
+            if side=='north':
+                away=np.flatnonzero(seg_h>=line+dist)      # otoshla vverh na d
+            else:
+                away=np.flatnonzero(seg_l<=line-dist)
+            if len(away)==0: continue
+            j=int(away[0])
+            h2=seg_h[j+1:]; l2=seg_l[j+1:]
+            if len(h2)<2: continue
+            if side=='north':
+                back=np.flatnonzero(l2<=line); far=np.flatnonzero(h2>=line+2*dist)
+            else:
+                back=np.flatnonzero(h2>=line); far=np.flatnonzero(l2<=line-2*dist)
+            b=int(back[0]) if len(back) else 10**9
+            f=int(far[0])  if len(far)  else 10**9
+            if b==f==10**9: res[(d,e)][2]+=1; res_n[(d,kb)][2]+=1; continue
+            if b<f: res[(d,e)][0]+=1; res_n[(d,kb)][0]+=1; tim[d].append(b+1)
+            else:   res[(d,e)][1]+=1; res_n[(d,kb)][1]+=1
+        break   # tolko pervyy vizit kazhdogo klastera, chtoby sluchai byli nezavisimy
+print("SIMMETRICHNYY TEST: posle othoda na d svechey ot linii — chto ranshe, liniya ili eshchyo d proch")
+print(f"{'d,svechey':>10} | " + " | ".join(f"{e:>21}" for e in EP))
+print(f"{'':>10} | " + " | ".join(f"{'N':>7} {'k linii%':>8} {'nereh%':>4}" for _ in EP))
+for d in D:
+    row=f"{d:>10} | "
+    for e in range(3):
+        a,b,c=res[(d,e)]; n=a+b
+        row+=f"{n:>7} {100*a/max(n,1):>8.1f} {100*c/max(a+b+c,1):>4.0f} | "
+    print(row)
+print(f"\n{'d':>3} {'zon=1':>9} {'zon=2':>9} {'zon=3-4':>9} {'zon>=5':>9}   (dolya vozvrata k linii, %)")
+for d in D:
+    print(f"{d:>3} " + " ".join(f"{100*res_n[(d,k)][0]/max(res_n[(d,k)][0]+res_n[(d,k)][1],1):>9.1f}" for k in range(4)))
+print(f"\nvremya do vozvrata k linii, minut (mediana / p75 / p90):")
+for d in D:
+    t=np.array(tim[d])
+    if len(t): print(f"  d={d}: {np.median(t):>5.0f} {np.percentile(t,75):>5.0f} {np.percentile(t,90):>6.0f}   (N={len(t)})")

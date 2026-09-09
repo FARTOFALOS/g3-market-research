@@ -1,0 +1,14 @@
+{
+  "synthetic": [
+    "wall_clock_hold",
+    "stop_in_entry_minute",
+    "stop_gap_actual_open",
+    "target_touch_vs_trade_through",
+    "both_orders_retained",
+    "gap_unknown_not_zero",
+    "entry_outside_cancel",
+    "long_short_mirror"
+  ],
+  "real_signal_prefix_checks": 509,
+  "one_minute_earlier_not_signal": 509
+}

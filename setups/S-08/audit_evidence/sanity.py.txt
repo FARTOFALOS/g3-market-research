@@ -1,0 +1,27 @@
+"""Proverka stenda: tot zhe simmetrichnyy test na sinteticheskom sluchaynom bluzhdanii.
+Dolzhen dat rovno 50%. Esli dast - stend chestnyy, i 47.4% na realnyh dannyh - eto realnyy moment."""
+import numpy as np
+rng=np.random.default_rng(3)
+n=3_000_000
+step=rng.normal(0,1,n).cumsum()
+hi=step+np.abs(rng.normal(0,0.4,n)); lo=step-np.abs(rng.normal(0,0.4,n)); cl=step
+u=1.0
+D=[2,3,5]
+res={d:[0,0] for d in D}
+anchors=rng.integers(1000,n-3000,size=60000)
+for a in anchors:
+    a=int(a); line=cl[a]
+    h=hi[a+1:a+2881]; l=lo[a+1:a+2881]
+    for d in D:
+        dist=d*u
+        aw=np.flatnonzero(h>=line+dist)
+        if len(aw)==0: continue
+        j=int(aw[0]); h2=h[j+1:]; l2=l[j+1:]
+        if len(h2)<2: continue
+        bk=np.flatnonzero(l2<=line); fr=np.flatnonzero(h2>=line+2*dist)
+        b=int(bk[0]) if len(bk) else 10**9; f=int(fr[0]) if len(fr) else 10**9
+        if b==f==10**9: continue
+        res[d][0 if b<f else 1]+=1
+print("SANITY: sluchaynoe bluzhdanie, tot zhe test")
+for d in D:
+    a,b=res[d]; print(f"  d={d}: vozvrat k urovnyu {100*a/max(a+b,1):.1f}%   N={a+b}")

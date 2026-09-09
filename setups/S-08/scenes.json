@@ -1,0 +1,50 @@
+[
+  {
+    "date": "2024-01-03",
+    "prev_date": "2024-01-02",
+    "prev_low": 16622.5,
+    "prev_high": 16873.5,
+    "target": 16720.75,
+    "signal_close": 16630.5,
+    "opening_price": 16609.75,
+    "boundary": 16622.5,
+    "entry": 16630.25,
+    "stop": 16581.25,
+    "exit": 16581.25,
+    "execution": "stop",
+    "net_usd": -995.0,
+    "held_minutes": 37.0
+  },
+  {
+    "date": "2024-01-11",
+    "prev_date": "2024-01-10",
+    "prev_low": 16801.5,
+    "prev_high": 16983.0,
+    "target": 16941.75,
+    "signal_close": 16980.25,
+    "opening_price": 16984.5,
+    "boundary": 16983.0,
+    "entry": 16980.25,
+    "stop": 17015.0,
+    "exit": 17015.0,
+    "execution": "stop",
+    "net_usd": -710.0,
+    "held_minutes": 3.0
+  },
+  {
+    "date": "2024-02-15",
+    "prev_date": "2024-02-14",
+    "prev_low": 17690.25,
+    "prev_high": 17887.0,
+    "target": 17869.25,
+    "signal_close": 17880.0,
+    "opening_price": 17888.0,
+    "boundary": 17887.0,
+    "entry": 17879.75,
+    "stop": 17903.5,
+    "exit": 17869.25,
+    "execution": "target",
+    "net_usd": 195.0,
+    "held_minutes": 3.0
+  }
+]

@@ -1,0 +1,183 @@
+{
+  "independent_execution_agreements": 395,
+  "full_month_block_bootstrap_95_total_usd": [
+    -5245.125,
+    43315.0
+  ],
+  "four_variant_family": [
+    {
+      "variant": "v1",
+      "net": 18705.0,
+      "family_interval_98_75": [
+        -12315.0625,
+        50822.90625000002
+      ]
+    },
+    {
+      "variant": "h30",
+      "net": -795.0,
+      "family_interval_98_75": [
+        -32320.5625,
+        33172.718750000015
+      ]
+    },
+    {
+      "variant": "h120",
+      "net": 16780.0,
+      "family_interval_98_75": [
+        -15255.1875,
+        51663.656250000065
+      ]
+    },
+    {
+      "variant": "delay1",
+      "net": 21885.0,
+      "family_interval_98_75": [
+        -5018.156249999999,
+        49268.218750000044
+      ]
+    }
+  ],
+  "known_decision_days": 4824,
+  "unknown_decision_days": 165,
+  "active_day_fraction_known": 0.08188225538971808,
+  "net_at_cost30": 12780.0,
+  "net_without_best_five": 5675.0,
+  "largest_five_profit": 13030.0,
+  "recent_2020_count": 123,
+  "recent_average_usd": 166.260162601626,
+  "yearly": [
+    {
+      "date": "2006",
+      "size": 7,
+      "sum": 85.0,
+      "mean": 12.142857142857142
+    },
+    {
+      "date": "2007",
+      "size": 19,
+      "sum": 275.0,
+      "mean": 14.473684210526315
+    },
+    {
+      "date": "2008",
+      "size": 15,
+      "sum": 105.0,
+      "mean": 7.0
+    },
+    {
+      "date": "2009",
+      "size": 15,
+      "sum": -1200.0,
+      "mean": -80.0
+    },
+    {
+      "date": "2010",
+      "size": 18,
+      "sum": 20.0,
+      "mean": 1.1111111111111112
+    },
+    {
+      "date": "2011",
+      "size": 20,
+      "sum": -30.0,
+      "mean": -1.5
+    },
+    {
+      "date": "2012",
+      "size": 24,
+      "sum": 205.0,
+      "mean": 8.541666666666666
+    },
+    {
+      "date": "2013",
+      "size": 19,
+      "sum": 435.0,
+      "mean": 22.894736842105264
+    },
+    {
+      "date": "2014",
+      "size": 36,
+      "sum": -785.0,
+      "mean": -21.805555555555557
+    },
+    {
+      "date": "2015",
+      "size": 19,
+      "sum": 1155.0,
+      "mean": 60.78947368421053
+    },
+    {
+      "date": "2016",
+      "size": 16,
+      "sum": 315.0,
+      "mean": 19.6875
+    },
+    {
+      "date": "2017",
+      "size": 20,
+      "sum": 860.0,
+      "mean": 43.0
+    },
+    {
+      "date": "2018",
+      "size": 24,
+      "sum": -3020.0,
+      "mean": -125.83333333333333
+    },
+    {
+      "date": "2019",
+      "size": 20,
+      "sum": -165.0,
+      "mean": -8.25
+    },
+    {
+      "date": "2020",
+      "size": 21,
+      "sum": 1250.0,
+      "mean": 59.523809523809526
+    },
+    {
+      "date": "2021",
+      "size": 19,
+      "sum": 5295.0,
+      "mean": 278.6842105263158
+    },
+    {
+      "date": "2022",
+      "size": 19,
+      "sum": 6370.0,
+      "mean": 335.2631578947368
+    },
+    {
+      "date": "2023",
+      "size": 22,
+      "sum": 2720.0,
+      "mean": 123.63636363636364
+    },
+    {
+      "date": "2024",
+      "size": 23,
+      "sum": 580.0,
+      "mean": 25.217391304347824
+    },
+    {
+      "date": "2025",
+      "size": 19,
+      "sum": 4235.0,
+      "mean": 222.89473684210526
+    }
+  ],
+  "drawdown_from_minute_close_peaks_to_bar_adverse_bound_usd": 6950.0,
+  "stopped_trades": 115,
+  "stops_followed_by_target_on_later_bar_before_60min": 14,
+  "verified_input_hashes": {
+    "data\\market\\NQ\\close_ts_utc_ns.npy": "b1a33f16ad754851b9d202e5fe3925add711c0ba0c5a1221e55ce71c49c683b7",
+    "data\\market\\NQ\\open.npy": "5f9709d127ab52b46b4229566df2180159be011a8cb0393cc6a269119585cc61",
+    "data\\market\\NQ\\high.npy": "e965cc0b62cb0af3ee296a451de401d2ff03ca1d401e51e4e93e4910dd4a6c32",
+    "data\\market\\NQ\\low.npy": "daa64c199e6f03125eec620413062527c947b9876d85b2fc4326c658b024ca00",
+    "data\\market\\NQ\\close.npy": "02c00108f3808c4f0a8078c2bede214f9d6357fc8fda8ecb487ec560290599da"
+  },
+  "corpus_id": "f077783c4bd483c18d74c8d61825645c2dda7f81e391738989dd2cf623e5ab2e",
+  "limitations": "Month resampling assumes representative exchangeable months; regime shift and unknown prior selection not corrected. Incomplete months contain observed days only."
+}

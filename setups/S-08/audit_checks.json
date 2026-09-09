@@ -1,0 +1,59 @@
+{
+  "stored_clusters": 84414,
+  "cutoff_pos": 6251962,
+  "stored_visit_starts_at_or_after_cutoff": 0,
+  "observation_budgets_cross_cutoff": 44,
+  "prefix_windows_with_gaps": 9959,
+  "finite_windows_longer_than_2880_wall_minutes": 84370,
+  "checked_starts_before_cutoff": 211180,
+  "starts_not_containing_line": 2537,
+  "examples": [
+    {
+      "p": 4536591,
+      "position": 4536592,
+      "UTC": "2020-12-10 23:47:00+00:00",
+      "line": 12398.25,
+      "low": 12399.0,
+      "high": 12400.5,
+      "side": "south"
+    },
+    {
+      "p": 5208195,
+      "position": 5208196,
+      "UTC": "2022-11-04 16:24:00+00:00",
+      "line": 10752.25,
+      "low": 10752.5,
+      "high": 10765.0,
+      "side": "south"
+    },
+    {
+      "p": 2649259,
+      "position": 2649260,
+      "UTC": "2015-06-10 22:02:00+00:00",
+      "line": 4480.5,
+      "low": 4479.0,
+      "high": 4479.25,
+      "side": "north"
+    }
+  ],
+  "repeat_visit_away_decisions_d2": 117007,
+  "unique_cluster_away_decisions_d2": 85238,
+  "duplicate_labels_of_same_departure_d2": 31769,
+  "prefix_scene": {
+    "riz_id": "riz_01bc3138842bf7f259b33190ef30f6b9",
+    "tf": 54,
+    "t0_pos": 3977357,
+    "t0_UTC": "2019-05-07 06:30:00+00:00",
+    "bottom": 7796.5,
+    "top": 7797.25,
+    "accepted_span_count": 1
+  },
+  "evidence_hashes": {
+    "work\\060\\visits.pkl": "6e8e6ef373445a1dd918405cc2c703c8bd9beaa332afb884c3e70773301eba12",
+    "work\\060\\visits.py": "5a35894eba23ade595a4fef89bb6d0c5fcaa276966b8b3ec2ef673aeee538dfb",
+    "work\\060\\magnet.py": "f1179e03b32411a86c983c320ea0d39da16309dd04127473bae292245e150829",
+    "work\\060\\second.py": "5bb2f0e44dd624f7c780a4da496eee346aec7de4ad3a10efd5370230cb338769",
+    "work\\060\\sanity.py": "9a148660258b824635f39f7a7810e68aa19d4f917b1cf80e1caf2e635dbe8d9c",
+    "work\\060\\control.py": "6ddbcc4d7b0f7c4263718fb2d024ba1440fd1d343874fc9c4c66fbae739f1d25"
+  }
+}
