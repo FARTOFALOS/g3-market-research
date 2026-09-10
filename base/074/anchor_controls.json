@@ -1,0 +1,93 @@
+{
+  "n": 206447,
+  "plus7_gap_real": [
+    0.46580336937389993,
+    0.7296962182269063,
+    0.2638928488530064
+  ],
+  "plus7_gap_mirror": [
+    0.52279559563833,
+    0.7634255319148936,
+    0.2406299362765636
+  ],
+  "far_border": {
+    "overall_real": 0.43838465923563014,
+    "overall_shuffled": 0.43963394665664,
+    "by_width_decile": [
+      {
+        "width_decile": 0,
+        "median_width": 0.25,
+        "n": 16490,
+        "stop_inside_real": 0.07640994542146756,
+        "stop_inside_shuffled": 0.07640994542146756
+      },
+      {
+        "width_decile": 1,
+        "median_width": 0.5,
+        "n": 16489,
+        "stop_inside_real": 0.13045060343259143,
+        "stop_inside_shuffled": 0.1363939596094366
+      },
+      {
+        "width_decile": 2,
+        "median_width": 0.75,
+        "n": 16489,
+        "stop_inside_real": 0.2100794469039966,
+        "stop_inside_shuffled": 0.2126872460428164
+      },
+      {
+        "width_decile": 3,
+        "median_width": 1.5,
+        "n": 16490,
+        "stop_inside_real": 0.27070952092177075,
+        "stop_inside_shuffled": 0.2715585203153426
+      },
+      {
+        "width_decile": 4,
+        "median_width": 2.25,
+        "n": 16489,
+        "stop_inside_real": 0.37631148038086,
+        "stop_inside_shuffled": 0.3781308751288738
+      },
+      {
+        "width_decile": 5,
+        "median_width": 3.5,
+        "n": 16489,
+        "stop_inside_real": 0.4711019467523804,
+        "stop_inside_shuffled": 0.47528655467281217
+      },
+      {
+        "width_decile": 6,
+        "median_width": 5.75,
+        "n": 16490,
+        "stop_inside_real": 0.5567010309278351,
+        "stop_inside_shuffled": 0.558095815645846
+      },
+      {
+        "width_decile": 7,
+        "median_width": 9.5,
+        "n": 16489,
+        "stop_inside_real": 0.6397598398932621,
+        "stop_inside_shuffled": 0.6366668688216387
+      },
+      {
+        "width_decile": 8,
+        "median_width": 18.5,
+        "n": 16489,
+        "stop_inside_real": 0.7374006913700042,
+        "stop_inside_shuffled": 0.7380678027776093
+      },
+      {
+        "width_decile": 9,
+        "median_width": 53.0,
+        "n": 16490,
+        "stop_inside_real": 0.9149181322013341,
+        "stop_inside_shuffled": 0.9130382049727107
+      }
+    ]
+  },
+  "near_border": {
+    "touch_real": 0.7987231589705832,
+    "touch_shuffled": 0.7962819784672466
+  }
+}

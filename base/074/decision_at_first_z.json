@@ -1,0 +1,275 @@
+{
+  "state_20071": {
+    "EXIT-RECLAIM": {
+      "touch": 0.318,
+      "<half": 0.097,
+      ">half": 0.042
+    },
+    "OSCILLATION": {
+      "touch": 0.291,
+      "<half": 0.138,
+      ">half": 0.208
+    },
+    "TRAVERSE": {
+      "touch": 0.263,
+      "<half": 0.669,
+      ">half": 0.75
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.128,
+      "<half": 0.097,
+      ">half": 0.0
+    },
+    "far_first": {
+      "touch": 0.028,
+      "<half": 0.441,
+      ">half": 0.833
+    },
+    "n": {
+      "touch": 179,
+      "<half": 145,
+      ">half": 24
+    }
+  },
+  "state_20517": {
+    "EXIT-RECLAIM": {
+      "touch": 0.472,
+      "<half": 0.371,
+      ">half": 0.196
+    },
+    "OSCILLATION": {
+      "touch": 0.221,
+      "<half": 0.147,
+      ">half": 0.261
+    },
+    "TRAVERSE": {
+      "touch": 0.228,
+      "<half": 0.364,
+      ">half": 0.543
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.079,
+      "<half": 0.118,
+      ">half": 0.0
+    },
+    "far_first": {
+      "touch": 0.006,
+      "<half": 0.279,
+      ">half": 0.63
+    },
+    "n": {
+      "touch": 544,
+      "<half": 272,
+      ">half": 46
+    }
+  },
+  "state_75248": {
+    "EXIT-RECLAIM": {
+      "touch": 0.558,
+      "<half": 0.326,
+      ">half": 0.276
+    },
+    "OSCILLATION": {
+      "touch": 0.189,
+      "<half": 0.081,
+      ">half": 0.103
+    },
+    "TRAVERSE": {
+      "touch": 0.218,
+      "<half": 0.491,
+      ">half": 0.621
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.034,
+      "<half": 0.102,
+      ">half": 0.0
+    },
+    "far_first": {
+      "touch": 0.018,
+      "<half": 0.196,
+      ">half": 0.655
+    },
+    "n": {
+      "touch": 380,
+      "<half": 285,
+      ">half": 29
+    }
+  },
+  "field": {
+    "EXIT-RECLAIM": {
+      "touch": 0.383,
+      "<half": 0.336,
+      ">half": 0.2
+    },
+    "OSCILLATION": {
+      "touch": 0.373,
+      "<half": 0.261,
+      ">half": 0.433
+    },
+    "TRAVERSE": {
+      "touch": 0.102,
+      "<half": 0.185,
+      ">half": 0.309
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.141,
+      "<half": 0.217,
+      ">half": 0.058
+    },
+    "far_first": {
+      "touch": 0.005,
+      "<half": 0.136,
+      ">half": 0.501
+    },
+    "n": {
+      "touch": 72160,
+      "<half": 34967,
+      ">half": 4065
+    }
+  },
+  "epoch_2006_2010": {
+    "EXIT-RECLAIM": {
+      "touch": 0.371,
+      "<half": 0.321,
+      ">half": 0.186
+    },
+    "OSCILLATION": {
+      "touch": 0.384,
+      "<half": 0.289,
+      ">half": 0.415
+    },
+    "TRAVERSE": {
+      "touch": 0.119,
+      "<half": 0.202,
+      ">half": 0.321
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.126,
+      "<half": 0.187,
+      ">half": 0.078
+    },
+    "far_first": {
+      "touch": 0.007,
+      "<half": 0.152,
+      ">half": 0.589
+    },
+    "n": {
+      "touch": 9602,
+      "<half": 3739,
+      ">half": 436
+    }
+  },
+  "epoch_2011_2015": {
+    "EXIT-RECLAIM": {
+      "touch": 0.397,
+      "<half": 0.348,
+      ">half": 0.21
+    },
+    "OSCILLATION": {
+      "touch": 0.357,
+      "<half": 0.248,
+      ">half": 0.413
+    },
+    "TRAVERSE": {
+      "touch": 0.107,
+      "<half": 0.196,
+      ">half": 0.31
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.14,
+      "<half": 0.208,
+      ">half": 0.067
+    },
+    "far_first": {
+      "touch": 0.006,
+      "<half": 0.14,
+      ">half": 0.501
+    },
+    "n": {
+      "touch": 14106,
+      "<half": 5992,
+      ">half": 668
+    }
+  },
+  "epoch_2016_2020": {
+    "EXIT-RECLAIM": {
+      "touch": 0.365,
+      "<half": 0.305,
+      ">half": 0.185
+    },
+    "OSCILLATION": {
+      "touch": 0.387,
+      "<half": 0.282,
+      ">half": 0.48
+    },
+    "TRAVERSE": {
+      "touch": 0.102,
+      "<half": 0.202,
+      ">half": 0.289
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.146,
+      "<half": 0.211,
+      ">half": 0.047
+    },
+    "far_first": {
+      "touch": 0.005,
+      "<half": 0.147,
+      ">half": 0.479
+    },
+    "n": {
+      "touch": 19431,
+      "<half": 9545,
+      ">half": 1224
+    }
+  },
+  "epoch_2021_2026": {
+    "EXIT-RECLAIM": {
+      "touch": 0.392,
+      "<half": 0.354,
+      ">half": 0.211
+    },
+    "OSCILLATION": {
+      "touch": 0.369,
+      "<half": 0.247,
+      ">half": 0.413
+    },
+    "TRAVERSE": {
+      "touch": 0.095,
+      "<half": 0.167,
+      ">half": 0.32
+    },
+    "ZONE-ABSORB": {
+      "touch": 0.144,
+      "<half": 0.232,
+      ">half": 0.056
+    },
+    "far_first": {
+      "touch": 0.003,
+      "<half": 0.125,
+      ">half": 0.495
+    },
+    "n": {
+      "touch": 29021,
+      "<half": 15691,
+      ">half": 1737
+    }
+  },
+  "decision": {
+    "n": 4065,
+    "share_of_scenes": 0.024348315683549764,
+    "available_minute_median": 1.0,
+    "available_minute_p90": 8.0,
+    "far_first": 0.5013530135301353,
+    "never_touched_either": 0.0004920049200492004,
+    "median_wait_minutes": 1.0,
+    "to_far_candles_median": 0.3157894736842105,
+    "to_near_candles_median": 0.6358381502890174,
+    "touch_first_by_epoch": {
+      "2006-2010": 0.5894495412844036,
+      "2011-2015": 0.5014970059880239,
+      "2016-2020": 0.47875816993464054,
+      "2021-2026": 0.49510650546919976
+    }
+  }
+}

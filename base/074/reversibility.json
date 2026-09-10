@@ -1,0 +1,214 @@
+{
+  "n": 206447,
+  "RETURN_cancelled_by_nothing": {
+    "by_minute": [
+      {
+        "minute": 1,
+        "n": 119266,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 2,
+        "n": 18959,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 3,
+        "n": 9766,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 4,
+        "n": 6385,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 5,
+        "n": 4313,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 6,
+        "n": 3602,
+        "cancelled_later": 0.0
+      },
+      {
+        "minute": 7,
+        "n": 2557,
+        "cancelled_later": 0.0
+      }
+    ],
+    "n": 164848,
+    "cancelled_share": 0.0
+  },
+  "CONFIRM_cancelled_by_return": {
+    "by_minute": [
+      {
+        "minute": 1,
+        "n": 87099,
+        "cancelled_later": 0.5228188612957669
+      },
+      {
+        "minute": 2,
+        "n": 25507,
+        "cancelled_later": 0.528247147841769
+      },
+      {
+        "minute": 3,
+        "n": 13992,
+        "cancelled_later": 0.48549170954831333
+      },
+      {
+        "minute": 4,
+        "n": 8820,
+        "cancelled_later": 0.4380952380952381
+      },
+      {
+        "minute": 5,
+        "n": 6146,
+        "cancelled_later": 0.3618613732508949
+      },
+      {
+        "minute": 6,
+        "n": 4827,
+        "cancelled_later": 0.24901595193702092
+      },
+      {
+        "minute": 7,
+        "n": 3664,
+        "cancelled_later": 0.0
+      }
+    ],
+    "n": 150055,
+    "cancelled_share": 0.48711472460097965
+  },
+  "TRAVERSE_cancelled_by_return": {
+    "by_minute": [
+      {
+        "minute": 1,
+        "n": 82,
+        "cancelled_later": 0.5487804878048781
+      },
+      {
+        "minute": 2,
+        "n": 8202,
+        "cancelled_later": 0.5238966105827847
+      },
+      {
+        "minute": 3,
+        "n": 8578,
+        "cancelled_later": 0.46211238050827697
+      },
+      {
+        "minute": 4,
+        "n": 7500,
+        "cancelled_later": 0.4281333333333333
+      },
+      {
+        "minute": 5,
+        "n": 6390,
+        "cancelled_later": 0.3685446009389671
+      },
+      {
+        "minute": 6,
+        "n": 6048,
+        "cancelled_later": 0.2567791005291005
+      },
+      {
+        "minute": 7,
+        "n": 5356,
+        "cancelled_later": 0.0
+      }
+    ],
+    "n": 42156,
+    "cancelled_share": 0.365902837081317
+  },
+  "hazard_at_fixed_lookahead_CONFIRM": [
+    {
+      "minute": 1,
+      "n": 87099,
+      "within_1": 0.2173848149806542,
+      "within_2": 0.3294182482003238,
+      "within_3": 0.40270267167246465
+    },
+    {
+      "minute": 2,
+      "n": 25507,
+      "within_1": 0.2307209785549065,
+      "within_2": 0.35503979299800054,
+      "within_3": 0.43537068255772926
+    },
+    {
+      "minute": 3,
+      "n": 13992,
+      "within_1": 0.22927387078330475,
+      "within_2": 0.35212978845054316,
+      "within_3": 0.433461978273299
+    },
+    {
+      "minute": 4,
+      "n": 8820,
+      "within_1": 0.2370748299319728,
+      "within_2": 0.3590702947845805,
+      "within_3": 0.4380952380952381
+    },
+    {
+      "minute": 5,
+      "n": 6146,
+      "within_1": 0.23299707126586397,
+      "within_2": 0.3618613732508949,
+      "within_3": null
+    },
+    {
+      "minute": 6,
+      "n": 4827,
+      "within_1": 0.24901595193702092,
+      "within_2": null,
+      "within_3": null
+    }
+  ],
+  "hazard_at_fixed_lookahead_TRAVERSE": [
+    {
+      "minute": 1,
+      "n": 82,
+      "within_1": 0.3048780487804878,
+      "within_2": 0.4024390243902439,
+      "within_3": 0.4268292682926829
+    },
+    {
+      "minute": 2,
+      "n": 8202,
+      "within_1": 0.24335527920019506,
+      "within_2": 0.3608875883930749,
+      "within_3": 0.4301389904901244
+    },
+    {
+      "minute": 3,
+      "n": 8578,
+      "within_1": 0.22359524364653766,
+      "within_2": 0.34017253439030076,
+      "within_3": 0.4090697132198648
+    },
+    {
+      "minute": 4,
+      "n": 7500,
+      "within_1": 0.23533333333333334,
+      "within_2": 0.3456,
+      "within_3": 0.4281333333333333
+    },
+    {
+      "minute": 5,
+      "n": 6390,
+      "within_1": 0.23051643192488264,
+      "within_2": 0.3685446009389671,
+      "within_3": null
+    },
+    {
+      "minute": 6,
+      "n": 6048,
+      "within_1": 0.2567791005291005,
+      "within_2": null,
+      "within_3": null
+    }
+  ]
+}

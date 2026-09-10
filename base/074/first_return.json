@@ -1,0 +1,298 @@
+{
+  "rich_states": {
+    "reach": {
+      "EXIT-RECLAIM": {
+        "touch": 0.4254,
+        "<half": 0.3981,
+        ">half": 0.3005,
+        "whole zone": 0.2566,
+        "past far border": 0.212
+      },
+      "OSCILLATION": {
+        "touch": 0.3289,
+        "<half": 0.1559,
+        ">half": 0.2559,
+        "whole zone": 0.2632,
+        "past far border": 0.356
+      },
+      "TRAVERSE": {
+        "touch": 0.1886,
+        "<half": 0.3277,
+        ">half": 0.4225,
+        "whole zone": 0.4276,
+        "past far border": 0.4207
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.057,
+        "<half": 0.1183,
+        ">half": 0.0211,
+        "whole zone": 0.0526,
+        "past far border": 0.0113
+      }
+    },
+    "close": {
+      "EXIT-RECLAIM": {
+        "touch": 0.4648,
+        "<half": 0.2648,
+        ">half": 0.2165,
+        "whole zone": 0.1494,
+        "past far border": 0.1027
+      },
+      "OSCILLATION": {
+        "touch": 0.2518,
+        "<half": 0.1494,
+        ">half": 0.2771,
+        "whole zone": 0.2989,
+        "past far border": 0.3757
+      },
+      "TRAVERSE": {
+        "touch": 0.2113,
+        "<half": 0.4763,
+        ">half": 0.4978,
+        "whole zone": 0.5402,
+        "past far border": 0.5135
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.0722,
+        "<half": 0.1095,
+        ">half": 0.0087,
+        "whole zone": 0.0115,
+        "past far border": 0.0081
+      }
+    },
+    "close_shuffled_width": {
+      "EXIT-RECLAIM": {
+        "touch": 0.4434,
+        "<half": 0.2285,
+        ">half": 0.2194,
+        "whole zone": 0.1477,
+        "past far border": 0.1573
+      },
+      "OSCILLATION": {
+        "touch": 0.2653,
+        "<half": 0.224,
+        ">half": 0.2296,
+        "whole zone": 0.2273,
+        "past far border": 0.2582
+      },
+      "TRAVERSE": {
+        "touch": 0.2171,
+        "<half": 0.4674,
+        ">half": 0.5102,
+        "whole zone": 0.5795,
+        "past far border": 0.5519
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.0742,
+        "<half": 0.0801,
+        ">half": 0.0408,
+        "whole zone": 0.0455,
+        "past far border": 0.0326
+      }
+    }
+  },
+  "rest_of_field": {
+    "reach": {
+      "EXIT-RECLAIM": {
+        "touch": 0.3697,
+        "<half": 0.3837,
+        ">half": 0.2462,
+        "whole zone": 0.2094,
+        "past far border": 0.1598
+      },
+      "OSCILLATION": {
+        "touch": 0.4134,
+        "<half": 0.2895,
+        ">half": 0.5034,
+        "whole zone": 0.526,
+        "past far border": 0.5785
+      },
+      "TRAVERSE": {
+        "touch": 0.1028,
+        "<half": 0.1265,
+        ">half": 0.2052,
+        "whole zone": 0.2379,
+        "past far border": 0.2479
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.1141,
+        "<half": 0.2003,
+        ">half": 0.0452,
+        "whole zone": 0.0266,
+        "past far border": 0.0137
+      }
+    },
+    "close": {
+      "EXIT-RECLAIM": {
+        "touch": 0.3603,
+        "<half": 0.3234,
+        ">half": 0.1772,
+        "whole zone": 0.1309,
+        "past far border": 0.0884
+      },
+      "OSCILLATION": {
+        "touch": 0.4112,
+        "<half": 0.2906,
+        ">half": 0.5087,
+        "whole zone": 0.5283,
+        "past far border": 0.5845
+      },
+      "TRAVERSE": {
+        "touch": 0.1091,
+        "<half": 0.1884,
+        ">half": 0.2793,
+        "whole zone": 0.3232,
+        "past far border": 0.3187
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.1194,
+        "<half": 0.1976,
+        ">half": 0.0348,
+        "whole zone": 0.0177,
+        "past far border": 0.0083
+      }
+    },
+    "close_shuffled_width": {
+      "EXIT-RECLAIM": {
+        "touch": 0.3584,
+        "<half": 0.2764,
+        ">half": 0.2184,
+        "whole zone": 0.1965,
+        "past far border": 0.1645
+      },
+      "OSCILLATION": {
+        "touch": 0.4102,
+        "<half": 0.357,
+        ">half": 0.4345,
+        "whole zone": 0.4597,
+        "past far border": 0.4907
+      },
+      "TRAVERSE": {
+        "touch": 0.1108,
+        "<half": 0.2132,
+        ">half": 0.257,
+        "whole zone": 0.258,
+        "past far border": 0.2818
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.1207,
+        "<half": 0.1534,
+        ">half": 0.0901,
+        "whole zone": 0.0858,
+        "past far border": 0.063
+      }
+    }
+  },
+  "short_of_far_border_rich": {
+    "close": {
+      "EXIT-RECLAIM": {
+        "touch": 0.4675,
+        "<half": 0.2655,
+        ">half": 0.1923
+      },
+      "OSCILLATION": {
+        "touch": 0.2348,
+        "<half": 0.1294,
+        ">half": 0.2308
+      },
+      "TRAVERSE": {
+        "touch": 0.2143,
+        "<half": 0.4874,
+        ">half": 0.5769
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.0833,
+        "<half": 0.1176,
+        ">half": 0.0
+      }
+    }
+  },
+  "short_shuffled_rich": {
+    "close_shuffled_width": {
+      "EXIT-RECLAIM": {
+        "touch": 0.4463,
+        "<half": 0.2661,
+        ">half": 0.268,
+        "whole zone": 0.1957,
+        "past far border": 0.2598
+      },
+      "OSCILLATION": {
+        "touch": 0.242,
+        "<half": 0.1317,
+        ">half": 0.1237,
+        "whole zone": 0.0652,
+        "past far border": 0.1732
+      },
+      "TRAVERSE": {
+        "touch": 0.2243,
+        "<half": 0.4706,
+        ">half": 0.5258,
+        "whole zone": 0.6522,
+        "past far border": 0.4961
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.0874,
+        "<half": 0.1317,
+        ">half": 0.0825,
+        "whole zone": 0.087,
+        "past far border": 0.0709
+      }
+    }
+  },
+  "short_of_far_border_rest": {
+    "close": {
+      "EXIT-RECLAIM": {
+        "touch": 0.3829,
+        "<half": 0.3362,
+        ">half": 0.2
+      },
+      "OSCILLATION": {
+        "touch": 0.3735,
+        "<half": 0.2611,
+        ">half": 0.4335
+      },
+      "TRAVERSE": {
+        "touch": 0.1023,
+        "<half": 0.1853,
+        ">half": 0.309
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.1413,
+        "<half": 0.2173,
+        ">half": 0.0576
+      }
+    }
+  },
+  "short_shuffled_rest": {
+    "close_shuffled_width": {
+      "EXIT-RECLAIM": {
+        "touch": 0.3828,
+        "<half": 0.3382,
+        ">half": 0.3119,
+        "whole zone": 0.3007,
+        "past far border": 0.2793
+      },
+      "OSCILLATION": {
+        "touch": 0.3686,
+        "<half": 0.2628,
+        ">half": 0.2964,
+        "whole zone": 0.297,
+        "past far border": 0.3232
+      },
+      "TRAVERSE": {
+        "touch": 0.1043,
+        "<half": 0.1807,
+        ">half": 0.2242,
+        "whole zone": 0.2193,
+        "past far border": 0.2327
+      },
+      "ZONE-ABSORB": {
+        "touch": 0.1443,
+        "<half": 0.2183,
+        ">half": 0.1675,
+        "whole zone": 0.1829,
+        "past far border": 0.1647
+      }
+    }
+  }
+}
