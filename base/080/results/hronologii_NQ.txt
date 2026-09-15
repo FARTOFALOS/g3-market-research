@@ -6,7 +6,8 @@
   T0 известен: 2015-06-03 07:18:00 ET  spine 2642519  close 4521
   q доступны: 1 шт., от spine 2642519 до 2642519
         q=2642519 (+0 бар, 0 мин часов, пропущено 0) close 4521 | reference open 4520.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.25 | alive, certified_fresh
-  contact: spine 2642520 = 2015-06-03 07:19:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 2642520 = 2015-06-03 07:19:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 2642520; остаток (2642520, 2642520)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 4520.75: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 4520.75, 'high': 4521.25, 'low': 4520.0, 'close': 4520.25}
   жизненный цикл: deletion 2660782, blue_end 2660782, native_conf 2643053, passport censored=False
@@ -16,7 +17,8 @@
   T0 известен: 2017-03-21 10:31:00 ET  spine 3241307  close 5407
   q доступны: 1 шт., от spine 3241307 до 3241307
         q=3241307 (+0 бар, 0 мин часов, пропущено 0) close 5407 | reference open 5407 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.25 | alive, certified_fresh
-  contact: spine 3241308 = 2017-03-21 10:32:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 3241308 = 2017-03-21 10:32:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 3241308; остаток (3241308, 3241308)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 5407: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 0.25], порядок внутри касательной свечи неизвестен; её OHLC {'open': 5407.0, 'high': 5410.75, 'low': 5406.75, 'close': 5410.25}
   жизненный цикл: deletion 3248387, blue_end 3248387, native_conf 3241681, passport censored=False
@@ -27,7 +29,8 @@
   T0 известен: 2008-02-18 11:12:00 ET  spine 455310  close 1819.25
   q доступны: 1 шт., от spine 455310 до 455310
         q=455310 (+0 бар, 0 мин часов, пропущено 0) close 1819.25 | reference open 1819 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.25 | alive, certified_fresh
-  contact: spine 455311 = 2008-02-18 11:13:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 455311 = 2008-02-18 11:13:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 455311; остаток (455311, 455311)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 1819: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 1819.0, 'high': 1819.5, 'low': 1818.25, 'close': 1819.25}
   жизненный цикл: deletion 479587, blue_end 455411, native_conf 455328, passport censored=False
@@ -50,7 +53,8 @@
         q=1886153 (+12 бар, 12 мин часов, пропущено 0) close 2654 | reference open 2653.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 4.50 | alive, certified_fresh
         q=1886154 (+13 бар, 13 мин часов, пропущено 0) close 2653.75 | reference open 2653.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 4.75 | alive, certified_fresh
         q=1886155 (+14 бар, 14 мин часов, пропущено 0) close 2654.5 | reference open 2654.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 3.50 | alive, certified_fresh
-  contact: spine 1886156 = 2012-12-20 20:34:00 ET  (+15 наблюдённых бар, 15 мин часов)
+  observed contact: spine 1886156 = 2012-12-20 20:34:00 ET  (+15 наблюдённых бар, 15 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 1886156; остаток (1886156, 1886156)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 2639: до TP 19.25 | против цели точно 2.00 (касательная свеча своего максимума против цели не поднимает)
   жизненный цикл: deletion 1887352, blue_end 1887352, native_conf 1887021, passport censored=False
@@ -76,9 +80,10 @@
         q=5134500 (+791 бар, 791 мин часов, пропущено 0) close 12934.5 | reference open 12934.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 181.75 | native_blue_confirmed, certified_fresh
         q=5134501 (+792 бар, 792 мин часов, пропущено 0) close 12934.5 | reference open 12934.2 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 182.00 | native_blue_confirmed, certified_fresh
         q=5134502 (+793 бар, 793 мин часов, пропущено 0) close 12933.5 | reference open 12933.8 [through_gap/shared_cause_unknown, ждать 61 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: spine 5138265 = 2022-08-25 10:43:00 ET  (+4556 наблюдённых бар, 4736 мин часов)
+  observed contact: spine 5138265 = 2022-08-25 10:43:00 ET  (+4556 наблюдённых бар, 4736 мин часов)
+  continuation (strict): primacy_unknown_observed_contact_later; сертифицированный TP нет; остаток пуст
   primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: certified / contact_certified)
-  от reference entry 13108.2: до TP 8.00 | против цели точно 284.75 (касательная свеча своего максимума против цели не поднимает)
+  экскурсия до TP НЕ считается: первичность не доказана при strict. Достоверное наблюдение кончается на 5134502, наблюдавшийся позже контакт на 5138265 первым касанием не является — оно могло случиться внутри пропуска.
   жизненный цикл: deletion 5140022, blue_end 5138642, native_conf 5133972, passport censored=False
 
 ### разные RIZ одной минуты T0 (разные границы)
@@ -99,7 +104,8 @@
         q=1167363 (+372 бар, 372 мин часов, пропущено 0) close 1820.25 | reference open 1820.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 13.75 | native_blue_confirmed, certified_fresh
         q=1167364 (+373 бар, 373 мин часов, пропущено 0) close 1819.5 | reference open 1819.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 13.00 | native_blue_confirmed, certified_fresh
         q=1167365 (+374 бар, 374 мин часов, пропущено 0) close 1821.5 | reference open 1820.5 [through_gap/shared_cause_unknown, ждать 16 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: не наблюдался до края архива
+  observed contact: не наблюдался до края архива
+  continuation (strict): freshness_lost_no_contact; сертифицированный TP нет; остаток пуст
   primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
   жизненный цикл: deletion -1, blue_end -1, native_conf 1166998, passport censored=True
 
@@ -120,7 +126,8 @@
         q=1167363 (+372 бар, 372 мин часов, пропущено 0) close 1820.25 | reference open 1820.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 13.50 | native_blue_confirmed, certified_fresh
         q=1167364 (+373 бар, 373 мин часов, пропущено 0) close 1819.5 | reference open 1819.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 12.75 | native_blue_confirmed, certified_fresh
         q=1167365 (+374 бар, 374 мин часов, пропущено 0) close 1821.5 | reference open 1820.5 [through_gap/shared_cause_unknown, ждать 16 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: не наблюдался до края архива
+  observed contact: не наблюдался до края архива
+  continuation (strict): freshness_lost_no_contact; сертифицированный TP нет; остаток пуст
   primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
   жизненный цикл: deletion -1, blue_end -1, native_conf 1166998, passport censored=True
 
@@ -141,7 +148,8 @@
         q=1167363 (+372 бар, 372 мин часов, пропущено 0) close 1820.25 | reference open 1820.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 14.25 | native_blue_confirmed, certified_fresh
         q=1167364 (+373 бар, 373 мин часов, пропущено 0) close 1819.5 | reference open 1819.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 13.50 | native_blue_confirmed, certified_fresh
         q=1167365 (+374 бар, 374 мин часов, пропущено 0) close 1821.5 | reference open 1820.5 [through_gap/shared_cause_unknown, ждать 16 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: не наблюдался до края архива
+  observed contact: не наблюдался до края архива
+  continuation (strict): freshness_lost_no_contact; сертифицированный TP нет; остаток пуст
   primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
   жизненный цикл: deletion -1, blue_end -1, native_conf 1166992, passport censored=True
 
@@ -151,7 +159,8 @@
   T0 известен: 2014-01-08 10:37:00 ET  spine 2205245  close 3568.75
   q доступны: 1 шт., от spine 2205245 до 2205245
         q=2205245 (+0 бар, 0 мин часов, пропущено 0) close 3568.75 | reference open 3568.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | alive, certified_fresh
-  contact: spine 2205246 = 2014-01-08 10:38:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 2205246 = 2014-01-08 10:38:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 2205246; остаток (2205246, 2205246)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 3568.75: до TP 0.50 | против цели ГРАНИЦЫ [0.00 .. 0.75], порядок внутри касательной свечи неизвестен; её OHLC {'open': 3568.75, 'high': 3569.5, 'low': 3568.0, 'close': 3568.25}
   жизненный цикл: deletion 2205606, blue_end 2205606, native_conf -1, passport censored=False
@@ -162,9 +171,10 @@
   T0 известен: 2018-09-12 20:27:00 ET  spine 3754035  close 7523.25
   q доступны: 1 шт., от spine 3754035 до 3754035
         q=3754035 (+0 бар, 0 мин часов, пропущено 0) close 7523.25 | reference open 7522.25 [through_gap/instrument_specific, ждать 2 мин] unknown, до TP — | alive, certified_fresh
-  contact: spine 3754375 = 2018-09-13 04:03:00 ET  (+340 наблюдённых бар, 456 мин часов)
+  observed contact: spine 3754375 = 2018-09-13 04:03:00 ET  (+340 наблюдённых бар, 456 мин часов)
+  continuation (strict): primacy_unknown_observed_contact_later; сертифицированный TP нет; остаток пуст
   primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: unknown / contact_seen_primacy_unknown)
-  от reference entry 7522.25: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 7521.5, 'high': 7522.75, 'low': 7521.5, 'close': 7522.75}
+  экскурсия до TP НЕ считается: первичность не доказана при strict. Достоверное наблюдение кончается на 3754035, наблюдавшийся позже контакт на 3754375 первым касанием не является — оно могло случиться внутри пропуска.
   жизненный цикл: deletion 3754080, blue_end 3754080, native_conf -1, passport censored=False
 
 ### потеря достоверности / missing tape до контакта
@@ -185,9 +195,10 @@
         q=2167021 (+63 бар, 63 мин часов, пропущено 0) close 3385.5 | reference open 3385.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 9.50 | native_blue_confirmed, certified_fresh
         q=2167022 (+64 бар, 64 мин часов, пропущено 0) close 3384.25 | reference open 3384.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 10.25 | native_blue_confirmed, certified_fresh
         q=2167023 (+65 бар, 65 мин часов, пропущено 0) close 3384 | reference open 3384 [through_gap/shared_cause_unknown, ждать 16 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: spine 2167899 = 2013-11-19 10:01:00 ET  (+941 наблюдённых бар, 1131 мин часов)
+  observed contact: spine 2167899 = 2013-11-19 10:01:00 ET  (+941 наблюдённых бар, 1131 мин часов)
+  continuation (strict): primacy_unknown_observed_contact_later; сертифицированный TP нет; остаток пуст
   primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: unknown / contact_seen_primacy_unknown)
-  от reference entry 3391.25: до TP 3.50 | против цели точно 15.25 (касательная свеча своего максимума против цели не поднимает)
+  экскурсия до TP НЕ считается: первичность не доказана при strict. Достоверное наблюдение кончается на 2167023, наблюдавшийся позже контакт на 2167899 первым касанием не является — оно могло случиться внутри пропуска.
   жизненный цикл: deletion 2167946, blue_end 2167946, native_conf 2166984, passport censored=False
 
 ### контакт не наблюдался до края архива
@@ -208,7 +219,8 @@
         q=6095242 (+837 бар, 837 мин часов, пропущено 0) close 20957 | reference open 20957 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 355.50 | native_blue_confirmed, certified_fresh
         q=6095243 (+838 бар, 838 мин часов, пропущено 0) close 20957 | reference open 20957.2 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 355.75 | native_blue_confirmed, certified_fresh
         q=6095244 (+839 бар, 839 мин часов, пропущено 0) close 20957 | reference open 20954.8 [through_gap/shared_cause_unknown, ждать 61 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
-  contact: не наблюдался до края архива
+  observed contact: не наблюдался до края архива
+  continuation (strict): freshness_lost_no_contact; сертифицированный TP нет; остаток пуст
   primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
   жизненный цикл: deletion -1, blue_end -1, native_conf 6095237, passport censored=True
 
@@ -218,7 +230,8 @@
   T0 известен: 2008-07-25 14:55:00 ET  spine 566114  close 1853.25
   q доступны: 1 шт., от spine 566114 до 566114
         q=566114 (+0 бар, 0 мин часов, пропущено 0) close 1853.25 | reference open 1853 [observed_contiguous/contiguous, ждать 1 мин] on_boundary, до TP 0.00 | alive, certified_fresh
-  contact: spine 566115 = 2008-07-25 14:56:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 566115 = 2008-07-25 14:56:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 566115; остаток (566115, 566115)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 1853: до TP 0.00 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 1853.0, 'high': 1853.5, 'low': 1852.0, 'close': 1852.25}
   жизненный цикл: deletion 566194, blue_end 566194, native_conf -1, passport censored=False
@@ -229,7 +242,8 @@
   T0 известен: 2019-03-20 08:01:00 ET  spine 3932666  close 7383.5
   q доступны: 1 шт., от spine 3932666 до 3932666
         q=3932666 (+0 бар, 0 мин часов, пропущено 0) close 7383.5 | reference open 7383 [observed_contiguous/contiguous, ждать 1 мин] beyond, до TP 0.25 | alive, certified_fresh
-  contact: spine 3932667 = 2019-03-20 08:02:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 3932667 = 2019-03-20 08:02:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 3932667; остаток (3932667, 3932667)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 7383: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 7383.0, 'high': 7383.5, 'low': 7382.5, 'close': 7383.0}
   жизненный цикл: deletion 3932721, blue_end 3932721, native_conf -1, passport censored=False
@@ -240,7 +254,8 @@
   T0 известен: 2024-01-16 23:39:00 ET  spine 5629553  close 16920.8
   q доступны: 1 шт., от spine 5629553 до 5629553
         q=5629553 (+0 бар, 0 мин часов, пропущено 0) close 16920.8 | reference open 16920.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.25 | native_blue_confirmed, certified_fresh
-  contact: spine 5629554 = 2024-01-16 23:40:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  observed contact: spine 5629554 = 2024-01-16 23:40:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  continuation (strict): certified_contact; сертифицированный TP 5629554; остаток (5629554, 5629554)
   primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
   от reference entry 16920.5: до TP 0.25 | против цели ГРАНИЦЫ [0.00 .. 1.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 16920.5, 'high': 16922.0, 'low': 16920.25, 'close': 16922.0}
   жизненный цикл: deletion 5629558, blue_end 5629554, native_conf 5629553, passport censored=False

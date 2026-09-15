@@ -51,8 +51,8 @@ def chronology(idx: Film1Index, riz_id, max_q=6):
         seen.add(q)
         p = idx.prefix(riz_id, q)
         x = idx.execution_reference(riz_id, q)
-        dist = ('—' if x.signed_distance_to_tp is None
-                else f'{x.signed_distance_to_tp:.2f}')
+        dist = ('—' if x.distance_to_tp is None
+                else f'{x.distance_to_tp:.2f}')
         lines.append(
             f'        q={q} (+{p.observed_bars_since_t0} бар, '
             f'{p.wall_clock_minutes_since_t0} мин часов, пропущено '
@@ -62,11 +62,17 @@ def chronology(idx: Film1Index, riz_id, max_q=6):
             f'{x.directional_status}, до TP {dist} | {p.lifecycle_state_as_of_q}, '
             f'{p.freshness_as_of_q}')
     if c >= 0:
-        lines.append(f'  contact: spine {c} = {et(r.first_observed_contact_ts_ns)} ET  '
+        lines.append(f'  observed contact: spine {c} = '
+                     f'{et(r.first_observed_contact_ts_ns)} ET  '
                      f'(+{int(r.observed_bars_t0_to_end)} наблюдённых бар, '
                      f'{int(r.wall_clock_minutes_t0_to_end)} мин часов)')
     else:
-        lines.append('  contact: не наблюдался до края архива')
+        lines.append('  observed contact: не наблюдался до края архива')
+    cont = idx.continuation(riz_id, int(qs[-1]) if qs.size else int(r.t0_spine_pos))
+    lines.append(f'  continuation (strict): {cont.continuation_status}; '
+                 f'сертифицированный TP '
+                 f'{"нет" if cont.certified_tp_pos is None else cont.certified_tp_pos}; '
+                 f'остаток {"пуст" if cont.remaining_range is None else cont.remaining_range}')
     lines.append(f'  primacy: {r.first_observed_contact_primacy}   '
                  f'status: {r.film1_status}   '
                  f'(shared-survived: {r.first_observed_contact_primacy_shared_survived} / '
@@ -86,6 +92,13 @@ def chronology(idx: Film1Index, riz_id, max_q=6):
                 f'{ex["distance_entry_to_tp"]:.2f} | против цели точно '
                 f'{ex["adverse_excursion_to_tp"]:.2f} (касательная свеча своего '
                 f'максимума против цели не поднимает)')
+        elif ex['kind'] == 'primacy_not_certified':
+            lines.append(
+                f'  экскурсия до TP НЕ считается: первичность не доказана при '
+                f'{ex["certification"]}. Достоверное наблюдение кончается на '
+                f'{ex["certified_fresh_until_pos"]}, наблюдавшийся позже контакт '
+                f'на {ex["observed_contact_pos"]} первым касанием не является — '
+                f'оно могло случиться внутри пропуска.')
         else:
             lines.append(f'  экскурсия: {ex["kind"]}')
     lines.append(f'  жизненный цикл: deletion {int(r.c1_deletion_spine_pos)}, '

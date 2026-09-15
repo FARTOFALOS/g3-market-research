@@ -43,7 +43,7 @@
 | `canon_check.py` | поэлементная сверка маски с каноническим `exit_boundary_touch_v1` |
 | `index_build.py` | компактный per-RIZ индекс Film-1; три оси, две сертификации |
 | `selftest.py` | инварианты индекса и совпадение с `first_exit_contact_v1` |
-| `grid.py` | ленивый вид: `decision_prefix`, `execution_reference`, `continuation` |
+| `grid.py` | ленивый вид: `decision_prefix`, `execution_reference`, `continuation`. Все три слоя знают о сертификации; поздний контакт за промежутком TP не объявляется |
 | `qa_prefix.py` | информационная граница: prefix из полного и из обрезанного источника |
 | `preflight.py` | перепись населения, лага, цензуры, кратностей |
 | `census_q.py` | решения и покрытие reference на всех сертифицированных q |

@@ -115,19 +115,29 @@ class ExecutionReference:
     wait_minutes: int | None
     gap_kind: str
     availability: str              # observed_contiguous | through_gap | none
-    signed_distance_to_tp: float | None
+    distance_to_tp: float | None   # НЕзнаковая величина; знак — в directional_status
     directional_status: str        # outside | on_boundary | beyond | unknown
 
 
 @dataclass(frozen=True)
 class Continuation:
-    """Слой 3. Будущее. Построителю признаков не передаётся."""
+    """Слой 3. Будущее. Построителю признаков не передаётся.
+
+    Слой ЗНАЕТ о сертификации, и это не украшение. Наблюдавшийся контакт после
+    неизвестного промежутка остаётся фактом наблюдения, но TP выбранной
+    сертификации он не является: первое касание могло случиться внутри
+    пропуска. Поэтому `certified_tp_pos` пуст там, где первичность не доказана,
+    а `observed_contact_pos` заполнен всегда — это разные поля про разное.
+    """
     riz_id: str
     q_spine_pos: int
-    remaining_range: tuple
-    first_observed_contact_pos: int | None
-    first_observed_contact_primacy: str
+    certification: str
+    remaining_range: tuple | None     # до сертифицированного конца; None — пусто
+    certified_tp_pos: int | None      # None, если первичность не доказана
+    observed_contact_pos: int | None  # факт наблюдения, независимо от первичности
+    observed_contact_primacy: str
     film1_status: str
+    continuation_status: str
     censor_reason: str | None
 
 
@@ -160,7 +170,7 @@ class Film1Index:
         return np.arange(t0, fresh + 1)
 
     # ---------- слой 1 ----------
-    def prefix(self, riz_id, q, source=None):
+    def prefix(self, riz_id, q, source=None, certification='strict'):
         r = self.row(riz_id)
         t0 = int(r.t0_spine_pos)
         src = source if source is not None else self.tape
@@ -181,7 +191,9 @@ class Film1Index:
         e = float(r.exit_boundary)
         close_q = float(d['close'][-1])
         north = r.side == 'north'
-        fresh_s = int(r.certified_fresh_until_pos_strict)
+        # свежесть сверяется с границей ВЫБРАННОЙ сертификации, иначе
+        # sensitivity-сетка из `q_positions` читалась бы strict-мерой
+        fresh_s = int(r[f'certified_fresh_until_pos_{certification}'])
         return DecisionPrefix(
             riz_id=riz_id, instrument=self.instrument, tf_minutes=int(r.tf_minutes),
             side=str(r.side), zone_top=float(r.zone_top), zone_bottom=float(r.zone_bottom),
@@ -217,31 +229,60 @@ class Film1Index:
             reference_ts_ns=ts1, open_price=op, wait_minutes=int((ts1 - ts0) // MIN),
             gap_kind=name,
             availability='observed_contiguous' if k == 0 else 'through_gap',
-            signed_distance_to_tp=abs(signed) if allowed else None,
+            distance_to_tp=abs(signed) if allowed else None,
             directional_status=status if allowed else 'unknown')
 
     # ---------- слой 3 ----------
-    def continuation(self, riz_id, q):
+    def _primacy(self, r, certification):
+        col = ('first_observed_contact_primacy' if certification == 'strict'
+               else 'first_observed_contact_primacy_shared_survived')
+        return str(r[col])
+
+    def continuation(self, riz_id, q, certification='strict'):
+        """Остаток пути. Поздний контакт за промежутком TP не объявляется."""
         r = self.row(riz_id)
         c = int(r.first_observed_contact_pos)
-        end = c if c >= 0 else self.tape.n - 1
-        reason = None
-        if c < 0:
-            reason = ('archive_edge' if r.film1_status == 'no_contact_through_archive'
-                      else 'freshness_lost')
+        fresh = int(r[f'certified_fresh_until_pos_{certification}'])
+        primacy = self._primacy(r, certification)
+        observed = c if c >= 0 else None
+        if primacy == 'certified':
+            # конец Film-1 установлен: остаток ведёт ровно до него
+            end, tp, status, reason = c, c, 'certified_contact', None
+        elif observed is not None:
+            # контакт наблюдался, но за неизвестным промежутком. Достоверное
+            # наблюдение кончается ПЕРЕД промежутком, и TP здесь нет.
+            end, tp = fresh, None
+            status = 'primacy_unknown_observed_contact_later'
+            reason = 'freshness_lost_before_observed_contact'
+        else:
+            end, tp = fresh, None
+            if str(r.film1_status) == 'no_contact_through_archive':
+                status, reason = 'archive_edge_no_contact', 'archive_edge'
+            else:
+                status, reason = 'freshness_lost_no_contact', 'freshness_lost'
+        # q на самой границе сертификации оставляет остаток ПУСТЫМ. Вывернутый
+        # кортеж (q+1, end < q+1) читался бы как диапазон и молча дал бы срез.
+        rng = (int(q) + 1, end) if end >= int(q) + 1 else None
         return Continuation(
-            riz_id=riz_id, q_spine_pos=int(q), remaining_range=(int(q) + 1, end),
-            first_observed_contact_pos=(c if c >= 0 else None),
-            first_observed_contact_primacy=str(r.first_observed_contact_primacy),
-            film1_status=str(r.film1_status), censor_reason=reason)
+            riz_id=riz_id, q_spine_pos=int(q), certification=certification,
+            remaining_range=rng, certified_tp_pos=tp,
+            observed_contact_pos=observed, observed_contact_primacy=primacy,
+            film1_status=str(r.film1_status), continuation_status=status,
+            censor_reason=reason)
 
     # ---------- касательная свеча ----------
-    def excursion_to_tp(self, riz_id, q_from=None):
+    def excursion_to_tp(self, riz_id, q_from=None, certification='strict'):
         """Экскурсия до TP с честным обращением с касательной свечой.
 
         Полный high/low минуты контакта может содержать движение ПОСЛЕ первого
         касания. Поэтому возвращается либо точное значение, либо границы, либо
         прямое признание неизвестности порядка.
+
+        TP считается ТОЛЬКО когда первичность контакта доказана под выбранной
+        сертификацией. Иначе функция отказывается считать «до TP»: поздний
+        наблюдавшийся контакт за неизвестным промежутком первым касанием не
+        является, и подставлять его сюда — ровно та подмена, против которой
+        построен весь слой сертификации.
         """
         r = self.row(riz_id)
         c = int(r.first_observed_contact_pos)
@@ -250,6 +291,15 @@ class Film1Index:
         a = int(q_from) + 1 if q_from is not None else t0 + 1
         if c < 0:
             return {'kind': 'no_contact', 'anchor': a}
+        primacy = self._primacy(r, certification)
+        if primacy != 'certified':
+            return {'kind': 'primacy_not_certified', 'anchor': a,
+                    'certification': certification,
+                    'observed_contact_pos': c,
+                    'certified_fresh_until_pos': int(
+                        r[f'certified_fresh_until_pos_{certification}']),
+                    'why': 'первое касание могло случиться внутри пропуска; '
+                           'наблюдавшийся позже контакт TP не является'}
         if a > c:
             return {'kind': 'entry_after_contact', 'anchor': a, 'contact_pos': c}
         north = r.side == 'north'

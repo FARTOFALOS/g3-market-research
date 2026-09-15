@@ -122,6 +122,40 @@ def main():
     check('NQ: индекс совпадает с каноническим first_exit_contact_v1',
           bad == 0, f'{tested} RIZ на 12 случайных ТФ, расхождений {bad}')
 
+    # слой continuation обязан знать о сертификации: поздний наблюдавшийся
+    # контакт за неизвестным промежутком не имеет права стать TP ни через
+    # `continuation`, ни через `excursion_to_tp`
+    from grid import Film1Index
+    fi = Film1Index('NQ')
+    bad_tp = bad_exc = 0
+    checked = 0
+    for cert in ('strict', 'shared_survived'):
+        col = ('first_observed_contact_primacy' if cert == 'strict'
+               else 'first_observed_contact_primacy_shared_survived')
+        pool = fi.df[fi.df[col] != 'certified']
+        for rid in pool.riz_id.to_numpy()[:150]:
+            rid = str(rid)
+            qs = fi.q_positions(rid, cert)
+            c = fi.continuation(rid, int(qs[-1]), certification=cert)
+            e = fi.excursion_to_tp(rid, certification=cert)
+            checked += 1
+            if c.certified_tp_pos is not None:
+                bad_tp += 1
+            if e['kind'] not in ('primacy_not_certified', 'no_contact'):
+                bad_exc += 1
+    check('continuation не выдаёт TP при недоказанной первичности', bad_tp == 0,
+          f'{checked} проверок в обеих сертификациях')
+    check('excursion_to_tp отказывается считать TP при недоказанной первичности',
+          bad_exc == 0)
+    # и наоборот: где первичность доказана, TP обязан быть наблюдавшимся контактом
+    ok = fi.df[fi.df.first_observed_contact_primacy == 'certified'].head(150)
+    bad_ok = 0
+    for _, row in ok.iterrows():
+        c = fi.continuation(str(row.riz_id), int(row.certified_fresh_until_pos_strict))
+        if c.certified_tp_pos != int(row.first_observed_contact_pos):
+            bad_ok += 1
+    check('при доказанной первичности TP — это наблюдавшийся контакт', bad_ok == 0)
+
     print('\nПРОВАЛЕНО:' if FAIL else '\nВсе инварианты держатся.')
     for f in FAIL:
         print(' -', f)
