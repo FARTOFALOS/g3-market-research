@@ -1,0 +1,177 @@
+{
+ "ES": {
+  "films": 364266,
+  "films_with_no_usable_q": 31259,
+  "no_usable_q_by_reason": {
+   "все q потеряны на промежутке (reference не определена)": 309,
+   "все q: open ровно на boundary": 30657,
+   "все q: open уже за boundary": 288,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 5,
+   "смесь причин, без промежутка (on + beyond)": 0
+  },
+  "no_usable_q_among_single_q_films": 31176,
+  "no_usable_q_among_multi_q_films": 83,
+  "no_usable_q_by_reason_single_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 309,
+   "все q: open ровно на boundary": 30657,
+   "все q: open уже за boundary": 210,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 0,
+   "смесь причин, без промежутка (on + beyond)": 0
+  },
+  "no_usable_q_by_reason_multi_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 0,
+   "все q: open ровно на boundary": 0,
+   "все q: open уже за boundary": 78,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 5,
+   "смесь причин, без промежутка (on + beyond)": 0
+  },
+  "usable_at_first_q": 333007,
+  "not_usable_at_first_q": 31259,
+  "not_usable_at_first_q_but_usable_later": 0,
+  "not_usable_at_first_q_and_never": 31259,
+  "first_q_reason_when_not_usable": {
+   "промежуток перед следующим баром": 309,
+   "open ровно на boundary": 30657,
+   "open уже за boundary": 293,
+   "следующего бара нет": 0
+  },
+  "age_of_first_usable_q_when_not_first": {},
+  "usable_q_count_quantiles": {
+   "0.5": 1,
+   "0.9": 21,
+   "0.99": 464,
+   "1.0": 1378
+  }
+ },
+ "NQ": {
+  "films": 461683,
+  "films_with_no_usable_q": 34392,
+  "no_usable_q_by_reason": {
+   "все q потеряны на промежутке (reference не определена)": 2687,
+   "все q: open ровно на boundary": 24590,
+   "все q: open уже за boundary": 6581,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 427,
+   "смесь причин, без промежутка (on + beyond)": 107
+  },
+  "no_usable_q_among_single_q_films": 33186,
+  "no_usable_q_among_multi_q_films": 1206,
+  "no_usable_q_by_reason_single_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 2687,
+   "все q: open ровно на boundary": 24590,
+   "все q: open уже за boundary": 5909,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 0,
+   "смесь причин, без промежутка (on + beyond)": 0
+  },
+  "no_usable_q_by_reason_multi_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 0,
+   "все q: open ровно на boundary": 0,
+   "все q: open уже за boundary": 672,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 427,
+   "смесь причин, без промежутка (on + beyond)": 107
+  },
+  "usable_at_first_q": 427251,
+  "not_usable_at_first_q": 34432,
+  "not_usable_at_first_q_but_usable_later": 40,
+  "not_usable_at_first_q_and_never": 34392,
+  "first_q_reason_when_not_usable": {
+   "промежуток перед следующим баром": 2687,
+   "open ровно на boundary": 24590,
+   "open уже за boundary": 7155,
+   "следующего бара нет": 0
+  },
+  "age_of_first_usable_q_when_not_first": {
+   "0.5": 1,
+   "0.9": 3,
+   "0.99": 5,
+   "1.0": 6
+  },
+  "usable_q_count_quantiles": {
+   "0.5": 1,
+   "0.9": 32,
+   "0.99": 411,
+   "1.0": 1378
+  }
+ },
+ "YM": {
+  "films": 441060,
+  "films_with_no_usable_q": 34327,
+  "no_usable_q_by_reason": {
+   "все q потеряны на промежутке (reference не определена)": 2434,
+   "все q: open ровно на boundary": 23488,
+   "все q: open уже за boundary": 7499,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 732,
+   "смесь причин, без промежутка (on + beyond)": 174
+  },
+  "no_usable_q_among_single_q_films": 32030,
+  "no_usable_q_among_multi_q_films": 2297,
+  "no_usable_q_by_reason_single_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 2434,
+   "все q: open ровно на boundary": 23488,
+   "все q: open уже за boundary": 6108,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 0,
+   "смесь причин, без промежутка (on + beyond)": 0
+  },
+  "no_usable_q_by_reason_multi_q_films": {
+   "все q потеряны на промежутке (reference не определена)": 0,
+   "все q: open ровно на boundary": 0,
+   "все q: open уже за boundary": 1391,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 732,
+   "смесь причин, без промежутка (on + beyond)": 174
+  },
+  "usable_at_first_q": 406478,
+  "not_usable_at_first_q": 34582,
+  "not_usable_at_first_q_but_usable_later": 255,
+  "not_usable_at_first_q_and_never": 34327,
+  "first_q_reason_when_not_usable": {
+   "промежуток перед следующим баром": 2434,
+   "open ровно на boundary": 23488,
+   "open уже за boundary": 8660,
+   "следующего бара нет": 0
+  },
+  "age_of_first_usable_q_when_not_first": {
+   "0.5": 2,
+   "0.9": 2,
+   "0.99": 9,
+   "1.0": 11
+  },
+  "usable_q_count_quantiles": {
+   "0.5": 1,
+   "0.9": 35,
+   "0.99": 446,
+   "1.0": 1326
+  }
+ },
+ "TOTAL": {
+  "films": 1267009,
+  "films_with_no_usable_q": 99978,
+  "usable_at_first_q": 1166736,
+  "not_usable_at_first_q": 100273,
+  "not_usable_at_first_q_but_usable_later": 295,
+  "not_usable_at_first_q_and_never": 99978,
+  "no_usable_q_among_single_q_films": 96392,
+  "no_usable_q_among_multi_q_films": 3586,
+  "no_usable_q_by_reason": {
+   "все q потеряны на промежутке (reference не определена)": 5430,
+   "все q: open ровно на boundary": 78735,
+   "все q: open уже за boundary": 14368,
+   "все q: следующего бара нет (край архива)": 0,
+   "смесь причин, с участием промежутка": 1164,
+   "смесь причин, без промежутка (on + beyond)": 281
+  },
+  "first_q_reason_when_not_usable": {
+   "промежуток перед следующим баром": 5430,
+   "open ровно на boundary": 78735,
+   "open уже за boundary": 16108,
+   "следующего бара нет": 0
+  }
+ }
+}

@@ -1,0 +1,431 @@
+{
+ "ES": {
+  "1_riz_rows": 364266,
+  "1_tf_cells_with_rows": 1440,
+  "1_distinct_t0_minutes": 53638,
+  "1_distinct_t0_minute_boundary_pairs": 76609,
+  "1_side": {
+   "north": 198531,
+   "south": 165735
+  },
+  "1_t0_years": "2006..2026",
+  "2_lag_observed_bars_to_contact": {
+   "0.5": 1,
+   "0.75": 3,
+   "0.9": 23,
+   "0.99": 5198,
+   "1.0": 1843963
+  },
+  "2_lag_wall_clock_minutes_to_contact": {
+   "0.5": 1,
+   "0.75": 3,
+   "0.9": 24,
+   "0.99": 8370,
+   "1.0": 2867306
+  },
+  "2_lag_observed_bars_no_contact_to_archive": {
+   "0.5": 1235601,
+   "0.75": 4634496,
+   "0.9": 5811103,
+   "0.99": 5813775,
+   "1.0": 5900968
+  },
+  "3_contact_within_observed_bars": {
+   "<= 1": 224261,
+   "<= 5": 292887,
+   "<= 15": 320311,
+   "<= 60": 338771,
+   "<= 240": 349555,
+   "<= 1024": 354874,
+   "total_with_contact": 363928
+  },
+  "3_contact_within_wall_clock_minutes": {
+   "<= 1": 224099,
+   "<= 5": 292525,
+   "<= 15": 319330,
+   "<= 60": 337849,
+   "<= 240": 349007,
+   "<= 1024": 353825,
+   "total_with_contact": 363928
+  },
+  "4_engineering_tail_beyond_1024_observed_bars": 9054,
+  "4_engineering_tail_beyond_1024_note": "счёт только инженерный: поиск шёл до края архива, горизонта не вводилось",
+  "4_no_observed_contact_to_archive_edge": 338,
+  "5_films_crossing_session_boundary": 13442,
+  "5_films_crossing_calendar_day": 13379,
+  "5_sessions_spanned": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 6,
+   "1.0": 4395
+  },
+  "6_film1_status_strict": {
+   "contact_certified": 347813,
+   "contact_seen_primacy_unknown": 16115,
+   "freshness_lost_before_contact": 338
+  },
+  "6_film1_status_shared_survived": {
+   "contact_certified": 355287,
+   "contact_seen_primacy_unknown": 8641,
+   "freshness_lost_before_contact": 337,
+   "no_contact_through_archive": 1
+  },
+  "6_primacy_strict": {
+   "certified": 347813,
+   "unknown": 16115,
+   "not_applicable": 338
+  },
+  "6_primacy_shared_survived": {
+   "certified": 355287,
+   "unknown": 8641,
+   "not_applicable": 338
+  },
+  "6_missing_minutes_inside_film_quantiles": {
+   "0.5": 0,
+   "0.75": 0,
+   "0.9": 0,
+   "0.99": 3420,
+   "1.0": 3077072
+  },
+  "6_status_partition_ok": true,
+  "7_passport_riz_alive_at_archive_end_flag": 4370,
+  "7_passport_flag_but_film1_contact_observed": 4032,
+  "7_film1_not_closed_by_observed_contact": 338,
+  "7_film1_censored_freshness_intact_strict": 0,
+  "7_film1_censored_freshness_intact_shared_survived": 1,
+  "7_deletion_recorded_before_contact": 26,
+  "7_deletion_recorded_at_or_after_contact": 359870,
+  "9_q_observed_total": 1245826193,
+  "9_q_certified_strict_total": 7487164,
+  "9_q_certified_shared_survived_total": 40370688,
+  "9_q_certified_strict_quantiles": {
+   "0.5": 1,
+   "0.75": 3,
+   "0.9": 21,
+   "0.99": 465,
+   "1.0": 1379
+  },
+  "next_open_at_t0_bar_kind": {
+   "contiguous": 363957,
+   "shared_cause_unknown": 251,
+   "instrument_specific": 58
+  },
+  "next_open_at_t0_wait_minutes": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 1,
+   "1.0": 3346
+  },
+  "next_open_at_t0_by_bar_kind_x_direction": {
+   "contiguous": {
+    "beyond_boundary_trade_void": 293,
+    "exactly_on_boundary": 30657,
+    "outside_boundary_trade_intact": 333007
+   },
+   "shared_cause_unknown": {
+    "beyond_boundary_trade_void": 115,
+    "exactly_on_boundary": 30,
+    "outside_boundary_trade_intact": 106
+   },
+   "instrument_specific": {
+    "beyond_boundary_trade_void": 7,
+    "exactly_on_boundary": 29,
+    "outside_boundary_trade_intact": 22
+   }
+  },
+  "next_open_at_t0_strict_available": 363957,
+  "next_open_at_t0_strict_available_and_trade_intact": 333007,
+  "next_open_at_t0_through_gap_not_available_strict": 309,
+  "index_bytes": 33115854
+ },
+ "NQ": {
+  "1_riz_rows": 461683,
+  "1_tf_cells_with_rows": 1440,
+  "1_distinct_t0_minutes": 87600,
+  "1_distinct_t0_minute_boundary_pairs": 137069,
+  "1_side": {
+   "north": 242619,
+   "south": 219064
+  },
+  "1_t0_years": "2006..2026",
+  "2_lag_observed_bars_to_contact": {
+   "0.5": 1,
+   "0.75": 5,
+   "0.9": 44,
+   "0.99": 5977,
+   "1.0": 834744
+  },
+  "2_lag_wall_clock_minutes_to_contact": {
+   "0.5": 1,
+   "0.75": 5,
+   "0.9": 47,
+   "0.99": 10361,
+   "1.0": 1573420
+  },
+  "2_lag_observed_bars_no_contact_to_archive": {
+   "0.5": 848466,
+   "0.75": 3533068,
+   "0.9": 5588618,
+   "0.99": 5592823,
+   "1.0": 5684519
+  },
+  "3_contact_within_observed_bars": {
+   "<= 1": 256277,
+   "<= 5": 349570,
+   "<= 15": 389804,
+   "<= 60": 420221,
+   "<= 240": 437351,
+   "<= 1024": 447354,
+   "total_with_contact": 460320
+  },
+  "3_contact_within_wall_clock_minutes": {
+   "<= 1": 255326,
+   "<= 5": 348543,
+   "<= 15": 388821,
+   "<= 60": 418471,
+   "<= 240": 435995,
+   "<= 1024": 443701,
+   "total_with_contact": 460320
+  },
+  "4_engineering_tail_beyond_1024_observed_bars": 12966,
+  "4_engineering_tail_beyond_1024_note": "счёт только инженерный: поиск шёл до края архива, горизонта не вводилось",
+  "4_no_observed_contact_to_archive_edge": 1363,
+  "5_films_crossing_session_boundary": 21697,
+  "5_films_crossing_calendar_day": 20795,
+  "5_sessions_spanned": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 10,
+   "1.0": 4412
+  },
+  "6_film1_status_strict": {
+   "contact_certified": 425479,
+   "contact_seen_primacy_unknown": 34841,
+   "freshness_lost_before_contact": 1363
+  },
+  "6_film1_status_shared_survived": {
+   "contact_certified": 433204,
+   "contact_seen_primacy_unknown": 27116,
+   "freshness_lost_before_contact": 1355,
+   "no_contact_through_archive": 8
+  },
+  "6_primacy_strict": {
+   "certified": 425479,
+   "unknown": 34841,
+   "not_applicable": 1363
+  },
+  "6_primacy_shared_survived": {
+   "certified": 433204,
+   "unknown": 27116,
+   "not_applicable": 1363
+  },
+  "6_missing_minutes_inside_film_quantiles": {
+   "0.5": 0,
+   "0.75": 0,
+   "0.9": 0,
+   "0.99": 8300,
+   "1.0": 3335741
+  },
+  "6_status_partition_ok": true,
+  "7_passport_riz_alive_at_archive_end_flag": 8184,
+  "7_passport_flag_but_film1_contact_observed": 6821,
+  "7_film1_not_closed_by_observed_contact": 1363,
+  "7_film1_censored_freshness_intact_strict": 0,
+  "7_film1_censored_freshness_intact_shared_survived": 8,
+  "7_deletion_recorded_before_contact": 1131,
+  "7_deletion_recorded_at_or_after_contact": 452368,
+  "9_q_observed_total": 3129126557,
+  "9_q_certified_strict_total": 10441349,
+  "9_q_certified_shared_survived_total": 39976865,
+  "9_q_certified_strict_quantiles": {
+   "0.5": 1,
+   "0.75": 5,
+   "0.9": 32,
+   "0.99": 413,
+   "1.0": 1379
+  },
+  "next_open_at_t0_bar_kind": {
+   "contiguous": 458996,
+   "instrument_specific": 2345,
+   "shared_cause_unknown": 342
+  },
+  "next_open_at_t0_wait_minutes": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 1,
+   "1.0": 3380
+  },
+  "next_open_at_t0_by_bar_kind_x_direction": {
+   "contiguous": {
+    "beyond_boundary_trade_void": 7155,
+    "exactly_on_boundary": 24590,
+    "outside_boundary_trade_intact": 427251
+   },
+   "shared_cause_unknown": {
+    "beyond_boundary_trade_void": 139,
+    "exactly_on_boundary": 16,
+    "outside_boundary_trade_intact": 187
+   },
+   "instrument_specific": {
+    "beyond_boundary_trade_void": 1097,
+    "exactly_on_boundary": 312,
+    "outside_boundary_trade_intact": 936
+   }
+  },
+  "next_open_at_t0_strict_available": 458996,
+  "next_open_at_t0_strict_available_and_trade_intact": 427251,
+  "next_open_at_t0_through_gap_not_available_strict": 2687,
+  "index_bytes": 44817199
+ },
+ "YM": {
+  "1_riz_rows": 441060,
+  "1_tf_cells_with_rows": 1440,
+  "1_distinct_t0_minutes": 82859,
+  "1_distinct_t0_minute_boundary_pairs": 126535,
+  "1_side": {
+   "north": 233841,
+   "south": 207219
+  },
+  "1_t0_years": "2006..2026",
+  "2_lag_observed_bars_to_contact": {
+   "0.5": 1,
+   "0.75": 6,
+   "0.9": 49,
+   "0.99": 4517,
+   "1.0": 1597852
+  },
+  "2_lag_wall_clock_minutes_to_contact": {
+   "0.5": 1,
+   "0.75": 6,
+   "0.9": 52,
+   "0.99": 8590,
+   "1.0": 2825610
+  },
+  "2_lag_observed_bars_no_contact_to_archive": {
+   "0.5": 1231375,
+   "0.75": 4462927,
+   "0.9": 5225610,
+   "0.99": 5562819,
+   "1.0": 5661354
+  },
+  "3_contact_within_observed_bars": {
+   "<= 1": 241976,
+   "<= 5": 329255,
+   "<= 15": 368488,
+   "<= 60": 401466,
+   "<= 240": 416175,
+   "<= 1024": 425772,
+   "total_with_contact": 440474
+  },
+  "3_contact_within_wall_clock_minutes": {
+   "<= 1": 241108,
+   "<= 5": 327886,
+   "<= 15": 366930,
+   "<= 60": 400045,
+   "<= 240": 415233,
+   "<= 1024": 423225,
+   "total_with_contact": 440474
+  },
+  "4_engineering_tail_beyond_1024_observed_bars": 14702,
+  "4_engineering_tail_beyond_1024_note": "счёт только инженерный: поиск шёл до края архива, горизонта не вводилось",
+  "4_no_observed_contact_to_archive_edge": 586,
+  "5_films_crossing_session_boundary": 20936,
+  "5_films_crossing_calendar_day": 21046,
+  "5_sessions_spanned": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 6,
+   "1.0": 4418
+  },
+  "6_film1_status_strict": {
+   "contact_certified": 403789,
+   "contact_seen_primacy_unknown": 36685,
+   "freshness_lost_before_contact": 586
+  },
+  "6_film1_status_shared_survived": {
+   "contact_certified": 410553,
+   "contact_seen_primacy_unknown": 29921,
+   "freshness_lost_before_contact": 586
+  },
+  "6_primacy_strict": {
+   "certified": 403789,
+   "unknown": 36685,
+   "not_applicable": 586
+  },
+  "6_primacy_shared_survived": {
+   "certified": 410553,
+   "unknown": 29921,
+   "not_applicable": 586
+  },
+  "6_missing_minutes_inside_film_quantiles": {
+   "0.5": 0,
+   "0.75": 0,
+   "0.9": 0,
+   "0.99": 4300,
+   "1.0": 3358913
+  },
+  "6_status_partition_ok": true,
+  "7_passport_riz_alive_at_archive_end_flag": 5003,
+  "7_passport_flag_but_film1_contact_observed": 4417,
+  "7_film1_not_closed_by_observed_contact": 586,
+  "7_film1_censored_freshness_intact_strict": 0,
+  "7_film1_censored_freshness_intact_shared_survived": 0,
+  "7_deletion_recorded_before_contact": 1322,
+  "7_deletion_recorded_at_or_after_contact": 434735,
+  "9_q_observed_total": 1681007570,
+  "9_q_certified_strict_total": 10144624,
+  "9_q_certified_shared_survived_total": 17810129,
+  "9_q_certified_strict_quantiles": {
+   "0.5": 1,
+   "0.75": 5,
+   "0.9": 36,
+   "0.99": 448,
+   "1.0": 1327
+  },
+  "next_open_at_t0_bar_kind": {
+   "contiguous": 438626,
+   "instrument_specific": 1783,
+   "shared_cause_unknown": 651
+  },
+  "next_open_at_t0_wait_minutes": {
+   "0.5": 1,
+   "0.75": 1,
+   "0.9": 1,
+   "0.99": 1,
+   "1.0": 3306
+  },
+  "next_open_at_t0_by_bar_kind_x_direction": {
+   "contiguous": {
+    "beyond_boundary_trade_void": 8660,
+    "exactly_on_boundary": 23488,
+    "outside_boundary_trade_intact": 406478
+   },
+   "shared_cause_unknown": {
+    "beyond_boundary_trade_void": 218,
+    "exactly_on_boundary": 134,
+    "outside_boundary_trade_intact": 299
+   },
+   "instrument_specific": {
+    "beyond_boundary_trade_void": 481,
+    "exactly_on_boundary": 252,
+    "outside_boundary_trade_intact": 1050
+   }
+  },
+  "next_open_at_t0_strict_available": 438626,
+  "next_open_at_t0_strict_available_and_trade_intact": 406478,
+  "next_open_at_t0_through_gap_not_available_strict": 2434,
+  "index_bytes": 42087888
+ },
+ "TOTAL": {
+  "riz_rows": 1267009,
+  "q_observed_total": 6055960320,
+  "q_certified_strict_total": 28073137,
+  "q_certified_shared_survived_total": 98157682,
+  "index_megabytes": 120.0
+ }
+}

@@ -1,0 +1,370 @@
+{
+ "ES": {
+  "films": 364266,
+  "q_certified_strict": 7487164,
+  "q_reference_available_strict": 7472254,
+  "q_reference_only_through_gap": 14910,
+  "q_reference_past_archive_edge": 0,
+  "q_trade_intact_open_outside": 7434398,
+  "q_open_exactly_on_boundary": 32113,
+  "q_open_beyond_boundary_trade_void": 5743,
+  "share_q_reference_available": 0.998,
+  "share_q_trade_intact": 0.993,
+  "films_with_at_least_one_usable_q": 333007,
+  "films_with_no_usable_q": 31259,
+  "mean_points_open_to_boundary_on_usable_q": 19.393,
+  "mean_zone_widths_open_to_boundary": 16.8969,
+  "by_tf_band": {
+   "1": {
+    "films": 3464,
+    "q": 66878,
+    "q_reference_available": 66770,
+    "q_trade_intact": 66505
+   },
+   "2": {
+    "films": 3019,
+    "q": 62997,
+    "q_reference_available": 62890,
+    "q_trade_intact": 62680
+   },
+   "3-5": {
+    "films": 7549,
+    "q": 179756,
+    "q_reference_available": 179445,
+    "q_trade_intact": 175786
+   },
+   "6-15": {
+    "films": 18076,
+    "q": 376682,
+    "q_reference_available": 376019,
+    "q_trade_intact": 372567
+   },
+   "16-60": {
+    "films": 44458,
+    "q": 1029470,
+    "q_reference_available": 1027423,
+    "q_trade_intact": 1022971
+   },
+   "61-240": {
+    "films": 78458,
+    "q": 1907262,
+    "q_reference_available": 1903656,
+    "q_trade_intact": 1896412
+   },
+   "241-1440": {
+    "films": 209242,
+    "q": 3864119,
+    "q_reference_available": 3856051,
+    "q_trade_intact": 3837477
+   }
+  },
+  "by_side": {
+   "north": {
+    "films": 198531,
+    "q": 4354500,
+    "q_reference_available": 4345772,
+    "q_trade_intact": 4325051
+   },
+   "south": {
+    "films": 165735,
+    "q": 3132664,
+    "q_reference_available": 3126482,
+    "q_trade_intact": 3109347
+   }
+  },
+  "by_epoch": {
+   "2005": {
+    "films": 58024,
+    "q": 930463,
+    "q_reference_available": 927420,
+    "q_trade_intact": 920976
+   },
+   "2010": {
+    "films": 69470,
+    "q": 1136469,
+    "q_reference_available": 1134063,
+    "q_trade_intact": 1122413
+   },
+   "2015": {
+    "films": 84010,
+    "q": 1464925,
+    "q_reference_available": 1461679,
+    "q_trade_intact": 1452583
+   },
+   "2020": {
+    "films": 121549,
+    "q": 2857746,
+    "q_reference_available": 2852726,
+    "q_trade_intact": 2843799
+   },
+   "2025": {
+    "films": 31213,
+    "q": 1097561,
+    "q_reference_available": 1096366,
+    "q_trade_intact": 1094627
+   }
+  },
+  "rth_0930_1600_et_films": 218287,
+  "distinct_session_days_with_a_film": 4959,
+  "multiplicity": {
+   "riz": 364266,
+   "distinct_t0_minutes": 53638,
+   "distinct_t0_minute_boundary_pairs": 76609,
+   "distinct_exit_boundary_prices": 21384,
+   "distinct_session_days": 4959,
+   "distinct_tf_cells": 1440,
+   "max_riz_on_one_t0_minute": 1150,
+   "max_distinct_boundaries_on_one_t0_minute": 35,
+   "films_sharing_their_t0_minute": 337767
+  }
+ },
+ "NQ": {
+  "films": 461683,
+  "q_certified_strict": 10441349,
+  "q_reference_available_strict": 10410945,
+  "q_reference_only_through_gap": 30404,
+  "q_reference_past_archive_edge": 0,
+  "q_trade_intact_open_outside": 10345774,
+  "q_open_exactly_on_boundary": 27878,
+  "q_open_beyond_boundary_trade_void": 37293,
+  "share_q_reference_available": 0.9971,
+  "share_q_trade_intact": 0.9908,
+  "films_with_at_least_one_usable_q": 427291,
+  "films_with_no_usable_q": 34392,
+  "mean_points_open_to_boundary_on_usable_q": 55.767,
+  "mean_zone_widths_open_to_boundary": 25.0043,
+  "by_tf_band": {
+   "1": {
+    "films": 11562,
+    "q": 242967,
+    "q_reference_available": 242483,
+    "q_trade_intact": 239553
+   },
+   "2": {
+    "films": 8253,
+    "q": 182110,
+    "q_reference_available": 181665,
+    "q_trade_intact": 179098
+   },
+   "3-5": {
+    "films": 17584,
+    "q": 357851,
+    "q_reference_available": 356790,
+    "q_trade_intact": 352620
+   },
+   "6-15": {
+    "films": 33997,
+    "q": 699585,
+    "q_reference_available": 697280,
+    "q_trade_intact": 690615
+   },
+   "16-60": {
+    "films": 67464,
+    "q": 1506002,
+    "q_reference_available": 1500980,
+    "q_trade_intact": 1488338
+   },
+   "61-240": {
+    "films": 97491,
+    "q": 2300975,
+    "q_reference_available": 2294139,
+    "q_trade_intact": 2276989
+   },
+   "241-1440": {
+    "films": 225332,
+    "q": 5151859,
+    "q_reference_available": 5137608,
+    "q_trade_intact": 5118561
+   }
+  },
+  "by_side": {
+   "north": {
+    "films": 242619,
+    "q": 6342883,
+    "q_reference_available": 6324685,
+    "q_trade_intact": 6294492
+   },
+   "south": {
+    "films": 219064,
+    "q": 4098466,
+    "q_reference_available": 4086260,
+    "q_trade_intact": 4051282
+   }
+  },
+  "by_epoch": {
+   "2005": {
+    "films": 70045,
+    "q": 1502771,
+    "q_reference_available": 1494719,
+    "q_trade_intact": 1482502
+   },
+   "2010": {
+    "films": 99672,
+    "q": 2206272,
+    "q_reference_available": 2198894,
+    "q_trade_intact": 2183089
+   },
+   "2015": {
+    "films": 121494,
+    "q": 2533853,
+    "q_reference_available": 2526647,
+    "q_trade_intact": 2508204
+   },
+   "2020": {
+    "films": 135179,
+    "q": 3149199,
+    "q_reference_available": 3142848,
+    "q_trade_intact": 3127093
+   },
+   "2025": {
+    "films": 35293,
+    "q": 1049254,
+    "q_reference_available": 1047837,
+    "q_trade_intact": 1044886
+   }
+  },
+  "rth_0930_1600_et_films": 275754,
+  "distinct_session_days_with_a_film": 5180,
+  "multiplicity": {
+   "riz": 461683,
+   "distinct_t0_minutes": 87600,
+   "distinct_t0_minute_boundary_pairs": 137069,
+   "distinct_exit_boundary_prices": 60314,
+   "distinct_session_days": 5180,
+   "distinct_tf_cells": 1440,
+   "max_riz_on_one_t0_minute": 1265,
+   "max_distinct_boundaries_on_one_t0_minute": 170,
+   "films_sharing_their_t0_minute": 413188
+  }
+ },
+ "YM": {
+  "films": 441060,
+  "q_certified_strict": 10144624,
+  "q_reference_available_strict": 10113774,
+  "q_reference_only_through_gap": 30850,
+  "q_reference_past_archive_edge": 0,
+  "q_trade_intact_open_outside": 10011803,
+  "q_open_exactly_on_boundary": 27256,
+  "q_open_beyond_boundary_trade_void": 74715,
+  "share_q_reference_available": 0.997,
+  "share_q_trade_intact": 0.9869,
+  "films_with_at_least_one_usable_q": 406733,
+  "films_with_no_usable_q": 34327,
+  "mean_points_open_to_boundary_on_usable_q": 133.196,
+  "mean_zone_widths_open_to_boundary": 21.9111,
+  "by_tf_band": {
+   "1": {
+    "films": 9476,
+    "q": 188570,
+    "q_reference_available": 187998,
+    "q_trade_intact": 182577
+   },
+   "2": {
+    "films": 7481,
+    "q": 140634,
+    "q_reference_available": 140152,
+    "q_trade_intact": 136004
+   },
+   "3-5": {
+    "films": 16677,
+    "q": 348291,
+    "q_reference_available": 347016,
+    "q_trade_intact": 341394
+   },
+   "6-15": {
+    "films": 33236,
+    "q": 726291,
+    "q_reference_available": 723687,
+    "q_trade_intact": 715537
+   },
+   "16-60": {
+    "films": 65783,
+    "q": 1576739,
+    "q_reference_available": 1571508,
+    "q_trade_intact": 1545317
+   },
+   "61-240": {
+    "films": 92862,
+    "q": 2113835,
+    "q_reference_available": 2107085,
+    "q_trade_intact": 2074505
+   },
+   "241-1440": {
+    "films": 215545,
+    "q": 5050264,
+    "q_reference_available": 5036328,
+    "q_trade_intact": 5016469
+   }
+  },
+  "by_side": {
+   "north": {
+    "films": 233841,
+    "q": 5973113,
+    "q_reference_available": 5954804,
+    "q_trade_intact": 5894672
+   },
+   "south": {
+    "films": 207219,
+    "q": 4171511,
+    "q_reference_available": 4158970,
+    "q_trade_intact": 4117131
+   }
+  },
+  "by_epoch": {
+   "2005": {
+    "films": 71828,
+    "q": 1191850,
+    "q_reference_available": 1185130,
+    "q_trade_intact": 1174647
+   },
+   "2010": {
+    "films": 97276,
+    "q": 1944170,
+    "q_reference_available": 1935751,
+    "q_trade_intact": 1916441
+   },
+   "2015": {
+    "films": 107289,
+    "q": 2718237,
+    "q_reference_available": 2711530,
+    "q_trade_intact": 2695956
+   },
+   "2020": {
+    "films": 127324,
+    "q": 3538943,
+    "q_reference_available": 3531561,
+    "q_trade_intact": 3486476
+   },
+   "2025": {
+    "films": 37343,
+    "q": 751424,
+    "q_reference_available": 749802,
+    "q_trade_intact": 738283
+   }
+  },
+  "rth_0930_1600_et_films": 263495,
+  "distinct_session_days_with_a_film": 5192,
+  "multiplicity": {
+   "riz": 441060,
+   "distinct_t0_minutes": 82859,
+   "distinct_t0_minute_boundary_pairs": 126535,
+   "distinct_exit_boundary_prices": 35353,
+   "distinct_session_days": 5192,
+   "distinct_tf_cells": 1440,
+   "max_riz_on_one_t0_minute": 985,
+   "max_distinct_boundaries_on_one_t0_minute": 91,
+   "films_sharing_their_t0_minute": 395428
+  }
+ },
+ "TOTAL": {
+  "films": 1267009,
+  "q_certified_strict": 28073137,
+  "q_reference_available_strict": 27996973,
+  "q_trade_intact_open_outside": 27791975,
+  "q_open_exactly_on_boundary": 87247,
+  "q_open_beyond_boundary_trade_void": 117751,
+  "q_reference_only_through_gap": 76164,
+  "films_with_no_usable_q": 99978,
+  "share_q_trade_intact": 0.99
+ }
+}

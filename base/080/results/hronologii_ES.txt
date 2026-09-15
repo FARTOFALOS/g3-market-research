@@ -1,0 +1,207 @@
+############ ПРОВЕРОЧНЫЕ СЦЕНЫ — ES ############
+
+### РЕШАЮЩАЯ: T0 известен → next open ещё actionable → запас до цели <= 2 тика (0.5) → contact на T0+1
+  RIZ riz_6784b07b36d743f59a14b5f9aa04476f  ES TF1344  side=south
+  зона [1271.75 .. 1272.75]  exit boundary 1271.75  far 1272.75
+  T0 известен: 2006-08-01 10:03:00 ET  spine 138992  close 1271.25
+  q доступны: 1 шт., от spine 138992 до 138992
+        q=138992 (+0 бар, 0 мин часов, пропущено 0) close 1271.25 | reference open 1271.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | alive, certified_fresh
+  contact: spine 138993 = 2006-08-01 10:04:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 1271.25: до TP 0.50 | против цели точно 0.00 (касательная свеча своего максимума против цели не поднимает)
+  жизненный цикл: deletion 139364, blue_end 139364, native_conf -1, passport censored=False
+
+  RIZ riz_8a20fd341fce310673f5d636564fccfd  ES TF934  side=north
+  зона [4039.5 .. 4042]  exit boundary 4042  far 4039.5
+  T0 известен: 2022-11-30 14:53:00 ET  spine 5665502  close 4042.75
+  q доступны: 1 шт., от spine 5665502 до 5665502
+        q=5665502 (+0 бар, 0 мин часов, пропущено 0) close 4042.75 | reference open 4042.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | alive, certified_fresh
+  contact: spine 5665503 = 2022-11-30 14:54:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 4042.5: до TP 0.50 | против цели ГРАНИЦЫ [0.00 .. 1.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 4042.5, 'high': 4044.0, 'low': 4038.25, 'close': 4038.5}
+  жизненный цикл: deletion 5667943, blue_end 5667943, native_conf 5665629, passport censored=False
+
+### contact на T0+1
+  RIZ riz_90761bef81cbbecfc5cb5f8ada7f2f77  ES TF307  side=north
+  зона [3286.5 .. 3289.5]  exit boundary 3289.5  far 3286.5
+  T0 известен: 2020-09-25 15:10:00 ET  spine 4896691  close 3290
+  q доступны: 1 шт., от spine 4896691 до 4896691
+        q=4896691 (+0 бар, 0 мин часов, пропущено 0) close 3290 | reference open 3290 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | alive, certified_fresh
+  contact: spine 4896692 = 2020-09-25 15:11:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 3290: до TP 0.50 | против цели ГРАНИЦЫ [0.00 .. 3.25], порядок внутри касательной свечи неизвестен; её OHLC {'open': 3290.0, 'high': 3293.25, 'low': 3289.25, 'close': 3292.0}
+  жизненный цикл: deletion 4896786, blue_end 4896786, native_conf -1, passport censored=False
+
+### несколько минут дальнейшего удаления
+  RIZ riz_eb011d855aa37475d3b31b2d23947792  ES TF1118  side=north
+  зона [2769 .. 2770]  exit boundary 2770  far 2769
+  T0 известен: 2018-07-08 21:15:00 ET  spine 4120683  close 2770.75
+  q доступны: 5 шт., от spine 4120683 до 4120687
+        q=4120683 (+0 бар, 0 мин часов, пропущено 0) close 2770.75 | reference open 2770.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.75 | alive, certified_fresh
+        q=4120684 (+1 бар, 1 мин часов, пропущено 0) close 2771.5 | reference open 2771.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.50 | alive, certified_fresh
+        q=4120685 (+2 бар, 2 мин часов, пропущено 0) close 2771.75 | reference open 2771.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.50 | alive, certified_fresh
+        q=4120686 (+3 бар, 3 мин часов, пропущено 0) close 2771.25 | reference open 2771 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.00 | alive, certified_fresh
+        q=4120687 (+4 бар, 4 мин часов, пропущено 0) close 2770.75 | reference open 2770.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.75 | alive, certified_fresh
+  contact: spine 4120688 = 2018-07-08 21:20:00 ET  (+5 наблюдённых бар, 5 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 2770.75: до TP 0.75 | против цели точно 1.50 (касательная свеча своего максимума против цели не поднимает)
+  жизненный цикл: deletion 4124333, blue_end 4124333, native_conf 4121605, passport censored=False
+
+### длинный фильм через смену дня, сертифицированный (strict)
+  ТИП НЕ НАЙДЕН на этой территории (пример не изобретается).
+
+### длинный фильм через смену дня, наблюдаемый (первичность не доказана)
+  RIZ riz_9a4891163920a262cc32d97ff4f1d9a9  ES TF961  side=south
+  зона [1050 .. 1051.5]  exit boundary 1050  far 1051.5
+  T0 известен: 2009-10-30 11:38:00 ET  spine 1145660  close 1047.75
+  q доступны: 278 шт., от spine 1145660 до 1145937
+        q=1145660 (+0 бар, 0 мин часов, пропущено 0) close 1047.75 | reference open 1047.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 2.50 | alive, certified_fresh
+        q=1145661 (+1 бар, 1 мин часов, пропущено 0) close 1048.5 | reference open 1048.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.75 | alive, certified_fresh
+        q=1145662 (+2 бар, 2 мин часов, пропущено 0) close 1048.75 | reference open 1048.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.25 | alive, certified_fresh
+        q=1145663 (+3 бар, 3 мин часов, пропущено 0) close 1048.5 | reference open 1048.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.50 | alive, certified_fresh
+        q=1145664 (+4 бар, 4 мин часов, пропущено 0) close 1048.5 | reference open 1048.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.50 | alive, certified_fresh
+        q=1145665 (+5 бар, 5 мин часов, пропущено 0) close 1049 | reference open 1049.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.75 | alive, certified_fresh
+        ...
+        q=1145932 (+272 бар, 272 мин часов, пропущено 0) close 1031.75 | reference open 1031.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 18.25 | alive, certified_fresh
+        q=1145933 (+273 бар, 273 мин часов, пропущено 0) close 1032.5 | reference open 1032.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 17.50 | alive, certified_fresh
+        q=1145934 (+274 бар, 274 мин часов, пропущено 0) close 1032.75 | reference open 1032.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 17.25 | alive, certified_fresh
+        q=1145935 (+275 бар, 275 мин часов, пропущено 0) close 1032.5 | reference open 1032.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 17.75 | alive, certified_fresh
+        q=1145936 (+276 бар, 276 мин часов, пропущено 0) close 1032.25 | reference open 1032 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 18.00 | alive, certified_fresh
+        q=1145937 (+277 бар, 277 мин часов, пропущено 0) close 1032.25 | reference open 1031.25 [through_gap/shared_cause_unknown, ждать 3046 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
+  contact: spine 1149495 = 2009-11-04 08:37:00 ET  (+3835 наблюдённых бар, 7079 мин часов)
+  primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: unknown / contact_seen_primacy_unknown)
+  от reference entry 1047.5: до TP 2.50 | против цели точно 21.50 (касательная свеча своего максимума против цели не поднимает)
+  жизненный цикл: deletion 1149579, blue_end 1149579, native_conf 1145937, passport censored=False
+
+### разные RIZ одной минуты T0 (разные границы)
+  RIZ riz_ade0a1209581d2cefb2a758dcfcacb9f  ES TF8  side=north
+  зона [1771.5 .. 1771.75]  exit boundary 1771.75  far 1771.5
+  T0 известен: 2014-02-07 08:48:00 ET  spine 2596407  close 1772.5
+  q доступны: 1 шт., от spine 2596407 до 2596407
+        q=2596407 (+0 бар, 0 мин часов, пропущено 0) close 1772.5 | reference open 1772.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | native_blue_confirmed, certified_fresh
+  contact: spine 2596408 = 2014-02-07 08:49:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 1772.25: до TP 0.50 | против цели ГРАНИЦЫ [0.00 .. 2.75], порядок внутри касательной свечи неизвестен; её OHLC {'open': 1772.25, 'high': 1775.0, 'low': 1771.5, 'close': 1771.75}
+  жизненный цикл: deletion 2596415, blue_end 2596415, native_conf 2596407, passport censored=False
+
+  RIZ riz_76613ca54b4ccdf13f758087f8e198c8  ES TF13  side=north
+  зона [1769.25 .. 1769.5]  exit boundary 1769.5  far 1769.25
+  T0 известен: 2014-02-07 08:48:00 ET  spine 2596407  close 1772.5
+  q доступны: 448 шт., от spine 2596407 до 2596854
+        q=2596407 (+0 бар, 0 мин часов, пропущено 0) close 1772.5 | reference open 1772.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 2.75 | alive, certified_fresh
+        q=2596408 (+1 бар, 1 мин часов, пропущено 0) close 1771.75 | reference open 1771.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 2.25 | alive, certified_fresh
+        q=2596409 (+2 бар, 2 мин часов, пропущено 0) close 1775.5 | reference open 1775.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 6.00 | alive, certified_fresh
+        q=2596410 (+3 бар, 3 мин часов, пропущено 0) close 1773 | reference open 1773.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 3.75 | alive, certified_fresh
+        q=2596411 (+4 бар, 4 мин часов, пропущено 0) close 1774.75 | reference open 1774.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 5.25 | alive, certified_fresh
+        q=2596412 (+5 бар, 5 мин часов, пропущено 0) close 1777.25 | reference open 1777.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 7.75 | alive, certified_fresh
+        ...
+        q=2596849 (+442 бар, 442 мин часов, пропущено 0) close 1792.75 | reference open 1792.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.00 | native_blue_confirmed, certified_fresh
+        q=2596850 (+443 бар, 443 мин часов, пропущено 0) close 1792.75 | reference open 1792.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.00 | native_blue_confirmed, certified_fresh
+        q=2596851 (+444 бар, 444 мин часов, пропущено 0) close 1792.75 | reference open 1792.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.00 | native_blue_confirmed, certified_fresh
+        q=2596852 (+445 бар, 445 мин часов, пропущено 0) close 1792.75 | reference open 1792.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.25 | native_blue_confirmed, certified_fresh
+        q=2596853 (+446 бар, 446 мин часов, пропущено 0) close 1793 | reference open 1793 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.50 | native_blue_confirmed, certified_fresh
+        q=2596854 (+447 бар, 447 мин часов, пропущено 0) close 1793.25 | reference open 1793.25 [through_gap/shared_cause_unknown, ждать 15 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
+  contact: не наблюдался до края архива
+  primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
+  жизненный цикл: deletion -1, blue_end -1, native_conf 2596416, passport censored=True
+
+### flicker (нет нативного подтверждения)
+  RIZ riz_a7696b487432d9d353a765fb143be4d6  ES TF831  side=south
+  зона [3990.25 .. 3992.25]  exit boundary 3990.25  far 3992.25
+  T0 известен: 2022-12-05 14:42:00 ET  spine 5669631  close 3988.75
+  q доступны: 1 шт., от spine 5669631 до 5669631
+        q=5669631 (+0 бар, 0 мин часов, пропущено 0) close 3988.75 | reference open 3988.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 1.75 | alive, certified_fresh
+  contact: spine 5669632 = 2022-12-05 14:43:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 3988.5: до TP 1.75 | против цели ГРАНИЦЫ [0.00 .. 0.50], порядок внутри касательной свечи неизвестен; её OHLC {'open': 3988.5, 'high': 3991.0, 'low': 3988.0, 'close': 3991.0}
+  жизненный цикл: deletion 5669769, blue_end 5669769, native_conf -1, passport censored=False
+
+### deletion до контакта
+  RIZ riz_afe2dead111f61077c288a54e09efb22  ES TF68  side=south
+  зона [1294.5 .. 1295.5]  exit boundary 1294.5  far 1295.5
+  T0 известен: 2008-03-13 01:32:00 ET  spine 598961  close 1294.25
+  q доступны: 1 шт., от spine 598961 до 598961
+        q=598961 (+0 бар, 0 мин часов, пропущено 0) close 1294.25 | reference open 1295.25 [through_gap/shared_cause_unknown, ждать 2 мин] unknown, до TP — | alive, certified_fresh
+  contact: spine 598986 = 2008-03-13 02:03:00 ET  (+25 наблюдённых бар, 31 мин часов)
+  primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: unknown / contact_seen_primacy_unknown)
+  от reference entry 1295.25: до TP 0.75 | против цели ГРАНИЦЫ [0.25 .. 0.75], порядок внутри касательной свечи неизвестен; её OHLC {'open': 1295.25, 'high': 1295.25, 'low': 1294.5, 'close': 1294.5}
+  жизненный цикл: deletion 598982, blue_end 598982, native_conf -1, passport censored=False
+
+### потеря достоверности / missing tape до контакта
+  RIZ riz_7f844524573c421b19d03d997ccdf0f8  ES TF215  side=south
+  зона [858.75 .. 860.25]  exit boundary 858.75  far 860.25
+  T0 известен: 2008-10-27 15:56:00 ET  spine 804987  close 855.25
+  q доступны: 20 шт., от spine 804987 до 805006
+        q=804987 (+0 бар, 0 мин часов, пропущено 0) close 855.25 | reference open 855.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 3.25 | alive, certified_fresh
+        q=804988 (+1 бар, 1 мин часов, пропущено 0) close 853 | reference open 853.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 5.50 | alive, certified_fresh
+        q=804989 (+2 бар, 2 мин часов, пропущено 0) close 851.25 | reference open 851.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 7.25 | alive, certified_fresh
+        q=804990 (+3 бар, 3 мин часов, пропущено 0) close 847.25 | reference open 847 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 11.75 | alive, certified_fresh
+        q=804991 (+4 бар, 4 мин часов, пропущено 0) close 846 | reference open 846 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 12.75 | alive, certified_fresh
+        q=804992 (+5 бар, 5 мин часов, пропущено 0) close 844.25 | reference open 844.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 14.50 | alive, certified_fresh
+        ...
+        q=805001 (+14 бар, 14 мин часов, пропущено 0) close 836.75 | reference open 837 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 21.75 | alive, certified_fresh
+        q=805002 (+15 бар, 15 мин часов, пропущено 0) close 836.75 | reference open 836.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 22.00 | alive, certified_fresh
+        q=805003 (+16 бар, 16 мин часов, пропущено 0) close 837.5 | reference open 837.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 21.00 | alive, certified_fresh
+        q=805004 (+17 бар, 17 мин часов, пропущено 0) close 837 | reference open 837 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 21.75 | alive, certified_fresh
+        q=805005 (+18 бар, 18 мин часов, пропущено 0) close 835.5 | reference open 835.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 23.00 | alive, certified_fresh
+        q=805006 (+19 бар, 19 мин часов, пропущено 0) close 835.5 | reference open 836.75 [through_gap/shared_cause_unknown, ждать 15 мин] unknown, до TP — | alive, certified_fresh
+  contact: spine 805295 = 2008-10-28 02:18:00 ET  (+308 наблюдённых бар, 622 мин часов)
+  primacy: unknown   status: contact_seen_primacy_unknown   (shared-survived: unknown / contact_seen_primacy_unknown)
+  от reference entry 855.5: до TP 3.25 | против цели точно 28.25 (касательная свеча своего максимума против цели не поднимает)
+  жизненный цикл: deletion 806087, blue_end 805657, native_conf 805037, passport censored=False
+
+### контакт не наблюдался до края архива
+  RIZ riz_32b4b0230e36a14da324ba40a867fd08  ES TF1368  side=north
+  зона [5104.75 .. 5116.5]  exit boundary 5116.5  far 5104.75
+  T0 известен: 2025-04-09 13:20:00 ET  spine 6497993  close 5179.75
+  q доступны: 221 шт., от spine 6497993 до 6498213
+        q=6497993 (+0 бар, 0 мин часов, пропущено 0) close 5179.75 | reference open 5180.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 64.00 | alive, certified_fresh
+        q=6497994 (+1 бар, 1 мин часов, пропущено 0) close 5251.5 | reference open 5252.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 135.75 | alive, certified_fresh
+        q=6497995 (+2 бар, 2 мин часов, пропущено 0) close 5248.5 | reference open 5248.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 132.00 | alive, certified_fresh
+        q=6497996 (+3 бар, 3 мин часов, пропущено 0) close 5267.25 | reference open 5266.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 149.75 | alive, certified_fresh
+        q=6497997 (+4 бар, 4 мин часов, пропущено 0) close 5279.25 | reference open 5279.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 162.75 | alive, certified_fresh
+        q=6497998 (+5 бар, 5 мин часов, пропущено 0) close 5288.5 | reference open 5289 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 172.50 | alive, certified_fresh
+        ...
+        q=6498208 (+215 бар, 215 мин часов, пропущено 0) close 5515.75 | reference open 5515.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 399.25 | native_blue_confirmed, certified_fresh
+        q=6498209 (+216 бар, 216 мин часов, пропущено 0) close 5513.25 | reference open 5513.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 397.00 | native_blue_confirmed, certified_fresh
+        q=6498210 (+217 бар, 217 мин часов, пропущено 0) close 5516.25 | reference open 5516.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 400.00 | native_blue_confirmed, certified_fresh
+        q=6498211 (+218 бар, 218 мин часов, пропущено 0) close 5515.5 | reference open 5515.5 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 399.00 | native_blue_confirmed, certified_fresh
+        q=6498212 (+219 бар, 219 мин часов, пропущено 0) close 5517.5 | reference open 5517.75 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 401.25 | native_blue_confirmed, certified_fresh
+        q=6498213 (+220 бар, 220 мин часов, пропущено 0) close 5513.5 | reference open 5502.5 [through_gap/shared_cause_unknown, ждать 61 мин] unknown, до TP — | native_blue_confirmed, certified_fresh
+  contact: не наблюдался до края архива
+  primacy: not_applicable   status: freshness_lost_before_contact   (shared-survived: not_applicable / freshness_lost_before_contact)
+  жизненный цикл: deletion -1, blue_end -1, native_conf 6498201, passport censored=True
+
+### reference open ровно на boundary
+  RIZ riz_3670e96c55657f093b5418fa3e7452a8  ES TF779  side=south
+  зона [1475.75 .. 1479]  exit boundary 1475.75  far 1479
+  T0 известен: 2007-12-11 16:52:00 ET  spine 516921  close 1475.5
+  q доступны: 1 шт., от spine 516921 до 516921
+        q=516921 (+0 бар, 0 мин часов, пропущено 0) close 1475.5 | reference open 1475.75 [observed_contiguous/contiguous, ждать 1 мин] on_boundary, до TP 0.00 | alive, certified_fresh
+  contact: spine 516922 = 2007-12-11 16:53:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 1475.75: до TP 0.00 | против цели ГРАНИЦЫ [0.00 .. 0.75], порядок внутри касательной свечи неизвестен; её OHLC {'open': 1475.75, 'high': 1476.0, 'low': 1475.0, 'close': 1475.75}
+  жизненный цикл: deletion 516929, blue_end 516929, native_conf -1, passport censored=False
+
+### reference open за boundary
+  RIZ riz_7f45f98ebda23bb8655814de2e52ef20  ES TF44  side=north
+  зона [2209.75 .. 2210.5]  exit boundary 2210.5  far 2209.75
+  T0 известен: 2020-03-22 19:40:00 ET  spine 4714729  close 2211.5
+  q доступны: 1 шт., от spine 4714729 до 4714729
+        q=4714729 (+0 бар, 0 мин часов, пропущено 0) close 2211.5 | reference open 2207.25 [observed_contiguous/contiguous, ждать 1 мин] beyond, до TP 3.25 | alive, certified_fresh
+  contact: spine 4714730 = 2020-03-22 19:41:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 2207.25: до TP 3.25 | против цели ГРАНИЦЫ [0.00 .. 21.75], порядок внутри касательной свечи неизвестен; её OHLC {'open': 2207.25, 'high': 2229.0, 'low': 2186.75, 'close': 2188.75}
+  жизненный цикл: deletion 4714761, blue_end 4714761, native_conf -1, passport censored=False
+
+### неоднозначная экскурсия внутри касательной свечи
+  RIZ riz_005bc0d580549813597a217d5f76d51f  ES TF1  side=south
+  зона [2601.75 .. 2602]  exit boundary 2601.75  far 2602
+  T0 известен: 2019-01-15 10:10:00 ET  spine 4302568  close 2601.5
+  q доступны: 1 шт., от spine 4302568 до 4302568
+        q=4302568 (+0 бар, 0 мин часов, пропущено 0) close 2601.5 | reference open 2601.25 [observed_contiguous/contiguous, ждать 1 мин] outside, до TP 0.50 | native_blue_confirmed, certified_fresh
+  contact: spine 4302569 = 2019-01-15 10:11:00 ET  (+1 наблюдённых бар, 1 мин часов)
+  primacy: certified   status: contact_certified   (shared-survived: certified / contact_certified)
+  от reference entry 2601.25: до TP 0.50 | против цели ГРАНИЦЫ [0.00 .. 5.00], порядок внутри касательной свечи неизвестен; её OHLC {'open': 2601.25, 'high': 2602.0, 'low': 2596.25, 'close': 2601.0}
+  жизненный цикл: deletion 4302569, blue_end 4302569, native_conf 4302568, passport censored=False
+
