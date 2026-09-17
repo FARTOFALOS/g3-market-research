@@ -180,6 +180,13 @@
   movement и деньги.
 - **Invariant:** informational novelty и economic usefulness — разные оси.
 - **Tripwire:** «no new state, so nothing to trade».
+- **Tripwire (residual gate):** «if known state fully explains the outcome, stop the
+  setup line». Before stopping, ask separately whether that already-known state
+  organizes a **remaining executable payoff asymmetry** (favorable vs adverse path
+  after honest recognition). No residual information is required for a setup —
+  выявлено cold-agent transfer-check 2026-09-17: даже сильный агент склонен делать
+  «residual сверх геометрии» обязательным пропуском к торговому вопросу. Не делать
+  «no residual → stop»; сначала проверить экономику известной геометрии.
 
 ## O. Single opposite-outcome pair становится доказательством скрытого состояния
 - **Temptation:** показать две сцены с одинаковым R0 и разными futures как omitted

@@ -72,7 +72,9 @@ estimand, support, censoring, selection, resolution)
 факт), «independent observations», «holdout says nothing», «we can rescue / try another
 threshold», «same state, different outcome proves a hidden variable», «test set should
 exclude long scenes», «last observed event = failure», «same ticker, same market»,
-«net positive but below the cost hurdle».
+«net positive but below the cost hurdle», «if known state explains the outcome, stop the
+setup line» (residual gate — сначала проверь исполнимую асимметрию известного состояния;
+остаток информации для сетапа не требуется).
 
 ## Как освоиться и начать
 
