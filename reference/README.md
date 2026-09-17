@@ -8,6 +8,18 @@ conversation.
 
 The Pine file is not a runtime dependency and is never an ordinary edit target.
 
+## Transferable research method (read before a new candidate family)
+
+- [`SETUP_DISCOVERY_METHOD.md`](SETUP_DISCOVERY_METHOD.md) — how to go forward:
+  Scene → X-Ray → Fork → Action. The method transfers; specific patterns do not.
+- [`RESEARCH_GUARDRAILS.md`](RESEARCH_GUARDRAILS.md) — operational memory of recurring
+  failure modes, corrections and audit lessons, with tripwires and a cold-agent check.
+- [`CASE_086_091_FROM_XRAY_TO_ACTION.md`](CASE_086_091_FROM_XRAY_TO_ACTION.md) — one
+  real line showing both documents in action (086 structural fork → 091 executable
+  candidate → frozen single-unit action).
+
+These three plus `README.md` and `AGENTS.md` form the required cold-start package.
+
 ## `SCENE.md`
 
 Begin with the market history and the calibration exercise. The examples
