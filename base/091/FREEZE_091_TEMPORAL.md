@@ -58,11 +58,10 @@ Overlap-policy меняет единицу зависимости: решени�
 - предобъявленные **favorable** и **adverse** bounds (все unknown → target / все
   unknown → stop).
 
-Порог решения — **ноль net после расходов**. Правило:
-
-- adverse bound > 0 → сильный результат;
-- bounds пересекают ноль → соответствующая экономика **UNRESOLVED** (середину не
-  угадывать).
+Порог решения — **ноль net после расходов**. Само terminal decision rule —
+единственное и задано в **§7.3 (CI-aware)**; §7.3 **supersedes** любое более грубое
+чтение этого пункта. Здесь фиксируется только принцип: середину между favorable и
+adverse bounds не угадывать.
 
 ## 5. Primary future outputs
 
@@ -103,9 +102,10 @@ territory = фиксированный post-cutoff период **до 2026-09-0
 Эти случаи публикуются отдельно. (Уточняет 091: pre-entry gap = нет сделки, P&L 0,
 не −cost.)
 
-### 7.3 Economic decision with uncertainty
-Порог primary claim = **0 net пунктов** после frozen 1.00 pt round-trip. На frozen
-sequential дневном action-stream, bootstrap 1/5/20 календарных дней:
+### 7.3 Economic decision with uncertainty (единственное terminal decision rule)
+Это **единственное** правило исхода temporal-теста; §4 к нему только отсылает. Порог primary
+claim = **0 net пунктов** после frozen 1.00 pt round-trip. На frozen sequential
+дневном action-stream, bootstrap 1/5/20 календарных дней:
 - adverse-case (все unknown → stop) **нижняя** доверит. граница > 0 → **positive
   temporal result**;
 - favorable-case (все unknown → target) **верхняя** граница < 0 → frozen 091 action
