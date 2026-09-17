@@ -74,7 +74,10 @@ threshold», «same state, different outcome proves a hidden variable», «test 
 exclude long scenes», «last observed event = failure», «same ticker, same market»,
 «net positive but below the cost hurdle», «if known state explains the outcome, stop the
 setup line» (residual gate — сначала проверь исполнимую асимметрию известного состояния;
-остаток информации для сетапа не требуется).
+остаток информации для сетапа не требуется), «reuse R0 / CONT* / the established baseline
+here» (representation/estimand привязаны к своему cursor — проверь object/cursor/support/
+outcome). Развилка Information ↔ Economics — структурно в
+[`SETUP_DISCOVERY_METHOD.md`](reference/SETUP_DISCOVERY_METHOD.md).
 
 ## Как освоиться и начать
 

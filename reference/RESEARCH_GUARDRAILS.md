@@ -394,6 +394,24 @@
   does not matter / market is Markov / RIZ is useless / no mechanism / price is random».
 - **Tripwire:** «therefore the market is random / RIZ is useless».
 
+## AH. Локально установленное representation/estimand универсализируется
+- **Temptation:** переиспользовать `R0`, `CONT*`, hazard, matched control или прежнее
+  sufficient-state чтение на новом cursor/population как готовый baseline.
+- **Why it looked reasonable:** «оно уже установлено в этом репозитории».
+- **What was actually wrong:** representation и estimand устанавливались на **своей**
+  популяции и своём observation cursor; на другом cursor их смысл, support и достаточность
+  не гарантированы. Старое «остатка нет» не переносится на новую точку наблюдения.
+- **G3 case:** cold-agent transfer-check 2026-09-17 (сцена foreign-level) автоматически
+  взял `R0=(dpos,σ)` как baseline и `CONT*` как outcome аппарата 089/090 на совсем
+  другом cursor (первый момент proximity к чужой границе), не установив, что объект/
+  cursor/support/outcome сохраняют смысл.
+- **Correction:** прежде чем переиспользовать любое prior representation/estimand —
+  установить, что object, cursor, support и outcome сохраняют то же значение здесь.
+- **Invariant:** a representation or estimand established at one observation cursor is
+  not automatically canonical at another.
+- **Tripwire:** «reuse R0 / CONT* / the established baseline here» без проверки, что
+  объект, cursor, support и outcome — те же.
+
 ---
 
 ## Audit interventions that materially changed G3
@@ -445,6 +463,10 @@ audit trigger.
 - «last observed event = failure»
 - «same ticker, same market»
 - «net is positive, but below the cost hurdle» (двойной вычет)
+- «if known state explains the outcome, stop the setup line» (residual gate — сначала
+  economic branch; см. развилку Information ↔ Economics в METHOD)
+- «reuse R0 / CONT* / the established baseline here» (guardrail AH — проверь object/
+  cursor/support/outcome)
 
 ---
 
