@@ -1,0 +1,17 @@
+{
+ "freeze_sha256": "2e66865c8460d7006bababc249becfcbaa9056d55f5f386e2694df6d917d07d0",
+ "map_sha256": "df44b7091af6f7e5c77b1e4184f0067276f928000f7e37c5a1056301fd492655",
+ "cells_sha256": "4daea2eb92d67e6191fc532381a56b59355022cc1634c3ec4b6924d1026ba57b",
+ "selected_cells": {
+  "u+ k- ttc- r-": {
+   "cell": 1,
+   "sign": -1
+  }
+ },
+ "regions": {
+  "negative": [
+   1
+  ]
+ },
+ "note": "signs chosen on NQ search before any holdout outcome; never re-chosen on holdout"
+}

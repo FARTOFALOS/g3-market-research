@@ -1,0 +1,18 @@
+{
+ "freeze_sha256": "2e66865c8460d7006bababc249becfcbaa9056d55f5f386e2694df6d917d07d0",
+ "period": [
+  "NQ",
+  "evaluation",
+  "2020-01-01",
+  "2025-10-25"
+ ],
+ "films": 34289,
+ "films_without_ttc": 0,
+ "medians": {
+  "u": 1.125,
+  "k": 6.0,
+  "ttc": 414.0,
+  "r": 1.0909090909090908
+ },
+ "rule": "<= median -> low, > median -> high"
+}

@@ -1,0 +1,55 @@
+{
+ "branch": "091-TEMPORAL",
+ "purpose": "compatibility gate for external NQ minute tape post-2026-05-04; overlap-only, post-cutoff sealed",
+ "decision": "REJECT_SOURCE",
+ "terminal_status": "DATA INCOMPATIBLE / NO VALID FREE SOURCE",
+ "post_cutoff_opened": false,
+ "source": {
+  "repository": "getdata-finance/nq-1m-ohlcv-stocks-historical-data",
+  "raw_url": "https://raw.githubusercontent.com/getdata-finance/nq-1m-ohlcv-stocks-historical-data/main/NQ_1m.csv",
+  "html_url": "https://github.com/getdata-finance/nq-1m-ohlcv-stocks-historical-data",
+  "retrieval_utc": "2026-09-17T15:08:04Z",
+  "commit_sha_main_for_path": "41366a5861230b7b923e0985f28e093325946dc8",
+  "raw_sha256": "1b182cd151bcc285c05f90037e9b5184e9a5436e903793637d6b43b7754c86b2",
+  "original_filename": "NQ_1m.csv",
+  "bytes": 3501303,
+  "data_rows": 55440,
+  "columns": ["datetime", "open", "high", "low", "close", "volume"],
+  "stated_span": "2026-04-01T18:10:00+00:00 .. 2026-09-02T01:50:00+00:00",
+  "stated_semantics": "repo description: 'NQ US stocks. US equity sessions - cash & extended hours coverage'; timezone UTC (+00:00); tick 0.25 present",
+  "license_provenance": "public GitHub repo, LICENSE file present (not relied upon; source rejected before use)"
+ },
+ "transformations_applied": "none (source rejected at gate; only mechanical UTC-ns timestamp parse used for comparison)",
+ "compatibility_overlap": {
+  "window": "2026-04-01T18:10Z .. 2026-05-04T04:38Z (local tape end)",
+  "external_minutes_in_overlap": 8630,
+  "matched_timestamps": 8630,
+  "only_external": 0,
+  "session_coverage": {
+   "external_utc_hours_present": [13, 14, 15, 16, 17, 18, 19, 20],
+   "external_minutes_per_day": 405,
+   "local_utc_hours_present": "0..23",
+   "local_minutes_per_day": 1380,
+   "verdict": "external is RTH/equity-session only (~6.75h); local is 23h CME futures session; overnight Globex entirely absent"
+  },
+  "ohlc_agreement": {
+   "close_exact_equal_share": 0.0,
+   "median_local_minus_external_close": -281.25,
+   "diff_std": 10.46,
+   "diff_range": 226.0,
+   "share_within_tick_after_median_shift": 0.0466,
+   "max_resid_after_median_shift": 128.25,
+   "verdict": "different price series / contract-roll construction; offset is not a constant, not recoverable by a deterministic mechanical adjustment"
+  }
+ },
+ "reject_reasons": [
+  "incomplete sessions: RTH/equity hours only, missing overnight Globex required by frozen 084/086 all-hours population",
+  "systematic OHLC/roll mismatch: 0% exact match, ~281 pt non-constant offset (std 10.5, range 226)",
+  "matches the freeze exclusion 'RTH-only series' / equity-session substitution"
+ ],
+ "free_source_scan": {
+  "checked": "Barchart, FirstRate Data, Portara/CQG, Databento, Investing.com, Kaggle",
+  "finding": "no free redistributable full-Globex-session NQ futures 1-min tape covering 2026-05..2026-09; free options are CFD/cash (excluded) or uncertain coverage (Kaggle); full-session vendors are paid",
+  "paid_requires_operator_decision": true
+ }
+}
