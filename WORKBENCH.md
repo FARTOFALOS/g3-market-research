@@ -13,8 +13,39 @@
 выбора проводится в пределах восстановимой истории; ограничения — в
 [`setups/README.md`](setups/README.md#как-перепроверять-на-готовой-истории).
 
-Актуальность указателя: **2026-09-17**. Последняя линия — X-Ray сцены 082–089 по
-мандатам архитектора. Итог 089
+Актуальность указателя: **2026-09-17**. Последняя линия — экономическое завершение
+кандидата 086 и канонизация метода дуги. По итогу
+[091](base/091-ekonomicheskoe-zavershenie-086-ispolnimyy-istoricheskiy-kandidat.md):
+структурное преимущество клетки `close_break` `u+ k- ttc- r-` (сторона продолжения)
+пережило честный вход `open(q_event+1)` с give-up ≈ 0 — execution снят как риск; на
+search NQ 2020–2025 net после расходов +8,97 пт (сравнение с нулём), но это
+**историческая экономика выбранного кандидата**, не proof of edge. Слабый holdout
+несёт частотное предупреждение (target-first 29,0%; best-case 59,0% < breakeven
+≈59,7% < search 82,7%). Статус: **EXECUTABLE HISTORICAL CANDIDATE — temporal transfer
+not established**. Полное торговое действие заморожено (single-unit,
+[`FREEZE_091_TEMPORAL`](base/091/FREEZE_091_TEMPORAL.md)).
+
+**Temporal test сейчас не на чем:** лента NQ кончается 2026-05-04 (= граница слабого
+holdout), нетронутого NQ-периода нет; попытка внешней бесплатной ленты
+(`getdata-finance/nq-1m-…` GitHub) провалила compatibility gate — RTH/equity-сессия
+(405 мин/день против 1380), другой контракт/roll, 0% совпадений OHLC на overlap
+([`base/091/source_gate.json`](base/091/source_gate.json)). Rescue-фильтров нет; ждём
+совместимую нетронутую NQ-ленту. ES/YM — отдельный вопрос переноса, не подмена.
+
+Перед 091 закрыта ветка достаточности
+[090](base/090-granica-predstavleniya-lokator-okazalsya-artefaktom-estimatora.md):
+единственный локатор остатка сверх `(dpos,psig)` оказался артефактом грубого
+estimator'а (снимается interaction/boundary чтением того же R₀); K не дал обнаружимой
+добавки; sealed holdout не открыт.
+
+**Метод дуги канонизирован** (приоритетная задача репозитория): переносимый
+[`reference/SETUP_DISCOVERY_METHOD.md`](reference/SETUP_DISCOVERY_METHOD.md), память
+ошибок [`reference/RESEARCH_GUARDRAILS.md`](reference/RESEARCH_GUARDRAILS.md),
+разобранный кейс [`reference/CASE_086_091_FROM_XRAY_TO_ACTION.md`](reference/CASE_086_091_FROM_XRAY_TO_ACTION.md);
+trader-facing сетап — [S-16](setups/S-16-prodolzhenie-tolchka-posle-close-break.md).
+Холодный агент перед новой candidate family читает METHOD и GUARDRAILS.
+
+Прежняя описательная линия — X-Ray сцены 082–089 по мандатам архитектора. Итог 089
 ([immediate continuation меняется непрерывно с положением](base/089-prodolzhenie-grammatiki-menyaetsya-nepreryvno-s-polozheniem.md),
 Outcome A): один описательный bridge после semantic-audit против 072/076/081/088.
 Внутри joint/outward-процесса 088 вероятность ещё одного фронт-события до

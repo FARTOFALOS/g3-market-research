@@ -26,5 +26,23 @@
     "temporary_cells": 0
   },
   "resume_rule": "The current field is complete and frozen. Run python -m g3riz.cli status and query it normally. The materializer was removed from the working tree; it lives in git history at commit dd278b6 and on branch snapshot/pre-restructure. Restore and rebuild only after an explicit trader decision: a new semantic generation, or recovery from verified data loss.",
-  "updated_utc": "2026-09-03"
+  "updated_utc": "2026-09-03",
+  "research_front": {
+    "as_of": "2026-09-17",
+    "two_layers": [
+      "accumulated market knowledge (base/, setups/)",
+      "reusable setup-discovery method (reference/SETUP_DISCOVERY_METHOD.md + RESEARCH_GUARDRAILS.md)"
+    ],
+    "cold_start_route": ["README.md", "AGENTS.md", "reference/SETUP_DISCOVERY_METHOD.md", "reference/RESEARCH_GUARDRAILS.md", "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"],
+    "canonical_method_docs": ["reference/SETUP_DISCOVERY_METHOD.md", "reference/RESEARCH_GUARDRAILS.md", "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"],
+    "arc": "083..091 (Event X-Ray -> structural fork -> economic completion)",
+    "candidates": {
+      "S-07": "earlier positive historical candidate outside the RIZ-centered line",
+      "S-16 / 086-091": "EXECUTABLE HISTORICAL CANDIDATE - temporal transfer not established; late NQ sample carries a negative frequency warning"
+    },
+    "frozen_action": "base/091/FREEZE_091_TEMPORAL.md (single-unit NQ temporal test operator; awaits a compatible untouched NQ tape)",
+    "temporal_test_status": "unavailable: local NQ tape ends 2026-05-04; external free GitHub NQ_1m failed compatibility gate (RTH/equity session, different contract); no rescue",
+    "data_tape_end_utc": "2026-05-04",
+    "note": "Field state above (semantic_generation, phase, cells) is unchanged; this block tracks the research front only."
+  }
 }

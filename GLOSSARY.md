@@ -480,6 +480,45 @@ required. Each candidate has its own stated territory and failure conditions.
 Discovery evidence, new-information evidence and permission to trade are
 different properties; a file in `setups/` establishes none of them by itself.
 
+### X-ray — `рентген`
+
+Discovery-only use of the whole finished film to see **where continuations of
+comparable scenes actually diverge**. The future is a locator for a question, never
+a state of the past. A divergence found by X-ray must be rewound to a prefix fact
+before it can inform recognition; without one it remains a description of the future.
+See [`reference/SETUP_DISCOVERY_METHOD.md`](reference/SETUP_DISCOVERY_METHOD.md).
+
+### Recognition — `распознавание`, `узнавание`
+
+The earliest closed-prefix minute at which a candidate condition is honestly
+observable. Every component of the decision must be available at or before it. If
+information a rule needs appears after the initial cursor, recognition has moved, and
+population, context, remaining future and executable opportunity are redefined
+accordingly. Movement between an earlier cursor and honest recognition is not credited.
+
+### Structural candidate — `структурный кандидат`
+
+A prefix-recognizable scene condition with a measured conditional outcome (e.g. a
+fork's probability), stated **from a structural reference price** and not yet shown to
+be executable. It is not a trade: an executable-entry test (recognition → earliest
+honest fill → costs → missed/gap handling) is a separate, required step.
+
+### Executable historical candidate — `исполнимый исторический кандидат`
+
+A structural candidate whose advantage survives honest recognition and a real
+available fill (e.g. next open) on its **own historical territory**, after costs. It
+carries neither temporal persistence nor cross-instrument transport nor forward
+validation — those are separate levels of proof. Worked example: 086→091.
+
+### Action policy — `торговое действие`, `action policy`
+
+The complete deterministic trader that turns per-scene candidates into one stream of
+real actions: concurrency limit, deterministic selection among simultaneous signals,
+sizing, skipped overlaps, re-entry rule, target/stop ownership, cost accounting and
+treatment of unknowns. Positive per-scene expectancy does not define it; a forward or
+temporal test requires it frozen. See
+[`base/091/FREEZE_091_TEMPORAL.md`](base/091/FREEZE_091_TEMPORAL.md).
+
 ### Idea error vs protective limit — `ошибка идеи` / `защитное ограничение`
 
 Two different things a stop can mean, and they need not coincide.

@@ -34,6 +34,42 @@
 минутную ленту без поля RIZ; её результат ничего сам по себе не устанавливает
 о RIZ. Текущие версии и решения принадлежат карточкам.
 
+## Метод и память ошибок — читать до новой candidate family
+
+**Холодный агент, начинающий новое семейство кандидатов, обязан сначала прочитать
+[`reference/SETUP_DISCOVERY_METHOD.md`](reference/SETUP_DISCOVERY_METHOD.md) и
+[`reference/RESEARCH_GUARDRAILS.md`](reference/RESEARCH_GUARDRAILS.md).** Первый — как
+идти вперёд (Scene → X-Ray → Fork → Action); второй — как мы исторически отклонялись и
+как это распознать. Разобранный пример обоих —
+[`reference/CASE_086_091_FROM_XRAY_TO_ACTION.md`](reference/CASE_086_091_FROM_XRAY_TO_ACTION.md).
+
+Что должно пережить cold start:
+
+- **метод переносится, конкретный паттерн — нет** (не искать обязательно `close_break`,
+  не повторять сетку 086);
+- **полный фильм — рентген на discovery**, но будущее не становится состоянием
+  прошлого задним числом (обязателен rewind к prefix-факту);
+- **новое скрытое состояние — не обязательная цель**: торговая возможность может жить в
+  уже известных координатах (informational novelty ≠ economic usefulness);
+- **экономику нельзя бесконечно откладывать** ради поиска новой информации; как только
+  есть узнаваемый кандидат — спросить, что осталось ценой после honest recognition;
+- **любой кандидат обязан пройти путь** structural → recognition → executable → action
+  policy, прежде чем говорить о переносе или торговле;
+- **negative knowledge ограничено**: not found X · under representation R · at
+  observation P · for outcome Y · with estimator E · at resolution D.
+
+### Tripwires — фразы, после которых остановиться и назвать (population, prefix,
+estimand, support, censoring, selection, resolution)
+
+Это audit trigger, не запрет слов. Полный список и разбор — в
+[`RESEARCH_GUARDRAILS.md`](reference/RESEARCH_GUARDRAILS.md#agent-tripwires).
+Останавливайся на: «absorbed by / reducible to», «explained completely by»,
+«therefore no additional information», «this proves», «the mechanism is», «edge» (как
+факт), «independent observations», «holdout says nothing», «we can rescue / try another
+threshold», «same state, different outcome proves a hidden variable», «test set should
+exclude long scenes», «last observed event = failure», «same ticker, same market»,
+«net positive but below the cost hurdle».
+
 ## Как освоиться и начать
 
 Вход можно проходить постепенно. Открывай материалы под задачу; возвращаясь

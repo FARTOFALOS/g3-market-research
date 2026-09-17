@@ -30,6 +30,11 @@
 | [S-13](S-13-ekstremum-na-reshayushchey-minute.md) | Экстремум окна на решающей минуте: одна версия, отклонена | — |
 | [S-14](S-14-motiv-prefiksa-i-blizhniy-baryer.md) | Мотив префикса и ближний барьер: две версии, обе отклонены; частота есть, валового нет | — |
 | [S-15](S-15-povtornyy-uhod-ot-zony.md) | Повторный уход от зоны: короткий стоп у границы, ход впереди — две версии, обе отклонены; поток отрицателен, сужение живёт в двух годах | — |
+| [S-16](S-16-prodolzhenie-tolchka-posle-close-break.md) | Продолжение толчка после `close_break` (вилка `b` против «за M»); **executable historical candidate**, перенос во времени не установлен, позднее частотное предупреждение | [FREEZE_091_TEMPORAL](../base/091/FREEZE_091_TEMPORAL.md), 086/091 |
+
+Перед новой candidate family прочитай переносимый метод
+[`reference/SETUP_DISCOVERY_METHOD.md`](../reference/SETUP_DISCOVERY_METHOD.md) и
+память ошибок [`reference/RESEARCH_GUARDRAILS.md`](../reference/RESEARCH_GUARDRAILS.md).
 
 Исследователь сам выбирает догадку и ведёт её до ответа. Ему не нужны отдельные
 генератор, комиссия и хранитель реестра. Скрипты считают; агент отвечает за
@@ -330,6 +335,23 @@ RIZ уже были в [029](../base/029-shirokiy-perebor-valovoe-nol.md), но 
 Полезен способ объяснения в S-01: «к такой минуте видно это; на следующей
 свече делаем это; здесь ошиблись; так выходим». Его конкретные 15 минут и
 правило не являются стандартом библиотеки или признанным преимуществом.
+
+## Смысловой lifecycle кандидата
+
+Отдельно от разрешительного состояния ниже полезно называть, на каком уровне
+доказательства стоит кандидат. Программного enum не требуется — важна читаемость.
+Уровни (см. [`reference/SETUP_DISCOVERY_METHOD.md`](../reference/SETUP_DISCOVERY_METHOD.md)):
+
+- **exploratory hypothesis** — догадка, ещё не доведена до conditional-структуры;
+- **structural candidate** — prefix-узнаваемое условие с измеренным conditional
+  outcome от структурной референсной цены; ещё не исполнимо;
+- **executable historical candidate** — преимущество пережило honest recognition и
+  реально доступный вход на своей исторической территории после расходов (086/091);
+- **transfer / forward candidate** — заморожен для нетронутой temporal/instrument
+  территории; ответ ещё не получен;
+- **established / failed / unresolved version** — итог проверки конкретной frozen-версии.
+
+Уровень не про разрешение торговать: перенос, forward и live — отдельные свидетельства.
 
 ## Состояние и разрешение
 
