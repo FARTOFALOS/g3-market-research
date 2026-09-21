@@ -110,7 +110,7 @@ def engine(m, cal):
                     nt_ = c3bb if c3bb > bt2 else lowside(j)
                     if nt_ > nb_:
                         first = nb_
-        prot = d30
+        prot, exc = d30, -1
         if tC is not None:
             exc = first_at_or_after(tC + 1)
             prot = np.nan if exc < 0 else px(exc, O)
@@ -132,6 +132,14 @@ def engine(m, cal):
         else:
             if last is not None:
                 res, reason = px(last, C) / cand, '120 минут (последний наблюдённый бар)'
+        miss = [k for k in range(-2, HOLD_S07) if idx[k + 2] < 0]
+        s07_exit_k = np.nan if not np.isfinite(res) else (ts[i] - ts[b]) // MIN if reason != 'закрытие сессии' and not reason.startswith('120 минут (') else (ts[last] - ts[b]) // MIN
+        d30_exit_k = np.nan if ex < 0 else (ts[ex] - ts[b]) // MIN
+        p_exit_k = d30_exit_k if tC is None else (np.nan if exc < 0 else (ts[exc] - ts[b]) // MIN)
+        row.update(missing_minutes=' '.join(str(k + 1) for k in miss), s07_exit_min=s07_exit_k + 1, d30_exit_min=d30_exit_k + 1, p_exit_min=p_exit_k + 1,
+                   s07_exact=bool(np.isfinite(res)) and all(k > s07_exit_k for k in miss),
+                   d30_exact=bool(ex >= 0 and d30_exit_k == HOLD_D30),
+                   p_exact=bool(np.isfinite(prot)) and all(k > p_exit_k for k in miss) and (tC is not None or d30_exit_k == HOLD_D30))
         row.update(side=int(s), entry=e0, candle=cand, d30_pts=d30, prot_pts=prot, c_min=np.nan if tC is None else tC + 1,
                    s07_candles=res, s07_reason=reason,
                    d30_usd=d30 * POINT - COST, prot_usd=prot * POINT - COST, s07_usd=res * cand * POINT - COST)
@@ -261,5 +269,93 @@ def open_forward():
     print(json.dumps(res, ensure_ascii=False, indent=1))
 
 
+def erratum():
+    """Ревизия УЧЁТА, не правил: взятые позиции с пропусками ленты возвращены в знаменатель.
+    Пишет setups/S-07/erratum_v1r1_accounting.json и setups/S-17/result_corrected.json. Новая лента не читается."""
+    import importlib.util
+    import revision
+    spec = importlib.util.spec_from_file_location('s17run', HERE / 'run.py')
+    s17 = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(s17)
+    e = pd.read_csv(HERE / 'engine_history_NQ.csv')
+    ent = e[~e.status.str.startswith('no_entry')].copy()
+    hole = ent[ent.status == 'entered_hole']
+
+    def s07_frame(d):
+        return pd.DataFrame(dict(date=d.date.to_numpy(), candles=d.s07_candles.to_numpy(), usd=d.s07_usd.to_numpy(),
+                                 reason=d.s07_reason.to_numpy()))
+
+    ok = ent[ent.status == 'ok']
+    known = ent[ent.s07_usd.notna()]
+    frozen, corrected = revision.summarise(s07_frame(ok)), revision.summarise(s07_frame(known))
+
+    def by_year(d):
+        return {y: round(float(g.s07_usd.sum()), 0) for y, g in d.assign(y=d.date.str[:4]).groupby('y') if y >= '2020'}
+
+    terr, terr_ok = known[(known.date >= '2021') & (known.date < '2026')], ok[(ok.date >= '2021') & (ok.date < '2026')]
+    positions = [dict(date=r.date, missing_minutes=str(r.missing_minutes), exit_minute=None if pd.isna(r.s07_exit_min) else int(r.s07_exit_min),
+                      exit_reason=r.s07_reason, usd=float(r.s07_usd), candles=round(float(r.s07_candles), 3),
+                      outcome='точный: все пропуски позже выхода' if r.s07_exact
+                      else 'по конвенции: пропуски внутри удержания, правила прочитаны на наблюдённых барах')
+                 for r in hole.itertuples()]
+    out = dict(revision='v1r1 + erratum учёта 2026-09-21', rule_changed=False,
+               what='замороженный расчёт требовал непрерывных 120 минут после входа и отбрасывал сессию целиком, даже если '
+                    'позиция была взята и закрыта раньше пропуска; взятые позиции возвращены в счёт',
+               frozen_reproduced=frozen, corrected=corrected,
+               by_year_2020_2026=dict(frozen=by_year(ok), corrected=by_year(known)),
+               territory_2021_2025=dict(frozen_total=round(float(terr_ok.s07_usd.sum()), 0), corrected_total=round(float(terr.s07_usd.sum()), 0),
+                                        frozen_trades=int(len(terr_ok)), corrected_trades=int(len(terr)),
+                                        frozen_worst=round(float(terr_ok.s07_usd.min()), 0), corrected_worst=round(float(terr.s07_usd.min()), 0)),
+               restored_positions=positions,
+               not_recomputed=['portfolio_v1.json и совместная линия S-04/S-05/S-06', 'verification_v1.json (проверка выбора, 675 конфигураций)',
+                               'summary_v1.csv (сетка)', 'stopstudy, stencil, management_v3', 'S-09 и другие карточки, опирающиеся на числа S-07'])
+    (ROOT / 'setups/S-07/erratum_v1r1_accounting.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
+    ref = json.loads((ROOT / 'setups/S-07/result_v1r1.json').read_text(encoding='utf-8'))['result_v1r1']
+    print('замороженный итог воспроизведён движком:', frozen == ref)
+    for ep in corrected:
+        f, c = frozen[ep], corrected[ep]
+        print(ep, {k: (f[k], c[k]) for k in ('trades', 'mean', 'median', 'win_share', 'total', 'drawdown', 'worst_day', 'without_best_5pct', 'years_positive')})
+        print('   exits', f['exits'], '->', c['exits'])
+    print('по годам', out['by_year_2020_2026']['corrected'])
+    print('2021-2025', out['territory_2021_2025'])
+
+    res = dict(note='ревизия учёта 2026-09-21: позиции с пропусками ленты внутри окна возвращены; правила и результат вскрытого '
+                    'участка не менялись', territories={})
+    old_dates = set(pd.read_csv(HERE / 'sessions_NQ.csv').date)
+    for name, a, b in (('NQ 2021-2025 (первичная)', '2021', '2026'), ('NQ 2026 неполный', '2026', '2027'),
+                       ('NQ 2013-2020', '2013', '2021'), ('NQ 2006-2012', '2006', '2013')):
+        d = ent[(ent.date >= a) & (ent.date < b)]
+        old = d[d.date.isin(old_dates)]
+        res['territories'][name] = dict(
+            D30_before=s17.account(old.d30_pts.to_numpy(), INS), D30_corrected=s17.account(d.d30_pts.dropna().to_numpy(), INS),
+            P_before=s17.account(old.prot_pts.to_numpy(), INS), P_corrected=s17.account(d.prot_pts.dropna().to_numpy(), INS),
+            restored=[dict(date=r.date, missing_minutes=str(r.missing_minutes), d30_usd=float(r.d30_usd),
+                           d30_outcome='точный' if r.d30_exact else 'по конвенции: бара выхода не было, взята первая доступная цена',
+                           p_usd=float(r.prot_usd),
+                           p_outcome='точный' if r.p_exact else 'по конвенции: пропуск раньше выхода P, событие читалось на наблюдённых барах')
+                      for r in d[~d.date.isin(old_dates)].itertuples()])
+    fw = json.loads((HERE / 'forward_result.json').read_text(encoding='utf-8'))
+    h = ent[(ent.date >= '2021') & (ent.date < '2026')].sort_values('date')
+    ctx = {}
+    for name, col in (('D30', 'd30_usd'), ('P', 'prot_usd'), ('S-07 v1r1', 's07_usd')):
+        x = h[col].dropna().to_numpy()
+        roll = np.convolve(x, np.ones(47), 'valid')
+        tot = fw['versions'][name]['total']
+        ctx[name] = dict(windows=int(len(roll)), non_overlapping_windows=int(len(x) // 47), forward_total=tot,
+                         percentile_corrected=round(float((roll <= tot).mean()), 3),
+                         percentile_before=fw['context'][name]['percentile_of_forward_total'],
+                         window_total_p05_p50_p95_corrected=[round(float(v), 0) for v in np.quantile(roll, [.05, .5, .95])],
+                         sd_per_trade_history=round(float(x.std(ddof=1)), 0), sd_per_trade_forward=fw['versions'][name]['sd'])
+    res['forward_context_corrected'] = ctx
+    (HERE / 'result_corrected.json').write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding='utf-8')
+    t = res['territories']['NQ 2021-2025 (первичная)']
+    keys = ('trades', 'net_mean', 'net_median', 'win_share', 'avg_win', 'avg_loss', 'p05', 'worst_day', 'net_total', 'max_drawdown',
+            'mean_over_sd', 't_by_session', 'total_without_best_5pct')
+    for v in ('D30', 'P'):
+        print(v, {k: (t[v + '_before'][k], t[v + '_corrected'][k]) for k in keys})
+    print('возвращены', t['restored'])
+    print('контекст', json.dumps(ctx, ensure_ascii=False))
+
+
 if __name__ == '__main__':
-    {'validate': validate, 'overlap': overlap, 'grid': grid, 'open': open_forward}[sys.argv[1]]()
+    {'validate': validate, 'overlap': overlap, 'grid': grid, 'open': open_forward, 'erratum': erratum}[sys.argv[1]]()
