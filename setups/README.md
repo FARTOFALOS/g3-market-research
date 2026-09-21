@@ -33,6 +33,9 @@
 | [S-16](S-16-prodolzhenie-tolchka-posle-close-break.md) | Продолжение толчка после `close_break` (вилка `b` против «за M»); **executable historical candidate**, перенос во времени не установлен, позднее частотное предупреждение | [FREEZE_091_TEMPORAL](../base/091/FREEZE_091_TEMPORAL.md), 086/091 |
 | [S-17](S-17-otklik-otkrytiya-tridtsat-minut.md) | Отклик открытия NQ: сторона S-07, тридцать минут, одна версия защиты; правило без RIZ; положительный исторический расчёт, целиком хвостовой, риск без ценовой защиты назван в деньгах | [S-17/result.json](S-17/result.json) |
 
+Перед новой торговой проверкой найди ближайший прежний результат той же **конструкции участия** (вход, стоп,
+выход, удержание) в [переписи конструкций](CONSTRUCTIONS.md): новый рисунок не обнуляет старый ответ.
+
 Перед новой candidate family прочитай переносимый метод
 [`reference/SETUP_DISCOVERY_METHOD.md`](../reference/SETUP_DISCOVERY_METHOD.md) и
 память ошибок [`reference/RESEARCH_GUARDRAILS.md`](../reference/RESEARCH_GUARDRAILS.md).
