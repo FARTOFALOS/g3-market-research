@@ -1,0 +1,631 @@
+{
+ "declared": "S-17: один ценовой кандидат на отклик открытия NQ (предложение человека от 2026-09-21).",
+ "hold_minutes": 30,
+ "decision_minute": 3,
+ "territories": {
+  "NQ 2021-2025 (первичная)": {
+   "D30": {
+    "trades": 1244,
+    "gross_mean": 92.5,
+    "net_mean": 77.5,
+    "net_median": 75.0,
+    "win_share": 0.5281,
+    "avg_win": 1118.53,
+    "avg_loss": -1087.67,
+    "p05": -2299.0,
+    "p95": 2402.0,
+    "worst_day": -9390.0,
+    "best_day": 5180.0,
+    "net_total": 96410.0,
+    "max_drawdown": 33535.0,
+    "sd": 1486.75,
+    "mean_over_sd": 0.0521,
+    "t_by_session": 1.84,
+    "top5pct_share_of_total": 2.09,
+    "total_without_best_5pct": -105040.0,
+    "total_without_best_10pct": -233820.0
+   },
+   "P": {
+    "trades": 1244,
+    "gross_mean": 94.13,
+    "net_mean": 79.13,
+    "net_median": -75.0,
+    "win_share": 0.4341,
+    "avg_win": 1036.33,
+    "avg_loss": -655.09,
+    "p05": -1604.75,
+    "p95": 2158.5,
+    "worst_day": -9390.0,
+    "best_day": 5180.0,
+    "net_total": 98440.0,
+    "max_drawdown": 41390.0,
+    "sd": 1189.0,
+    "mean_over_sd": 0.0666,
+    "t_by_session": 2.35,
+    "top5pct_share_of_total": 1.902,
+    "total_without_best_5pct": -88750.0,
+    "total_without_best_10pct": -204630.0
+   },
+   "D30_by_year": {
+    "2021": {
+     "n": 252,
+     "net_total": 2410.0,
+     "P_net_total": 13280.0
+    },
+    "2022": {
+     "n": 250,
+     "net_total": 30080.0,
+     "P_net_total": 22695.0
+    },
+    "2023": {
+     "n": 250,
+     "net_total": -8680.0,
+     "P_net_total": -3080.0
+    },
+    "2024": {
+     "n": 251,
+     "net_total": 41045.0,
+     "P_net_total": 17900.0
+    },
+    "2025": {
+     "n": 241,
+     "net_total": 31555.0,
+     "P_net_total": 47645.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": 76.63,
+    "расход x2": 62.5,
+    "расход x3": 47.5,
+    "хуже на 1 тик с каждой стороны": 67.5,
+    "хуже на 4 тика с каждой стороны": 37.5
+   },
+   "sensitivity_P": {
+    "расход x2": 64.13,
+    "хуже на 4 тика с каждой стороны": 39.13
+   }
+  },
+  "NQ 2026 неполный": {
+   "D30": {
+    "trades": 78,
+    "gross_mean": 502.69,
+    "net_mean": 487.69,
+    "net_median": 640.0,
+    "win_share": 0.6282,
+    "avg_win": 1771.53,
+    "avg_loss": -1681.55,
+    "p05": -2917.25,
+    "p95": 3528.75,
+    "worst_day": -3890.0,
+    "best_day": 6795.0,
+    "net_total": 38040.0,
+    "max_drawdown": 11430.0,
+    "sd": 2125.49,
+    "mean_over_sd": 0.2294,
+    "t_by_session": 2.03,
+    "top5pct_share_of_total": 0.551,
+    "total_without_best_5pct": 17085.0,
+    "total_without_best_10pct": 4490.0
+   },
+   "P": {
+    "trades": 78,
+    "gross_mean": 457.82,
+    "net_mean": 442.82,
+    "net_median": 302.5,
+    "win_share": 0.5769,
+    "avg_win": 1694.78,
+    "avg_loss": -1264.39,
+    "p05": -2340.75,
+    "p95": 3528.75,
+    "worst_day": -3480.0,
+    "best_day": 6795.0,
+    "net_total": 34540.0,
+    "max_drawdown": 9295.0,
+    "sd": 1958.62,
+    "mean_over_sd": 0.2261,
+    "t_by_session": 2.0,
+    "top5pct_share_of_total": 0.607,
+    "total_without_best_5pct": 13585.0,
+    "total_without_best_10pct": 990.0
+   },
+   "D30_by_year": {
+    "2026": {
+     "n": 78,
+     "net_total": 38040.0,
+     "P_net_total": 34540.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": 487.18,
+    "расход x2": 472.69,
+    "расход x3": 457.69,
+    "хуже на 1 тик с каждой стороны": 477.69,
+    "хуже на 4 тика с каждой стороны": 447.69
+   },
+   "sensitivity_P": {
+    "расход x2": 427.82,
+    "хуже на 4 тика с каждой стороны": 402.82
+   }
+  },
+  "NQ 2013-2020": {
+   "D30": {
+    "trades": 1986,
+    "gross_mean": 11.91,
+    "net_mean": -3.09,
+    "net_median": 10.0,
+    "win_share": 0.5096,
+    "avg_win": 310.26,
+    "avg_loss": -328.67,
+    "p05": -693.75,
+    "p95": 738.75,
+    "worst_day": -5545.0,
+    "best_day": 3635.0,
+    "net_total": -6145.0,
+    "max_drawdown": 27355.0,
+    "sd": 503.02,
+    "mean_over_sd": -0.0062,
+    "t_by_session": -0.27,
+    "top5pct_share_of_total": -18.299,
+    "total_without_best_5pct": -118595.0,
+    "total_without_best_10pct": -176455.0
+   },
+   "P": {
+    "trades": 1986,
+    "gross_mean": 17.6,
+    "net_mean": 2.6,
+    "net_median": -30.0,
+    "win_share": 0.4144,
+    "avg_win": 313.29,
+    "avg_loss": -217.27,
+    "p05": -553.75,
+    "p95": 678.75,
+    "worst_day": -3885.0,
+    "best_day": 3635.0,
+    "net_total": 5155.0,
+    "max_drawdown": 16065.0,
+    "sd": 422.44,
+    "mean_over_sd": 0.0061,
+    "t_by_session": 0.27,
+    "top5pct_share_of_total": 21.021,
+    "total_without_best_5pct": -103210.0,
+    "total_without_best_10pct": -154955.0
+   },
+   "D30_by_year": {
+    "2013": {
+     "n": 243,
+     "net_total": 695.0,
+     "P_net_total": 1050.0
+    },
+    "2014": {
+     "n": 244,
+     "net_total": 3560.0,
+     "P_net_total": 4365.0
+    },
+    "2015": {
+     "n": 251,
+     "net_total": -5245.0,
+     "P_net_total": -8200.0
+    },
+    "2016": {
+     "n": 250,
+     "net_total": 2825.0,
+     "P_net_total": 3950.0
+    },
+    "2017": {
+     "n": 250,
+     "net_total": 3910.0,
+     "P_net_total": -135.0
+    },
+    "2018": {
+     "n": 251,
+     "net_total": -9185.0,
+     "P_net_total": -130.0
+    },
+    "2019": {
+     "n": 250,
+     "net_total": 1660.0,
+     "P_net_total": 6165.0
+    },
+    "2020": {
+     "n": 247,
+     "net_total": -4365.0,
+     "P_net_total": -1910.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": -3.12,
+    "расход x2": -18.09,
+    "расход x3": -33.09,
+    "хуже на 1 тик с каждой стороны": -13.09,
+    "хуже на 4 тика с каждой стороны": -43.09
+   },
+   "sensitivity_P": {
+    "расход x2": -12.4,
+    "хуже на 4 тика с каждой стороны": -37.4
+   }
+  },
+  "NQ 2006-2012": {
+   "D30": {
+    "trades": 1563,
+    "gross_mean": 15.51,
+    "net_mean": 0.51,
+    "net_median": 0.0,
+    "win_share": 0.4984,
+    "avg_win": 136.51,
+    "avg_loss": -134.63,
+    "p05": -300.0,
+    "p95": 290.0,
+    "worst_day": -1130.0,
+    "best_day": 1030.0,
+    "net_total": 795.0,
+    "max_drawdown": 7360.0,
+    "sd": 187.11,
+    "mean_over_sd": 0.0027,
+    "t_by_session": 0.11,
+    "top5pct_share_of_total": 41.849,
+    "total_without_best_5pct": -32475.0,
+    "total_without_best_10pct": -51890.0
+   },
+   "P": {
+    "trades": 1563,
+    "gross_mean": 7.4,
+    "net_mean": -7.6,
+    "net_median": -30.0,
+    "win_share": 0.348,
+    "avg_win": 146.88,
+    "avg_loss": -90.07,
+    "p05": -225.0,
+    "p95": 265.0,
+    "worst_day": -1130.0,
+    "best_day": 1030.0,
+    "net_total": -11880.0,
+    "max_drawdown": 12580.0,
+    "sd": 161.72,
+    "mean_over_sd": -0.047,
+    "t_by_session": -1.86,
+    "top5pct_share_of_total": -2.727,
+    "total_without_best_5pct": -44280.0,
+    "total_without_best_10pct": -61975.0
+   },
+   "D30_by_year": {
+    "2006": {
+     "n": 119,
+     "net_total": -105.0,
+     "P_net_total": -1075.0
+    },
+    "2007": {
+     "n": 212,
+     "net_total": -4695.0,
+     "P_net_total": -4050.0
+    },
+    "2008": {
+     "n": 243,
+     "net_total": 2300.0,
+     "P_net_total": -645.0
+    },
+    "2009": {
+     "n": 246,
+     "net_total": 7025.0,
+     "P_net_total": 2130.0
+    },
+    "2010": {
+     "n": 246,
+     "net_total": 1380.0,
+     "P_net_total": -940.0
+    },
+    "2011": {
+     "n": 250,
+     "net_total": -4670.0,
+     "P_net_total": -5270.0
+    },
+    "2012": {
+     "n": 247,
+     "net_total": -440.0,
+     "P_net_total": -2030.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": 0.49,
+    "расход x2": -14.49,
+    "расход x3": -29.49,
+    "хуже на 1 тик с каждой стороны": -9.49,
+    "хуже на 4 тика с каждой стороны": -39.49
+   },
+   "sensitivity_P": {
+    "расход x2": -22.6,
+    "хуже на 4 тика с каждой стороны": -47.6
+   }
+  },
+  "ES 2021-2025": {
+   "D30": {
+    "trades": 1252,
+    "gross_mean": 63.81,
+    "net_mean": 33.81,
+    "net_median": 20.0,
+    "win_share": 0.5208,
+    "avg_win": 545.12,
+    "avg_loss": -521.81,
+    "p05": -1130.0,
+    "p95": 1207.5,
+    "worst_day": -4417.5,
+    "best_day": 2895.0,
+    "net_total": 42327.5,
+    "max_drawdown": 17595.0,
+    "sd": 729.23,
+    "mean_over_sd": 0.0464,
+    "t_by_session": 1.64,
+    "top5pct_share_of_total": 2.457,
+    "total_without_best_5pct": -61657.5,
+    "total_without_best_10pct": -126760.0
+   },
+   "P": {
+    "trades": 1252,
+    "gross_mean": 60.01,
+    "net_mean": 30.01,
+    "net_median": -55.0,
+    "win_share": 0.4209,
+    "avg_win": 519.45,
+    "avg_loss": -325.76,
+    "p05": -809.37,
+    "p95": 1100.63,
+    "worst_day": -4417.5,
+    "best_day": 2895.0,
+    "net_total": 37577.5,
+    "max_drawdown": 20632.5,
+    "sd": 601.71,
+    "mean_over_sd": 0.0499,
+    "t_by_session": 1.76,
+    "top5pct_share_of_total": 2.653,
+    "total_without_best_5pct": -62107.5,
+    "total_without_best_10pct": -118822.5
+   },
+   "D30_by_year": {
+    "2021": {
+     "n": 252,
+     "net_total": 4515.0,
+     "P_net_total": 8228.0
+    },
+    "2022": {
+     "n": 250,
+     "net_total": 33612.0,
+     "P_net_total": 17438.0
+    },
+    "2023": {
+     "n": 250,
+     "net_total": -8275.0,
+     "P_net_total": -6938.0
+    },
+    "2024": {
+     "n": 251,
+     "net_total": 10482.0,
+     "P_net_total": 2945.0
+    },
+    "2025": {
+     "n": 249,
+     "net_total": 1992.0,
+     "P_net_total": 15905.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": 32.62,
+    "расход x2": 3.81,
+    "расход x3": -26.19,
+    "хуже на 1 тик с каждой стороны": 8.81,
+    "хуже на 4 тика с каждой стороны": -66.19
+   },
+   "sensitivity_P": {
+    "расход x2": 0.01,
+    "хуже на 4 тика с каждой стороны": -69.99
+   }
+  },
+  "YM 2021-2025": {
+   "D30": {
+    "trades": 1243,
+    "gross_mean": 4.57,
+    "net_mean": -10.43,
+    "net_median": -20.0,
+    "win_share": 0.4811,
+    "avg_win": 424.89,
+    "avg_loss": -414.04,
+    "p05": -894.0,
+    "p95": 909.5,
+    "worst_day": -2060.0,
+    "best_day": 2330.0,
+    "net_total": -12970.0,
+    "max_drawdown": 29675.0,
+    "sd": 546.18,
+    "mean_over_sd": -0.0191,
+    "t_by_session": -0.67,
+    "top5pct_share_of_total": -5.835,
+    "total_without_best_5pct": -88655.0,
+    "total_without_best_10pct": -137520.0
+   },
+   "P": {
+    "trades": 1243,
+    "gross_mean": 12.8,
+    "net_mean": -2.2,
+    "net_median": -70.0,
+    "win_share": 0.3982,
+    "avg_win": 418.0,
+    "avg_loss": -280.27,
+    "p05": -639.5,
+    "p95": 884.5,
+    "worst_day": -1765.0,
+    "best_day": 2330.0,
+    "net_total": -2735.0,
+    "max_drawdown": 25055.0,
+    "sd": 468.57,
+    "mean_over_sd": -0.0047,
+    "t_by_session": -0.17,
+    "top5pct_share_of_total": -27.216,
+    "total_without_best_5pct": -77170.0,
+    "total_without_best_10pct": -123220.0
+   },
+   "D30_by_year": {
+    "2021": {
+     "n": 250,
+     "net_total": -2355.0,
+     "P_net_total": 2340.0
+    },
+    "2022": {
+     "n": 249,
+     "net_total": 8790.0,
+     "P_net_total": 2350.0
+    },
+    "2023": {
+     "n": 244,
+     "net_total": -5890.0,
+     "P_net_total": -9635.0
+    },
+    "2024": {
+     "n": 251,
+     "net_total": -18035.0,
+     "P_net_total": -11560.0
+    },
+    "2025": {
+     "n": 249,
+     "net_total": 4520.0,
+     "P_net_total": 13770.0
+    }
+   },
+   "sensitivity_D30": {
+    "выход по close 30-й минуты (как в сетке S-07)": -10.46,
+    "расход x2": -25.43,
+    "расход x3": -40.43,
+    "хуже на 1 тик с каждой стороны": -20.43,
+    "хуже на 4 тика с каждой стороны": -50.43
+   },
+   "sensitivity_P": {
+    "расход x2": -17.2,
+    "хуже на 4 тика с каждой стороны": -42.2
+   }
+  }
+ },
+ "skipped": {
+  "NQ": {
+   "calendar": 5114,
+   "no_decision_minute": 48,
+   "no_30m_prefix": 189,
+   "no_entry_bar": 0,
+   "broken_grid_in_hold": 6,
+   "no_exit_bar": 0,
+   "trades": 4871
+  },
+  "ES": {
+   "calendar": 5114,
+   "no_decision_minute": 48,
+   "no_30m_prefix": 31,
+   "no_entry_bar": 0,
+   "broken_grid_in_hold": 8,
+   "no_exit_bar": 0,
+   "trades": 5027
+  },
+  "YM": {
+   "calendar": 5114,
+   "no_decision_minute": 45,
+   "no_30m_prefix": 277,
+   "no_entry_bar": 0,
+   "broken_grid_in_hold": 7,
+   "no_exit_bar": 0,
+   "trades": 4785
+  }
+ },
+ "xray": {
+  "NQ 2021-2025": {
+   "sessions": 1244,
+   "tail_definition": "лучшие 10 % сессий D30 по деньгам — ретроспективная группа, только для отчёта",
+   "tail_share_of_total": 3.444,
+   "mae_wick_candles_quantiles": {
+    "0.25": 2.96,
+    "0.5": 6.38,
+    "0.75": 11.13,
+    "0.9": 16.16
+   },
+   "mae_wick_candles_of_winners": {
+    "0.5": 3.25,
+    "0.75": 5.76,
+    "0.9": 8.68
+   },
+   "mae_wick_candles_of_tail": {
+    "0.5": 1.96,
+    "0.75": 3.57,
+    "0.9": 5.19
+   },
+   "event_C": {
+    "gap_born_share": 0.954,
+    "gap_born_median_minute": 5.0,
+    "far_edge_below_entry_candles_p25_50_75": [
+     -0.52,
+     1.44,
+     4.01
+    ],
+    "occurs": 0.541,
+    "median_minute": 12.0,
+    "remaining_after_usd": -3.0,
+    "remaining_t": -0.07,
+    "kept_tail_money": 0.773,
+    "winners_cut": 0.356,
+    "losers_reduced": 0.537,
+    "time_in_position": 0.707
+   },
+   "ruler_description_only": {
+    "2 свечей по закрытию": {
+     "occurs": 0.719,
+     "median_minute": 4.0,
+     "remaining_after_usd": 54.8,
+     "remaining_t": 1.23,
+     "kept_tail_money": 0.653,
+     "managed_mean": 38.1,
+     "managed_p05": -834.0,
+     "managed_worst": -3040.0
+    },
+    "4 свечей по закрытию": {
+     "occurs": 0.584,
+     "median_minute": 7.0,
+     "remaining_after_usd": 45.6,
+     "remaining_t": 1.03,
+     "kept_tail_money": 0.902,
+     "managed_mean": 50.9,
+     "managed_p05": -1179.0,
+     "managed_worst": -3985.0
+    },
+    "6 свечей по закрытию": {
+     "occurs": 0.446,
+     "median_minute": 10.0,
+     "remaining_after_usd": 50.7,
+     "remaining_t": 1.03,
+     "kept_tail_money": 0.958,
+     "managed_mean": 54.9,
+     "managed_p05": -1540.0,
+     "managed_worst": -5140.0
+    },
+    "8 свечей по закрытию": {
+     "occurs": 0.327,
+     "median_minute": 13.0,
+     "remaining_after_usd": 33.3,
+     "remaining_t": 0.59,
+     "kept_tail_money": 0.99,
+     "managed_mean": 66.6,
+     "managed_p05": -1749.0,
+     "managed_worst": -6365.0
+    },
+    "12 свечей по закрытию": {
+     "occurs": 0.181,
+     "median_minute": 17.0,
+     "remaining_after_usd": -10.8,
+     "remaining_t": -0.16,
+     "kept_tail_money": 1.0,
+     "managed_mean": 79.5,
+     "managed_p05": -2009.0,
+     "managed_worst": -9980.0
+    }
+   }
+  }
+ },
+ "check_against_S07_grid": {
+  "grid_mean_2020_2026": 82.2944550669216,
+  "grid_n": 1569,
+  "here_close_exit_mean": 82.29,
+  "here_n": 1569
+ }
+}
