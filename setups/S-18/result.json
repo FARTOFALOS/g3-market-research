@@ -3,7 +3,7 @@
  "version": "v0",
  "frozen": "2026-09-21",
  "rule": {
-  "source": "Zarattini, Aziz, Barbon (SFI 24-97), basic model without VWAP and without volatility sizing",
+  "source": "Zarattini, Aziz, Barbon (SFI 24-97): adaptation of the version with the trailing stop at the current near boundary of the Noise Area (Fig. 5a), without VWAP and without volatility sizing; the authors' base model exits at the opposite boundary",
   "lookback_sessions": 14,
   "multiplier": 1.0,
   "marks": "close labels 10:00..15:30 every 30 min",
@@ -39,9 +39,10 @@
   "setups/S-17/engine_history_NQ.csv": "7c6ddf74c514d2ad68d3f360aca9b1954a9f3692b1b0e804a615f2694dee118e"
  },
  "code_sha256_worktree": {
-  "run.py": "b98c891d98df2d462df348ee910c19d5c16837dd23021b442e42fb412de46b43",
+  "run.py": "b8feacf640e325322c07be3d041f5ec4d419d698440d2005433b80e20a1a41e9",
   "checks.py": "a1cea53fe3e7e87eb35dd80f49a9b38ebc8649f2331419932731dfe5fe5a8332",
   "elsewhere.py": "e4e6facf7e5bb472f616f11e89bceea8b56fa4392ef7419aa7daafdbead27e29",
+  "anatomy.py": "64a20be1559c39d13d761e9312f5db23ca3bb9af513049f5c23af8b3796db634",
   "scenes.py": "69b3aaf454e7d31cbb60f4b4bf817b6267d2233b9b85409f53d99e231d5c4d79",
   "hours.py": "4a086c6c3fd84e9e557aed77a03eaa18c4968a5b144173a7e4144dcc203a9533",
   "hours2.py": "2c89b163ec51fcffc87f3850517c4078a2d787a0bb34e65570e2e4d8e4f68560"
@@ -432,5 +433,7 @@
    "net откр. позже $": -775
   }
  ],
- "note": "Хеши кода сняты с рабочих файлов Windows; для сверки с коммитом использовать git show <commit>:<path> | sha256sum."
+ "note": "Хеши кода сняты с рабочих файлов Windows; для сверки с коммитом использовать git show <commit>:<path> | sha256sum.",
+ "description_erratum_2026-09-21": "run.py docstring first said \"as the source's base model\"; corrected after checking the paper. Code logic and all numbers unchanged; run.py hash changed by the docstring only.",
+ "human_decision_2026-09-21": "S-18 не снимать; норма допущена как отдельное ценово-временное сравнение (адаптивная оценка типичного движения), узкое решение по данной конструкции"
 }
