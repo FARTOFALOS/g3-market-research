@@ -1,0 +1,106 @@
+{
+ "branch": "091-TEMPORAL / forward tape for every frozen operator (S-07 v1r1, S-09 v1, S-16)",
+ "purpose": "acquire and gate a free continuation of the local minute tape after 2026-05-04; overlap-only comparison, post-cutoff outcomes sealed",
+ "decision": "ACCEPT_SOURCE_UNDER_RELAXED_GATE",
+ "post_cutoff_opened": false,
+ "post_cutoff_touched_mechanically": "bar equality against an independent tick source, row counts per session, OHLC/tick invariants, roll join. No signal, fork, target/stop or P&L was computed after 2026-05-04.",
+ "human_word": {
+  "who": "human partner, live chat",
+  "date": "2026-09-21",
+  "words": [
+   "пойди и скачай недостающие даты на бесплатных каких-то архивах",
+   "не обязательно прям точь-в-точь, но буквально 2-3 месяца может докачать, что ты не возвращался к этому",
+   "Главное, чтобы ты NQ получил и сверил",
+   "Нам не нужно прям до сегодняшнего дня ... один-два месяца, сколько там есть",
+   "мы же сможем ту стратегию проверить на свежесозданных ризов с новыми датами"
+  ],
+  "effect": "FREEZE_091_TEMPORAL §7.4 asked for EXACT agreement on overlap. The human relaxed data identity to near-exact. What near-exact means here is measured below instead of assumed. Nothing else in the freeze is changed: hypothesis, cell, action policy, costs and the terminal rule §7.3 stay as ratified."
+ },
+ "source": {
+  "dataset": "huggingface:lynx1231/historical-equity-index-futures-data-sample",
+  "commit": "1e10ad1f78044d494fe00e0b252fad6cbc097e98",
+  "last_modified": "2026-09-18T06:57:17Z",
+  "file": "data/minute/part-00000.parquet",
+  "bytes": 10213498,
+  "sha256": "3c89d4069070ce36123fc20e5bbac71e34a71ae401335df6b11937efcd7d0b0d",
+  "sha256_matches_publisher_catalog": true,
+  "license": "other (free evaluation sample of a commercial catalogue; private research use)",
+  "content": "minute bars of INDIVIDUAL contracts NQH26 NQM26 NQU26 NQZ26, ESH26 ESM26 ESU26 ESZ26 (+RTY, HSI); no YM",
+  "retrieval_utc": "2026-09-21T17:31Z",
+  "clock": "integer ms is America/Chicago wall clock with bar-OPEN label, stored as if UTC. Not documented by the publisher; resolved on overlap (the 09:30 ET bar carries label 08:30)."
+ },
+ "cross_check_source": {
+  "dataset": "huggingface:EdgeArbiter/rithmic-tick-data",
+  "commit": "2b0feb8470973e2718452b784ffb427b8615f9ba",
+  "files": {
+   "nq_tick_rithmic_2026.parquet": {"bytes": 258628942, "sha256": "33a46172f670d90f7954c7ecf173fe878dae7da90f057024a3d858e2b951371e", "rows": 60483890, "span_utc": "2025-12-31 18:00 .. 2026-06-17 20:59"},
+   "es_tick_rithmic_2026.parquet": {"bytes": 368072593, "sha256": "368627415bddbcdb6d5162295e2a35bd16b3fec7fcfabfd3386182093f25f4ea", "note": "downloaded, not aggregated"}
+  },
+  "clock": "UTC (resolved on overlap: 0.959 exact under UTC, 0.000 under US/Eastern and America/Chicago)",
+  "role": "independent real CME ticks; used only to verify bars, not to build the tape"
+ },
+ "roll_rule_of_local_tape": {
+  "finding": "the local unadjusted continuous series switches to the next quarterly contract at the Sunday session open of expiration week",
+  "evidence": [
+   "2025-12-14 (Sun): local NQ bars become identical to NQH26 (exact H,L,C 1.000 that day; 0.000 on 2025-12-08..12)",
+   "2026-03-15 (Sun): local NQ switches NQH26 -> NQM26 (0.969 on 03-13 vs H26; 0.998 on 03-15 vs M26); ES identical dates",
+   "the independent Rithmic collector also switches to NQU26 on Sunday 2026-06-14"
+  ],
+  "applied": "NQM26/ESM26 through Fri 2026-06-12 16:00 CT, NQU26/ESU26 from Sun 2026-06-14 17:00 CT",
+  "resolves": "SOURCE_DATA.json source_uncertainties.continuous_roll_rule (was null) - for the two observed rolls; not checked on older years"
+ },
+ "overlap_agreement": {
+  "window": "local roll into the June contract (2026-03-15 22:00 UTC) .. local tape end (2026-05-04 04:37 UTC)",
+  "NQ": {
+   "minute_grid": {"local": 48226, "source": 48226, "only_local": 0, "only_source": 0},
+   "bars_equal": {"open": 0.9893, "high": 0.9990, "low": 0.9991, "close": 0.9896},
+   "within_one_tick": {"open": 0.9930, "high": 0.9993, "low": 0.9994, "close": 0.9932},
+   "volume_ratio_median": 1.0
+  },
+  "ES": {
+   "minute_grid": {"local": 42888, "source": 48231, "only_local": 0, "only_source": 5343, "note": "the source fills known holes of the local ES tape (e.g. 2026-04-15..19)"},
+   "bars_equal": {"open": 0.9950, "high": 0.9997, "low": 0.9996, "close": 0.9954}
+  },
+  "riz_event_reproduction": {
+   "method": "pinned machine (work/line-097/gap_lens.py, validated against the field) run from an empty state on both bar sets, per native TF; identical bounds AND identical native bar required",
+   "NQ_blue_same_over_local": {"1": "163/165", "2": "90/94", "3": "48/49", "5": "28/28", "10": "27/27", "15": "11/11", "30": "7/7", "60": "4/4"},
+   "NQ_gaps_born_share": "0.947 .. 0.985",
+   "ES_blue_same_over_local": "all 224 Blue events on TF 1,2,3,5,10,15,30,60 reproduced",
+   "ES_gaps_born_share": "0.957 .. 0.993",
+   "tables": ["base/091/forward_tape/riz_gate_overlap_NQ.csv", "base/091/forward_tape/riz_gate_overlap_ES.csv"]
+  },
+  "not_measured_yet": "agreement at the 091 level (q_event, a, b, cell membership, 091 outcomes) on overlap - requires the 084->086->091 harness over lens-built RIZ; to be reported BEFORE the sealed run"
+ },
+ "post_cutoff_integrity": {
+  "source_vs_independent_ticks_NQ": "daily exact H,L,C share 0.976 .. 1.000 on every day 2026-05-04 .. 2026-06-17 (NQM26 to 06-12, NQU26 from 06-14)",
+  "unverified_tail": "2026-06-18 .. 2026-07-10 has no second source",
+  "sessions": "50 session dates in the extension (first one continues the local 2026-05-04 session); 1380 rows on regular days",
+  "short_sessions": {"2026-05-25": 1140, "2026-06-19": 1140, "2026-07-03": 1139, "note": "CME holiday early close 12:00 CT"},
+  "known_gap": "2026-06-17 21:27..22:03 and 22:35..22:43 CT, 46 minutes, absent in BOTH NQU26 and ESU26 (collector outage, Asia hours)",
+  "junction": "the last local NQ bar (label 2026-05-03 23:38 CT) is a partial minute: H,L,C 27952.5/27949.0/27949.25 vs complete 27952.75/27949.0/27950.0. Canonical prefix kept byte-identical; the bar is not repaired.",
+  "roll_join": {"NQ_gap_points": 513.25, "NQ_calendar_spread_same_minute": 292.75, "ES_gap_points": 107.25, "note": "unadjusted join, same kind as inside the local tape; the remainder is the weekend move"}
+ },
+ "outputs_local_untracked": {
+  "extension_csv": {"NQ": "data/forward/raw/NQ_1min_ext_20260503_20260710.csv sha256 6ab089c2c41ca628c3f6af266c0adef7e721f3482d52c5d8a8872e2d271750fe (67827 rows)",
+                    "ES": "data/forward/raw/ES_1min_ext_20260503_20260710.csv sha256 1267125513d027226441214dc762ccde214c374ff28d29820781903565b51ac7 (67829 rows)"},
+  "forward_spine": {"NQ": "data/forward/market/NQ rows 6486368 sessions 5279 corpus_id 286635663325395b7501ae36fcbb775a5a72802b07ca97f9865065004f200281",
+                    "ES": "data/forward/market/ES rows 6922887 sessions 5283 corpus_id db4082b08deab888a3e40d60a17d90a1aad3c3d89027cb45c06bcd38efb8eb4f"},
+  "properties": "first N rows byte-identical to the canonical spine in all 9 arrays; canonical transform self-tested on the raw tail; opens with g3riz.market.MarketSpine.open_store",
+  "untouched": "data/raw, data/market, data/field"
+ },
+ "territory_fixed_by_freeze_7_1": "primary temporal territory of 091 = NQ minutes strictly after the local tape end through the last full day of the first accepted source = 2026-05-04 .. 2026-07-10. Not to be shortened or extended after results.",
+ "sources_found_and_not_used": {
+  "danielharkin21/futuresss (origin of the local tape)": "not updated since 2026-05-04",
+  "thillsss/SPX-MES-VIX-data": "MES 1m continuous, back-adjusted, to 2026-09-17 (downloaded, 99.9 MB); micro ES, no NQ after 2025-09",
+  "kaggle:brtnsmth/intraday-market-data": "CC0, weekly files to 2026-09-18, /ES and /NQ sampled every ~3 s from thinkorswim RTD; would cover 2026-07-10..09-18 with truncated highs/lows; NOT downloaded",
+  "brkly03/CME-Globex-MDP-3.0": "NQ/ES 1m without timestamps (row index only) - unusable",
+  "getdata-finance/nq-1m-ohlcv-stocks-historical-data": "rejected earlier, see source_gate.json",
+  "kaggle:bpwqsdd/us-futures-1-minute-candlesticks": "pickle files of CFDs - not opened"
+ },
+ "reproduce": [
+  "python -B base/091/forward_tape/align_lynx.py NQ",
+  "python -B base/091/forward_tape/ticks_to_bars.py nq && python -B base/091/forward_tape/align_rithmic.py NQ",
+  "python -B base/091/forward_tape/build_forward.py NQ",
+  "python -B base/091/forward_tape/riz_gate_overlap.py NQ   # needs work/line-097/gap_lens.py (not yet in git) and numba"
+ ]
+}
