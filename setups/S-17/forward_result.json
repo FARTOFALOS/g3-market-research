@@ -1,0 +1,110 @@
+{
+ "window": [
+  "2026-05-04",
+  "2026-07-10"
+ ],
+ "calendar_sessions": 47,
+ "statuses": {
+  "ok": 47
+ },
+ "positions_taken": 47,
+ "outcomes_known": 47,
+ "versions": {
+  "D30": {
+   "n": 47,
+   "total": -7990.0,
+   "mean": -170.0,
+   "median": -370.0,
+   "win_share": 0.468,
+   "worst": -6400.0,
+   "best": 11725.0,
+   "max_drawdown": 23905.0,
+   "sd": 3084.0,
+   "mean_cost_x2_slip0t": -185.0,
+   "mean_cost_x1_slip4t": -210.0
+  },
+  "P": {
+   "n": 47,
+   "total": 840.0,
+   "mean": 17.9,
+   "median": -395.0,
+   "win_share": 0.383,
+   "worst": -5330.0,
+   "best": 11725.0,
+   "max_drawdown": 19530.0,
+   "sd": 2557.0,
+   "mean_cost_x2_slip0t": 2.9,
+   "mean_cost_x1_slip4t": -22.1
+  },
+  "S-07 v1r1": {
+   "n": 47,
+   "total": -9235.0,
+   "mean": -196.5,
+   "median": -655.0,
+   "win_share": 0.319,
+   "worst": -6295.0,
+   "best": 7740.0,
+   "max_drawdown": 37050.0,
+   "sd": 3299.0,
+   "mean_cost_x2_slip0t": -211.5,
+   "mean_cost_x1_slip4t": -236.5
+  }
+ },
+ "paired": {
+  "P − D30": {
+   "sessions_differ": 27,
+   "total": 8830.0,
+   "mean": 187.9,
+   "median": 0.0,
+   "worst": -2615.0,
+   "best": 5410.0,
+   "better_in": 16,
+   "worse_in": 11
+  },
+  "S-07 v1r1 − D30": {
+   "sessions_differ": 47,
+   "total": -1245.0,
+   "mean": -26.5,
+   "median": 550.0,
+   "worst": -5720.0,
+   "best": 4650.0,
+   "better_in": 27,
+   "worse_in": 20
+  }
+ },
+ "context": {
+  "D30": {
+   "historical_windows": 1193,
+   "percentile_of_forward_total": 0.117,
+   "historical_window_total_p05_p50_p95": [
+    -13467.0,
+    3635.0,
+    29503.0
+   ]
+  },
+  "P": {
+   "historical_windows": 1193,
+   "percentile_of_forward_total": 0.37,
+   "historical_window_total_p05_p50_p95": [
+    -11450.0,
+    4090.0,
+    20304.0
+   ]
+  },
+  "S-07 v1r1": {
+   "historical_windows": 1193,
+   "percentile_of_forward_total": 0.088,
+   "historical_window_total_p05_p50_p95": [
+    -12665.0,
+    5190.0,
+    29371.0
+   ]
+  }
+ },
+ "s07_exit_reasons": {
+  "минус на 15-й минуте": 23,
+  "120 минут": 19,
+  "катастрофический лимит": 5
+ },
+ "event_C_sessions": 27
+}
