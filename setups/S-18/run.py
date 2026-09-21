@@ -65,8 +65,8 @@ COST = {'ES': 30., 'NQ': 15., 'YM': 15.}
 KMAX = 390
 
 
-def sessions(ins, cal=None):
-    d = ROOT / 'data/market' / ins
+def sessions(ins, cal=None, root=None):
+    d = (ROOT / 'data/market' if root is None else root) / ins
     ts = np.load(d / 'close_ts_utc_ns.npy')
     o = np.load(d / 'open.npy')
     c = np.load(d / 'close.npy')
@@ -87,8 +87,8 @@ def sessions(ins, cal=None):
     return cal, K, O, C
 
 
-def run(ins, look=14, mult=1.0, step=30, cost_mult=1.0, first=30, cal=None, gap=True):
-    cal, K, O, C = sessions(ins, cal)
+def run(ins, look=14, mult=1.0, step=30, cost_mult=1.0, first=30, cal=None, gap=True, root=None):
+    cal, K, O, C = sessions(ins, cal, root)
     S = len(cal)
     op = O[:, 1]
     cl = np.array([C[s, min(K[s], KMAX)] for s in range(S)])
