@@ -76,7 +76,8 @@ exclude long scenes», «last observed event = failure», «same ticker, same ma
 setup line» (residual gate — сначала проверь исполнимую асимметрию известного состояния;
 остаток информации для сетапа не требуется), «reuse R0 / CONT* / the established baseline
 here» (representation/estimand привязаны к своему cursor — проверь object/cursor/support/
-outcome). Развилка Information ↔ Economics — структурно в
+outcome), «сможет ли модель прочитать это чтение» (сначала literal compilation —
+правило без свободных параметров; burden of proof на приборе, не на коде). Развилка Information ↔ Economics — структурно в
 [`SETUP_DISCOVERY_METHOD.md`](reference/SETUP_DISCOVERY_METHOD.md).
 
 ## Как освоиться и начать

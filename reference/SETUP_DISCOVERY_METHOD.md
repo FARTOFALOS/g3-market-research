@@ -117,6 +117,10 @@ position, scale, candle relations, sequence, age, session time, TF, другие
 координата обязана иметь понятное семантическое чтение. Не строить огромный feature
 leaderboard и затем объявлять победившую колонку «механизмом рынка» (GUARDRAILS P).
 
+**Заявленное словами чтение сначала компилируется в код, а не покупается прибором.**
+Порядок: literal compilation → falsification of reduction → representation work →
+внешняя модель. Burden of proof лежит на приборе, а не на коде (GUARDRAILS AI).
+
 ## G. Сначала remaining movement, затем trade
 
 Критический урок дуги: исследование слишком долго требовало сначала найти более
