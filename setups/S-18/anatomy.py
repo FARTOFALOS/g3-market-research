@@ -81,7 +81,8 @@ def states(ins, look=14):
                          'zp': int(zp[j]), 'd': int(d), 'flip': bool(z[j] != 0 and zp[j] == -z[j]),
                          'r_next': d * (nxt[j] - e[j]) / op[s] * 1e4,
                          'r_close': d * (cl[s] - e[j]) / op[s] * 1e4,
-                         'pts_next': d * (nxt[j] - e[j]), 'raw_next': nxt[j] - e[j], 'open': op[s]})
+                         'pts_next': d * (nxt[j] - e[j]), 'raw_next': nxt[j] - e[j], 'open': op[s],
+                         'p': p[j], 'e': e[j], 'cl': cl[s], 'up': up[k], 'dn': dn[k], 'norm': norm[k]})
     M = pd.DataFrame(rows)
     M['year'] = M.date.dt.year
     M['epoch'] = band.epoch(M.year.values)
