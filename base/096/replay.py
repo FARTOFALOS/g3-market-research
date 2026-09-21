@@ -58,7 +58,7 @@ def build():
             'iso': (sig == 0),
             'y_lo': np.where(code == F.WIN, 1.0, 0.0),
             'y_hi': np.where(code == F.WIN, 1.0, np.where(unk, 1.0, 0.0)),
-            'year': pd.to_datetime(g.t0_day.to_numpy() * 86400000000000).year}))
+            'year': pd.to_datetime(g.t0_day.to_numpy(), unit='D').year}))
     d = pd.concat(frames, ignore_index=True)
     d['x_lo'] = d.y_lo - d.p0
     d['x_hi'] = d.y_hi - d.p0
