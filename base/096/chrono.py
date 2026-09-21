@@ -21,7 +21,11 @@ OUT = ROOT / 'work/096'
 sys.path.insert(0, str(ROOT / 'base/086')); sys.path.insert(0, str(HERE))
 import fork086 as F                                                          # noqa: E402
 from part2 import operator                                                   # noqa: E402
-from replay import build, delta                                              # noqa: E402
+# base/081 тоже содержит replay.py и попадает в sys.path через fork086 — грузим по пути
+import importlib.util as _iu                                                 # noqa: E402
+_s = _iu.spec_from_file_location('replay096', HERE / 'replay.py')
+_m = _iu.module_from_spec(_s); _s.loader.exec_module(_m)
+build, delta = _m.build, _m.delta
 
 WIN_DAYS, STEP = 250, 25
 
@@ -63,7 +67,7 @@ def main():
         if rr is None:
             continue
         mid = (rr[0] + rr[1]) / 2
-        c = pd.Timestamp(win[len(win) // 2] * 86400 * 10 ** 9).strftime('%Y-%m')
+        c = pd.Timestamp(int(win[len(win) // 2]), unit='D').strftime('%Y-%m')
         bar = '#' * int(abs(mid) * 60)
         print(f'  {c:>12} {len(s):>6} {s.iso.mean():>6.3f} {mid:>+9.4f}  '
               f"{'  ' if mid >= 0 else '-'}{bar}")
