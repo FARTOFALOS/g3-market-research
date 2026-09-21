@@ -1,0 +1,78 @@
+{
+ "frozen_utc": "2026-09-21",
+ "freeze_doc": "base/096/FREEZE_096_INSTRUMENT.md",
+ "freeze_sha256": "7eee96c3771ba6150163d92bcde660dd4953490dd49145ff11801ab874dd44ff",
+ "selector": "base/096/select.py",
+ "selector_sha256": "e35e780aa3115e83d346acebdeaf72017accfb878da75804e3940efc69ea7439",
+ "renderer": "base/096/render.py",
+ "renderer_sha256": "54c365a00f6d5f51faf1cb872e3382e7f07b9f66b03cdff4ae385c42a982ba67",
+ "source_period": "NQ_development",
+ "source_bounds": [
+  "NQ",
+  "discovery",
+  "2006-01-01",
+  "2018-12-25"
+ ],
+ "eligibility": "in_window & finite ttc & sigma>0",
+ "pool_films": 53834,
+ "pool_days": 2562,
+ "pool_physical_episodes": 8068,
+ "dedup_rule": "one per (t0_pos, side); then at most one scene per calendar day",
+ "strata": [
+  {
+   "name": "1-2",
+   "k_lo": 1,
+   "k_hi": 2,
+   "n": 12
+  },
+  {
+   "name": "3-4",
+   "k_lo": 3,
+   "k_hi": 4,
+   "n": 12
+  },
+  {
+   "name": "5-6",
+   "k_lo": 5,
+   "k_hi": 6,
+   "n": 12
+  },
+  {
+   "name": "7-12",
+   "k_lo": 7,
+   "k_hi": 12,
+   "n": 12
+  },
+  {
+   "name": "13-50",
+   "k_lo": 13,
+   "k_hi": 50,
+   "n": 12
+  }
+ ],
+ "seed": 20260921,
+ "n_scenes": 60,
+ "shown_to_trader": [
+  "candles T0..q",
+  "b line",
+  "running M line",
+  "bar numbers 0..k",
+  "q_event marked"
+ ],
+ "hidden_from_trader": [
+  "date",
+  "year",
+  "instrument",
+  "absolute price",
+  "riz_id",
+  "tf",
+  "k as a label",
+  "u/ttc/r",
+  "anything after q_event",
+  "outcome"
+ ],
+ "mirrored": "south -> north",
+ "y_scale": "local: (price - b)*sign/sigma; no nominal axis",
+ "outcomes_read_during_selection": false,
+ "note": "instrument-development corpus, NOT untouched market validation; 086 measured X on this epoch earlier, but no 096 outcome is used or shown here."
+}
