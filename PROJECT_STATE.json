@@ -28,22 +28,34 @@
   "resume_rule": "The current field is complete and frozen. Run python -m g3riz.cli status and query it normally. The materializer was removed from the working tree; it lives in git history at commit dd278b6 and on branch snapshot/pre-restructure. Restore and rebuild only after an explicit trader decision: a new semantic generation, or recovery from verified data loss.",
   "updated_utc": "2026-09-03",
   "research_front": {
-    "as_of": "2026-09-17",
+    "as_of": "2026-09-23",
     "two_layers": [
       "accumulated market knowledge (base/, setups/)",
       "reusable setup-discovery method (reference/SETUP_DISCOVERY_METHOD.md + RESEARCH_GUARDRAILS.md)"
     ],
-    "cold_start_route": ["README.md", "AGENTS.md", "reference/SETUP_DISCOVERY_METHOD.md", "reference/RESEARCH_GUARDRAILS.md", "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"],
-    "canonical_method_docs": ["reference/SETUP_DISCOVERY_METHOD.md", "reference/RESEARCH_GUARDRAILS.md", "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"],
+    "cold_start_route": [
+      "README.md",
+      "AGENTS.md",
+      "reference/SETUP_DISCOVERY_METHOD.md",
+      "reference/RESEARCH_GUARDRAILS.md",
+      "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"
+    ],
+    "canonical_method_docs": [
+      "reference/SETUP_DISCOVERY_METHOD.md",
+      "reference/RESEARCH_GUARDRAILS.md",
+      "reference/CASE_086_091_FROM_XRAY_TO_ACTION.md"
+    ],
     "arc": "083..091 (Event X-Ray -> structural fork -> economic completion)",
     "candidates": {
-      "S-07": "earlier positive historical candidate outside the RIZ-centered line",
-      "S-16 / 086-091": "EXECUTABLE HISTORICAL CANDIDATE - temporal transfer not established; late NQ sample carries a negative frequency warning"
+      "S-07 family": "S-07 (frozen), S-09 morning door, S-17 (a cell of the S-07 grid), weakly S-08; S-18 related (r 0.18). All at the NY cash open, no RIZ field in the rules. Not independent candidates; no joint position/risk replay exists, so their results do not add up",
+      "S-16 / 086-091": "the only RIZ candidate: EXECUTABLE HISTORICAL CANDIDATE on a selected NQ cell, temporal transfer not established; weakened by 097 (NQ-only lean, ES/YM zero, NQ 2006-2018 negative); +8.97 pt is per executed trade with known outcome, not per session"
     },
-    "frozen_action": "base/091/FREEZE_091_TEMPORAL.md (single-unit NQ temporal test operator; awaits a compatible untouched NQ tape)",
+    "frozen_action": "base/091/FREEZE_091_TEMPORAL.md (single-unit NQ temporal test operator). The available continuation tape is NOT outcome-blind for the project: S-17 and S-18 opened their outcomes on the same 47 sessions (FREEZE_091_TEMPORAL §7.5). Whether it may serve as the primary temporal territory is the trader's decision; the test does not run before it",
     "temporal_test_status": "tape available since 2026-09-21, test NOT run: forward continuation NQ/ES 2026-05-04..2026-07-10 under data/forward (canonical prefix byte-identical), accepted under a gate relaxed by the human's word of 2026-09-21; 091-level event agreement on overlap not measured yet; see base/091/source_gate_forward_2026-09-21.json. Earlier GitHub NQ_1m source stays rejected (base/091/source_gate.json)",
     "data_tape_end_utc": "2026-05-04",
     "forward_tape_end_utc": "2026-07-10",
-    "note": "Field state above (semantic_generation, phase, cells) is unchanged; this block tracks the research front only."
+    "note": "Field state above (semantic_generation, phase, cells) is unchanged; this block tracks the research front only.",
+    "entry_status_marks": "base/README.md, section 'Статус для входа (2026-09-23)': cards measured on a non-current object are marked АРХИВ, failed positives НЕ ОПОРА, narrowed ones ОПОРА С ПОПРАВКОЙ; read the status line under each card title before relying on it",
+    "object_facts_2026_09_23": "First exit contact at +1 in ~60% of scenes on ES/NQ/YM equals an ordinary big candle with a line at the same distance (60.4% vs 59.6%, base/002); the far boundary is reached as often as an ordinary line at the same distance and volatility (base/022). Claims that RIZ adds something are compared with such a line, not with zero"
   }
 }

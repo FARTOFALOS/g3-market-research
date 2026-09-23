@@ -42,6 +42,14 @@ unchanged. A pre-T0 candidate is ancestry, not yet a RIZ population member.
 The full worked ancestry and the boundary between observed price geometry and
 a hypothesis of unfilled interest are in `reference/SCENE.md`.
 
+**Reaching a RIZ boundary is not evidence about RIZ by itself.** Both boundaries
+are reached about as often as an ordinary line at the same distance from price
+with the same volatility: the near one at +1 in ~60 % (candle size, see
+`Film-1`), the far one within a session in ~90 % and before the archive end in
+~99.5 % (recounts 2026-09-23 in [002](base/002-vozvrat-k-vyhodnoy-granitse.md) and
+[022](base/022-riz-eto-neprotorgovannaya-likvidnost.md)). A claim that RIZ adds
+something must beat such a line, not zero.
+
 ### North / south — `север` / `юг`
 
 **Field fact.** The upper and lower fixed prices of the zone:
@@ -83,6 +91,17 @@ dominate a result until measured.
 **Field fact.** The canonical one-minute market sequence used to observe T0,
 slice context and eventually make decisions. A native RIZ timeframe and the
 minute observation clock are different things.
+
+**The minute label is the END of the interval, on US Eastern clocks — measured,
+not assumed.** Two independent checks: the opening burst of the stock session
+lands on the candle labelled 09:31 ET in all 63 instrument-years
+([058](base/058-riz-na-otkrytii-rynka-aktsiy.md)); the CPI release burst lands on
+the label 08:31 and the 14:00 burst on 14:01 over 1,494 days
+(`research/context_release.py`). The source's own timezone, feed and license
+metadata stay unknown; `SOURCE_DATA.json` keeps them `null` and is not edited,
+because frozen candidates pin its hash. What this measurement does not give is a
+calendar of scheduled closures with provenance — see the correction line of
+[080](base/080-film1-korpus-vosstanovim-granitsa-sertifikatsii-gap.md).
 
 ### Cluster — `кластер`
 
@@ -212,6 +231,21 @@ event the field already stores instead of writing a candle detector for it.
 What always holds on the minute tape is the close: strictly beyond
 `t0_exit_side`, never beyond the other side. Take the exit boundary from the
 passport, do not re-derive the span.
+
+**The T0 candle is a big candle.** It spans the zone (with the native bar's
+open), so it is a median 1.5 times the mean range of the 30 minutes before it,
+against 0.9 for an ordinary minute; 31 % of T0 candles exceed twice that mean,
+against 5 % (NQ 2021–2025, [002](base/002-vozvrat-k-vyhodnoy-granitse.md) recount).
+Card 016's title "T0 does not mark a special range" measured the path after T0,
+not the T0 candle.
+
+**T0 is a late point of a selected biography** ([097](base/097-tsikl-ot-pervogo-kontakta-s-b-k-selektsii-t0-i-otkliku-na-otkrytie.md) §2–4):
+the zone was born by an impulse, was crossed by body once against that impulse
+and is crossed back at T0; the round trip is already done
+([046](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md)). Only gaps crossed twice by
+body without a wick touch in between become Blue — 1.5–2.4 % of fresh gaps, the
+thinnest ones. On TF 1–3 the machine deletes the object one or two minutes after
+T0; later price reads a level that no longer exists in the machine.
 
 **T0 does not by itself establish a departure.** The measured close sits
 beyond the boundary by a median 0.30 of that minute's own range — about five
@@ -402,12 +436,16 @@ object counts, distinct decision moments, levels and sessions, then state
 how dependence is treated. None of these counts automatically supplies the
 number of independent observations. See `Episode vs row`.
 
-**No departure is required, so first contact is not automatically a retest.**
-A study using `retest` must define and observe a prior departure and report
-the resulting narrower population. Short contact latency alone cannot prove
-that no departure occurred, especially within a one-minute bar. Population
-frequencies and the proximity interpretation belong to
-[`046`](base/046-t0-eto-vozvratnaya-hodka-a-ne-uhod.md); they are not admission rules.
+**No departure is required.** The trader calls the end of Film-1 «ретест»
+(see `Retest`); a study that needs a prior departure must observe it and report
+the narrower population. Measured length (NQ 2021–2025, unique levels, recount
+2026-09-23 in [002](base/002-vozvrat-k-vyhodnoy-granitse.md)): contact at +1 in
+59.6 %, +2…+3 in 13.6 %, +4…+15 in 13.0 %, +16…+60 in 5.9 %, later within a day
+5.4 %, none within a day 2.5 %; ES and YM alike. **The median Film-1 is two
+candles, and the quick contact is candle size, not RIZ:** the T0 close sits a
+median 2.75 points from the line while the T0 candle is 13 points, and an
+ordinary big candle with a line at the same distance is touched by the next
+minute just as often. Frequencies are descriptions, not admission rules.
 
 After Film-1 the same RIZ's life continues. There is no canonical Film-2 /
 Film-3 cut. Preserve OHLC and the chosen observation limits when studying
@@ -424,15 +462,25 @@ the study.
 
 ### Retest — `ретест`, `повторный тест`
 
-Price returns to a specified boundary or zone after a specified departure.
-The machine does not provide a universal retest flag. A study must define the
-line, direction of approach, qualifying touch/close, and whether repeated
-contacts count.
+**The trader's word (2026-09-23, live chat): «ретест» is the first touch of the
+exit boundary after T0 — the end of Film-1 — however many candles it took, one or
+two included. What price does after the touch (holds, goes through to the far
+boundary) does not change the word.** So a trader's «ретест» and the repository's
+`first exit contact` are the same event; read the trader's word that way and do
+not ask him to add a departure to it.
 
-The word carries a condition — that price first left — and the field does not
-supply it. Where the trader says "first retest" about the end of the first film,
-the repository says `first exit contact`; see `Film-1`. Use `retest` only when
-departure is actually in your selection.
+The word itself does not say whether price had left. When a study needs that
+distinction, name the two kinds instead of changing the word:
+
+- **retest without departure** — the contact comes at +1: about 60 % of scenes
+  on all three indices, and an ordinary big candle with a line at the same
+  distance behind its close is touched just as often (60.4 % against 59.6 %,
+  [002](base/002-vozvrat-k-vyhodnoy-granitse.md) recount 2026-09-23);
+- **retest after departure** — price first went away (median 11–97 points on NQ
+  depending on how long it took) and came back; about 38 % of scenes.
+
+A study must still define the line, the qualifying touch/close and whether
+repeated contacts count. The machine provides no retest flag.
 
 ### Return / rejection / continuation / reversal
 
