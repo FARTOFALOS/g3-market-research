@@ -1,0 +1,85 @@
+{
+  "rule": "S-20-v1-first-retest-opening-hour-body-cross",
+  "instrument": "ES",
+  "cost_points": 0.4,
+  "cost_usd": 20,
+  "contract_multiplier_usd_per_point": 50,
+  "contract_specs": "https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.contractSpecs.html",
+  "corpus_id": "0f2f8a4c6800b10f7295101916e1c4e3ee66c2dc78bcd8944a597b296ccc5ddd",
+  "period": [
+    "2020-01-01",
+    "2025-12-31"
+  ],
+  "runtime_versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "exchange_calendars": "4.13.2"
+  },
+  "sessions": 1508,
+  "known_sessions": 1498,
+  "unknown_sessions": 10,
+  "reasons": {
+    "first_retest_no_body_cross": 841,
+    "closed_back_inside": 544,
+    "no_first_retest": 48,
+    "session_close": 46,
+    "next_open_back_inside": 17,
+    "opening_hour_incomplete": 7,
+    "signal_at_session_close": 2,
+    "gap_before_first_retest": 2,
+    "exit_open_unknown": 1
+  },
+  "known_entries": 590,
+  "known_net_sum_points": -294.24999999999994,
+  "known_net_per_session_points": -0.1964285714285714,
+  "known_net_per_session_usd": -9.82142857142857,
+  "ci95_block20_conditional_points": [
+    -0.5469921276903076,
+    0.1746018586290984
+  ],
+  "known_trade_mean_net_points": -0.4987288135593219,
+  "known_trade_median_net_points": -2.15,
+  "known_trade_worst_net_points": -18.65,
+  "known_trade_win_rate": 0.07627118644067797,
+  "top5_net_sum_points": 418.50000000000006,
+  "by_year_conditional": [
+    {
+      "year": "2020",
+      "sessions": 248,
+      "mean": -0.44899193548387095,
+      "trades": 109
+    },
+    {
+      "year": "2021",
+      "sessions": 252,
+      "mean": -0.0478174603174603,
+      "trades": 92
+    },
+    {
+      "year": "2022",
+      "sessions": 250,
+      "mean": -0.514,
+      "trades": 100
+    },
+    {
+      "year": "2023",
+      "sessions": 250,
+      "mean": -0.2966,
+      "trades": 91
+    },
+    {
+      "year": "2024",
+      "sessions": 249,
+      "mean": -0.43694779116465854,
+      "trades": 92
+    },
+    {
+      "year": "2025",
+      "sessions": 249,
+      "mean": 0.5646586345381526,
+      "trades": 106
+    }
+  ],
+  "frozen_rule_code_sha256": "4ef84d3682769f7f6cb6dee5434264baa77a81ba386d009b1dd4eb3a4bb1f591",
+  "interpretation_boundary": "Correlated cross-instrument replication; no independent temporal validation."
+}

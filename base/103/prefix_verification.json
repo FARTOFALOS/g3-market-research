@@ -1,0 +1,26 @@
+{
+  "checks": [
+    {
+      "tf": 1,
+      "native_bars_compared": 6308579,
+      "full_vs_truncated_cases": 12
+    },
+    {
+      "tf": 5,
+      "native_bars_compared": 1357882,
+      "full_vs_truncated_cases": 12
+    },
+    {
+      "tf": 54,
+      "native_bars_compared": 131191,
+      "full_vs_truncated_cases": 12
+    },
+    {
+      "tf": 240,
+      "native_bars_compared": 30487,
+      "full_vs_truncated_cases": 12
+    }
+  ],
+  "status": "pass",
+  "scope": "grid and prefix facts; does not certify selection, execution or economics"
+}

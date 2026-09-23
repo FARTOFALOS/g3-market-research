@@ -1,0 +1,58 @@
+{
+  "v1": {
+    "sessions": 1255,
+    "known_sessions": 728,
+    "unknown_sessions": 527,
+    "all_session_net_mean": null,
+    "resolved_sessions_only_mean_not_population": -12.134615384615385,
+    "certified_entries": 8374,
+    "known_trade_outcomes": 8374,
+    "known_trades_gross_mean_not_policy": 0.09021972772868402,
+    "decision_reasons": {
+      "policy_unknown_after_prior_gap": 44506,
+      "busy": 33174,
+      "simultaneous_not_selected": 14225,
+      "entered_known": 8374,
+      "prefix_unknown_changes_selection": 527,
+      "open_outside_action": 20
+    },
+    "exit_reasons": {
+      "zone_close": 5870,
+      "target_close": 2332,
+      "session_close": 172
+    },
+    "sign_status": "UNRESOLVED: certified replay stops at shared missing history; trader observation channel and joint full-policy bounds not established",
+    "pairs": {
+      "events": 5870,
+      "known": 5851,
+      "unknown": 19,
+      "delta_mean_known_only": 0.6247649974363356,
+      "recovered_winners_known": 4138
+    }
+  },
+  "v2": {
+    "sessions": 1255,
+    "known_sessions": 888,
+    "unknown_sessions": 367,
+    "all_session_net_mean": null,
+    "resolved_sessions_only_mean_not_population": -19.842905405405407,
+    "certified_entries": 3242,
+    "known_trade_outcomes": 3234,
+    "known_trades_gross_mean_not_policy": 0.5058750773036488,
+    "decision_reasons": {
+      "busy": 59064,
+      "policy_unknown_after_prior_gap": 33205,
+      "simultaneous_not_selected": 4942,
+      "entered_known": 3234,
+      "prefix_unknown_changes_selection": 359,
+      "open_outside_action": 14,
+      "entered_unknown": 8
+    },
+    "exit_reasons": {
+      "target_close": 2464,
+      "session_close": 770,
+      "gap_while_open": 8
+    },
+    "sign_status": "UNRESOLVED: certified replay stops at shared missing history; trader observation channel and joint full-policy bounds not established"
+  }
+}

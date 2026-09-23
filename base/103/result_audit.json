@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "verified": [
+    {
+      "version": "v1",
+      "all_known_executions_checked": 8374,
+      "all_session_accounting_checked": 1255
+    },
+    {
+      "version": "v2",
+      "all_known_executions_checked": 3234,
+      "all_session_accounting_checked": 1255
+    }
+  ],
+  "paired_event_denominator_matches_certified_v1_exits": true,
+  "source_hashes_verified": {
+    "open.npy": "5f9709d127ab52b46b4229566df2180159be011a8cb0393cc6a269119585cc61",
+    "high.npy": "e965cc0b62cb0af3ee296a451de401d2ff03ca1d401e51e4e93e4910dd4a6c32",
+    "low.npy": "daa64c199e6f03125eec620413062527c947b9876d85b2fc4326c658b024ca00",
+    "close.npy": "02c00108f3808c4f0a8078c2bede214f9d6357fc8fda8ecb487ec560290599da",
+    "close_ts_utc_ns.npy": "b1a33f16ad754851b9d202e5fe3925add711c0ba0c5a1221e55ce71c49c683b7",
+    "session_id.npy": "31b0172d1afa7a4557849f3fcda3f77d458fc871601fa818c0c0745c0323859e",
+    "sessions.npz": "af29321b38f15877c9bf9b009cd1daa1b058f4913c49475bb0e718d409685f79"
+  },
+  "scope": "known executions/accounting/source identity; full policy unresolved",
+  "illustration_selection": "first chronological case in each named outcome class"
+}

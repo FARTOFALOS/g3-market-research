@@ -1,0 +1,97 @@
+{
+  "v1": [
+    {
+      "reason": "busy",
+      "rows": 47876,
+      "median_tf": 229.0,
+      "median_remaining": 81.5,
+      "long_share": 0.5077491853956053
+    },
+    {
+      "reason": "entered_known",
+      "rows": 8355,
+      "median_tf": 6.0,
+      "median_remaining": 19.25,
+      "long_share": 0.5084380610412926
+    },
+    {
+      "reason": "open_outside_action",
+      "rows": 20,
+      "median_tf": 3.0,
+      "median_remaining": 10.875,
+      "long_share": 0.45
+    },
+    {
+      "reason": "policy_unknown_after_prior_gap",
+      "rows": 45134,
+      "median_tf": 342.0,
+      "median_remaining": 124.75,
+      "long_share": 0.5531971462755351
+    },
+    {
+      "reason": "prefix_unknown_changes_selection",
+      "rows": 533,
+      "median_tf": 42.0,
+      "median_remaining": 109.25,
+      "long_share": 0.5459662288930581
+    },
+    {
+      "reason": "simultaneous_not_selected",
+      "rows": 7,
+      "median_tf": 31.0,
+      "median_remaining": 22.75,
+      "long_share": 0.7142857142857143
+    }
+  ],
+  "v2": [
+    {
+      "reason": "busy",
+      "rows": 64730,
+      "median_tf": 200.0,
+      "median_remaining": 80.5,
+      "long_share": 0.5147535918430404
+    },
+    {
+      "reason": "entered_known",
+      "rows": 3225,
+      "median_tf": 6.0,
+      "median_remaining": 17.0,
+      "long_share": 0.5017054263565891
+    },
+    {
+      "reason": "entered_unknown",
+      "rows": 8,
+      "median_tf": 7.5,
+      "median_remaining": 29.875,
+      "long_share": 0.25
+    },
+    {
+      "reason": "open_outside_action",
+      "rows": 14,
+      "median_tf": 2.0,
+      "median_remaining": 7.25,
+      "long_share": 0.2857142857142857
+    },
+    {
+      "reason": "policy_unknown_after_prior_gap",
+      "rows": 33584,
+      "median_tf": 350.0,
+      "median_remaining": 125.5,
+      "long_share": 0.5562767984754645
+    },
+    {
+      "reason": "prefix_unknown_changes_selection",
+      "rows": 362,
+      "median_tf": 36.5,
+      "median_remaining": 90.75,
+      "long_share": 0.56353591160221
+    },
+    {
+      "reason": "simultaneous_not_selected",
+      "rows": 2,
+      "median_tf": 27.5,
+      "median_remaining": 13.875,
+      "long_share": 0.0
+    }
+  ]
+}

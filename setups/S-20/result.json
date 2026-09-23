@@ -1,0 +1,82 @@
+{
+  "rule": "S-20-v1-first-retest-opening-hour-body-cross",
+  "corpus_id": "f077783c4bd483c18d74c8d61825645c2dda7f81e391738989dd2cf623e5ab2e",
+  "period": [
+    "2020-01-01",
+    "2025-12-31"
+  ],
+  "runtime_versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "exchange_calendars": "4.13.2"
+  },
+  "exposure": "20 calendar-addressed quarter-first sessions and five x-ray scenes, 2021-2025; prior G3 archive exposure",
+  "sessions": 1508,
+  "known_sessions": 1486,
+  "unknown_sessions": 22,
+  "reasons": {
+    "closed_back_inside": 692,
+    "first_retest_no_body_cross": 633,
+    "session_close": 76,
+    "no_first_retest": 68,
+    "next_open_back_inside": 17,
+    "opening_hour_incomplete": 15,
+    "gap_before_first_retest": 7
+  },
+  "recognized_body_cross": 785,
+  "known_entries": 768,
+  "unknown_trade_outcomes": 0,
+  "known_net_sum_points": 1223.25,
+  "known_net_per_session_points": 0.8231830417227456,
+  "ci95_block20_conditional": [
+    -1.204498642789531,
+    3.0291117821904923
+  ],
+  "known_zero_cost_mean": 1.340006729475101,
+  "known_cost_0_75_mean": 0.9523889636608345,
+  "known_cost_2_mean": 0.3063593539703903,
+  "known_trade_mean_net": 1.5927734375,
+  "known_trade_median_net": -8.75,
+  "known_trade_worst_net": -74.5,
+  "known_trade_win_rate": 0.09765625,
+  "by_year_conditional": [
+    {
+      "year": "2020",
+      "sessions": 247,
+      "mean": -0.3117408906882591,
+      "trades": 128
+    },
+    {
+      "year": "2021",
+      "sessions": 250,
+      "mean": -1.628,
+      "trades": 139
+    },
+    {
+      "year": "2022",
+      "sessions": 250,
+      "mean": 0.424,
+      "trades": 129
+    },
+    {
+      "year": "2023",
+      "sessions": 250,
+      "mean": 2.054,
+      "trades": 133
+    },
+    {
+      "year": "2024",
+      "sessions": 248,
+      "mean": 3.4546370967741935,
+      "trades": 131
+    },
+    {
+      "year": "2025",
+      "sessions": 241,
+      "mean": 0.9585062240663901,
+      "trades": 108
+    }
+  ],
+  "code_sha256": "4ef84d3682769f7f6cb6dee5434264baa77a81ba386d009b1dd4eb3a4bb1f591",
+  "interpretation_boundary": "Known-session economics only; unknown sessions are not zeros, and selected v1 has no independent validation."
+}

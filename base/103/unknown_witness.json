@@ -1,0 +1,23 @@
+{
+  "riz_id": "riz_9b24b938b8485d915ad982d9bddd06b3",
+  "date": "2021-01-27",
+  "tf": 1,
+  "t0": "2021-01-27 11:43:00+00:00",
+  "observed_target_not_certified": 13469.0,
+  "first_span_pos": 4578371,
+  "gaps": [
+    {
+      "before": "2021-01-26 21:15:00+00:00",
+      "after": "2021-01-26 21:31:00+00:00",
+      "scheduled_pause": true,
+      "in_target_interval": false
+    },
+    {
+      "before": "2021-01-27 05:29:00+00:00",
+      "after": "2021-01-27 05:31:00+00:00",
+      "scheduled_pause": false,
+      "in_target_interval": false
+    }
+  ],
+  "meaning": "missing extrema/touches can change admission or E; no valid full-policy bounds were established"
+}

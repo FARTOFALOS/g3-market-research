@@ -1,0 +1,43 @@
+{
+  "parent": 132525,
+  "cells": 1440,
+  "sessions": 1255,
+  "structural_status": {
+    "structural_signal": 81655,
+    "prefix_unknown": 43016,
+    "target_already_visited": 5818,
+    "opposite_origin": 2036
+  },
+  "clock_status": {
+    "entry_window": 106574,
+    "at_or_after_close": 13998,
+    "before_03": 6692,
+    "non_XNYS_day": 5261
+  },
+  "signals": 65084,
+  "signal_minutes": 16824,
+  "distinct_actions": 33517,
+  "minutes_with_multiple_actions": 5388,
+  "minutes_with_opposite_directions": 0,
+  "signal_remaining_quantiles": {
+    "0.0": 0.25,
+    "0.1": 10.25,
+    "0.5": 67.75,
+    "0.9": 335.25,
+    "1.0": 2470.25
+  },
+  "signal_tf_quantiles": {
+    "0.0": 1.0,
+    "0.1": 4.0,
+    "0.5": 110.0,
+    "0.9": 1188.0,
+    "1.0": 1440.0
+  },
+  "prefix_unknown_in_entry_window": 35742,
+  "calendar_package": "4.13.2",
+  "scheduled_2020_2021_pauses_not_missing": 359,
+  "pause_sources": [
+    "https://www.cmegroup.com/content/dam/cmegroup/notices/ser/2021/06/SER-8788.pdf",
+    "https://www.cmegroup.com/education/articles-and-reports/faq-daily-settlement-price-determination-time-change.html"
+  ]
+}

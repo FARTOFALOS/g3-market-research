@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "NQ": {
+    "known_fills_and_exits_checked": 768,
+    "sessions_checked": 1508,
+    "source_corpus_id": "f077783c4bd483c18d74c8d61825645c2dda7f81e391738989dd2cf623e5ab2e"
+  },
+  "ES": {
+    "known_fills_and_exits_checked": 590,
+    "sessions_checked": 1508,
+    "source_corpus_id": "0f2f8a4c6800b10f7295101916e1c4e3ee66c2dc78bcd8944a597b296ccc5ddd"
+  },
+  "scope": "known fills, earliest exit predicate, accounting; not predictive validity or missing outcomes"
+}

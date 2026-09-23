@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "checks": [
+    "intrabar extremes do not trigger; target close fills next open",
+    "gap price honored; recovered winner remains in paired comparison",
+    "long/short symmetry",
+    "missing execution retained unknown",
+    "announced session close precedes later next-open exit",
+    "missing later session close cannot invalidate an already completed trade"
+  ],
+  "scope": "synthetic execution counterexamples; real-trade audit still required"
+}

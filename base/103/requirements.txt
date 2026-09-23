@@ -1,0 +1,5 @@
+numpy
+pandas
+pyarrow
+numba
+exchange_calendars==4.13.2

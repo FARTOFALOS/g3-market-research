@@ -1,0 +1,301 @@
+{
+  "v1": {
+    "scope": "conditional on completely identified sessions; NOT full policy economics",
+    "known_sessions": 728,
+    "unknown_sessions": 527,
+    "known_zero_sessions": 9,
+    "net_per_known_session": -12.134615384615385,
+    "ci95_conditional_by_block": {
+      "5": [
+        -18.865559904275297,
+        -5.461785450356462
+      ],
+      "20": [
+        -19.36875234369021,
+        -4.932518129222166
+      ],
+      "60": [
+        -20.55960911026176,
+        -5.581688247555439
+      ]
+    },
+    "net_per_known_session_cost_sensitivity": {
+      "0": -3.232142857142857,
+      "1": -12.134615384615385,
+      "2": -21.037087912087912
+    },
+    "known_sessions_break_even_roundtrip_cost": -0.36306125597901556,
+    "known_trade_net_mean": -0.909780272271316,
+    "known_trade_win_rate": 0.29316933365177933,
+    "known_trade_avg_win": 26.863747454175154,
+    "known_trade_avg_loss": -12.439803855258708,
+    "known_trade_min_net": -162.5,
+    "known_trade_max_net": 507.75,
+    "known_trade_mae_quantiles": {
+      "0.5": 8.0,
+      "0.9": 25.0,
+      "0.99": 60.337500000000546,
+      "1.0": 229.75
+    },
+    "known_trade_held_quantiles": {
+      "0.5": 4.0,
+      "0.9": 30.0,
+      "0.99": 251.1600000000035,
+      "1.0": 741.0
+    },
+    "known_trade_held_total_minutes": 129136.0,
+    "known_session_worst": -427.5,
+    "max_drawdown_within_contiguous_known_runs": 793.5,
+    "known_session_sum": -8834.0,
+    "known_session_sum_without_best_5pct": -18007.5,
+    "unknown_full_policy_drawdown": true,
+    "known_trade_tf_quantiles": {
+      "0.0": 1.0,
+      "0.5": 6.0,
+      "0.9": 82.0,
+      "1.0": 1378.0
+    },
+    "by_year_conditional": [
+      {
+        "year": "2021",
+        "sessions": 155,
+        "net": -3.725806451612903,
+        "entries": 1316
+      },
+      {
+        "year": "2022",
+        "sessions": 134,
+        "net": -4.358208955223881,
+        "entries": 1270
+      },
+      {
+        "year": "2023",
+        "sessions": 116,
+        "net": -17.55387931034483,
+        "entries": 1020
+      },
+      {
+        "year": "2024",
+        "sessions": 156,
+        "net": -18.147435897435898,
+        "entries": 1477
+      },
+      {
+        "year": "2025",
+        "sessions": 167,
+        "net": -16.797904191616766,
+        "entries": 1398
+      }
+    ]
+  },
+  "v2": {
+    "scope": "conditional on completely identified sessions; NOT full policy economics",
+    "known_sessions": 888,
+    "unknown_sessions": 367,
+    "known_zero_sessions": 9,
+    "net_per_known_session": -19.842905405405407,
+    "ci95_conditional_by_block": {
+      "5": [
+        -31.966942933081118,
+        -7.928074337439279
+      ],
+      "20": [
+        -31.872021888471945,
+        -7.568233551541269
+      ],
+      "60": [
+        -34.28040002190312,
+        -7.297615499113737
+      ]
+    },
+    "net_per_known_session_cost_sensitivity": {
+      "0": -16.84403153153153,
+      "1": -19.842905405405407,
+      "2": -22.84177927927928
+    },
+    "known_sessions_break_even_roundtrip_cost": -5.6167855801727375,
+    "known_trade_net_mean": -0.4941249226963513,
+    "known_trade_win_rate": 0.813543599257885,
+    "known_trade_avg_win": 31.541809198023564,
+    "known_trade_avg_loss": -141.20951585976627,
+    "known_trade_min_net": -755.5,
+    "known_trade_max_net": 1000.25,
+    "known_trade_mae_quantiles": {
+      "0.5": 21.25,
+      "0.9": 179.92500000000007,
+      "0.99": 462.58500000000004,
+      "1.0": 1255.5
+    },
+    "known_trade_held_quantiles": {
+      "0.5": 56.0,
+      "0.9": 493.7000000000003,
+      "0.99": 770.6700000000001,
+      "1.0": 780.0
+    },
+    "known_trade_held_total_minutes": 534227.0,
+    "known_session_worst": -718.5,
+    "max_drawdown_within_contiguous_known_runs": 1584.75,
+    "known_session_sum": -17620.5,
+    "known_session_sum_without_best_5pct": -33925.75,
+    "unknown_full_policy_drawdown": true,
+    "known_trade_tf_quantiles": {
+      "0.0": 1.0,
+      "0.5": 6.0,
+      "0.9": 78.70000000000027,
+      "1.0": 1354.0
+    },
+    "by_year_conditional": [
+      {
+        "year": "2021",
+        "sessions": 185,
+        "net": -15.974324324324325,
+        "entries": 577
+      },
+      {
+        "year": "2022",
+        "sessions": 164,
+        "net": -20.45731707317073,
+        "entries": 475
+      },
+      {
+        "year": "2023",
+        "sessions": 164,
+        "net": -14.303353658536585,
+        "entries": 467
+      },
+      {
+        "year": "2024",
+        "sessions": 185,
+        "net": -24.35945945945946,
+        "entries": 580
+      },
+      {
+        "year": "2025",
+        "sessions": 190,
+        "net": -23.46315789473684,
+        "entries": 564
+      }
+    ]
+  },
+  "pairs": {
+    "scope": "events in certified v1 position prefixes, with known counterfactual continuation; not all potential events",
+    "observed_events": 5870,
+    "known_pairs": 5851,
+    "unknown_counterfactual": 19,
+    "mean_exit_minus_continue": 0.6247649974363356,
+    "ci95_conditional_by_block": {
+      "5": [
+        -2.854659131013429,
+        4.0985939979736195
+      ],
+      "20": [
+        -3.254768776853773,
+        4.206210070863357
+      ],
+      "60": [
+        -3.5375151690322615,
+        3.88142561092178
+      ]
+    },
+    "recovered_winners": 4138,
+    "recovered_winners_share": 0.7072295334130918,
+    "exit_better_fraction": 0.26798837805503334,
+    "delta_quantiles": {
+      "0.0": -1102.75,
+      "0.01": -213.0,
+      "0.1": -83.5,
+      "0.5": -20.0,
+      "0.9": 128.5,
+      "0.99": 392.5,
+      "1.0": 2271.0
+    }
+  },
+  "library_comparison": {
+    "v1": {
+      "s19_certified_active_sessions": 1135,
+      "s07_active_sessions": 1246,
+      "s18_active_sessions": 732,
+      "shared_active_s07": 1135,
+      "shared_active_s18": 667,
+      "known_held_minutes": 129136.0,
+      "overlap_s07_minutes": 13872.0,
+      "same_direction_s07_minutes": 10394.0,
+      "overlap_s18_minutes": 21669.0,
+      "same_direction_s18_minutes": 19736.0,
+      "s07_common_exact_days_for_correlation": 719,
+      "s07_daily_correlation": 0.21010298805349262,
+      "s18_common_exact_days_for_correlation": 706,
+      "s18_daily_correlation": 0.2973070258044622,
+      "qualification": "descriptive selected known support; not independence or executable portfolio"
+    },
+    "v2": {
+      "s19_certified_active_sessions": 1135,
+      "s07_active_sessions": 1246,
+      "s18_active_sessions": 732,
+      "shared_active_s07": 1135,
+      "shared_active_s18": 667,
+      "known_held_minutes": 534227.0,
+      "overlap_s07_minutes": 50001.0,
+      "same_direction_s07_minutes": 21347.0,
+      "overlap_s18_minutes": 75518.0,
+      "same_direction_s18_minutes": 23302.0,
+      "s07_common_exact_days_for_correlation": 879,
+      "s07_daily_correlation": 0.008216297526224593,
+      "s18_common_exact_days_for_correlation": 867,
+      "s18_daily_correlation": -0.13611377275025552,
+      "qualification": "descriptive selected known support; not independence or executable portfolio"
+    }
+  },
+  "clean_base_decision": {
+    "common_fully_known": {
+      "v1": {
+        "sessions": 726,
+        "trades": 6460,
+        "net_sum": -8846.5,
+        "net_per_session": -12.18526170798898,
+        "zero_cost_mean": -3.2871900826446283,
+        "ci95_block20": [
+          -19.433356851892867,
+          -4.9587762605042025
+        ]
+      },
+      "v2": {
+        "sessions": 726,
+        "trades": 2234,
+        "net_sum": 3988.0,
+        "net_per_session": 5.493112947658402,
+        "zero_cost_mean": 8.570247933884298,
+        "ci95_block20": [
+          -6.511762772785253,
+          18.380233554746084
+        ]
+      }
+    },
+    "v2_known_while_v1_unknown": {
+      "v2": {
+        "sessions": 162,
+        "trades": 429,
+        "net_sum": -21608.5,
+        "net_per_session": -133.3858024691358,
+        "zero_cost_mean": -130.73765432098764,
+        "ci95_block20": [
+          -160.57670815677966,
+          -104.24092536071032
+        ]
+      },
+      "exit_reason": [
+        {
+          "reason": "session_close",
+          "trades": 154,
+          "net_sum": -27568.25
+        },
+        {
+          "reason": "target_close",
+          "trades": 275,
+          "net_sum": 5959.75
+        }
+      ]
+    },
+    "qualification": "Common-day membership is determined by both policy paths and data completeness; it is not an ex-ante trading selector or a clean holdout. Full-population signs remain unknown."
+  }
+}

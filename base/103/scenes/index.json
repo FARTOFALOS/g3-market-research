@@ -1,0 +1,38 @@
+[
+  {
+    "label": "target",
+    "riz_id": "riz_558a02643f1cdc239fdc8ac0d9f078b9",
+    "tf": 7,
+    "q": 4556213,
+    "target": 12937.25,
+    "target_pos": 4556177,
+    "far": 12941.75,
+    "entry": 12941.0,
+    "exit": 12935.0,
+    "net": 5.0
+  },
+  {
+    "label": "zone_loss",
+    "riz_id": "riz_8d49b586647d49c7be7aad6157e6655c",
+    "tf": 1,
+    "q": 4556147,
+    "target": 12947.25,
+    "target_pos": 4556144,
+    "far": 12945.75,
+    "entry": 12946.25,
+    "exit": 12945.25,
+    "net": -2.0
+  },
+  {
+    "label": "recovered_after_exit",
+    "riz_id": "riz_d7a89133db96a1c1f73bb9fd4e0c30fd",
+    "tf": 4,
+    "q": 4556014,
+    "target": 12953.0,
+    "target_pos": 4555981,
+    "far": 12933.0,
+    "entry": 12935.25,
+    "exit": 12931.75,
+    "net": -4.5
+  }
+]

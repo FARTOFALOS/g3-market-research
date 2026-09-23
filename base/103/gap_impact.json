@@ -1,0 +1,198 @@
+{
+  "scope": "NQ, UTC-close-labelled minutes 2020-01-01 through 2025-12-31; same session_id intervals",
+  "corpus_id": "f077783c4bd483c18d74c8d61825645c2dda7f81e391738989dd2cf623e5ab2e",
+  "nq_usd_per_point": 20.0,
+  "nq_multiplier_source": "https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.contractSpecs.html",
+  "observed_minutes": 2101630,
+  "nominal_session_span_minute_slots_including_halts": 2112459,
+  "scheduled_15_minute_halts": 359,
+  "scheduled_halt_minute_slots": 5385,
+  "other_gap_intervals": 1509,
+  "other_missing_minute_slots": 5444,
+  "expected_minute_slots_excluding_documented_halts": 2107074,
+  "other_missing_fraction": 0.0025836776496696366,
+  "observed_one_minute_range_points": {
+    "median": 4.5,
+    "p99": 32.25,
+    "p999": 61.0927499999525
+  },
+  "other_gap_length_bins_intervals": {
+    "1": 971,
+    "2_to_5": 403,
+    "6_to_15": 98,
+    "16_to_60": 33,
+    "over_60": 4
+  },
+  "other_gap_max_missing_minutes": 645,
+  "observed_market_sessions": 1543,
+  "market_sessions_with_other_gap": 219,
+  "xnys_policy_sessions_2021_2025": 1255,
+  "xnys_policy_sessions_with_direct_market_gap": 158,
+  "riz_with_any_prefix_gap": 45506,
+  "entry_window_riz_with_unknown_prefix": 35742,
+  "entry_window_t0_minutes_with_unknown_prefix": 3227,
+  "entry_window_sessions_with_unknown_prefix": 530,
+  "policy": {
+    "v1": {
+      "known_sessions": 728,
+      "unknown_sessions": 527,
+      "first_uncertainty_reason_sessions": {
+        "prefix_unknown_changes_selection": 527
+      },
+      "first_blocking_prefix_gap_context": {
+        "sessions": 527,
+        "distinct_market_gap_intervals_across_these_prefixes": 1009,
+        "exactly_one_missing_minute": 185,
+        "only_gaps_of_at_most_five_minutes": 405,
+        "any_gap_over_sixty_minutes": 42,
+        "gap_before_or_at_first_span": 241,
+        "gap_after_first_span": 331,
+        "gap_in_forming_c3_bar": 21,
+        "gap_between_birth_and_first_span": 226,
+        "only_gap_after_first_span": 286,
+        "native_tf_at_least_60_minutes": 241,
+        "single_one_minute_gap_on_tf_at_least_60": 76,
+        "single_one_minute_gap_nearest_edge_to_E_points": {
+          "count": 185,
+          "median": 128.25,
+          "p10": 28.150000000000002,
+          "p90": 515.75
+        },
+        "missing_minutes_median": 3.0,
+        "missing_minutes_p90": 304.4000000000002,
+        "gap_intervals_median": 2.0,
+        "only_after_span_min_observed_edge_to_E_points": {
+          "median": 255.5,
+          "p10": 60.0,
+          "p90": 691.75,
+          "min": 8.25
+        }
+      },
+      "entered_unknown_position_gap_lengths": [],
+      "buckets": {
+        "no_direct_gap_policy_unknown": {
+          "sessions": 386,
+          "known_trades": 1605,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": null,
+          "net_usd_if_fully_known": null,
+          "certified_prefix_net_sum_only": 1320.0,
+          "certified_prefix_net_usd_only": 26400.0
+        },
+        "no_direct_gap_policy_known": {
+          "sessions": 711,
+          "known_trades": 6387,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": -8704.25,
+          "net_usd_if_fully_known": -174085.0,
+          "certified_prefix_net_sum_only": -8704.25,
+          "certified_prefix_net_usd_only": -174085.0
+        },
+        "direct_gap_policy_unknown": {
+          "sessions": 141,
+          "known_trades": 288,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": null,
+          "net_usd_if_fully_known": null,
+          "certified_prefix_net_sum_only": -104.5,
+          "certified_prefix_net_usd_only": -2090.0
+        },
+        "direct_gap_policy_known": {
+          "sessions": 17,
+          "known_trades": 94,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": -129.75,
+          "net_usd_if_fully_known": -2595.0,
+          "certified_prefix_net_sum_only": -129.75,
+          "certified_prefix_net_usd_only": -2595.0
+        }
+      }
+    },
+    "v2": {
+      "known_sessions": 888,
+      "unknown_sessions": 367,
+      "first_uncertainty_reason_sessions": {
+        "entered_unknown": 8,
+        "prefix_unknown_changes_selection": 359
+      },
+      "first_blocking_prefix_gap_context": {
+        "sessions": 359,
+        "distinct_market_gap_intervals_across_these_prefixes": 1007,
+        "exactly_one_missing_minute": 131,
+        "only_gaps_of_at_most_five_minutes": 281,
+        "any_gap_over_sixty_minutes": 29,
+        "gap_before_or_at_first_span": 159,
+        "gap_after_first_span": 229,
+        "gap_in_forming_c3_bar": 10,
+        "gap_between_birth_and_first_span": 154,
+        "only_gap_after_first_span": 200,
+        "native_tf_at_least_60_minutes": 155,
+        "single_one_minute_gap_on_tf_at_least_60": 47,
+        "single_one_minute_gap_nearest_edge_to_E_points": {
+          "count": 131,
+          "median": 118.25,
+          "p10": 19.0,
+          "p90": 498.25
+        },
+        "missing_minutes_median": 2.0,
+        "missing_minutes_p90": 303.19999999999993,
+        "gap_intervals_median": 2.0,
+        "only_after_span_min_observed_edge_to_E_points": {
+          "median": 226.625,
+          "p10": 55.725,
+          "p90": 672.5,
+          "min": 8.25
+        }
+      },
+      "entered_unknown_position_gap_lengths": [
+        1,
+        1,
+        12,
+        1,
+        3,
+        10,
+        2,
+        1
+      ],
+      "buckets": {
+        "no_direct_gap_policy_unknown": {
+          "sessions": 245,
+          "known_trades": 436,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": null,
+          "net_usd_if_fully_known": null,
+          "certified_prefix_net_sum_only": 14000.75,
+          "certified_prefix_net_usd_only": 280015.0
+        },
+        "no_direct_gap_policy_known": {
+          "sessions": 852,
+          "known_trades": 2571,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": -15911.0,
+          "net_usd_if_fully_known": -318220.0,
+          "certified_prefix_net_sum_only": -15911.0,
+          "certified_prefix_net_usd_only": -318220.0
+        },
+        "direct_gap_policy_unknown": {
+          "sessions": 122,
+          "known_trades": 135,
+          "unknown_trade_outcomes": 8,
+          "net_sum_if_fully_known": null,
+          "net_usd_if_fully_known": null,
+          "certified_prefix_net_sum_only": 2021.75,
+          "certified_prefix_net_usd_only": 40435.0
+        },
+        "direct_gap_policy_known": {
+          "sessions": 36,
+          "known_trades": 92,
+          "unknown_trade_outcomes": 0,
+          "net_sum_if_fully_known": -1709.5,
+          "net_usd_if_fully_known": -34190.0,
+          "certified_prefix_net_sum_only": -1709.5,
+          "certified_prefix_net_usd_only": -34190.0
+        }
+      }
+    }
+  },
+  "qualification": "Other gaps are absent archive bars after removing the documented regular halt; individual exceptional exchange closures are not adjudicated. Policy-unknown sessions have only certified-prefix money, not full-session P&L. A gap in a RIZ prefix can predate the affected policy session. First-uncertainty addresses are conservative replay stops, not proven changed trades. Neighbor-to-E distances describe required excursions and are not hard price bounds."
+}

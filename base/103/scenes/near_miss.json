@@ -1,0 +1,8 @@
+{
+  "riz_id": "riz_bbecc8c41d7478415ce265691a67cd3e",
+  "tf": 1,
+  "q": 4556365,
+  "target": 12922.5,
+  "t0_close": 12916.25,
+  "reason": "original extreme already visited after span1; no v1/v2 signal"
+}
