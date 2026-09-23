@@ -1,0 +1,74 @@
+{
+ "territory": {
+  "first_minute_utc": "2026-05-04 04:39:00+00:00",
+  "last_minute_utc": "2026-07-10 21:00:00+00:00",
+  "utc_days_on_tape": 59
+ },
+ "forward_corpus_id": "286635663325395b7501ae36fcbb775a5a72802b07ca97f9865065004f200281",
+ "riz_after_cutoff": 4659,
+ "close_break_films": 947,
+ "cell_signals": 32,
+ "signal_classes": {
+  "target_first": 23,
+  "boundary_first": 9
+ },
+ "fork_codes": {
+  "win": 9,
+  "cancel": 23,
+  "same_bar": 0,
+  "gap_through_b": 0,
+  "gap_through_a": 0,
+  "lost_observability": 0,
+  "archive_edge": 0
+ },
+ "mean_d": 51.23,
+ "mean_s": 28.8,
+ "mean_p0": 0.3708,
+ "single_unit_status": {
+  "skipped_overlap": 29,
+  "taken_boundary_first": 2,
+  "taken_target_first": 1
+ },
+ "taken": 3,
+ "target_first_rate_resolved": 0.3333,
+ "participation_rate": 0.0938,
+ "skipped_overlap_rate": 0.9062,
+ "unknown_rate_taken": 0.0,
+ "gap_through_b_exits": 0,
+ "net": {
+  "identified": {
+   "n": 3,
+   "net_per_position_pts": -27.25,
+   "ci95_widest_day_blocks": [
+    -108.75,
+    45.5
+   ],
+   "total_pts": -81.75,
+   "per_utc_day_pts": -1.3856,
+   "total_usd_one_contract": -1635.0
+  },
+  "favorable": {
+   "n": 3,
+   "net_per_position_pts": -27.25,
+   "ci95_widest_day_blocks": [
+    -108.75,
+    45.5
+   ],
+   "total_pts": -81.75,
+   "per_utc_day_pts": -1.3856,
+   "total_usd_one_contract": -1635.0
+  },
+  "adverse": {
+   "n": 3,
+   "net_per_position_pts": -27.25,
+   "ci95_widest_day_blocks": [
+    -108.75,
+    45.5
+   ],
+   "total_pts": -81.75,
+   "per_utc_day_pts": -1.3856,
+   "total_usd_one_contract": -1635.0
+  }
+ },
+ "decision_7_3": "UNRESOLVED"
+}
