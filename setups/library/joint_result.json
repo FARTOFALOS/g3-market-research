@@ -1,0 +1,490 @@
+{
+ "validation": {
+  "history_s07_usd_equal": 5114,
+  "history_d30_usd_equal": 5114,
+  "history_s07_exit_min_equal": 5114,
+  "history_d30_exit_min_equal": 5114,
+  "history_sessions": 5114,
+  "s18_history_status_equal": 5101,
+  "s18_history_sessions": 5101,
+  "s18_history_usd_equal_to_cent": 4976,
+  "s18_history_ok": 4976,
+  "forward_s07_equal": 47,
+  "forward_d30_equal": 47,
+  "forward_sessions": 47,
+  "s18_forward_usd_equal_to_cent": 47,
+  "s18_forward_ok": 47
+ },
+ "history_2020_2026_05_04": {
+  "s07": {
+   "sessions": 1592,
+   "usd_per_session": 144.07,
+   "t": 3.19,
+   "ci95_block20": [
+    55.11,
+    237.54
+   ],
+   "total_usd": 229360.0,
+   "max_drawdown_usd": -37585.0,
+   "worst_day_usd": -6055.0,
+   "share_positive": 0.356,
+   "total_without_top5pct_days": -177350.0,
+   "by_year": {
+    "2020": 13225.0,
+    "2021": 24220.0,
+    "2022": 44440.0,
+    "2023": 22405.0,
+    "2024": 25080.0,
+    "2025": 63870.0,
+    "2026": 36120.0
+   }
+  },
+  "s17": {
+   "sessions": 1592,
+   "usd_per_session": 80.27,
+   "t": 2.2,
+   "ci95_block20": [
+    -3.79,
+    162.46
+   ],
+   "total_usd": 127790.0,
+   "max_drawdown_usd": -34270.0,
+   "worst_day_usd": -9390.0,
+   "share_positive": 0.528,
+   "total_without_top5pct_days": -132995.0,
+   "by_year": {
+    "2020": -4365.0,
+    "2021": 2410.0,
+    "2022": 28520.0,
+    "2023": -8680.0,
+    "2024": 40310.0,
+    "2025": 31555.0,
+    "2026": 38040.0
+   }
+  },
+  "s18": {
+   "sessions": 1555,
+   "usd_per_session": 141.6,
+   "t": 3.17,
+   "ci95_block20": [
+    69.6,
+    226.92
+   ],
+   "total_usd": 220190.0,
+   "max_drawdown_usd": -37300.0,
+   "worst_day_usd": -6285.0,
+   "share_positive": 0.273,
+   "total_without_top5pct_days": -168335.0,
+   "by_year": {
+    "2020": 25235.0,
+    "2021": 25430.0,
+    "2022": 42735.0,
+    "2023": 44890.0,
+    "2024": 46135.0,
+    "2025": 37190.0,
+    "2026": -1425.0
+   }
+  },
+  "A3": {
+   "sessions": 1555,
+   "usd_per_session": 372.72,
+   "t": 4.09,
+   "ci95_block20": [
+    193.9,
+    563.77
+   ],
+   "total_usd": 579585.0,
+   "max_drawdown_usd": -52800.0,
+   "worst_day_usd": -15445.0,
+   "share_positive": 0.455,
+   "total_without_top5pct_days": -230575.0,
+   "by_year": {
+    "2020": 33655.0,
+    "2021": 52060.0,
+    "2022": 115695.0,
+    "2023": 58040.0,
+    "2024": 115125.0,
+    "2025": 137530.0,
+    "2026": 67480.0
+   }
+  },
+  "A2": {
+   "sessions": 1555,
+   "usd_per_session": 286.79,
+   "t": 4.13,
+   "ci95_block20": [
+    165.46,
+    424.65
+   ],
+   "total_usd": 445960.0,
+   "max_drawdown_usd": -32935.0,
+   "worst_day_usd": -10110.0,
+   "share_positive": 0.421,
+   "total_without_top5pct_days": -198580.0,
+   "by_year": {
+    "2020": 39435.0,
+    "2021": 49650.0,
+    "2022": 87175.0,
+    "2023": 66480.0,
+    "2024": 73550.0,
+    "2025": 98905.0,
+    "2026": 30765.0
+   }
+  },
+  "B1": {
+   "sessions": 1555,
+   "usd_per_session": 244.73,
+   "t": 4.11,
+   "ci95_block20": [
+    130.59,
+    362.5
+   ],
+   "total_usd": 380555.0,
+   "max_drawdown_usd": -29695.0,
+   "worst_day_usd": -10110.0,
+   "share_positive": 0.439,
+   "total_without_top5pct_days": -129765.0,
+   "by_year": {
+    "2020": 40385.0,
+    "2021": 18045.0,
+    "2022": 88010.0,
+    "2023": 63440.0,
+    "2024": 51935.0,
+    "2025": 91220.0,
+    "2026": 27520.0
+   }
+  },
+  "B2": {
+   "sessions": 1556,
+   "usd_per_session": 204.4,
+   "t": 3.63,
+   "ci95_block20": [
+    99.68,
+    317.57
+   ],
+   "total_usd": 318040.0,
+   "max_drawdown_usd": -29815.0,
+   "worst_day_usd": -10975.0,
+   "share_positive": 0.517,
+   "total_without_top5pct_days": -133300.0,
+   "by_year": {
+    "2020": 14125.0,
+    "2021": 14980.0,
+    "2022": 74855.0,
+    "2023": 39150.0,
+    "2024": 67040.0,
+    "2025": 81895.0,
+    "2026": 25995.0
+   }
+  },
+  "correlation_daily": {
+   "s07_s17": 0.615,
+   "s07_s18": 0.182,
+   "s17_s18": 0.025
+  },
+  "s18_blocked_by_s07": {
+   "sessions_changed": 394,
+   "usd_lost_vs_standalone": -65405.0
+  },
+  "s18_blocked_by_s17": {
+   "sessions_changed": 392,
+   "usd_lost_vs_standalone": -33240.0
+  }
+ },
+ "history_2021_2025": {
+  "s07": {
+   "sessions": 1255,
+   "usd_per_session": 143.44,
+   "t": 2.78,
+   "ci95_block20": [
+    33.27,
+    233.45
+   ],
+   "total_usd": 180015.0,
+   "max_drawdown_usd": -37585.0,
+   "worst_day_usd": -6055.0,
+   "share_positive": 0.356,
+   "total_without_top5pct_days": -141870.0,
+   "by_year": {
+    "2021": 24220.0,
+    "2022": 44440.0,
+    "2023": 22405.0,
+    "2024": 25080.0,
+    "2025": 63870.0
+   }
+  },
+  "s17": {
+   "sessions": 1255,
+   "usd_per_session": 74.99,
+   "t": 1.79,
+   "ci95_block20": [
+    -19.49,
+    159.65
+   ],
+   "total_usd": 94115.0,
+   "max_drawdown_usd": -34270.0,
+   "worst_day_usd": -9390.0,
+   "share_positive": 0.524,
+   "total_without_top5pct_days": -109740.0,
+   "by_year": {
+    "2021": 2410.0,
+    "2022": 28520.0,
+    "2023": -8680.0,
+    "2024": 40310.0,
+    "2025": 31555.0
+   }
+  },
+  "s18": {
+   "sessions": 1229,
+   "usd_per_session": 159.79,
+   "t": 3.05,
+   "ci95_block20": [
+    72.0,
+    255.96
+   ],
+   "total_usd": 196380.0,
+   "max_drawdown_usd": -29195.0,
+   "worst_day_usd": -6265.0,
+   "share_positive": 0.279,
+   "total_without_top5pct_days": -123865.0,
+   "by_year": {
+    "2021": 25430.0,
+    "2022": 42735.0,
+    "2023": 44890.0,
+    "2024": 46135.0,
+    "2025": 37190.0
+   }
+  },
+  "A3": {
+   "sessions": 1229,
+   "usd_per_session": 389.3,
+   "t": 3.7,
+   "ci95_block20": [
+    159.99,
+    587.44
+   ],
+   "total_usd": 478450.0,
+   "max_drawdown_usd": -52800.0,
+   "worst_day_usd": -15445.0,
+   "share_positive": 0.446,
+   "total_without_top5pct_days": -177500.0,
+   "by_year": {
+    "2021": 52060.0,
+    "2022": 115695.0,
+    "2023": 58040.0,
+    "2024": 115125.0,
+    "2025": 137530.0
+   }
+  },
+  "A2": {
+   "sessions": 1229,
+   "usd_per_session": 305.74,
+   "t": 3.8,
+   "ci95_block20": [
+    147.01,
+    454.66
+   ],
+   "total_usd": 375760.0,
+   "max_drawdown_usd": -32935.0,
+   "worst_day_usd": -8170.0,
+   "share_positive": 0.417,
+   "total_without_top5pct_days": -148915.0,
+   "by_year": {
+    "2021": 49650.0,
+    "2022": 87175.0,
+    "2023": 66480.0,
+    "2024": 73550.0,
+    "2025": 98905.0
+   }
+  },
+  "B1": {
+   "sessions": 1229,
+   "usd_per_session": 254.39,
+   "t": 3.71,
+   "ci95_block20": [
+    115.62,
+    386.74
+   ],
+   "total_usd": 312650.0,
+   "max_drawdown_usd": -29695.0,
+   "worst_day_usd": -7730.0,
+   "share_positive": 0.434,
+   "total_without_top5pct_days": -100210.0,
+   "by_year": {
+    "2021": 18045.0,
+    "2022": 88010.0,
+    "2023": 63440.0,
+    "2024": 51935.0,
+    "2025": 91220.0
+   }
+  },
+  "B2": {
+   "sessions": 1230,
+   "usd_per_session": 225.95,
+   "t": 3.44,
+   "ci95_block20": [
+    89.37,
+    350.02
+   ],
+   "total_usd": 277920.0,
+   "max_drawdown_usd": -29815.0,
+   "worst_day_usd": -10220.0,
+   "share_positive": 0.515,
+   "total_without_top5pct_days": -98560.0,
+   "by_year": {
+    "2021": 14980.0,
+    "2022": 74855.0,
+    "2023": 39150.0,
+    "2024": 67040.0,
+    "2025": 81895.0
+   }
+  },
+  "correlation_daily": {
+   "s07_s17": 0.611,
+   "s07_s18": 0.192,
+   "s17_s18": 0.044
+  },
+  "s18_blocked_by_s07": {
+   "sessions_changed": 318,
+   "usd_lost_vs_standalone": -63110.0
+  },
+  "s18_blocked_by_s17": {
+   "sessions_changed": 319,
+   "usd_lost_vs_standalone": -18615.0
+  }
+ },
+ "forward_2026_05_04_07_10_seen": {
+  "s07": {
+   "sessions": 47,
+   "usd_per_session": -196.49,
+   "t": -0.41,
+   "ci95_block20": [
+    -1574.52,
+    373.83
+   ],
+   "total_usd": -9235.0,
+   "max_drawdown_usd": -37050.0,
+   "worst_day_usd": -6295.0,
+   "share_positive": 0.319,
+   "total_without_top5pct_days": -23050.0,
+   "by_year": {
+    "2026": -9235.0
+   }
+  },
+  "s17": {
+   "sessions": 47,
+   "usd_per_session": -170.0,
+   "t": -0.38,
+   "ci95_block20": [
+    -1054.69,
+    122.88
+   ],
+   "total_usd": -7990.0,
+   "max_drawdown_usd": -23905.0,
+   "worst_day_usd": -6400.0,
+   "share_positive": 0.468,
+   "total_without_top5pct_days": -24310.0,
+   "by_year": {
+    "2026": -7990.0
+   }
+  },
+  "s18": {
+   "sessions": 47,
+   "usd_per_session": 293.19,
+   "t": 0.62,
+   "ci95_block20": [
+    -18.44,
+    961.56
+   ],
+   "total_usd": 13780.0,
+   "max_drawdown_usd": -11030.0,
+   "worst_day_usd": -6120.0,
+   "share_positive": 0.34,
+   "total_without_top5pct_days": -8800.0,
+   "by_year": {
+    "2026": 13780.0
+   }
+  },
+  "A3": {
+   "sessions": 47,
+   "usd_per_session": -73.3,
+   "t": -0.08,
+   "ci95_block20": [
+    -1769.38,
+    703.02
+   ],
+   "total_usd": -3445.0,
+   "max_drawdown_usd": -43385.0,
+   "worst_day_usd": -13875.0,
+   "share_positive": 0.426,
+   "total_without_top5pct_days": -30820.0,
+   "by_year": {
+    "2026": -3445.0
+   }
+  },
+  "A2": {
+   "sessions": 47,
+   "usd_per_session": 96.7,
+   "t": 0.14,
+   "ci95_block20": [
+    -875.26,
+    655.22
+   ],
+   "total_usd": 4545.0,
+   "max_drawdown_usd": -24795.0,
+   "worst_day_usd": -12415.0,
+   "share_positive": 0.362,
+   "total_without_top5pct_days": -16405.0,
+   "by_year": {
+    "2026": 4545.0
+   }
+  },
+  "B1": {
+   "sessions": 47,
+   "usd_per_session": 57.13,
+   "t": 0.09,
+   "ci95_block20": [
+    -706.09,
+    427.92
+   ],
+   "total_usd": 2685.0,
+   "max_drawdown_usd": -23120.0,
+   "worst_day_usd": -12415.0,
+   "share_positive": 0.362,
+   "total_without_top5pct_days": -16575.0,
+   "by_year": {
+    "2026": 2685.0
+   }
+  },
+  "B2": {
+   "sessions": 47,
+   "usd_per_session": 530.11,
+   "t": 0.9,
+   "ci95_block20": [
+    -24.63,
+    835.01
+   ],
+   "total_usd": 24915.0,
+   "max_drawdown_usd": -13485.0,
+   "worst_day_usd": -8085.0,
+   "share_positive": 0.553,
+   "total_without_top5pct_days": 2360.0,
+   "by_year": {
+    "2026": 24915.0
+   }
+  },
+  "correlation_daily": {
+   "s07_s17": 0.633,
+   "s07_s18": -0.023,
+   "s17_s18": -0.238
+  },
+  "s18_blocked_by_s07": {
+   "sessions_changed": 14,
+   "usd_lost_vs_standalone": -1860.0
+  },
+  "s18_blocked_by_s17": {
+   "sessions_changed": 13,
+   "usd_lost_vs_standalone": 19125.0
+  }
+ }
+}

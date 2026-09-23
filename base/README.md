@@ -59,6 +59,7 @@ rg -n "^- \*\*вывод:\*\* не держится" base
 
 | № | Почему здесь | as-of |
 |---|---|---|
+| [091](091-ekonomicheskoe-zavershenie-086-ispolnimyy-istoricheskiy-kandidat.md) | Проверка во времени на ленте 2026-05-04…07-10: три эпизода, UNRESOLVED | 2026-09-23 |
 | [002](002-vozvrat-k-vyhodnoy-granitse.md), [022](022-riz-eto-neprotorgovannaya-likvidnost.md) | Пересчёт: быстрое касание и достижение дальней границы — как у обычной линии | 2026-09-23 |
 | [104](104-pervoe-ispytanie-utrennego-ekstremuma.md) | Первый повторный тест утреннего экстремума, S-20 v1 закрыта | 2026-09-23 |
 | [103](103-biografiya-riz-i-ostavsheesya-dvizhenie.md) | Возврат к экстремуму биографии RIZ, S-19 v1/v2 не продвигаются | 2026-09-23 |

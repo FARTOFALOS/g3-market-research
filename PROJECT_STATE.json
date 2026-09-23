@@ -47,11 +47,11 @@
     ],
     "arc": "083..091 (Event X-Ray -> structural fork -> economic completion)",
     "candidates": {
-      "S-07 family": "S-07 (frozen), S-09 morning door, S-17 (a cell of the S-07 grid), weakly S-08; S-18 related (r 0.18). All at the NY cash open, no RIZ field in the rules. Not independent candidates; no joint position/risk replay exists, so their results do not add up",
-      "S-16 / 086-091": "the only RIZ candidate: EXECUTABLE HISTORICAL CANDIDATE on a selected NQ cell, temporal transfer not established; weakened by 097 (NQ-only lean, ES/YM zero, NQ 2006-2018 negative); +8.97 pt is per executed trade with known outcome, not per session"
+      "S-07 family": "S-07 (frozen), S-09 morning door, S-17 (a cell of the S-07 grid), weakly S-08; S-18 related. All at the NY cash open, no RIZ field in the rules. Joint replay 2026-09-23 (setups/library/JOINT_S07_S17_S18.md): S-17 correlates 0.62 with S-07 (a shorter exit of the same trade); S-07 and S-18 correlate 0.18 and one contract S-07-then-S-18 gives +$245/session, max drawdown $29,695 (NQ 2020-2026-05); every variant is negative without its best 5% days",
+      "S-16 / 086-091": "the only RIZ candidate: EXECUTABLE HISTORICAL CANDIDATE on a selected NQ cell, temporal transfer not established; weakened by 097; temporal test run 2026-09-23 on the already-seen tape 2026-05-04..07-10: three physical episodes, 1 target / 2 stops, -81.75 pt, decision UNRESOLVED (FREEZE_091_TEMPORAL 7.6-7.7)"
     },
-    "frozen_action": "base/091/FREEZE_091_TEMPORAL.md (single-unit NQ temporal test operator). The available continuation tape is NOT outcome-blind for the project: S-17 and S-18 opened their outcomes on the same 47 sessions (FREEZE_091_TEMPORAL §7.5). Whether it may serve as the primary temporal territory is the trader's decision; the test does not run before it",
-    "temporal_test_status": "tape available since 2026-09-21, test NOT run: forward continuation NQ/ES 2026-05-04..2026-07-10 under data/forward (canonical prefix byte-identical), accepted under a gate relaxed by the human's word of 2026-09-21; 091-level event agreement on overlap not measured yet; see base/091/source_gate_forward_2026-09-21.json. Earlier GitHub NQ_1m source stays rejected (base/091/source_gate.json)",
+    "frozen_action": "base/091/FREEZE_091_TEMPORAL.md. Run once on 2026-09-23 by the trader's decision on the continuation tape (not outcome-blind: S-17, S-18 opened it); forward RIZ built by base/091/temporal/lens_riz.py (exact copy of the frozen machine rules: 14,356/14,356 against the field); result UNRESOLVED",
+    "temporal_test_status": "RUN 2026-09-23: 32 cell signals = 3 physical episodes, 3 positions taken, net -27.25 pt per position, CI [-108.75; +45.50], UNRESOLVED by 7.3. Gate 7.4 measured before the run: lens = field 14,356/14,356; harness reproduced frozen 084 and 091 holdout exactly; lynx bars on the overlap gave cell 104/104 with identical outcomes",
     "data_tape_end_utc": "2026-05-04",
     "forward_tape_end_utc": "2026-07-10",
     "note": "Field state above (semantic_generation, phase, cells) is unchanged; this block tracks the research front only.",
