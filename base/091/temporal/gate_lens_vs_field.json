@@ -1,0 +1,20 @@
+{
+ "territory": [
+  "2025-11-01",
+  "end of canonical NQ tape"
+ ],
+ "warm_start": "2024-01-01",
+ "tf": "1..1440",
+ "lens_seconds": 96.0,
+ "field_riz": 14356,
+ "lens_riz": 14356,
+ "matched_by_riz_id": 14356,
+ "field_only": 0,
+ "lens_only": 0,
+ "matched_same_t0_minute": 14356,
+ "matched_same_t0_close_and_side": 14356,
+ "recall_of_field": 1.0,
+ "precision_of_lens": 1.0,
+ "field_only_by_tf_band": {},
+ "lens_only_by_tf_band": {}
+}
