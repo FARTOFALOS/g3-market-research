@@ -71,6 +71,18 @@ class Market:
     def open(self, D, m):
         i = self.T.at(D, m)
         return None if i < 0 else float(self.T.o[i])
+    def prefix(self, D, closed_through):
+        return Prefix(self, D, closed_through)
+
+
+class Prefix:
+    """Closed-bar view that makes future OHLC inaccessible by construction."""
+    def __init__(self, market, D, closed_through):
+        self.market, self.D, self.closed_through = market, D, closed_through
+    def bar(self, m):
+        if m > self.closed_through:
+            raise AssertionError(f"future OHLC access: requested {m}, closed through {self.closed_through}")
+        return self.market.bar(self.D, m)
 
 
 class SuffixMarket(Market):
@@ -95,9 +107,9 @@ def cal_close(T, D):
 
 def op_s07(M, D):
     """Opportunity exists from 30 closed bars 09:04..09:33 (close known 09:34)."""
-    bs = []
+    bs = []; P = M.prefix(D, S07_REC)
     for m in range(544, 574):
-        b = M.bar(D, m)
+        b = P.bar(m)
         if b is None: return None, f"missing_decision_prefix_bar:{m}"
         bs.append(b)
     mid = (max(b["h"] for b in bs) + min(b["l"] for b in bs)) / 2
@@ -120,21 +132,22 @@ def v7_anchor(M, T, D, up, dn, side):
         if close is not None and m >= close: return None, None, "session_ended"
         bound = up[k] if side > 0 else dn[k]
         if not np.isfinite(bound): continue
-        b = M.bar(D, m)
+        b = M.prefix(D, m).bar(m)
         if b is None: return None, m, f"missing_v7m_bar:{m}"
         if side * (b["c"] - bound) > 0: return (b["i"], m), None, "ok"
     return None, None, "no_anchor"
 
 
 def pv2_after_anchor(M, T, D, ai, am, up, dn, side):
-    close = cal_close(T, D); a = M.bar(D, am)
+    close = cal_close(T, D); a = M.prefix(D, am).bar(am)
     if a is None: return None, am, f"missing_anchor_bar:{am}"
     extreme = a["h"] if side > 0 else a["l"]
     u0 = float(T.u[ai])
     if not np.isfinite(u0): return None, None, "anchor_scale_unavailable"
     for pm in range(am+1, am+31):
         if close is not None and pm+2 >= close: return None, None, "session_ended_before_confirmation"
-        bars = {m:M.bar(D,m) for m in (pm-1, pm, pm+1, pm+2)}
+        P = M.prefix(D, pm+2)
+        bars = {m:P.bar(m) for m in (pm-1, pm, pm+1, pm+2)}
         miss = [m for m,b in bars.items() if b is None]
         if miss: return None, min(miss), f"missing_pv2_recognizer_bar:{min(miss)}"
         q0,q,q1,q2 = bars[pm-1],bars[pm],bars[pm+1],bars[pm+2]
