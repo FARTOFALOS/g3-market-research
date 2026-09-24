@@ -43,13 +43,15 @@ def month_t(x, months):
     return float(x.mean() / se) if se > 0 else float("nan"), float(se)
 
 
-def build():
-    cal = J.S17.history_calendar()
-    cal, K, O, C = S18.sessions(INST, cal, ROOT / "data/market")
+def build(inst=None, cal=None, root=None, d_lo=20060101, d_hi=20251231):
+    """Defaults reproduce the CW1 run; the frozen check (FREEZE_CW1.md) passes another calendar, root and window."""
+    inst = inst or INST
+    cal = J.S17.history_calendar() if cal is None else cal
+    cal, K, O, C = S18.sessions(inst, cal, ROOT / "data/market" if root is None else root)
     S = len(cal); op = O[:, 1]
     cl = np.array([C[s, min(K[s], S18.KMAX)] for s in range(S)])
     move = np.abs(C / op[:, None] - 1.0)
-    tape = load_minutes("2005-11-01", "2026-01-01", INST)
+    tape = load_minutes("2005-11-01", "2026-07-11", inst)
     am = tape[(tape["mod"] >= 570) & (tape["mod"] < 720)].groupby("date").agg(hi=("h", "max"), lo=("l", "min"), n=("h", "size"))
     dates = pd.to_datetime(cal.date); D = (dates.dt.year * 10000 + dates.dt.month * 100 + dates.dt.day).to_numpy()
     amr = np.full(S, np.nan)
@@ -57,7 +59,7 @@ def build():
         if D[s] in am.index and am.at[D[s], "n"] == 150: amr[s] = am.at[D[s], "hi"] - am.at[D[s], "lo"]
     rows, short = [], 0
     for s in range(14, S):
-        if not (20060101 <= D[s] <= 20251231): continue
+        if not (d_lo <= D[s] <= d_hi): continue
         if K[s] != 390: short += 1; continue
         prev = cl[s - 1]
         hist = move[s - 14:s]; cnt = np.isfinite(hist).sum(0)
@@ -99,7 +101,7 @@ def build():
             r[f"r{h}"] = y; r[f"rn{h}"] = y / npts; r[f"rs{h}"] = ys
         rows.append(r)
     P = pd.DataFrame(rows)
-    P["epoch"] = pd.cut(P.date, [0, 20121231, 20191231, 20251231], labels=[e[0] for e in EPOCHS]).astype(str)
+    P["epoch"] = pd.cut(P.date, [0, 20121231, 20191231, 20251231, 20991231], labels=[e[0] for e in EPOCHS] + ["later"]).astype(str)
     P["month"] = P.date // 100
     for ep in P.epoch.unique():
         m = P.epoch == ep
