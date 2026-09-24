@@ -1,0 +1,53 @@
+{'declaration': 'base/105/LOG.md NSR1', 'instrument': 'NQ', 'rows': 31441, 'clusters': 5247, 'clusters_without_eligible_close': 718, 'representatives': 4529, 'twin_share': 0.1095, 'unit': 'absorbing episode'}
+confirmed all     ep  2343 fork  2314 status {'a_first': 1298, 'b_first': 825, 'same_minute': 81, 'censored_horizon': 68, 'censored_window': 38, 'b_at_entry': 23, 'a_at_entry': 6, 'censored_gap': 4}
+   prefix {'minutes_t0_to_q': 27.0, 'run_t0_q': 5.25, 'M_minus_b': 13.5, 'close_q_from_b': 7.5, 'zone_age_d': 2.9, 'share_touched_b_before_q': 0.712} remaining {'d_median': 7.75, 's_median': 4.25, 'p0_mean': 0.4067, 'minutes_held_median': 3.0}
+   Y 0.3886 p0 0.4076 X {'n': 2123, 'mean': -0.019, 't': -1.96, 'days': 1093}
+   G {'n': 2233, 'mean': -0.9736, 't': -1.83, 'days': 1134} lo -1.0239 (t -2.0) hi -0.8299 (t -1.62)
+   ret  net adv -1.7739 (t -3.46) fav -1.5799 (t -3.08) | contract share 0.858 adv -1.1584 (t -4.97)
+   cont net adv 0.0799 (t 0.16) fav 0.2739 (t 0.53) | contract share 0.726 adv -0.5513 (t -3.06)
+confirmed 2006-12 ep   662 fork   651 status {'a_first': 355, 'b_first': 243, 'censored_horizon': 22, 'same_minute': 16, 'censored_window': 12, 'b_at_entry': 9, 'censored_gap': 3, 'a_at_entry': 2}
+   prefix {'minutes_t0_to_q': 24.5, 'run_t0_q': 2.25, 'M_minus_b': 6.0, 'close_q_from_b': 3.25, 'zone_age_d': 2.13, 'share_touched_b_before_q': 0.66} remaining {'d_median': 3.5, 's_median': 2.0, 'p0_mean': 0.4234, 'minutes_held_median': 4.0}
+   Y 0.4064 p0 0.4269 X {'n': 598, 'mean': -0.0205, 't': -1.11, 'days': 345}
+   G {'n': 635, 'mean': 0.0409, 't': 0.16, 'days': 360} lo 0.0215 (t 0.09) hi 0.0649 (t 0.26)
+   ret  net adv -0.7285 (t -2.93) fav -0.6851 (t -2.76) | contract share 0.992 adv -0.9377 (t -5.32)
+   cont net adv -0.8149 (t -3.28) fav -0.7715 (t -3.1) | contract share 0.963 adv -0.6033 (t -3.7)
+confirmed 2013-19 ep   805 fork   797 status {'a_first': 448, 'b_first': 277, 'same_minute': 27, 'censored_horizon': 26, 'censored_window': 18, 'b_at_entry': 6, 'a_at_entry': 2, 'censored_gap': 1}
+   prefix {'minutes_t0_to_q': 26.0, 'run_t0_q': 4.0, 'M_minus_b': 11.0, 'close_q_from_b': 5.75, 'zone_age_d': 2.97, 'share_touched_b_before_q': 0.719} remaining {'d_median': 5.75, 's_median': 3.5, 'p0_mean': 0.4121, 'minutes_held_median': 3.0}
+   Y 0.3821 p0 0.4148 X {'n': 725, 'mean': -0.0327, 't': -2.04, 'days': 392}
+   G {'n': 770, 'mean': -0.5756, 't': -1.84, 'days': 408} lo -0.5907 (t -1.95) hi -0.494 (t -1.63)
+   ret  net adv -1.3407 (t -4.43) fav -1.244 (t -4.11) | contract share 0.941 adv -1.0173 (t -3.63)
+   cont net adv -0.256 (t -0.84) fav -0.1593 (t -0.53) | contract share 0.832 adv -0.3676 (t -1.52)
+confirmed 2020-25 ep   876 fork   866 status {'a_first': 495, 'b_first': 305, 'same_minute': 38, 'censored_horizon': 20, 'b_at_entry': 8, 'censored_window': 8, 'a_at_entry': 2}
+   prefix {'minutes_t0_to_q': 31.0, 'run_t0_q': 17.62, 'M_minus_b': 38.75, 'close_q_from_b': 22.25, 'zone_age_d': 3.08, 'share_touched_b_before_q': 0.744} remaining {'d_median': 22.5, 's_median': 11.5, 'p0_mean': 0.3892, 'minutes_held_median': 3.0}
+   Y 0.3812 p0 0.3868 X {'n': 800, 'mean': -0.0055, 't': -0.34, 'days': 356}
+   G {'n': 828, 'mean': -2.1217, 't': -1.54, 'days': 366} lo -2.2084 (t -1.67) hi -1.8118 (t -1.37)
+   ret  net adv -2.9584 (t -2.24) fav -2.5618 (t -1.93) | contract share 0.68 adv -1.5802 (t -2.35)
+   cont net adv 1.0618 (t 0.8) fav 1.4584 (t 1.1) | contract share 0.452 adv -0.7794 (t -1.29)
+flicker   all     ep  1690 fork    15 status {'b_at_entry': 1675, 'b_first': 14, 'same_minute': 1}
+   prefix {'minutes_t0_to_q': 46.0, 'run_t0_q': -9.5, 'M_minus_b': 6.0, 'close_q_from_b': -7.75, 'zone_age_d': 2.91, 'share_touched_b_before_q': 1.0} remaining {'d_median': 0.25, 's_median': 3.5, 'p0_mean': 0.9261, 'minutes_held_median': 1.0}
+   Y 1.0 p0 0.931 X {'n': 14, 'mean': 0.069, 't': 6.03, 'days': 14}
+   G {'n': 14, 'mean': 0.3214, 't': 8.17, 'days': 14} lo 0.2 (t 1.63) hi 0.3167 (t 8.55)
+   ret  net adv -0.55 (t -4.47) fav -0.4333 (t -11.71) | contract share 0.8 adv -0.625 (t -4.38)
+   cont net adv -1.0667 (t -28.81) fav -0.95 (t -7.73) | contract share 1.0 adv -1.0667 (t -28.81)
+flicker   2006-12 ep   504 fork     4 status {'b_at_entry': 500, 'b_first': 4}
+   prefix {'minutes_t0_to_q': 42.0, 'run_t0_q': -4.5, 'M_minus_b': 2.5, 'close_q_from_b': -3.5, 'zone_age_d': 2.72, 'share_touched_b_before_q': 1.0} remaining {'d_median': 0.25, 's_median': 2.75, 'p0_mean': 0.9124, 'minutes_held_median': 1.0}
+   Y 1.0 p0 0.9124 X {'n': 4, 'mean': 0.0876, 't': 5.55, 'days': 4}
+   G {'n': 4, 'mean': 0.25, 't': None, 'days': 4} lo 0.25 (t None) hi 0.25 (t None)
+   ret  net adv -0.5 (t None) fav -0.5 (t None) | contract share 1.0 adv -0.5 (t None)
+   cont net adv -1.0 (t None) fav -1.0 (t None) | contract share 1.0 adv -1.0 (t None)
+flicker   2013-19 ep   594 fork     7 status {'b_at_entry': 587, 'b_first': 6, 'same_minute': 1}
+   prefix {'minutes_t0_to_q': 45.5, 'run_t0_q': -8.25, 'M_minus_b': 4.5, 'close_q_from_b': -6.5, 'zone_age_d': 2.48, 'share_touched_b_before_q': 1.0} remaining {'d_median': 0.25, 's_median': 2.25, 'p0_mean': 0.9037, 'minutes_held_median': 1.0}
+   Y 1.0 p0 0.9114 X {'n': 6, 'mean': 0.0886, 't': 5.77, 'days': 6}
+   G {'n': 6, 'mean': 0.25, 't': None, 'days': 6} lo 0.0 (t 0.0) hi 0.25 (t None)
+   ret  net adv -0.75 (t -3.24) fav -0.5 (t None) | contract share 1.0 adv -0.75 (t -3.24)
+   cont net adv -1.0 (t None) fav -0.75 (t -3.24) | contract share 1.0 adv -1.0 (t None)
+flicker   2020-25 ep   592 fork     4 status {'b_at_entry': 588, 'b_first': 4}
+   prefix {'minutes_t0_to_q': 48.5, 'run_t0_q': -27.5, 'M_minus_b': 18.75, 'close_q_from_b': -23.0, 'zone_age_d': 3.2, 'share_touched_b_before_q': 1.0} remaining {'d_median': 0.5, 's_median': 25.38, 'p0_mean': 0.9791, 'minutes_held_median': 1.0}
+   Y 1.0 p0 0.9791 X {'n': 4, 'mean': 0.0209, 't': 5.2, 'days': 4}
+   G {'n': 4, 'mean': 0.5, 't': 5.66, 'days': 4} lo 0.5 (t 5.66) hi 0.5 (t 5.66)
+   ret  net adv -0.25 (t -2.83) fav -0.25 (t -2.83) | contract share 0.25 adv -0.25 (t None)
+   cont net adv -1.25 (t -14.14) fav -1.25 (t -14.14) | contract share 1.0 adv -1.25 (t -14.14)
+contrast G confirmed - flicker: {'2006-12': {'diff': -0.2091, 't': -0.82}, '2013-19': {'diff': -0.8256, 't': -2.64}, '2020-25': {'diff': -2.6217, 't': -1.89}, 'all': {'diff': -1.295, 't': -2.44}}
+confirmed minute_ignition fork 2150 G {'n': 2116, 'mean': -1.022, 't': -1.83, 'days': 1094} X {'n': 2006, 'mean': -0.0192, 't': -1.92, 'days': 1050}
+confirmed native_confirmation fork 164 G {'n': 117, 'mean': -0.0983, 't': -0.32, 'days': 110} X {'n': 117, 'mean': -0.0157, 't': -0.41, 'days': 110}
+asymmetry: False {'G_pts_lo': False, 'G_pts_hi': False} money: None None

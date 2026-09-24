@@ -1,0 +1,1255 @@
+{
+ "declaration": "base/105/LOG.md NSR1",
+ "instrument": "NQ",
+ "rows": 31441,
+ "clusters": 5247,
+ "clusters_without_eligible_close": 718,
+ "representatives": 4529,
+ "twin_share": 0.1095,
+ "unit": "absorbing episode",
+ "by_state": {
+  "confirmed": {
+   "all": {
+    "episodes": 2343,
+    "status": {
+     "a_first": 1298,
+     "b_first": 825,
+     "same_minute": 81,
+     "censored_horizon": 68,
+     "censored_window": 38,
+     "b_at_entry": 23,
+     "a_at_entry": 6,
+     "censored_gap": 4
+    },
+    "fork_episodes": 2314,
+    "prefix": {
+     "minutes_t0_to_q": 27.0,
+     "run_t0_q": 5.25,
+     "M_minus_b": 13.5,
+     "close_q_from_b": 7.5,
+     "zone_age_d": 2.9,
+     "share_touched_b_before_q": 0.712
+    },
+    "remaining": {
+     "d_median": 7.75,
+     "s_median": 4.25,
+     "p0_mean": 0.4067,
+     "minutes_held_median": 3.0
+    },
+    "Y_mean_resolved": 0.3886,
+    "p0_mean_resolved": 0.4076,
+    "X_resolved": {
+     "n": 2123,
+     "mean": -0.019,
+     "t": -1.96,
+     "days": 1093
+    },
+    "G_pts": {
+     "n": 2233,
+     "mean": -0.9736,
+     "t": -1.83,
+     "days": 1134
+    },
+    "G_pts_lo": {
+     "n": 2314,
+     "mean": -1.0239,
+     "t": -2.0,
+     "days": 1171
+    },
+    "G_pts_hi": {
+     "n": 2314,
+     "mean": -0.8299,
+     "t": -1.62,
+     "days": 1171
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 2233,
+      "mean": -1.7236,
+      "t": -3.25,
+      "days": 1134
+     },
+     "adverse": {
+      "n": 2314,
+      "mean": -1.7739,
+      "t": -3.46,
+      "days": 1171
+     },
+     "favorable": {
+      "n": 2314,
+      "mean": -1.5799,
+      "t": -3.08,
+      "days": 1171
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.858,
+     "adverse": {
+      "n": 1985,
+      "mean": -1.1584,
+      "t": -4.97,
+      "days": 1078
+     },
+     "favorable": {
+      "n": 1985,
+      "mean": -0.9324,
+      "t": -3.99,
+      "days": 1078
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 2233,
+      "mean": 0.2236,
+      "t": 0.42,
+      "days": 1134
+     },
+     "adverse": {
+      "n": 2314,
+      "mean": 0.0799,
+      "t": 0.16,
+      "days": 1171
+     },
+     "favorable": {
+      "n": 2314,
+      "mean": 0.2739,
+      "t": 0.53,
+      "days": 1171
+     }
+    },
+    "cont_net_contract": {
+     "share": 0.726,
+     "adverse": {
+      "n": 1681,
+      "mean": -0.5513,
+      "t": -3.06,
+      "days": 999
+     },
+     "favorable": {
+      "n": 1681,
+      "mean": -0.3186,
+      "t": -1.77,
+      "days": 999
+     }
+    }
+   },
+   "2006-12": {
+    "episodes": 662,
+    "status": {
+     "a_first": 355,
+     "b_first": 243,
+     "censored_horizon": 22,
+     "same_minute": 16,
+     "censored_window": 12,
+     "b_at_entry": 9,
+     "censored_gap": 3,
+     "a_at_entry": 2
+    },
+    "fork_episodes": 651,
+    "prefix": {
+     "minutes_t0_to_q": 24.5,
+     "run_t0_q": 2.25,
+     "M_minus_b": 6.0,
+     "close_q_from_b": 3.25,
+     "zone_age_d": 2.13,
+     "share_touched_b_before_q": 0.66
+    },
+    "remaining": {
+     "d_median": 3.5,
+     "s_median": 2.0,
+     "p0_mean": 0.4234,
+     "minutes_held_median": 4.0
+    },
+    "Y_mean_resolved": 0.4064,
+    "p0_mean_resolved": 0.4269,
+    "X_resolved": {
+     "n": 598,
+     "mean": -0.0205,
+     "t": -1.11,
+     "days": 345
+    },
+    "G_pts": {
+     "n": 635,
+     "mean": 0.0409,
+     "t": 0.16,
+     "days": 360
+    },
+    "G_pts_lo": {
+     "n": 651,
+     "mean": 0.0215,
+     "t": 0.09,
+     "days": 368
+    },
+    "G_pts_hi": {
+     "n": 651,
+     "mean": 0.0649,
+     "t": 0.26,
+     "days": 368
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 635,
+      "mean": -0.7091,
+      "t": -2.78,
+      "days": 360
+     },
+     "adverse": {
+      "n": 651,
+      "mean": -0.7285,
+      "t": -2.93,
+      "days": 368
+     },
+     "favorable": {
+      "n": 651,
+      "mean": -0.6851,
+      "t": -2.76,
+      "days": 368
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.992,
+     "adverse": {
+      "n": 646,
+      "mean": -0.9377,
+      "t": -5.32,
+      "days": 368
+     },
+     "favorable": {
+      "n": 646,
+      "mean": -0.894,
+      "t": -5.06,
+      "days": 368
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 635,
+      "mean": -0.7909,
+      "t": -3.11,
+      "days": 360
+     },
+     "adverse": {
+      "n": 651,
+      "mean": -0.8149,
+      "t": -3.28,
+      "days": 368
+     },
+     "favorable": {
+      "n": 651,
+      "mean": -0.7715,
+      "t": -3.1,
+      "days": 368
+     }
+    },
+    "cont_net_contract": {
+     "share": 0.963,
+     "adverse": {
+      "n": 627,
+      "mean": -0.6033,
+      "t": -3.7,
+      "days": 359
+     },
+     "favorable": {
+      "n": 627,
+      "mean": -0.5582,
+      "t": -3.43,
+      "days": 359
+     }
+    }
+   },
+   "2013-19": {
+    "episodes": 805,
+    "status": {
+     "a_first": 448,
+     "b_first": 277,
+     "same_minute": 27,
+     "censored_horizon": 26,
+     "censored_window": 18,
+     "b_at_entry": 6,
+     "a_at_entry": 2,
+     "censored_gap": 1
+    },
+    "fork_episodes": 797,
+    "prefix": {
+     "minutes_t0_to_q": 26.0,
+     "run_t0_q": 4.0,
+     "M_minus_b": 11.0,
+     "close_q_from_b": 5.75,
+     "zone_age_d": 2.97,
+     "share_touched_b_before_q": 0.719
+    },
+    "remaining": {
+     "d_median": 5.75,
+     "s_median": 3.5,
+     "p0_mean": 0.4121,
+     "minutes_held_median": 3.0
+    },
+    "Y_mean_resolved": 0.3821,
+    "p0_mean_resolved": 0.4148,
+    "X_resolved": {
+     "n": 725,
+     "mean": -0.0327,
+     "t": -2.04,
+     "days": 392
+    },
+    "G_pts": {
+     "n": 770,
+     "mean": -0.5756,
+     "t": -1.84,
+     "days": 408
+    },
+    "G_pts_lo": {
+     "n": 797,
+     "mean": -0.5907,
+     "t": -1.95,
+     "days": 421
+    },
+    "G_pts_hi": {
+     "n": 797,
+     "mean": -0.494,
+     "t": -1.63,
+     "days": 421
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 770,
+      "mean": -1.3256,
+      "t": -4.23,
+      "days": 408
+     },
+     "adverse": {
+      "n": 797,
+      "mean": -1.3407,
+      "t": -4.43,
+      "days": 421
+     },
+     "favorable": {
+      "n": 797,
+      "mean": -1.244,
+      "t": -4.11,
+      "days": 421
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.941,
+     "adverse": {
+      "n": 750,
+      "mean": -1.0173,
+      "t": -3.63,
+      "days": 407
+     },
+     "favorable": {
+      "n": 750,
+      "mean": -0.9147,
+      "t": -3.25,
+      "days": 407
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 770,
+      "mean": -0.1744,
+      "t": -0.56,
+      "days": 408
+     },
+     "adverse": {
+      "n": 797,
+      "mean": -0.256,
+      "t": -0.84,
+      "days": 421
+     },
+     "favorable": {
+      "n": 797,
+      "mean": -0.1593,
+      "t": -0.53,
+      "days": 421
+     }
+    },
+    "cont_net_contract": {
+     "share": 0.832,
+     "adverse": {
+      "n": 663,
+      "mean": -0.3676,
+      "t": -1.52,
+      "days": 390
+     },
+     "favorable": {
+      "n": 663,
+      "mean": -0.2515,
+      "t": -1.05,
+      "days": 390
+     }
+    }
+   },
+   "2020-25": {
+    "episodes": 876,
+    "status": {
+     "a_first": 495,
+     "b_first": 305,
+     "same_minute": 38,
+     "censored_horizon": 20,
+     "b_at_entry": 8,
+     "censored_window": 8,
+     "a_at_entry": 2
+    },
+    "fork_episodes": 866,
+    "prefix": {
+     "minutes_t0_to_q": 31.0,
+     "run_t0_q": 17.62,
+     "M_minus_b": 38.75,
+     "close_q_from_b": 22.25,
+     "zone_age_d": 3.08,
+     "share_touched_b_before_q": 0.744
+    },
+    "remaining": {
+     "d_median": 22.5,
+     "s_median": 11.5,
+     "p0_mean": 0.3892,
+     "minutes_held_median": 3.0
+    },
+    "Y_mean_resolved": 0.3812,
+    "p0_mean_resolved": 0.3868,
+    "X_resolved": {
+     "n": 800,
+     "mean": -0.0055,
+     "t": -0.34,
+     "days": 356
+    },
+    "G_pts": {
+     "n": 828,
+     "mean": -2.1217,
+     "t": -1.54,
+     "days": 366
+    },
+    "G_pts_lo": {
+     "n": 866,
+     "mean": -2.2084,
+     "t": -1.67,
+     "days": 382
+    },
+    "G_pts_hi": {
+     "n": 866,
+     "mean": -1.8118,
+     "t": -1.37,
+     "days": 382
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 828,
+      "mean": -2.8717,
+      "t": -2.08,
+      "days": 366
+     },
+     "adverse": {
+      "n": 866,
+      "mean": -2.9584,
+      "t": -2.24,
+      "days": 382
+     },
+     "favorable": {
+      "n": 866,
+      "mean": -2.5618,
+      "t": -1.93,
+      "days": 382
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.68,
+     "adverse": {
+      "n": 589,
+      "mean": -1.5802,
+      "t": -2.35,
+      "days": 303
+     },
+     "favorable": {
+      "n": 589,
+      "mean": -0.997,
+      "t": -1.48,
+      "days": 303
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 828,
+      "mean": 1.3717,
+      "t": 0.99,
+      "days": 366
+     },
+     "adverse": {
+      "n": 866,
+      "mean": 1.0618,
+      "t": 0.8,
+      "days": 382
+     },
+     "favorable": {
+      "n": 866,
+      "mean": 1.4584,
+      "t": 1.1,
+      "days": 382
+     }
+    },
+    "cont_net_contract": {
+     "share": 0.452,
+     "adverse": {
+      "n": 391,
+      "mean": -0.7794,
+      "t": -1.29,
+      "days": 250
+     },
+     "favorable": {
+      "n": 391,
+      "mean": -0.048,
+      "t": -0.08,
+      "days": 250
+     }
+    }
+   }
+  },
+  "flicker": {
+   "all": {
+    "episodes": 1690,
+    "status": {
+     "b_at_entry": 1675,
+     "b_first": 14,
+     "same_minute": 1
+    },
+    "fork_episodes": 15,
+    "prefix": {
+     "minutes_t0_to_q": 46.0,
+     "run_t0_q": -9.5,
+     "M_minus_b": 6.0,
+     "close_q_from_b": -7.75,
+     "zone_age_d": 2.91,
+     "share_touched_b_before_q": 1.0
+    },
+    "remaining": {
+     "d_median": 0.25,
+     "s_median": 3.5,
+     "p0_mean": 0.9261,
+     "minutes_held_median": 1.0
+    },
+    "Y_mean_resolved": 1.0,
+    "p0_mean_resolved": 0.931,
+    "X_resolved": {
+     "n": 14,
+     "mean": 0.069,
+     "t": 6.03,
+     "days": 14
+    },
+    "G_pts": {
+     "n": 14,
+     "mean": 0.3214,
+     "t": 8.17,
+     "days": 14
+    },
+    "G_pts_lo": {
+     "n": 15,
+     "mean": 0.2,
+     "t": 1.63,
+     "days": 15
+    },
+    "G_pts_hi": {
+     "n": 15,
+     "mean": 0.3167,
+     "t": 8.55,
+     "days": 15
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 14,
+      "mean": -0.4286,
+      "t": -10.89,
+      "days": 14
+     },
+     "adverse": {
+      "n": 15,
+      "mean": -0.55,
+      "t": -4.47,
+      "days": 15
+     },
+     "favorable": {
+      "n": 15,
+      "mean": -0.4333,
+      "t": -11.71,
+      "days": 15
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.8,
+     "adverse": {
+      "n": 12,
+      "mean": -0.625,
+      "t": -4.38,
+      "days": 12
+     },
+     "favorable": {
+      "n": 12,
+      "mean": -0.4792,
+      "t": -24.02,
+      "days": 12
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 14,
+      "mean": -1.0714,
+      "t": -27.22,
+      "days": 14
+     },
+     "adverse": {
+      "n": 15,
+      "mean": -1.0667,
+      "t": -28.81,
+      "days": 15
+     },
+     "favorable": {
+      "n": 15,
+      "mean": -0.95,
+      "t": -7.73,
+      "days": 15
+     }
+    },
+    "cont_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 15,
+      "mean": -1.0667,
+      "t": -28.81,
+      "days": 15
+     },
+     "favorable": {
+      "n": 15,
+      "mean": -0.95,
+      "t": -7.73,
+      "days": 15
+     }
+    }
+   },
+   "2006-12": {
+    "episodes": 504,
+    "status": {
+     "b_at_entry": 500,
+     "b_first": 4
+    },
+    "fork_episodes": 4,
+    "prefix": {
+     "minutes_t0_to_q": 42.0,
+     "run_t0_q": -4.5,
+     "M_minus_b": 2.5,
+     "close_q_from_b": -3.5,
+     "zone_age_d": 2.72,
+     "share_touched_b_before_q": 1.0
+    },
+    "remaining": {
+     "d_median": 0.25,
+     "s_median": 2.75,
+     "p0_mean": 0.9124,
+     "minutes_held_median": 1.0
+    },
+    "Y_mean_resolved": 1.0,
+    "p0_mean_resolved": 0.9124,
+    "X_resolved": {
+     "n": 4,
+     "mean": 0.0876,
+     "t": 5.55,
+     "days": 4
+    },
+    "G_pts": {
+     "n": 4,
+     "mean": 0.25,
+     "t": null,
+     "days": 4
+    },
+    "G_pts_lo": {
+     "n": 4,
+     "mean": 0.25,
+     "t": null,
+     "days": 4
+    },
+    "G_pts_hi": {
+     "n": 4,
+     "mean": 0.25,
+     "t": null,
+     "days": 4
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 4,
+      "mean": -0.5,
+      "t": null,
+      "days": 4
+     },
+     "adverse": {
+      "n": 4,
+      "mean": -0.5,
+      "t": null,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -0.5,
+      "t": null,
+      "days": 4
+     }
+    },
+    "ret_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 4,
+      "mean": -0.5,
+      "t": null,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -0.5,
+      "t": null,
+      "days": 4
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 4,
+      "mean": -1.0,
+      "t": null,
+      "days": 4
+     },
+     "adverse": {
+      "n": 4,
+      "mean": -1.0,
+      "t": null,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -1.0,
+      "t": null,
+      "days": 4
+     }
+    },
+    "cont_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 4,
+      "mean": -1.0,
+      "t": null,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -1.0,
+      "t": null,
+      "days": 4
+     }
+    }
+   },
+   "2013-19": {
+    "episodes": 594,
+    "status": {
+     "b_at_entry": 587,
+     "b_first": 6,
+     "same_minute": 1
+    },
+    "fork_episodes": 7,
+    "prefix": {
+     "minutes_t0_to_q": 45.5,
+     "run_t0_q": -8.25,
+     "M_minus_b": 4.5,
+     "close_q_from_b": -6.5,
+     "zone_age_d": 2.48,
+     "share_touched_b_before_q": 1.0
+    },
+    "remaining": {
+     "d_median": 0.25,
+     "s_median": 2.25,
+     "p0_mean": 0.9037,
+     "minutes_held_median": 1.0
+    },
+    "Y_mean_resolved": 1.0,
+    "p0_mean_resolved": 0.9114,
+    "X_resolved": {
+     "n": 6,
+     "mean": 0.0886,
+     "t": 5.77,
+     "days": 6
+    },
+    "G_pts": {
+     "n": 6,
+     "mean": 0.25,
+     "t": null,
+     "days": 6
+    },
+    "G_pts_lo": {
+     "n": 7,
+     "mean": 0.0,
+     "t": 0.0,
+     "days": 7
+    },
+    "G_pts_hi": {
+     "n": 7,
+     "mean": 0.25,
+     "t": null,
+     "days": 7
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 6,
+      "mean": -0.5,
+      "t": null,
+      "days": 6
+     },
+     "adverse": {
+      "n": 7,
+      "mean": -0.75,
+      "t": -3.24,
+      "days": 7
+     },
+     "favorable": {
+      "n": 7,
+      "mean": -0.5,
+      "t": null,
+      "days": 7
+     }
+    },
+    "ret_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 7,
+      "mean": -0.75,
+      "t": -3.24,
+      "days": 7
+     },
+     "favorable": {
+      "n": 7,
+      "mean": -0.5,
+      "t": null,
+      "days": 7
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 6,
+      "mean": -1.0,
+      "t": null,
+      "days": 6
+     },
+     "adverse": {
+      "n": 7,
+      "mean": -1.0,
+      "t": null,
+      "days": 7
+     },
+     "favorable": {
+      "n": 7,
+      "mean": -0.75,
+      "t": -3.24,
+      "days": 7
+     }
+    },
+    "cont_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 7,
+      "mean": -1.0,
+      "t": null,
+      "days": 7
+     },
+     "favorable": {
+      "n": 7,
+      "mean": -0.75,
+      "t": -3.24,
+      "days": 7
+     }
+    }
+   },
+   "2020-25": {
+    "episodes": 592,
+    "status": {
+     "b_at_entry": 588,
+     "b_first": 4
+    },
+    "fork_episodes": 4,
+    "prefix": {
+     "minutes_t0_to_q": 48.5,
+     "run_t0_q": -27.5,
+     "M_minus_b": 18.75,
+     "close_q_from_b": -23.0,
+     "zone_age_d": 3.2,
+     "share_touched_b_before_q": 1.0
+    },
+    "remaining": {
+     "d_median": 0.5,
+     "s_median": 25.38,
+     "p0_mean": 0.9791,
+     "minutes_held_median": 1.0
+    },
+    "Y_mean_resolved": 1.0,
+    "p0_mean_resolved": 0.9791,
+    "X_resolved": {
+     "n": 4,
+     "mean": 0.0209,
+     "t": 5.2,
+     "days": 4
+    },
+    "G_pts": {
+     "n": 4,
+     "mean": 0.5,
+     "t": 5.66,
+     "days": 4
+    },
+    "G_pts_lo": {
+     "n": 4,
+     "mean": 0.5,
+     "t": 5.66,
+     "days": 4
+    },
+    "G_pts_hi": {
+     "n": 4,
+     "mean": 0.5,
+     "t": 5.66,
+     "days": 4
+    },
+    "ret_net": {
+     "excl_same": {
+      "n": 4,
+      "mean": -0.25,
+      "t": -2.83,
+      "days": 4
+     },
+     "adverse": {
+      "n": 4,
+      "mean": -0.25,
+      "t": -2.83,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -0.25,
+      "t": -2.83,
+      "days": 4
+     }
+    },
+    "ret_net_contract": {
+     "share": 0.25,
+     "adverse": {
+      "n": 1,
+      "mean": -0.25,
+      "t": null,
+      "days": 1
+     },
+     "favorable": {
+      "n": 1,
+      "mean": -0.25,
+      "t": null,
+      "days": 1
+     }
+    },
+    "cont_net": {
+     "excl_same": {
+      "n": 4,
+      "mean": -1.25,
+      "t": -14.14,
+      "days": 4
+     },
+     "adverse": {
+      "n": 4,
+      "mean": -1.25,
+      "t": -14.14,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -1.25,
+      "t": -14.14,
+      "days": 4
+     }
+    },
+    "cont_net_contract": {
+     "share": 1.0,
+     "adverse": {
+      "n": 4,
+      "mean": -1.25,
+      "t": -14.14,
+      "days": 4
+     },
+     "favorable": {
+      "n": 4,
+      "mean": -1.25,
+      "t": -14.14,
+      "days": 4
+     }
+    }
+   }
+  }
+ },
+ "confirmed_by_t0_kind": {
+  "minute_ignition": {
+   "episodes": 2166,
+   "status": {
+    "a_first": 1228,
+    "b_first": 778,
+    "censored_horizon": 68,
+    "censored_window": 38,
+    "same_minute": 34,
+    "b_at_entry": 13,
+    "censored_gap": 4,
+    "a_at_entry": 3
+   },
+   "fork_episodes": 2150,
+   "prefix": {
+    "minutes_t0_to_q": 33.0,
+    "run_t0_q": 6.25,
+    "M_minus_b": 15.25,
+    "close_q_from_b": 8.5,
+    "zone_age_d": 2.89,
+    "share_touched_b_before_q": 0.77
+   },
+   "remaining": {
+    "d_median": 8.5,
+    "s_median": 4.75,
+    "p0_mean": 0.4054,
+    "minutes_held_median": 4.0
+   },
+   "Y_mean_resolved": 0.3878,
+   "p0_mean_resolved": 0.4071,
+   "X_resolved": {
+    "n": 2006,
+    "mean": -0.0192,
+    "t": -1.92,
+    "days": 1050
+   },
+   "G_pts": {
+    "n": 2116,
+    "mean": -1.022,
+    "t": -1.83,
+    "days": 1094
+   },
+   "G_pts_lo": {
+    "n": 2150,
+    "mean": -1.0633,
+    "t": -1.93,
+    "days": 1110
+   },
+   "G_pts_hi": {
+    "n": 2150,
+    "mean": -0.9541,
+    "t": -1.73,
+    "days": 1110
+   },
+   "ret_net": {
+    "excl_same": {
+     "n": 2116,
+     "mean": -1.772,
+     "t": -3.17,
+     "days": 1094
+    },
+    "adverse": {
+     "n": 2150,
+     "mean": -1.8133,
+     "t": -3.3,
+     "days": 1110
+    },
+    "favorable": {
+     "n": 2150,
+     "mean": -1.7041,
+     "t": -3.1,
+     "days": 1110
+    }
+   },
+   "ret_net_contract": {
+    "share": 0.847,
+    "adverse": {
+     "n": 1821,
+     "mean": -1.1495,
+     "t": -4.55,
+     "days": 1011
+    },
+    "favorable": {
+     "n": 1821,
+     "mean": -1.0206,
+     "t": -4.04,
+     "days": 1011
+    }
+   },
+   "cont_net": {
+    "excl_same": {
+     "n": 2116,
+     "mean": 0.272,
+     "t": 0.49,
+     "days": 1094
+    },
+    "adverse": {
+     "n": 2150,
+     "mean": 0.2041,
+     "t": 0.37,
+     "days": 1110
+    },
+    "favorable": {
+     "n": 2150,
+     "mean": 0.3133,
+     "t": 0.57,
+     "days": 1110
+    }
+   },
+   "cont_net_contract": {
+    "share": 0.707,
+    "adverse": {
+     "n": 1520,
+     "mean": -0.4911,
+     "t": -2.49,
+     "days": 929
+    },
+    "favorable": {
+     "n": 1520,
+     "mean": -0.3367,
+     "t": -1.71,
+     "days": 929
+    }
+   }
+  },
+  "native_confirmation": {
+   "episodes": 177,
+   "status": {
+    "a_first": 70,
+    "b_first": 47,
+    "same_minute": 47,
+    "b_at_entry": 10,
+    "a_at_entry": 3
+   },
+   "fork_episodes": 164,
+   "prefix": {
+    "minutes_t0_to_q": 0.0,
+    "run_t0_q": 0.0,
+    "M_minus_b": 2.5,
+    "close_q_from_b": 1.5,
+    "zone_age_d": 3.29,
+    "share_touched_b_before_q": 0.0
+   },
+   "remaining": {
+    "d_median": 1.5,
+    "s_median": 1.0,
+    "p0_mean": 0.423,
+    "minutes_held_median": 1.0
+   },
+   "Y_mean_resolved": 0.4017,
+   "p0_mean_resolved": 0.4175,
+   "X_resolved": {
+    "n": 117,
+    "mean": -0.0157,
+    "t": -0.41,
+    "days": 110
+   },
+   "G_pts": {
+    "n": 117,
+    "mean": -0.0983,
+    "t": -0.32,
+    "days": 110
+   },
+   "G_pts_lo": {
+    "n": 164,
+    "mean": -0.5076,
+    "t": -2.13,
+    "days": 152
+   },
+   "G_pts_hi": {
+    "n": 164,
+    "mean": 0.7973,
+    "t": 2.55,
+    "days": 152
+   },
+   "ret_net": {
+    "excl_same": {
+     "n": 117,
+     "mean": -0.8483,
+     "t": -2.73,
+     "days": 110
+    },
+    "adverse": {
+     "n": 164,
+     "mean": -1.2576,
+     "t": -5.27,
+     "days": 152
+    },
+    "favorable": {
+     "n": 164,
+     "mean": 0.0473,
+     "t": 0.15,
+     "days": 152
+    }
+   },
+   "ret_net_contract": {
+    "share": 1.0,
+    "adverse": {
+     "n": 164,
+     "mean": -1.2576,
+     "t": -5.27,
+     "days": 152
+    },
+    "favorable": {
+     "n": 164,
+     "mean": 0.0473,
+     "t": 0.15,
+     "days": 152
+    }
+   },
+   "cont_net": {
+    "excl_same": {
+     "n": 117,
+     "mean": -0.6517,
+     "t": -2.1,
+     "days": 110
+    },
+    "adverse": {
+     "n": 164,
+     "mean": -1.5473,
+     "t": -4.94,
+     "days": 152
+    },
+    "favorable": {
+     "n": 164,
+     "mean": -0.2424,
+     "t": -1.01,
+     "days": 152
+    }
+   },
+   "cont_net_contract": {
+    "share": 0.982,
+    "adverse": {
+     "n": 161,
+     "mean": -1.1196,
+     "t": -5.77,
+     "days": 149
+    },
+    "favorable": {
+     "n": 161,
+     "mean": -0.1475,
+     "t": -0.92,
+     "days": 149
+    }
+   }
+  }
+ },
+ "contrast_confirmed_minus_flicker_G": {
+  "2006-12": {
+   "diff": -0.2091,
+   "t": -0.82
+  },
+  "2013-19": {
+   "diff": -0.8256,
+   "t": -2.64
+  },
+  "2020-25": {
+   "diff": -2.6217,
+   "t": -1.89
+  },
+  "all": {
+   "diff": -1.295,
+   "t": -2.44
+  }
+ },
+ "asymmetry": false,
+ "asymmetry_by_bound": {
+  "G_pts_lo": false,
+  "G_pts_hi": false
+ }
+}
