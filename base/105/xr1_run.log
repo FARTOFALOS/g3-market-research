@@ -1,0 +1,7 @@
+C:\Users\Admin\Claude\g3-market-research\setups\library\payoff_map.py:53: RuntimeWarning: Mean of empty slice
+  norm = np.where(cnt >= int(np.ceil(0.7 * look)), np.nanmean(hist, axis=0), np.nan)
+2013-19 y30 {'n': 261073, 'r2_K': np.float64(-0.0018), 'r2_KR': np.float64(-0.0044), 'gain': np.float64(-0.0025), 't_gain': np.float64(-4.4352), 'top10_K_pts_net': -0.3818, 'top10_KR_pts_net': -0.4994}
+2013-19 y60 {'n': 249414, 'r2_K': np.float64(-0.0036), 'r2_KR': np.float64(-0.008), 'gain': np.float64(-0.0044), 't_gain': np.float64(-4.0668), 'top10_K_pts_net': -0.1819, 'top10_KR_pts_net': -0.6071}
+2013-19 y120 {'n': 220108, 'r2_K': np.float64(-0.0063), 'r2_KR': np.float64(-0.0104), 'gain': np.float64(-0.0041), 't_gain': np.float64(-1.9788), 'top10_K_pts_net': -0.4168, 'top10_KR_pts_net': -0.4605}
+2013-19 a60 {'n': 249414, 'r2_K': np.float64(0.1584), 'r2_KR': np.float64(0.1703), 'gain': np.float64(0.0119), 't_gain': np.float64(12.969)}
+2013-19 tr60 {'n': 249414, 'r2_K': np.float64(-0.0018), 'r2_KR': np.float64(-0.0024), 'gain': np.float64(-0.0007), 't_gain': np.float64(-1.393)}
