@@ -1,0 +1,74 @@
+{
+ "rule": "B1 + S-09 den_1338, one position, first come holds",
+ "door_taken": 1116,
+ "door_skipped_s18_busy": 445,
+ "regression": "no-door replay equals joint B1 on every session",
+ "segments": {
+  "2020-01-02..2025-10-31 (S-09 search)": {
+   "B1": {
+    "sessions": 1448,
+    "usd_per_session": 235.4,
+    "t": 3.9,
+    "share_days_ge_0": 0.44,
+    "top5_share_of_total": 1.366,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0
+   },
+   "B1_plus_door": {
+    "sessions": 1448,
+    "usd_per_session": 280.9,
+    "t": 4.26,
+    "share_days_ge_0": 0.499,
+    "top5_share_of_total": 1.215,
+    "max_drawdown": -34375.0,
+    "worst_day": -10110.0
+   },
+   "door_usd_per_session": 77.7,
+   "s18_change_usd_per_session": -32.2
+  },
+  "2025-11-01..2026-05-04 (S-09 holdout)": {
+   "B1": {
+    "sessions": 107,
+    "usd_per_session": 370.6,
+    "t": 1.31,
+    "share_days_ge_0": 0.458,
+    "top5_share_of_total": 1.165,
+    "max_drawdown": -16380.0,
+    "worst_day": -5965.0
+   },
+   "B1_plus_door": {
+    "sessions": 107,
+    "usd_per_session": 317.9,
+    "t": 1.08,
+    "share_days_ge_0": 0.467,
+    "top5_share_of_total": 1.348,
+    "max_drawdown": -29670.0,
+    "worst_day": -5921.0
+   },
+   "door_usd_per_session": -95.8,
+   "s18_change_usd_per_session": 43.2
+  },
+  "all": {
+   "B1": {
+    "sessions": 1555,
+    "usd_per_session": 244.7,
+    "t": 4.11,
+    "share_days_ge_0": 0.441,
+    "top5_share_of_total": 1.341,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0
+   },
+   "B1_plus_door": {
+    "sessions": 1555,
+    "usd_per_session": 283.5,
+    "t": 4.39,
+    "share_days_ge_0": 0.497,
+    "top5_share_of_total": 1.221,
+    "max_drawdown": -34375.0,
+    "worst_day": -10110.0
+   },
+   "door_usd_per_session": 65.8,
+   "s18_change_usd_per_session": -27.0
+  }
+ }
+}
