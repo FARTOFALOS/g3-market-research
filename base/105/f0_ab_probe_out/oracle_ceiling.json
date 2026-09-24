@@ -1,0 +1,116 @@
+{
+  "source": {
+    "f0_ab_days.csv": "517edd02fd482e7cbd1dc8f88ed4383bbf73c0692d60b86c3b8b39a7b5efb22d",
+    "f0_ab_events.csv": "d649943f9b7ad0b540df46fc0f42f95f6b5de44ce87de37324f12f50d0de3ad4"
+  },
+  "tie_rule": "A when RA == RB; the day-level figures do not depend on it here",
+  "note": "oracle uses the future; not a trading rule; conditional on P_AB",
+  "territory_2020_2025": {
+    "A": {
+      "days": 1514,
+      "mean_per_day": 2.0837186261558784,
+      "share_days_ge_0": 0.19616908850726553,
+      "days_with_trade": 1514,
+      "top5pct_traded_days_share_of_net": 4.587447499801886
+    },
+    "B": {
+      "days": 1514,
+      "mean_per_day": 1.178996036988111,
+      "share_days_ge_0": 0.8877146631439894,
+      "days_with_trade": 218,
+      "top5pct_traded_days_share_of_net": 0.9126050420168067
+    },
+    "oracle_AB": {
+      "days": 1514,
+      "mean_per_day": 18.06472919418758,
+      "share_days_ge_0": 0.9180977542932629,
+      "days_with_trade": 423,
+      "top5pct_traded_days_share_of_net": 0.21127970749542963
+    },
+    "oracle_AB_flat": {
+      "days": 1514,
+      "mean_per_day": 18.98068031704095,
+      "share_days_ge_0": 1.0,
+      "days_with_trade": 299,
+      "top5pct_traded_days_share_of_net": 0.1459281233959999
+    },
+    "both_lose_days": {
+      "days": 124,
+      "share": 0.08190224570673713,
+      "mean_best_of_AB": -11.183467741935484,
+      "share_morning_A_full_stop": 0.9838709677419355,
+      "share_B_traded": 1.0,
+      "mean_downstream_A": -9.618951612903226,
+      "mean_downstream_B": -11.328629032258064,
+      "by_year": {
+        "2020": 15,
+        "2021": 20,
+        "2022": 30,
+        "2023": 22,
+        "2024": 26,
+        "2025": 11
+      }
+    }
+  },
+  "all_history": {
+    "A": {
+      "days": 4802,
+      "mean_per_day": 0.8259058725531029,
+      "share_days_ge_0": 0.3827571845064556,
+      "days_with_trade": 4802,
+      "top5pct_traded_days_share_of_net": 7.372226424609178
+    },
+    "B": {
+      "days": 4802,
+      "mean_per_day": 0.2903477717617659,
+      "share_days_ge_0": 0.8300708038317368,
+      "days_with_trade": 1020,
+      "top5pct_traded_days_share_of_net": 3.0313788775327235
+    },
+    "oracle_AB": {
+      "days": 4802,
+      "mean_per_day": 10.716003748438151,
+      "share_days_ge_0": 0.9198250728862973,
+      "days_with_trade": 2264,
+      "top5pct_traded_days_share_of_net": 0.371981169200274
+    },
+    "oracle_AB_flat": {
+      "days": 4802,
+      "mean_per_day": 11.259891711786755,
+      "share_days_ge_0": 1.0,
+      "days_with_trade": 1879,
+      "top5pct_traded_days_share_of_net": 0.3120353245792491
+    },
+    "both_lose_days": {
+      "days": 385,
+      "share": 0.08017492711370262,
+      "mean_best_of_AB": -6.783766233766234,
+      "share_morning_A_full_stop": 0.7428571428571429,
+      "share_B_traded": 1.0,
+      "mean_downstream_A": -5.391558441558441,
+      "mean_downstream_B": -6.9876623376623375,
+      "by_year": {
+        "2006": 9,
+        "2007": 10,
+        "2008": 17,
+        "2009": 19,
+        "2010": 20,
+        "2011": 18,
+        "2012": 17,
+        "2013": 12,
+        "2014": 14,
+        "2015": 30,
+        "2016": 25,
+        "2017": 20,
+        "2018": 29,
+        "2019": 21,
+        "2020": 15,
+        "2021": 20,
+        "2022": 30,
+        "2023": 22,
+        "2024": 26,
+        "2025": 11
+      }
+    }
+  }
+}

@@ -33,10 +33,12 @@ S07_REC, S07_BOUNDARY, S07_END = 573, 574, 693
 BOOT_N, BOOT_SEED = 2000, 1050934
 ALLOWED_CORRECTIONS = [
     "remove future-dependent parent-population filtering",
+    "retain calendar rows whose status reflects missing future tape",
     "separate opportunity from execution/outcome",
     "keep deterministic entry rejection as an event",
     "propagate archive uncertainty instead of numeric surrogate P&L",
     "interpret mod as bar-open minute and label S07 decision boundary 09:34",
+    "book settlements only when their bar has closed; preserve policy decisions",
 ]
 
 
@@ -105,6 +107,23 @@ def cal_close(T, D):
     return int(T.cal.loc[D, "close_mod"])
 
 
+def parent_membership(M, T, D):
+    """Tape-derived calendar completeness is never an eligibility filter."""
+    row = T.cal.loc[D]
+    # REG's prescribed close is independent of its observed tape end/status.
+    close = 960 if row.get("type") == "REG" else cal_close(T, D)
+    if close is not None and close <= S07_BOUNDARY:
+        return "no", "calendar_closed_before_decision", None
+    op, reason = op_s07(M, D)
+    if op is None:
+        if row.get("status") == "closed":
+            return "no", "calendar_closed", None
+        return "unknown", reason, None
+    if close is None:
+        return "unknown", "calendar_decision_eligibility_unknown", None
+    return "yes", "ok", op
+
+
 def op_s07(M, D):
     """Opportunity exists from 30 closed bars 09:04..09:33 (close known 09:34)."""
     bs = []; P = M.prefix(D, S07_REC)
@@ -146,17 +165,21 @@ def pv2_after_anchor(M, T, D, ai, am, up, dn, side):
     if not np.isfinite(u0): return None, None, "anchor_scale_unavailable"
     for pm in range(am+1, am+31):
         if close is not None and pm+2 >= close: return None, None, "session_ended_before_confirmation"
+        # A broken guard closes the recognizer on pm; later missing bars
+        # cannot undo that already observable terminal fact.
+        q = M.prefix(D, pm).bar(pm)
+        if q is None: return None, pm, f"missing_pv2_recognizer_bar:{pm}"
+        k = pm - 570 + 1; guard = up[k] if side > 0 else dn[k]
+        if (side > 0 and q["l"] <= guard) or (side < 0 and q["h"] >= guard):
+            return None, None, "guard_broken"
         P = M.prefix(D, pm+2)
         bars = {m:P.bar(m) for m in (pm-1, pm, pm+1, pm+2)}
         miss = [m for m,b in bars.items() if b is None]
         if miss: return None, min(miss), f"missing_pv2_recognizer_bar:{min(miss)}"
         q0,q,q1,q2 = bars[pm-1],bars[pm],bars[pm+1],bars[pm+2]
-        k = pm - 570 + 1; guard = up[k] if side > 0 else dn[k]
         if side > 0:
-            if np.isfinite(guard) and q["l"] <= guard: return None, None, "guard_broken"
             ok = q["l"] < q0["l"] and q["l"] <= q1["l"] and q["l"] <= q2["l"] and extreme-q["l"] >= u0
         else:
-            if np.isfinite(guard) and q["h"] >= guard: return None, None, "guard_broken"
             ok = q["h"] > q0["h"] and q["h"] >= q1["h"] and q["h"] >= q2["h"] and q["h"]-extreme >= u0
         if ok:
             rec = pm+2; st = (q["l"] if side > 0 else q["h"]) - side*TICK
@@ -225,43 +248,89 @@ def position(M,T,op,e,stop_override=None):
     raise AssertionError("position fell through")
 
 
-def replay(M,T,D,ops,unknown_mod,unknown_reason,authorize_morning):
-    pnl=0.; busy=-1; morning=0.; downstream=0.; log=[]
-    timeline=[(o["rec"],"op",o) for o in ops]
-    if unknown_mod is not None: timeline.append((unknown_mod,"unknown",unknown_reason))
-    timeline.sort(key=lambda x:(x[0],0 if x[1]=="op" else 1))
-    for mod,kind,x in timeline:
-        if kind=="unknown":
-            log.append(dict(date=D,event="detector_unknown",mod=mod,reason=x))
-            return dict(status="unknown",reason=f"detector:{x}",net=np.nan,morning=np.nan,downstream=np.nan),log
-        op=x; auth=not(op["branch"]=="S07" and not authorize_morning)
-        z=dict(date=D,event="opportunity",oid=op["oid"],branch=op["branch"],rec=op["rec"],boundary=op["boundary"],
-               side=op["side"],authorized=auth,day_before=pnl,busy_before=busy)
-        if not auth: z.update(result="authorization_skip",reason="B_intervention",day_after=pnl,busy_after=busy); log.append(z); continue
-        if op["boundary"] <= busy: z.update(result="policy_skip",reason="busy",day_after=pnl,busy_after=busy); log.append(z); continue
-        e=materialize_entry(M,T,op)
-        if e["status"]=="unknown":
-            z.update(result="unknown",reason=e["reason"]); log.append(z)
-            return dict(status="unknown",reason=e["reason"],net=np.nan,morning=np.nan,downstream=np.nan),log
-        if e["status"]=="no_trade": z.update(result="no_trade",reason=e["reason"],day_after=pnl,busy_after=busy); log.append(z); continue
-        if e["plan_loss"] > LIMIT:
-            z.update(result="policy_skip",reason="original_plan_loss_over_LIMIT",plan_loss=e["plan_loss"],day_after=pnl,busy_after=busy); log.append(z); continue
+def replay(M,T,D,ops,unknown_mod,unknown_reason,authorize_morning,through=None):
+    """Boundary phases: observe prior closed bar, decide, then read next open.
+
+    No future exit time or final P&L enters the live policy state. `through`
+    stops just after the decision phase of a boundary, for causal falsifiers.
+    """
+    pnl=0.; morning=0.; downstream=0.; active=None; log=[]
+    close=cal_close(T,D)
+    last_boundary=close if close is not None else 960
+    by_boundary={}
+    for op in ops: by_boundary.setdefault(op["boundary"],[]).append(op)
+
+    def state():
         lim=min(LIMIT,DAY_LIMIT+pnl)
         if LOCK and pnl>0: lim=min(lim,pnl)
-        if lim<MIN_LIM: z.update(result="policy_skip",reason="remaining_limit_below_min_lim",limit=lim,day_after=pnl,busy_after=busy); log.append(z); continue
-        stop=None
-        if e["plan_loss"]>lim: stop=e["entry"]-op["side"]*(lim-COST-SLIP)
-        q=position(M,T,op,e,stop)
-        if q["status"]=="unknown":
-            z.update(result="unknown",reason=q["reason"],entry=e["entry"]); log.append(z)
-            return dict(status="unknown",reason=q["reason"],net=np.nan,morning=np.nan,downstream=np.nan),log
-        if q["status"]=="no_trade": z.update(result="no_trade",reason=q["reason"],day_after=pnl,busy_after=busy); log.append(z); continue
-        pnl+=q["net"]; busy=q["exit_mod"]
-        if op["branch"]=="S07": morning+=q["net"]
-        else: downstream+=q["net"]
-        z.update(result="trade",reason=q["reason"],entry_mod=e["entry_mod"],entry=e["entry"],stop=q["stop"],
-                 exit_mod=q["exit_mod"],exit=q["exit"],xtype=q["xtype"],net=q["net"],day_after=pnl,busy_after=busy)
-        log.append(z)
+        return dict(pnl=pnl,busy=active is not None,
+                    position=None if active is None else active["op"]["oid"],
+                    remaining_budget=DAY_LIMIT+pnl,lock_active=bool(LOCK and pnl>0),limit=lim)
+
+    def unknown(reason,boundary,phase,op=None):
+        log.append(dict(date=D,event="unknown",boundary=boundary,phase=phase,
+                        oid=None if op is None else op["oid"],reason=reason,**state()))
+        return dict(status="unknown",reason=reason,net=np.nan,morning=morning,
+                    downstream=downstream,unknown_boundary=boundary),log
+
+    for boundary in range(S07_BOUNDARY,last_boundary+1):
+        if active is not None:
+            op,e,st,last=active["op"],active["entry"],active["stop"],active["last"]
+            m=boundary-1; b=M.prefix(D,m).bar(m)
+            if b is None: return unknown(f"missing_open_position_bar:{m}",boundary,"observe_close",op)
+            side=op["side"]; px=None; why=None; xtype=None
+            if side>0 and b["l"]<=st: px=min(b["o"],st)-SLIP; why="stop"; xtype=1
+            elif side<0 and b["h"]>=st: px=max(b["o"],st)+SLIP; why="stop"; xtype=1
+            elif np.isfinite(e["target"]) and side>0 and b["h"]>=e["target"]+TICK:
+                px=max(b["o"],e["target"]); why="target"; xtype=2
+            elif np.isfinite(e["target"]) and side<0 and b["l"]<=e["target"]-TICK:
+                px=min(b["o"],e["target"]); why="target"; xtype=2
+            elif m==last: px=b["c"]; why="time"; xtype=3
+            if px is not None:
+                before=pnl; net=side*(px-e["entry"])-COST; pnl+=net
+                if op["branch"]=="S07": morning+=net
+                else: downstream+=net
+                active=None
+                log.append(dict(date=D,event="settlement",phase="observe_close",boundary=boundary,
+                                oid=op["oid"],branch=op["branch"],rec=op["rec"],side=side,
+                                entry_mod=e["entry_mod"],entry=e["entry"],stop=st,
+                                exit_mod=m,exit=px,xtype=xtype,net=net,reason=why,
+                                day_before=before,day_after=pnl,**state()))
+        if unknown_mod is not None and boundary==unknown_mod+1:
+            return unknown(f"detector:{unknown_reason}",boundary,"recognition")
+        for op in by_boundary.get(boundary,[]):
+            auth=not(op["branch"]=="S07" and not authorize_morning)
+            snap=state()
+            z=dict(date=D,event="opportunity",phase="decision",oid=op["oid"],branch=op["branch"],
+                   rec=op["rec"],boundary=boundary,side=op["side"],authorized=auth,
+                   day_before=pnl,busy_before=snap["busy"],**snap)
+            z["result"]="authorization_skip" if not auth else ("policy_skip" if active is not None else "authorized")
+            z["reason"]="B_intervention" if not auth else ("busy" if active is not None else "ok")
+            log.append(z)
+            if through is not None and boundary>=through: continue
+            if not auth or active is not None: continue
+            e=materialize_entry(M,T,op)
+            if e["status"]=="unknown": return unknown(e["reason"],boundary,"execution",op)
+            ex=dict(date=D,event="execution",phase="execution",boundary=boundary,oid=op["oid"],branch=op["branch"],**state())
+            if e["status"]=="no_trade":
+                ex.update(result="no_trade",reason=e["reason"]); log.append(ex); continue
+            if e["plan_loss"]>LIMIT:
+                ex.update(result="policy_skip",reason="original_plan_loss_over_LIMIT"); log.append(ex); continue
+            lim=state()["limit"]
+            if lim<MIN_LIM:
+                ex.update(result="policy_skip",reason="remaining_limit_below_min_lim"); log.append(ex); continue
+            if close is None: return unknown("calendar_close_unknown",boundary,"execution",op)
+            last=min(op["rec"]+op["hold"],close-1)
+            if op["iend"]>=0: last=min(last,op["iend"])
+            if boundary>last:
+                ex.update(result="no_trade",reason="no_horizon_after_entry"); log.append(ex); continue
+            st=e["stop"] if e["plan_loss"]<=lim else e["entry"]-op["side"]*(lim-COST-SLIP)
+            active=dict(op=op,entry=e,stop=st,last=last)
+            ex.update(result="opened",reason="ok",entry=e["entry"],stop=st,planned_last=last)
+            log.append(ex)
+        if through is not None and boundary>=through:
+            return dict(status="prefix",reason="decision_phase",**state()),log
+    assert active is None, "position survived prescribed session end"
     return dict(status="resolved",reason="ok",net=pnl,morning=morning,downstream=downstream),log
 
 
@@ -320,7 +389,7 @@ def fp(ops,upto):
 
 
 def causality_tests(T,info,streams,max_pv=256):
-    sf=[];pf=[];phase=[];cand=[]; sn=0
+    sf=[];pf=[];phase=[];cand=[]; sn=0; state_fail=[]; state_n=0
     for D,(ops,_,_) in streams.items():
         s=[o for o in ops if o["branch"]=="S07"]
         if s:
@@ -334,41 +403,149 @@ def causality_tests(T,info,streams,max_pv=256):
     for D,o in cand:
         alt,_,_=market_stream(SuffixMarket(T,D,o["rec"]),T,D,info)
         if fp(streams[D][0],o["rec"])!=fp(alt,o["rec"]):pf.append((D,o["oid"]))
+        for auth in (True,False):
+            s=streams[D]
+            before,_=replay(Market(T),T,D,*s,auth,through=o["boundary"])
+            after,_=replay(SuffixMarket(T,D,o["rec"]),T,D,*s,auth,through=o["boundary"])
+            state_n+=1
+            if before["status"]!=after["status"] or any(before.get(k)!=after.get(k) for k in ("pnl","position","busy","remaining_budget","limit")):
+                state_fail.append((D,o["oid"],auth))
     return dict(s07_tests=sn,s07_failures=sf,pv2_tests=len(cand),pv2_failures=pf,phase_access_violations=phase,
-                passed=not(sf or pf or phase),note="Substitution tests are falsifiers; phase-limited interfaces carry the main burden.")
+                policy_state_tests=state_n,policy_state_failures=state_fail,
+                passed=not(sf or pf or phase or state_fail),note="Substitution tests are falsifiers, not a universal proof.")
 
 
-def bootstrap(ra,rb,nboot):
+def bootstrap(ra,rb,nboot,dates=None):
     n=len(ra)
     if n<2:return dict(n=n,H=np.nan,H_lo=np.nan,H_hi=np.nan,mean_D=np.nan,D_lo=np.nan,D_hi=np.nan)
     H=float(np.mean(np.maximum(ra,rb))-max(np.mean(ra),np.mean(rb))); D=ra-rb
     rng=np.random.default_rng(BOOT_SEED); hb=[];db=[]
+    # Calendar-month blocks preserve within-month dependence; A/B stay paired.
+    if dates is None: blocks=[np.array([i]) for i in range(n)]
+    else:
+        months=np.asarray(dates,dtype=np.int64)//100
+        blocks=[np.flatnonzero(months==m) for m in np.unique(months)]
     for _ in range(max(1,nboot)):
-        i=rng.integers(0,n,n); a=ra[i];b=rb[i]
+        i=np.concatenate([blocks[k] for k in rng.integers(0,len(blocks),len(blocks))]); a=ra[i];b=rb[i]
         hb.append(np.mean(np.maximum(a,b))-max(np.mean(a),np.mean(b))); db.append(np.mean(a-b))
+    k=max(1,math.ceil(.05*n)); pos=np.maximum(D,0); neg=np.maximum(-D,0)
     return dict(n=n,H=H,H_lo=float(np.quantile(hb,.025)),H_hi=float(np.quantile(hb,.975)),
+                bootstrap_unit="calendar_month" if dates is not None else "paired_day",bootstrap_blocks=len(blocks),bootstrap_replicates=nboot,
+                mean_A=float(np.mean(ra)),mean_B=float(np.mean(rb)),mean_oracle=float(np.mean(np.maximum(ra,rb))),
                 mean_D=float(np.mean(D)),D_lo=float(np.quantile(db,.025)),D_hi=float(np.quantile(db,.975)),
+                median_D=float(np.median(D)),D_quantiles={str(q):float(np.quantile(D,q)) for q in [0,.01,.05,.25,.5,.75,.95,.99,1]},
+                positive_mass_top5pct_paired_days=float(np.sort(pos)[-k:].sum()/pos.sum()) if pos.sum() else None,
+                negative_mass_top5pct_paired_days=float(np.sort(neg)[-k:].sum()/neg.sum()) if neg.sum() else None,
                 H_identity_from_D=float(min(np.mean(np.maximum(D,0)),np.mean(np.maximum(-D,0)))),
                 positive_D_mass=float(np.maximum(D,0).sum()),negative_D_mass=float(np.maximum(-D,0).sum()),
                 share_D_gt0=float(np.mean(D>0)),share_D_lt0=float(np.mean(D<0)),share_D_eq0=float(np.mean(D==0)))
 
 
-def reconcile(days,old,sdates):
+def reference_replay(T,streams,authorize_morning):
+    """Independent unchanged legacy execution/policy applied to corrected ops.
+
+    Used only as a verifier. Its gap surrogates are NEVER reported as outcomes.
+    """
+    rows=[]
+    for D,(ops,_,_) in streams.items():
+        for op in ops:
+            if op["branch"]=="S07" and not authorize_morning: continue
+            i=T.at(D,op["rec"]); j=T.at(D,op["boundary"])
+            if i<0 or j<0: continue
+            st=float(T.o[j])-op["side"]*op["stop"] if op["stop_kind"]=="offset" else op["stop"]
+            end=T.at(D,op["iend"]) if op["iend"]>=0 else -1
+            rows.append(dict(date=D,irec=i,side=op["side"],stop=st,target=op["target"],
+                             iend=end,branch=op["branch"],oid=op["oid"]))
+    if not rows: return pd.DataFrame()
+    return legacy_run(T,simulate(T,pd.DataFrame(rows)),lock=LOCK,min_lim=MIN_LIM,y0=Y0,y1=Y1)
+
+
+def trade_signature(T,frame):
+    return [(r.branch,int(T.mod[int(r.irec)]),int(r.side),float(r.entry),
+             int(T.mod[int(r.jexit)]),float(r.exit),float(r.net)) for r in frame.itertuples()]
+
+
+def event_signature(events):
+    return [(e["branch"],e["rec"],e["side"],e["entry"],e["exit_mod"],e["exit"],e["net"])
+            for e in events if e["event"]=="settlement"]
+
+
+def signatures_equal(a,b):
+    return len(a)==len(b) and all(x[:3]==y[:3] and np.allclose(x[3:],y[3:],rtol=0,atol=1e-9)
+                                 for x,y in zip(a,b))
+
+
+def unknown_witness(M,T,D,reason,stream=None):
+    if reason=="calendar_close_unknown": return cal_close(T,D) is None
+    if reason=="calendar_decision_eligibility_unknown":
+        return cal_close(T,D) is None and op_s07(M,D)[0] is not None
+    if reason.startswith("detector:"):
+        if stream is None or stream[1] is None or reason!="detector:"+stream[2]: return False
+        reason=reason.removeprefix("detector:")
+    prefixes=("missing_decision_prefix_bar:","missing_entry_open:","missing_open_position_bar:",
+              "missing_v7m_bar:","missing_anchor_bar:","missing_pv2_recognizer_bar:")
+    if not reason.startswith(prefixes): return False
+    minute=int(reason.rsplit(":",1)[1])
+    if reason.startswith("missing_decision_prefix_bar:") and not 544<=minute<=573: return False
+    return M.bar(D,minute) is None
+
+
+def verify_branch(T,M,D,status,net,events,reference,stream):
+    actual=event_signature(events)
+    if status=="resolved":
+        expected=trade_signature(T,reference)
+        return signatures_equal(actual,expected) and abs(sum(x[-1] for x in actual)-net)<=1e-9
+    if status!="unknown": return False
+    missing=[e for e in events if e["event"]=="unknown"]
+    if len(missing)!=1: return False
+    e=missing[0]
+    if not unknown_witness(M,T,D,e["reason"],stream): return False
+    # Every already settled, unaffected trade must match the independent engine.
+    known=reference[(reference.xtype!=4) & (reference.jexit.map(lambda i:int(T.mod[int(i)])+1)<=e["boundary"])] if len(reference) else reference
+    return signatures_equal(actual,trade_signature(T,known))
+
+
+def reconcile(days,old,sdates,context=None):
     rows=[]
     for r in days.itertuples():
         D=int(r.date); ov=float(old.loc[D]) if D in old.index else np.nan; nv=float(r.RA) if r.A_status=="resolved" else np.nan
-        if r.p0_status=="unknown":cat,ok="parent_membership_unknown",True
-        elif r.A_status=="unknown":cat,ok=("old_numeric_surrogate_to_unknown" if np.isfinite(ov) else "new_A_unknown"),True
-        elif np.isfinite(ov) and abs(ov-nv)<=1e-9:cat,ok="exact_reproduction",True
-        elif D not in sdates:cat,ok="future_filter_measurement_correction",True
-        elif np.isfinite(ov):cat,ok="unexplained_numeric_difference",False
-        else:cat,ok="old_missing_new_resolved",False
-        rows.append(dict(date=D,old_A=ov,new_A=nv,category=cat,allowed=ok,A_status=r.A_status,A_reason=r.A_reason))
+        cat,ok="unverified_difference",False; va=vb=False; detail="missing_verification_context"
+        if context is not None:
+            T,M=context["T"],context["M"]
+            status,why,_=parent_membership(M,T,D)
+            if r.p0_status in ("no","unknown"):
+                ok=status==r.p0_status and why==r.p0_reason
+                cat="calendar_not_eligible" if status=="no" else "parent_membership_unknown"
+                detail=why
+            else:
+                ea=context["events"].get((D,"A"),[]); eb=context["events"].get((D,"B"),[])
+                empty=pd.DataFrame()
+                ra=context["ref_a"].get(D,empty); rb=context["ref_b"].get(D,empty)
+                raw=context["old_trades"].get(D,empty); stream=context["streams"].get(D)
+                va=verify_branch(T,M,D,r.A_status,r.RA,ea,ra,stream)
+                vb=verify_branch(T,M,D,r.B_status,r.RB,eb,rb,stream)
+                if r.A_status=="unknown": va=va and any(e.get("reason")==r.A_reason for e in ea if e["event"]=="unknown")
+                if r.B_status=="unknown": vb=vb and any(e.get("reason")==r.B_reason for e in eb if e["event"]=="unknown")
+                raw_match=signatures_equal(event_signature(ea),trade_signature(T,raw))
+                if not (status=="yes" and va and vb):
+                    cat="execution_or_unknown_evidence_failed"; detail=f"A_verified={va}; B_verified={vb}"
+                elif r.A_status=="unknown":
+                    cat="old_numeric_outcome_to_unknown" if np.isfinite(ov) else "new_A_unknown"
+                    ok=True; detail=r.A_reason
+                elif raw_match and (abs((ov if np.isfinite(ov) else 0.)-nv)<=1e-9):
+                    cat="exact_reproduction"; ok=True; detail="full_trade_trace_and_independent_execution_match"
+                elif D not in sdates and T.at(D,S07_END)<0 and r.B_status=="resolved" and signatures_equal(event_signature(eb),trade_signature(T,raw)):
+                    cat="returned_future_filtered_morning"; ok=True
+                    detail="missing_legacy_future_exit_bar; corrected_A_verified; B_exactly_reproduces_legacy"
+                else:
+                    cat="unexplained_or_unpermitted_semantic_difference"; detail="independent_execution_matches_but_raw_legacy_difference_not_authorized"
+        rows.append(dict(date=D,old_A=ov,new_A=nv,category=cat,allowed=ok,
+                         A_verified=va,B_verified=vb,evidence=detail,A_status=r.A_status,A_reason=r.A_reason))
     return pd.DataFrame(rows)
 
 
 def passport():
-    files=["tape.py","trade.py","v0_s18.py","pivot2.py","composite.py","obs1.py","calendar_nq.csv"]
+    files=["f0_ab_probe.py","test_f0_ab_probe.py","tape.py","trade.py","v0_batch1.py","v0_s18.py","pivot2.py","composite.py","obs1.py","calendar_nq.csv"]
     return dict(object="F0 probe: S07 + PV2_V7m_120, lock=True, min_lim=3",f0_source_commit=SOURCE_F0_COMMIT,
                 runtime_git_head=git_head(),decision_boundary="09:34 ET after close of bar opened 09:33",
                 execution_convention="next minute open; boundary-fill convention; executability not established",
@@ -376,39 +553,64 @@ def passport():
                 policy=dict(cost=COST,stop_slippage=SLIP,trade_limit=LIMIT,day_limit=DAY_LIMIT,lock=LOCK,min_lim=MIN_LIM,one_position=True),
                 territory=[Y0,Y1],data_origin=dict(tape="data/forward/market/NQ/*.npy",source_gate="base/091/source_gate_forward_2026-09-21.json",calendar="base/105/calendar_nq.csv"),
                 allowed_measurement_corrections=ALLOWED_CORRECTIONS,file_sha256={f:sha256(HERE/f) for f in files},
+                calendar_note="Frozen inherited calendar conventions; full row census retained, completeness/status unknown does not exclude a valid regular-day prefix. Historical schedule provenance limitations remain.",
                 non_goals=["G_S","ML","feature selection","policy optimization","real-world execution validation"])
 
 
 def run_probe(outdir,max_pv_tests=256,nboot=BOOT_N):
-    os.chdir(HERE); outdir.mkdir(parents=True,exist_ok=True)
-    T=Tape(); M=Market(T); info,UB,LB=band_state(T)
+    outdir=outdir.resolve(); os.chdir(HERE); outdir.mkdir(parents=True,exist_ok=True)
+    print("Loading tape and frozen band state...",flush=True)
+    T=Tape(end="2026-01-01"); M=Market(T); info,UB,LB=band_state(T)
+    frozen_passport=passport()
+    data=ROOT/"data/forward/market/NQ"
+    manifest=json.loads((data/"manifest.json").read_text(encoding="utf-8"))
+    identities={name:sha256(data/name) for name in ("close_ts_utc_ns.npy","open.npy","high.npy","low.npy","close.npy")}
+    if any(v!=manifest["array_sha256"][k] for k,v in identities.items()): raise AssertionError("market array identity mismatch")
+    frozen_passport["data_identity"]=dict(corpus_id=manifest["corpus_id"],array_sha256=identities,source_gate_sha256=sha256(ROOT/"base/091/source_gate_forward_2026-09-21.json"))
+    (outdir/"passport.json").write_text(json.dumps(frozen_passport,ensure_ascii=False,indent=2),encoding="utf-8")
     cal=T.cal.reset_index(); cal=cal[(cal.date>=Y0)&(cal.date<=Y1)]
-    cal=cal[cal.status.isin(["regular","short"])|((cal.status=="special")&cal["last"].notna())]
     rows=[];opsout=[];events=[];streams={}
-    for c in cal.itertuples():
-        D=int(c.date); close=None if pd.isna(c.close_mod) else int(c.close_mod)
-        if close is not None and close<=S07_BOUNDARY:
-            rows.append(dict(date=D,p0_status="no",p0_reason="calendar_closed_before_decision",side=np.nan,A_status="not_in_P0",A_reason="",RA=np.nan,B_status="not_in_P0",B_reason="",RB=np.nan,morning_A=np.nan,downstream_A=np.nan,downstream_B=np.nan));continue
-        s,reason=op_s07(M,D)
-        if s is None:
-            rows.append(dict(date=D,p0_status="unknown",p0_reason=reason,side=np.nan,A_status="unknown",A_reason=reason,RA=np.nan,B_status="unknown",B_reason=reason,RB=np.nan,morning_A=np.nan,downstream_A=np.nan,downstream_B=np.nan));continue
+    event_map={}
+    print(f"Replaying {len(cal)} calendar dates...",flush=True)
+    for count,c in enumerate(cal.itertuples(),1):
+        D=int(c.date); member,reason,s=parent_membership(M,T,D)
+        if member!="yes":
+            st="not_in_P0" if member=="no" else "unknown"
+            rows.append(dict(date=D,p0_status=member,p0_reason=reason,side=np.nan,A_status=st,A_reason=reason,RA=np.nan,B_status=st,B_reason=reason,RB=np.nan,morning_A=np.nan,downstream_A=np.nan,downstream_B=np.nan));continue
         ops,um,ur=market_stream(M,T,D,info); streams[D]=(ops,um,ur);opsout+=ops
         A,ea=replay(M,T,D,ops,um,ur,True);B,eb=replay(M,T,D,ops,um,ur,False)
+        event_map[(D,"A")]=ea; event_map[(D,"B")]=eb
         for e in ea:e["policy"]="A";events.append(e)
         for e in eb:e["policy"]="B";events.append(e)
         rows.append(dict(date=D,p0_status="yes",p0_reason="ok",side=s["side"],A_status=A["status"],A_reason=A["reason"],RA=A["net"],B_status=B["status"],B_reason=B["reason"],RB=B["net"],morning_A=A["morning"],downstream_A=A["downstream"],downstream_B=B["downstream"]))
+        if count%1000==0: print(f"  {count}/{len(cal)} dates",flush=True)
     days=pd.DataFrame(rows);days["epoch"]=days.date.map(epoch)
     pair=(days.p0_status=="yes")&(days.A_status=="resolved")&(days.B_status=="resolved")
     days["D"]=np.where(pair,days.RA-days.RB,np.nan)
     days["D_decomp"]=np.where(pair,days.morning_A+(days.downstream_A-days.downstream_B),np.nan)
     if ((days.loc[pair,"D"]-days.loc[pair,"D_decomp"]).abs()>1e-9).any():raise AssertionError("D decomposition failed")
-    old,oldtk,sdates=legacy_f0(T,info,UB,LB);rec=reconcile(days,old,sdates);rpass=bool(rec.allowed.all())
+    print("Independent legacy execution and reconciliation...",flush=True)
+    old,oldtk,sdates=legacy_f0(T,info,UB,LB)
+    refa=reference_replay(T,streams,True); refb=reference_replay(T,streams,False)
+    groups=lambda df:dict(tuple(df.groupby("date"))) if len(df) else {}
+    context=dict(T=T,M=M,events=event_map,streams=streams,ref_a=groups(refa),ref_b=groups(refb),old_trades=groups(oldtk))
+    rec=reconcile(days,old,sdates,context);rpass=bool(rec.allowed.all())
+    print("Continuation and policy-state falsifiers...",flush=True)
     tests=causality_tests(T,info,streams,max_pv_tests); p=days[pair]
-    head=bootstrap(p.RA.to_numpy(float),p.RB.to_numpy(float),nboot)
+    passed=bool(tests["passed"] and rpass)
+    head=bootstrap(p.RA.to_numpy(float),p.RB.to_numpy(float),nboot,p.date) if passed else None
     p0=days[days.p0_status=="yes"]
-    summary=dict(passport=passport(),counts=dict(calendar_decision_dates=int((days.p0_status!="no").sum()),P0_known=int((days.p0_status=="yes").sum()),P0_membership_unknown=int((days.p0_status=="unknown").sum()),P_A=int(((days.p0_status=="yes")&(days.A_status=="resolved")).sum()),P_B=int(((days.p0_status=="yes")&(days.B_status=="resolved")).sum()),P_AB=int(pair.sum())),
+    epochs={}
+    for ep,g in days.groupby("epoch"):
+        gp=g[g.p0_status=="yes"]; pp=g[(g.p0_status=="yes")&(g.A_status=="resolved")&(g.B_status=="resolved")]
+        epochs[ep]=dict(P0=len(gp),P_AB=len(pp),membership_unknown=int((g.p0_status=="unknown").sum()),
+                       A_unknown_reasons=gp.loc[gp.A_status=="unknown","A_reason"].value_counts().to_dict(),
+                       B_unknown_reasons=gp.loc[gp.B_status=="unknown","B_reason"].value_counts().to_dict(),
+                       headroom=bootstrap(pp.RA.to_numpy(float),pp.RB.to_numpy(float),nboot,pp.date) if passed else None,
+                       mean_morning_A=float(pp.morning_A.mean()),mean_downstream_A=float(pp.downstream_A.mean()),mean_downstream_B=float(pp.downstream_B.mean()))
+    summary=dict(passport=frozen_passport,counts=dict(calendar_dates=len(days),calendar_decision_dates=int((days.p0_status!="no").sum()),P0_known=int((days.p0_status=="yes").sum()),P0_membership_unknown=int((days.p0_status=="unknown").sum()),P_A=int(((days.p0_status=="yes")&(days.A_status=="resolved")).sum()),P_B=int(((days.p0_status=="yes")&(days.B_status=="resolved")).sum()),P_AB=int(pair.sum())),
                  resolution=dict(A=float((p0.A_status=="resolved").mean()) if len(p0) else np.nan,B=float((p0.B_status=="resolved").mean()) if len(p0) else np.nan,AB=float(pair.sum()/len(p0)) if len(p0) else np.nan,A_unknown_reasons=p0.loc[p0.A_status=="unknown","A_reason"].value_counts().to_dict(),B_unknown_reasons=p0.loc[p0.B_status=="unknown","B_reason"].value_counts().to_dict()),
-                 headroom_resolved=head,headroom_scope="conditional on P_AB; all-P0 headroom is not established without justified bounds for unresolved days",epsilon="not set; no practical-smallness verdict is allowed",continuation_substitution=tests,reconciliation=dict(passed=rpass,categories=rec.category.value_counts().to_dict(),forbidden_differences=int((~rec.allowed).sum())),stage1_passed=bool(tests["passed"] and rpass))
+                 by_epoch=epochs,headroom_resolved=head,headroom_scope="conditional on P_AB; all-P0 headroom is not established without justified bounds for unresolved days",epsilon="not set; no practical-smallness verdict is allowed",continuation_substitution=tests,reconciliation=dict(passed=rpass,categories=rec.category.value_counts().to_dict(),forbidden_differences=int((~rec.allowed).sum())),stage1_passed=passed)
     days.to_csv(outdir/"f0_ab_days.csv",index=False);pd.DataFrame(opsout).to_csv(outdir/"f0_ab_opportunities.csv",index=False);pd.DataFrame(events).to_csv(outdir/"f0_ab_events.csv",index=False);rec.to_csv(outdir/"f0_ab_reconciliation.csv",index=False)
     if len(oldtk):oldtk.to_csv(outdir/"legacy_f0_trades_rebuilt.csv",index=False)
     with open(outdir/"f0_ab_summary.json","w",encoding="utf-8") as f:json.dump(summary,f,ensure_ascii=False,indent=2,allow_nan=True,default=jdefault)

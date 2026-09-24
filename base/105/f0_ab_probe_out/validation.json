@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "stage1_passed": true,
+    "all_dates_unique": true,
+    "unknown_is_nan": true,
+    "pair_count": true,
+    "D_and_decomposition": true,
+    "headroom_identity": true,
+    "one_shared_opportunity_stream": true,
+    "single_intervention": true,
+    "ledger_matches_resolved_payoffs": true,
+    "resolved_policies_receive_all_opportunities": true,
+    "reconciliation_all_allowed": true,
+    "input_source_fingerprints": true,
+    "legacy_original_journal_identical": true
+  },
+  "all_passed": true,
+  "unavailable": [],
+  "legacy_original_sha256": "0afa16c03a3bf5c094b8f5278cc51530cabb932fee74b67aca24c785a84f6f5f",
+  "generator": "base/105/f0_ab_validate.py"
+}

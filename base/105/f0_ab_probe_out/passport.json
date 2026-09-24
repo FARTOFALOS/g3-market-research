@@ -1,0 +1,71 @@
+{
+  "object": "F0 probe: S07 + PV2_V7m_120, lock=True, min_lim=3",
+  "f0_source_commit": "0cc0dee33af9ebff35c3e1c4778b9a77f93a8524",
+  "runtime_git_head": "dde660be129ef3abd0d02fbb0f45529a654139e7",
+  "decision_boundary": "09:34 ET after close of bar opened 09:33",
+  "execution_convention": "next minute open; boundary-fill convention; executability not established",
+  "s07": {
+    "recognition_bar_mod": 573,
+    "decision_boundary_mod": 574,
+    "stop_distance": 18.5,
+    "time_exit_bar_mod": 693
+  },
+  "policy": {
+    "cost": 0.75,
+    "stop_slippage": 0.5,
+    "trade_limit": 20.0,
+    "day_limit": 60.0,
+    "lock": true,
+    "min_lim": 3.0,
+    "one_position": true
+  },
+  "territory": [
+    20060101,
+    20251231
+  ],
+  "data_origin": {
+    "tape": "data/forward/market/NQ/*.npy",
+    "source_gate": "base/091/source_gate_forward_2026-09-21.json",
+    "calendar": "base/105/calendar_nq.csv"
+  },
+  "allowed_measurement_corrections": [
+    "remove future-dependent parent-population filtering",
+    "retain calendar rows whose status reflects missing future tape",
+    "separate opportunity from execution/outcome",
+    "keep deterministic entry rejection as an event",
+    "propagate archive uncertainty instead of numeric surrogate P&L",
+    "interpret mod as bar-open minute and label S07 decision boundary 09:34",
+    "book settlements only when their bar has closed; preserve policy decisions"
+  ],
+  "file_sha256": {
+    "f0_ab_probe.py": "1a5925c40d5deaf22d8efc26422c399f87e7fb676b58c6b3041e6c53135a4c1b",
+    "test_f0_ab_probe.py": "cdd4e526b6a46196e1112b37c77c91f744965c95924c7c8f6a35f50deb8980d0",
+    "tape.py": "51fc65f511bc029fead2b9314352c92cf6e22932c093202a4f413e8d0caad43e",
+    "trade.py": "bb39c100882f0778b3c461542a1bba59263545dc6168e9b6c2a8c017209acf65",
+    "v0_batch1.py": "398a35a30f9c57bb41b95c846642752ae9aa3efb6d2af5c0d20c5bff0fe83f6e",
+    "v0_s18.py": "48813b2a0068a26627f8f2d5241e5708c4bf09f2a35487b3dc4ee31820bd3f29",
+    "pivot2.py": "1bb57bfe4bb629e79c909b62e8721effc691ad29be1b9e3644db9e75c3b82cae",
+    "composite.py": "87b1a94381396366b6fb7b32c31d96f1e88735bc23a84fd927a652d271ced0ed",
+    "obs1.py": "b0a1839a0c912e160f19e325e6aeff0d2f79bdbba43f6a564812a0df968d3a55",
+    "calendar_nq.csv": "cde3a524ba214ca3bfa37c10f34da94d8e0e22d1571eefdb2281325e5654c131"
+  },
+  "calendar_note": "Frozen inherited calendar conventions; full row census retained, completeness/status unknown does not exclude a valid regular-day prefix. Historical schedule provenance limitations remain.",
+  "non_goals": [
+    "G_S",
+    "ML",
+    "feature selection",
+    "policy optimization",
+    "real-world execution validation"
+  ],
+  "data_identity": {
+    "corpus_id": "286635663325395b7501ae36fcbb775a5a72802b07ca97f9865065004f200281",
+    "array_sha256": {
+      "close_ts_utc_ns.npy": "f215c92e078e2292416b18f32aed89f7c9a8682f18d80db9e14fa8974c07fa54",
+      "open.npy": "5228494b93116101afe396b413707d3d7c8140c0abaf8b71d836941c27e1bed4",
+      "high.npy": "23d9b06cc0daac6006db66d1feec6fd6b6c76802b88c3124021b943109249a9e",
+      "low.npy": "b680036fb6cb5e5c7dd04d431df2ba6c9adbe04de6ec11ed69ac33bae717e1ee",
+      "close.npy": "15aec3a7ab35279169735a352bd32bef7b424d6c38704f914b98ad49b05085c0"
+    },
+    "source_gate_sha256": "d00ef0285f15d69196369587741ba7aa764d96e3ebce3742c61ca3601bb15e51"
+  }
+}
