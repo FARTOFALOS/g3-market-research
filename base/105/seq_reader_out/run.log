@@ -1,0 +1,182 @@
+Loading tape...
+C:\Users\Admin\Claude\g3-market-research\base\105\v0_s18.py:42: RuntimeWarning: Mean of empty slice
+  norm = np.where(cnt >= 10, np.nanmean(hist, 0), np.nan)
+P0 days 4878; regression of constant policies against the probe...
+  reproduced A and B on every P0 day
+  prefix falsifier passed (512 decisions)
+Point 2 rows (both morning worlds)...
+C:\Users\Admin\Claude\g3-market-research\base\105\seq_reader.py:296: Pandas4Warning: Starting with pandas version 4.0 all arguments of all will be keyword-only.
+  usable2 = r2[r2.resolved & r2[F2].notna().all(1)]
+Point 1 labels with out-of-past pi2...
+C:\Users\Admin\Claude\g3-market-research\base\105\seq_reader.py:314: Pandas4Warning: Starting with pandas version 4.0 all arguments of all will be keyword-only.
+  usable1 = r1[r1.resolved & r1[F1].notna().all(1)]
+Sequential test replays 2013-2025...
+C:\Users\Admin\Claude\g3-market-research\base\105\seq_reader.py:339: Pandas4Warning: Starting with pandas version 4.0 all arguments of all will be keyword-only.
+  paired = days[days[[f"R_{k}" for k in keys]].notna().all(1)]
+{
+ "verdict": "not distinguished at the protocol's resolution",
+ "rows": {
+  "point2_total": 1706,
+  "point2_usable": 1687,
+  "point1_total": 4296,
+  "point1_usable": 4234,
+  "test_days": 3300,
+  "paired_days": 3266
+ },
+ "decisions": {
+  "point1": {
+   "asked": 3300,
+   "taken": 2001,
+   "fallback": 9
+  },
+  "point2": {
+   "asked": 515,
+   "taken": 269,
+   "fallback": 1
+  }
+ },
+ "territories": {
+  "2013-2019": {
+   "pi_minus": {
+    "A": {
+     "mean": 0.017123287671232876,
+     "se_month": 0.326531521388638,
+     "t": 0.052439922487154705
+    },
+    "B": {
+     "mean": 0.704480593607306,
+     "se_month": 0.47693261641053564,
+     "t": 1.4771071832103444
+    },
+    "Z": {
+     "mean": 0.6695205479452054,
+     "se_month": 0.4333896720598782,
+     "t": 1.5448465690541484
+    },
+    "M": {
+     "mean": 0.00442351598173516,
+     "se_month": 0.3079622164794465,
+     "t": 0.014363826940537644
+    }
+   },
+   "components": {
+    "pi1_take_minus_A": {
+     "mean": 0.14840182648401826,
+     "se_month": 0.3188280379324713,
+     "t": 0.46546040130714667
+    },
+    "take_pi2_minus_A": {
+     "mean": -0.04366438356164384,
+     "se_month": 0.09553724671109859,
+     "t": -0.457040422084629
+    },
+    "defer_pi2_minus_B": {
+     "mean": -0.061501141552511414,
+     "se_month": 0.1439226649613661,
+     "t": -0.42732075291282634
+    }
+   },
+   "policies": {
+    "pi": {
+     "mean": 0.6695205479452054,
+     "share_days_ge_0": 0.6757990867579908,
+     "days_with_trade": 1018,
+     "top5pct_share": 3.228687127024723,
+     "worst_day": -38.75
+    },
+    "A": {
+     "mean": 0.6523972602739726,
+     "share_days_ge_0": 0.4486301369863014,
+     "days_with_trade": 1752,
+     "top5pct_share": 5.448818897637795,
+     "worst_day": -38.75
+    },
+    "B": {
+     "mean": -0.03496004566210046,
+     "share_days_ge_0": 0.803082191780822,
+     "days_with_trade": 420,
+     "top5pct_share": null,
+     "worst_day": -19.0
+    },
+    "Z": {
+     "mean": 0.0,
+     "share_days_ge_0": 1.0,
+     "days_with_trade": 0,
+     "top5pct_share": null,
+     "worst_day": 0.0
+    }
+   }
+  },
+  "2020-2025": {
+   "pi_minus": {
+    "A": {
+     "mean": -0.5858652575957728,
+     "se_month": 0.8386117346510327,
+     "t": -0.6986132358850976
+    },
+    "B": {
+     "mean": 0.3188573315719947,
+     "se_month": 0.988864117367939,
+     "t": 0.3224480754956482
+    },
+    "Z": {
+     "mean": 1.4978533685601056,
+     "se_month": 1.1164489733648493,
+     "t": 1.3416227738969093
+    },
+    "M": {
+     "mean": -0.007595772787318362,
+     "se_month": 0.8551376357894864,
+     "t": -0.008882514895167417
+    }
+   },
+   "components": {
+    "pi1_take_minus_A": {
+     "mean": -0.2473579920739762,
+     "se_month": 0.8177173262110435,
+     "t": -0.3024981667199454
+    },
+    "take_pi2_minus_A": {
+     "mean": -0.2820343461030383,
+     "se_month": 0.15006790010984922,
+     "t": -1.879378240760283
+    },
+    "defer_pi2_minus_B": {
+     "mean": -0.33553500660501984,
+     "se_month": 0.17113039920683953,
+     "t": -1.9606978547363172
+    }
+   },
+   "policies": {
+    "pi": {
+     "mean": 1.4978533685601056,
+     "share_days_ge_0": 0.45310435931307796,
+     "days_with_trade": 1029,
+     "top5pct_share": 4.137030095910043,
+     "worst_day": -39.5
+    },
+    "A": {
+     "mean": 2.0837186261558784,
+     "share_days_ge_0": 0.19616908850726553,
+     "days_with_trade": 1514,
+     "top5pct_share": 4.587447499801886,
+     "worst_day": -39.5
+    },
+    "B": {
+     "mean": 1.178996036988111,
+     "share_days_ge_0": 0.8877146631439894,
+     "days_with_trade": 218,
+     "top5pct_share": 0.9126050420168067,
+     "worst_day": -19.75
+    },
+    "Z": {
+     "mean": 0.0,
+     "share_days_ge_0": 1.0,
+     "days_with_trade": 0,
+     "top5pct_share": null,
+     "worst_day": 0.0
+    }
+   }
+  }
+ }
+}
