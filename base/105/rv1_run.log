@@ -1,0 +1,30 @@
+rows 1869293
+L15|H15|2006-12        n  318174 beta +0.0090 t   +1.1 null99 [-0.0064,+0.0055]
+L15|H15|2013-19        n  620730 beta +0.0159 t   +2.9 null99 [-0.0051,+0.0045]
+L15|H15|2020-25        n  618709 beta -0.0017 t   -0.2 null99 [-0.0040,+0.0037]
+L15|H30|2006-12        n  264380 beta +0.0341 t   +2.6 null99 [-0.0090,+0.0090]
+L15|H30|2013-19        n  575471 beta +0.0229 t   +2.5 null99 [-0.0053,+0.0053]
+L15|H30|2020-25        n  595023 beta +0.0042 t   +0.3 null99 [-0.0056,+0.0050]
+L30|H15|2006-12        n  266938 beta +0.0059 t   +0.9 null99 [-0.0052,+0.0047]
+L30|H15|2013-19        n  589153 beta +0.0105 t   +2.4 null99 [-0.0040,+0.0027]
+L30|H15|2020-25        n  617891 beta +0.0009 t   +0.1 null99 [-0.0029,+0.0031]
+L30|H30|2006-12        n  224396 beta +0.0144 t   +1.2 null99 [-0.0068,+0.0077]
+L30|H30|2013-19        n  547729 beta +0.0234 t   +3.0 null99 [-0.0058,+0.0040]
+L30|H30|2020-25        n  594316 beta +0.0027 t   +0.3 null99 [-0.0041,+0.0041]
+L15|H15  2006-12: trades  20835 gross/trade -0.010 net/trade -0.760 win 0.330 pts/day -9.55 t -35.1
+L15|H15  2013-19: trades  38110 gross/trade +0.016 net/trade -0.734 win 0.372 pts/day -15.62 t -30.8
+L15|H15  2020-25: trades  36981 gross/trade -0.010 net/trade -0.760 win 0.471 pts/day -18.26 t -8.2
+L15|H30  2006-12: trades   9827 gross/trade -0.020 net/trade -0.770 win 0.381 pts/day -4.81 t -17.5
+L15|H30  2013-19: trades  19464 gross/trade -0.023 net/trade -0.773 win 0.405 pts/day -8.43 t -17.1
+L15|H30  2020-25: trades  19391 gross/trade -0.256 net/trade -1.006 win 0.482 pts/day -12.67 t -5.5
+L30|H15  2006-12: trades  16933 gross/trade +0.004 net/trade -0.746 win 0.335 pts/day -8.01 t -28.9
+L30|H15  2013-19: trades  35279 gross/trade +0.002 net/trade -0.748 win 0.377 pts/day -14.80 t -31.3
+L30|H15  2020-25: trades  36094 gross/trade -0.100 net/trade -0.850 win 0.471 pts/day -19.94 t -9.2
+L30|H30  2006-12: trades   8206 gross/trade -0.057 net/trade -0.807 win 0.369 pts/day -4.42 t -16.6
+L30|H30  2013-19: trades  18158 gross/trade -0.032 net/trade -0.782 win 0.406 pts/day -8.01 t -16.8
+L30|H30  2020-25: trades  19057 gross/trade -0.307 net/trade -1.057 win 0.482 pts/day -13.10 t -5.4
+L15|H15 B1 {'usd_per_session': 238.7, 'share_days_ge_0': 0.439, 'top5_share': 1.364, 'max_drawdown': -29695.0} B1+RV1 {'usd_per_session': -136.6, 'share_days_ge_0': 0.435, 'top5_share': None, 'max_drawdown': -241960.0} rv1 $/s -375.3 corr 0.048
+L15|H30 B1 {'usd_per_session': 238.7, 'share_days_ge_0': 0.439, 'top5_share': 1.364, 'max_drawdown': -29695.0} B1+RV1 {'usd_per_session': -19.0, 'share_days_ge_0': 0.458, 'top5_share': None, 'max_drawdown': -107410.0} rv1 $/s -257.7 corr 0.053
+L30|H15 B1 {'usd_per_session': 238.7, 'share_days_ge_0': 0.439, 'top5_share': 1.364, 'max_drawdown': -29695.0} B1+RV1 {'usd_per_session': -168.5, 'share_days_ge_0': 0.431, 'top5_share': None, 'max_drawdown': -311455.0} rv1 $/s -407.2 corr 0.07
+L30|H30 B1 {'usd_per_session': 238.7, 'share_days_ge_0': 0.439, 'top5_share': 1.364, 'max_drawdown': -29695.0} B1+RV1 {'usd_per_session': -36.2, 'share_days_ge_0': 0.454, 'top5_share': None, 'max_drawdown': -121285.0} rv1 $/s -274.9 corr -0.007
+stage 1 passed: [] | money passed: []
