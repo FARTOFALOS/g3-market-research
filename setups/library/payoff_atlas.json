@@ -1,0 +1,297 @@
+{
+ "territory": [
+  "2020-01-02",
+  "2025-12-31"
+ ],
+ "note": "naive daily sums; one-position conflicts not resolved",
+ "candidates": {
+  "S-07": {
+   "days": 1479,
+   "clock": "09:34 → до 11:34",
+   "standalone": {
+    "usd_per_session": 130.88573360378635,
+    "t": 2.8790401530951715,
+    "share_days_ge_0": 0.3630831643002028,
+    "top5_share_of_total": 1.8723266866411818,
+    "max_drawdown": -35250.0,
+    "worst_day": -6055.0,
+    "traded_days": 1474
+   },
+   "corr_with_B1": 0.7477899029828509,
+   "best5_overlap_with_B1": 0.6351351351351351,
+   "x_on_B1_le0": -835.0600961538462,
+   "x_on_B1_worst_half": -927.8581081081081,
+   "x_on_B1_best_half": 1191.062246278755,
+   "B1_alone": {
+    "usd_per_session": 238.69844489519946,
+    "t": 3.9497219683647486,
+    "share_days_ge_0": 0.43948613928329955,
+    "top5_share_of_total": 1.3639157590607163,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0,
+    "traded_days": 1476
+   },
+   "B1_plus_x": {
+    "usd_per_session": 369.5841784989858,
+    "t": 3.728029931637479,
+    "share_days_ge_0": 0.418526031102096,
+    "top5_share_of_total": 1.46776981970857,
+    "max_drawdown": -51235.0,
+    "worst_day": -14605.0,
+    "traded_days": 1476
+   }
+  },
+  "S-17": {
+   "days": 1479,
+   "clock": "09:34 → 30 мин (та же сделка, что S-07)",
+   "standalone": {
+    "usd_per_session": 65.52400270453009,
+    "t": 1.7952385705720602,
+    "share_days_ge_0": 0.5348208248816768,
+    "top5_share_of_total": 2.351408523372201,
+    "max_drawdown": -32765.0,
+    "worst_day": -9390.0,
+    "traded_days": 1471
+   },
+   "corr_with_B1": 0.44822869397143067,
+   "best5_overlap_with_B1": 0.33783783783783783,
+   "x_on_B1_le0": -387.3137019230769,
+   "x_on_B1_worst_half": -442.0810810810811,
+   "x_on_B1_best_half": 573.8159675236807,
+   "B1_alone": {
+    "usd_per_session": 238.69844489519946,
+    "t": 3.9497219683647486,
+    "share_days_ge_0": 0.43948613928329955,
+    "top5_share_of_total": 1.3639157590607163,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0,
+    "traded_days": 1476
+   },
+   "B1_plus_x": {
+    "usd_per_session": 304.22244759972955,
+    "t": 3.646105173937524,
+    "share_days_ge_0": 0.4746450304259635,
+    "top5_share_of_total": 1.4031937236773384,
+    "max_drawdown": -52930.0,
+    "worst_day": -15445.0,
+    "traded_days": 1477
+   }
+  },
+  "S-18 (alone)": {
+   "days": 1479,
+   "clock": "отметки 10:00–15:30, до закрытия",
+   "standalone": {
+    "usd_per_session": 149.84110885733602,
+    "t": 3.2831155074135485,
+    "share_days_ge_0": 0.6835699797160243,
+    "top5_share_of_total": 1.216050357602148,
+    "max_drawdown": -29195.0,
+    "worst_day": -6265.0,
+    "traded_days": 874
+   },
+   "corr_with_B1": 0.7350297615000385,
+   "best5_overlap_with_B1": 0.5675675675675675,
+   "x_on_B1_le0": -422.8425480769231,
+   "x_on_B1_worst_half": -462.7905405405405,
+   "x_on_B1_best_half": 763.3017591339648,
+   "B1_alone": {
+    "usd_per_session": 238.69844489519946,
+    "t": 3.9497219683647486,
+    "share_days_ge_0": 0.43948613928329955,
+    "top5_share_of_total": 1.3639157590607163,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0,
+    "traded_days": 1476
+   },
+   "B1_plus_x": {
+    "usd_per_session": 388.5395537525355,
+    "t": 3.9268387511141833,
+    "share_days_ge_0": 0.43137254901960786,
+    "top5_share_of_total": 1.4086400417645524,
+    "max_drawdown": -42460.0,
+    "worst_day": -15725.0,
+    "traded_days": 1476
+   }
+  },
+  "S-08 v1": {
+   "days": 1423,
+   "clock": "09:31–10:00, 60 мин",
+   "standalone": {
+    "usd_per_session": 14.371047083626141,
+    "t": 1.727038913592073,
+    "share_days_ge_0": 0.9725931131412509,
+    "top5_share_of_total": 0.810757946210269,
+    "max_drawdown": -5120.0,
+    "worst_day": -2795.0,
+    "traded_days": 123
+   },
+   "corr_with_B1": 0.08670502639561632,
+   "best5_overlap_with_B1": 0.05555555555555555,
+   "x_on_B1_le0": -8.7515762925599,
+   "x_on_B1_worst_half": -11.36938202247191,
+   "x_on_B1_best_half": 40.14767932489451,
+   "B1_alone": {
+    "usd_per_session": 265.9803232607168,
+    "t": 4.416449739563915,
+    "share_days_ge_0": 0.44342937456078707,
+    "top5_share_of_total": 1.2170863166794368,
+    "max_drawdown": -24180.0,
+    "worst_day": -6965.0,
+    "traded_days": 1422
+   },
+   "B1_plus_x": {
+    "usd_per_session": 280.3513703443429,
+    "t": 4.557994541425649,
+    "share_days_ge_0": 0.4483485593815882,
+    "top5_share_of_total": 1.1801900035092996,
+    "max_drawdown": -25015.0,
+    "worst_day": -6965.0,
+    "traded_days": 1422
+   }
+  },
+  "S-09 door den_1338": {
+   "days": 1448,
+   "clock": "13:38 (дневная дверь)",
+   "standalone": {
+    "usd_per_session": 84.71008287292803,
+    "t": 2.431938901701247,
+    "share_days_ge_0": 0.48480662983425415,
+    "top5_share_of_total": 2.162722708751498,
+    "max_drawdown": -41980.199999999786,
+    "worst_day": -4082.024999999994,
+    "traded_days": 1434
+   },
+   "corr_with_B1": 0.1508757076268362,
+   "best5_overlap_with_B1": 0.1232876712328767,
+   "x_on_B1_le0": 5.024692874693168,
+   "x_on_B1_worst_half": -6.582907458563096,
+   "x_on_B1_best_half": 176.00307320441917,
+   "B1_alone": {
+    "usd_per_session": 235.43162983425415,
+    "t": 3.9001240906444994,
+    "share_days_ge_0": 0.4399171270718232,
+    "top5_share_of_total": 1.3656883882606592,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0,
+    "traded_days": 1445
+   },
+   "B1_plus_x": {
+    "usd_per_session": 320.1417127071822,
+    "t": 4.320041406069616,
+    "share_days_ge_0": 0.4951657458563536,
+    "top5_share_of_total": 1.2123144705426554,
+    "max_drawdown": -41610.374999999876,
+    "worst_day": -9707.300000000032,
+    "traded_days": 1448
+   }
+  },
+  "S-09 door utro_0933": {
+   "days": 1448,
+   "clock": "09:33, до 120 мин (сторона как у S-07)",
+   "standalone": {
+    "usd_per_session": 123.20386740331504,
+    "t": 2.3719032127702624,
+    "share_days_ge_0": 0.47168508287292815,
+    "top5_share_of_total": 1.9924416701420165,
+    "max_drawdown": -41362.99999999994,
+    "worst_day": -10125.800000000016,
+    "traded_days": 1442
+   },
+   "corr_with_B1": 0.6350525712745914,
+   "best5_overlap_with_B1": 0.6164383561643836,
+   "x_on_B1_le0": -807.4375921375922,
+   "x_on_B1_worst_half": -883.6638121546963,
+   "x_on_B1_best_half": 1130.0715469613262,
+   "B1_alone": {
+    "usd_per_session": 235.43162983425415,
+    "t": 3.9001240906444994,
+    "share_days_ge_0": 0.4399171270718232,
+    "top5_share_of_total": 1.3656883882606592,
+    "max_drawdown": -29695.0,
+    "worst_day": -10110.0,
+    "traded_days": 1445
+   },
+   "B1_plus_x": {
+    "usd_per_session": 358.6354972375692,
+    "t": 3.5295434009337323,
+    "share_days_ge_0": 0.462707182320442,
+    "top5_share_of_total": 1.5007307855395735,
+    "max_drawdown": -59242.39999999991,
+    "worst_day": -16180.800000000016,
+    "traded_days": 1444
+   }
+  },
+  "S-20 v1 (pts x20)": {
+   "days": 1470,
+   "clock": "после утреннего экстремума, первый ретест",
+   "standalone": {
+    "usd_per_session": 15.431972789115646,
+    "t": 0.7558208922365066,
+    "share_days_ge_0": 0.5319727891156463,
+    "top5_share_of_total": 6.422085078245536,
+    "max_drawdown": -27005.0,
+    "worst_day": -1490.0,
+    "traded_days": 762
+   },
+   "corr_with_B1": 0.22808944386825417,
+   "best5_overlap_with_B1": 0.14864864864864866,
+   "x_on_B1_le0": -61.09830097087379,
+   "x_on_B1_worst_half": -57.5169147496617,
+   "x_on_B1_best_half": 89.17920656634747,
+   "B1_alone": {
+    "usd_per_session": 246.14625850340136,
+    "t": 4.061190529830569,
+    "share_days_ge_0": 0.44081632653061226,
+    "top5_share_of_total": 1.3307446764409192,
+    "max_drawdown": -25300.0,
+    "worst_day": -10110.0,
+    "traded_days": 1468
+   },
+   "B1_plus_x": {
+    "usd_per_session": 261.578231292517,
+    "t": 3.833954094942599,
+    "share_days_ge_0": 0.4312925170068027,
+    "top5_share_of_total": 1.4390798918131698,
+    "max_drawdown": -30475.0,
+    "worst_day": -10110.0,
+    "traded_days": 1469
+   }
+  },
+  "F0 pullback PV2 (world B, pts x20)": {
+   "days": 1460,
+   "clock": "обычно 10:02–10:22, до 120 мин",
+   "standalone": {
+    "usd_per_session": 24.52054794520548,
+    "t": 2.761298696417421,
+    "share_days_ge_0": 0.8842465753424658,
+    "top5_share_of_total": 0.9100558659217877,
+    "max_drawdown": -4315.0,
+    "worst_day": -395.0,
+    "traded_days": 217
+   },
+   "corr_with_B1": 0.12579137226072956,
+   "best5_overlap_with_B1": 0.1095890410958904,
+   "x_on_B1_le0": -19.100367197062422,
+   "x_on_B1_worst_half": -19.496598639455783,
+   "x_on_B1_best_half": 69.1448275862069,
+   "B1_alone": {
+    "usd_per_session": 244.91095890410958,
+    "t": 4.022785408214259,
+    "share_days_ge_0": 0.4410958904109589,
+    "top5_share_of_total": 1.3349274267975502,
+    "max_drawdown": -29235.0,
+    "worst_day": -10110.0,
+    "traded_days": 1459
+   },
+   "B1_plus_x": {
+    "usd_per_session": 269.43150684931504,
+    "t": 4.302592096736973,
+    "share_days_ge_0": 0.43767123287671234,
+    "top5_share_of_total": 1.2652718814347814,
+    "max_drawdown": -29360.0,
+    "worst_day": -10110.0,
+    "traded_days": 1459
+   }
+  }
+ }
+}
